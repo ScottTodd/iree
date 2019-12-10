@@ -47,7 +47,9 @@
 #include "third_party/dear_imgui/examples/imgui_impl_vulkan.h"
 
 // Compiled module embedded here to avoid file IO:
-#include "iree/samples/rt/vulkan/simple_mul_bytecode_module.h"
+// #include "iree/samples/rt/vulkan/simple_mul_bytecode_module.h"
+// #include "iree/samples/rt/vulkan/edge_detection_bytecode_module.h"
+#include "iree/samples/rt/vulkan/sample_bytecode_module.h"
 
 static VkAllocationCallbacks* g_Allocator = NULL;
 static VkInstance g_Instance = VK_NULL_HANDLE;
@@ -536,7 +538,8 @@ extern "C" int main(int argc, char** argv) {
   // Load bytecode module from embedded data.
   LOG(INFO) << "Loading simple_mul.mlir...";
   const auto* module_file_toc =
-      iree::rt::samples::simple_mul_bytecode_module_create();
+      // iree::rt::samples::simple_mul_bytecode_module_create();
+      iree::samples::rt::vulkan::sample_bytecode_module_create();
   iree_rt_module_t* bytecode_module = nullptr;
   CHECK_IREE_OK(iree_vm_bytecode_module_create_from_buffer(
       iree_const_byte_span_t{
@@ -554,7 +557,7 @@ extern "C" int main(int argc, char** argv) {
 
   // Lookup the entry point function.
   iree_rt_function_t main_function;
-  const char kMainFunctionName[] = "module.simple_mul";
+  const char kMainFunctionName[] = "module.edge_detect_sobel_operator";
   CHECK_IREE_OK(iree_rt_context_resolve_function(
       iree_context,
       iree_string_view_t{kMainFunctionName, sizeof(kMainFunctionName) - 1},
@@ -629,6 +632,7 @@ extern "C" int main(int argc, char** argv) {
       // clang-format on
       ImGui::PopItemWidth();
 
+      /*
       if (dirty) {
         // Some input values changed, run the computation.
         // This is synchronous and doesn't reuse buffers for now.
@@ -666,8 +670,8 @@ extern "C" int main(int argc, char** argv) {
         iree_hal_buffer_release(arg0_buffer);
         iree_hal_buffer_release(arg1_buffer);
 
-        // Call into the @simple_mul function.
-        DLOG(INFO) << "Calling @simple_mul...";
+        // Call into the @edge_detect_sobel_operator function.
+        DLOG(INFO) << "Calling @edge_detect_sobel_operator...";
         iree_rt_invocation_t* invocation = nullptr;
         CHECK_IREE_OK(iree_rt_invocation_create(
             iree_context, &main_function, nullptr, nullptr,
@@ -704,6 +708,7 @@ extern "C" int main(int argc, char** argv) {
 
         dirty = false;
       }
+      */
 
       // Display the latest computation output.
       ImGui::Text("X * Y = [%f, %f, %f, %f]",

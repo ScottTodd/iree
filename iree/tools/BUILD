@@ -113,7 +113,7 @@ cc_binary(
     deps = [
         "//iree/compiler/Dialect/VM/Target/Bytecode",
         "//iree/compiler/Translation:IREEVM",
-        "//iree/compiler/Translation/Interpreter",
+        # "//iree/compiler/Translation/Interpreter",  # DO NOT SUBMIT
         "//iree/compiler/Translation/SPIRV",
         "//iree/compiler/Translation/Sequencer",
         "@llvm//:support",

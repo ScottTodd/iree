@@ -21,10 +21,34 @@ package(
     licenses = ["notice"],  # Apache 2.0
 )
 
+# iree_bytecode_module(
+#     name = "edge_detection_bytecode_module",
+#     srcs = ["edge_detection.mlir"],
+#     cc_namespace = "iree::rt::samples",
+# )
+
+# iree_bytecode_module(
+#     name = "simple_mul_bytecode_module",
+#     srcs = ["simple_mul.mlir"],
+#     cc_namespace = "iree::rt::samples",
+# )
+
+# iree_bytecode_module(
+#     name = "sample_bytecode_module",
+#     srcs = [
+#         "edge_detection.mlir",
+#         "simple_mul.mlir",
+#     ],
+#     cc_namespace = "iree::samples::rt::vulkan",
+# )
+
 iree_bytecode_module(
-    name = "simple_mul_bytecode_module",
-    srcs = ["simple_mul.mlir"],
-    cc_namespace = "iree::rt::samples",
+    name = "sample_bytecode_module",
+    srcs = [
+        "edge_detection_trimmed.mlir",
+        # "simple_mul.mlir",
+    ],
+    cc_namespace = "iree::samples::rt::vulkan",
 )
 
 cc_binary(
@@ -36,7 +60,9 @@ cc_binary(
         "notap",
     ],
     deps = [
-        ":simple_mul_bytecode_module_cc",
+        # ":edge_detection_bytecode_module_cc",
+        # ":simple_mul_bytecode_module_cc",
+        ":sample_bytecode_module_cc",
         "//iree/base:api",
         "//iree/base:logging",
         "//iree/hal:api",
