@@ -60,17 +60,19 @@ function(set_alwayslink_mlir_libs)
     MLIRAnalysis
     MLIREDSC
     MLIRIR
+    MLIRLinalgOps
+    MLIRMlirOptLib
+    MLIROptMain
     MLIRParser
     MLIRPass
     MLIRSPIRV
     MLIRSPIRVSerialization
     MLIRSPIRVTransforms
     MLIRStandardOps
+    MLIRSupport
     MLIRTransforms
     MLIRTranslation
-    MLIRSupport
     MLIRVectorOps
-    MLIRLinalgOps
   )
 
   set_alwayslink_property(

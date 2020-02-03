@@ -43,7 +43,7 @@ iree_tablegen_library(
   NAME
     custom_ops_gen
   TD_FILE
-    custom_ops.td
+    "custom_ops.td"
   OUTS
     -gen-op-decls custom_ops.h.inc
     -gen-op-defs custom_ops.cc.inc
@@ -68,10 +68,12 @@ iree_cc_binary(
     custom-opt
   OUT
     custom-opt
+  SRCS
+    "${IREE_ROOT_DIR}/third_party/llvm-project/mlir/tools/mlir-opt/mlir-opt.cpp"
   DEPS
     iree::samples::custom_modules::dialect
     iree::tools::iree_opt_library
-    MLIROptMain
+    MLIRMlirOptLib # main; TODO: swap with MLIROptMain
 )
 
 iree_cc_binary(

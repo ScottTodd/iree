@@ -12,30 +12,69 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO(suderman): fix cmake build
-# bazel_to_cmake: DO NOT EDIT
+# bazel_to_cmake: DO NOT EDIT (keep the IREE_BUILD_COMPILER check)
 
-add_subdirectory(dialect)
+if(${IREE_BUILD_COMPILER})
+  add_subdirectory(dialect)
 
-iree_cc_library(
-  NAME
-    strings
-  HDRS
-    "strings_module.h"
-  SRCS
-    "strings_module.cc"
-  DEPS
-    iree::base::api
-    iree::base::api_util
-    iree::base::tracing
-    iree::hal::api
-    iree::hal::command_queue
-    iree::hal::device
-    iree::vm
-    iree::vm::module_abi_cc
-    absl::core_headers
-    absl::memory
-    absl::strings
-    absl::span
-  PUBLIC
-)
+  iree_cc_library(
+    NAME
+      strings_module
+    HDRS
+      "strings_module.h"
+    SRCS
+      "strings_module.cc"
+    DEPS
+      iree::base::api
+      iree::base::logging
+      iree::vm
+      iree::vm::bytecode_module
+      iree::vm::module
+      iree::vm::module_abi_cc
+      iree::vm::ref
+      iree::vm::stack
+      iree::vm::types
+      absl::inlined_vector
+      absl::strings
+      absl::span
+      benchmark
+    PUBLIC
+  )
+
+  iree_cc_test(
+    NAME
+      strings_module_test
+    SRCS
+      "strings_module_test.cc"
+    DEPS
+      ::strings_module
+      ::strings_module_test_module_cc
+      iree::base::api
+      iree::base::logging
+      iree::testing::gtest_main
+      iree::vm::bytecode_module
+      iree::vm::context
+      iree::vm::instance
+      iree::vm::module
+      iree::vm::ref
+      iree::vm::stack
+      iree::vm::types
+      absl::inlined_vector
+      absl::strings
+      benchmark
+  )
+
+  iree_bytecode_module(
+    NAME
+      strings_module_test_module
+    SRC
+      "strings_module_test.mlir"
+    CC_NAMESPACE
+      "iree::strings_module_test"
+    TRANSLATE_TOOL
+      iree_modules_strings_dialect_strings-translate
+    TRANSLATION
+      "-iree-mlir-to-vm-bytecode-module"
+    PUBLIC
+  )
+endif()
