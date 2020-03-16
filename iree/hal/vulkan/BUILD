@@ -329,6 +329,22 @@ cc_library(
     ],
 )
 
+cc_test(
+    name = "timeline_semaphore_test",
+    srcs = ["timeline_semaphore_test.cc"],
+    # TODO(scotttodd) Get this running in OSS CI.
+    tags = [
+        "noga",
+        "nokokoro",
+    ],
+    deps = [
+        ":status_util",
+        "//iree/base:status_matchers",
+        "//iree/hal:driver_registry",
+        "//iree/hal/vulkan:vulkan_driver_module",
+    ] + PLATFORM_VULKAN_TEST_DEPS,
+)
+
 cc_library(
     name = "vma_allocator",
     srcs = [

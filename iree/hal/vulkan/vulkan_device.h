@@ -72,6 +72,7 @@ class VulkanDevice final : public Device {
   }
 
   Allocator* allocator() const override { return allocator_.get(); }
+  VkDeviceHandle* logical_device() const { return logical_device_.get(); }
 
   absl::Span<CommandQueue*> dispatch_queues() const override {
     return absl::MakeSpan(dispatch_queues_);

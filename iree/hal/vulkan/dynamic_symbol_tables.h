@@ -354,6 +354,9 @@ namespace vulkan {
   INS_PFN(EXCLUDED, vkGetPhysicalDeviceSurfaceSupportKHR)               \
   INS_PFN(EXCLUDED, vkReleaseDisplayEXT)                                \
   DEV_PFN(EXCLUDED, vkGetQueueCheckpointDataNV)                         \
+  DEV_PFN(REQUIRED, vkGetSemaphoreCounterValueKHR)                      \
+  DEV_PFN(REQUIRED, vkWaitSemaphoresKHR)                                \
+  DEV_PFN(REQUIRED, vkSignalSemaphoreKHR)                               \
   DEV_PFN(OPTIONAL, vkQueueBeginDebugUtilsLabelEXT)                     \
   DEV_PFN(EXCLUDED, vkQueueBindSparse)                                  \
   DEV_PFN(OPTIONAL, vkQueueEndDebugUtilsLabelEXT)                       \
