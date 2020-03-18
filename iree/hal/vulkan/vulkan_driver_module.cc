@@ -95,7 +95,7 @@ StatusOr<ref_ptr<Driver>> CreateVulkanDriver() {
     // Polyfill layer - enable if present.
     options.instance_extensibility.optional_layers.push_back(
         "VK_LAYER_KHRONOS_timeline_semaphore");
-    options.device_extensibility.optional_extensions.push_back(
+    options.device_extensibility.required_extensions.push_back(
         VK_KHR_TIMELINE_SEMAPHORE_EXTENSION_NAME);
   }
 
