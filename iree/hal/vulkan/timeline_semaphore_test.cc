@@ -24,6 +24,18 @@ namespace hal {
 namespace vulkan {
 namespace {
 
+// clang-format off
+//
+// Testing timeline semaphores with and without VK_LAYER_KHRONOS_timeline_semaphore
+//
+// To use the layer on Linux, build it with CMake then connect it manually to a Bazel build
+// (could also add a CMake CTest for this file, but that was faster for me)
+//
+// $ cmake -G Ninja -B build/ . && cmake --build build/ --target vk_layer_khronos_timeline_semaphore
+// $ bazel build iree/hal/vulkan:timeline_semaphore_test && VK_LAYER_PATH=$VK_LAYER_PATH:./build/third_party/vulkan_extensionlayer/layers ./bazel-bin/iree/hal/vulkan/timeline_semaphore_test --iree_v=2
+//
+// clang-format on
+
 TEST(DynamicSymbolsTest, CreateSemaphore) {
   ASSERT_OK_AND_ASSIGN(auto driver,
                        DriverRegistry::shared_registry()->Create("vulkan"));
@@ -44,7 +56,7 @@ TEST(DynamicSymbolsTest, CreateSemaphore) {
   create_info.flags = 0;
   VkSemaphore semaphore_handle = VK_NULL_HANDLE;
   VK_CHECK_OK(vulkan_device->syms()->vkCreateSemaphore(
-      *logical_device, &create_info, logical_device->allocator(),
+      logical_device->value(), &create_info, logical_device->allocator(),
       &semaphore_handle));
 
   VkSemaphoreSignalInfoKHR signal_info;
@@ -53,7 +65,15 @@ TEST(DynamicSymbolsTest, CreateSemaphore) {
   signal_info.semaphore = semaphore_handle;
   signal_info.value = 456;
 
-  vulkan_device->syms()->vkSignalSemaphoreKHR(*logical_device, &signal_info);
+  LOG(INFO) << "Calling vkSignalSemaphoreKHR, device: "
+            << logical_device->value();
+  // Linux with vulkan_extensionlayer crashes here?
+  VK_CHECK_OK(vulkan_device->syms()->vkSignalSemaphoreKHR(
+      logical_device->value(), &signal_info));
+  LOG(INFO) << "Signalled";
+
+  vulkan_device->syms()->vkDestroySemaphore(
+      logical_device->value(), semaphore_handle, logical_device->allocator());
 }
 
 }  // namespace
