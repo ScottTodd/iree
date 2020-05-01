@@ -26,6 +26,6 @@ java_test(
     deps = [
         "//bindings/java/com/google/iree:Context",
         # TODO(jennik): Update this for OSS side.
-        "//third_party/java/junit",
+        "@junit",
     ],
 )

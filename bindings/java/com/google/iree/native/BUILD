@@ -28,7 +28,6 @@ cc_library(
     deps = [
         "//iree/base:logging",
         # TODO(jennik): Update this for OSS side.
-        "//third_party/java/jdk:jni",
     ],
     alwayslink = 1,
 )

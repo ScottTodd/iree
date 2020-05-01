@@ -21,7 +21,6 @@ java_library(
     name = "Context",
     srcs = ["Context.java"],
     # TODO(jennik): Update this for OSS side.
-    constraints = ["android"],
     tags = [
         "noga",
     ],

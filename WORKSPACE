@@ -139,6 +139,17 @@ maybe(vulkan_sdk_setup,
 )
 ###############################################################################
 
+###############################################################################
+# Set up JNI for java bindings.
+android_sdk_repository(
+    name = "androidsdk",
+)
+
+android_ndk_repository(
+    name = "androidndk",
+)
+###############################################################################
+
 maybe(local_repository,
      name = "com_google_absl",
      path = "third_party/abseil-cpp",
