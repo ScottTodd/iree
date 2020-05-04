@@ -22,3 +22,7 @@
 JNI_FUNC void JNI_PREFIX(nativeCreate)(JNIEnv* env, jobject thiz) {
   LOG(INFO) << "Implement IREE java bindings";
 }
+
+JNI_FUNC int JNI_PREFIX(nativeGetNumber)(JNIEnv* env, jobject thiz) {
+  return 5;
+}

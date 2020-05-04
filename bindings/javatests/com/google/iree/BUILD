@@ -28,4 +28,9 @@ java_test(
         # TODO(jennik): Update this for OSS side.
         "@junit",
     ],
+
+    # Hoping for the .so to show up in the .jar (or Android APK)
+    # data = [
+    #     "//bindings/java/com/google/iree/native:libiree_native.so",
+    # ],
 )

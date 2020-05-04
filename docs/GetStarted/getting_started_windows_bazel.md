@@ -85,6 +85,12 @@ build --disk_cache=c:/bazelcache
 build:debug --compilation_mode=dbg --copt=/O2 --per_file_copt=iree@/Od --strip=never
 ```
 
+> Note:<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;If you plan on building the Java bindings, drop
+> `--config=windows` as you'll be using other configs, such as
+> `--config=android_x86` for those builds.
+
+
 ## What's next?
 
 ### Take a Look Around

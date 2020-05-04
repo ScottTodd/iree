@@ -18,11 +18,21 @@ package com.google.iree;
 
 /** An isolated execution context. */
 final class Context {
+  static {
+    System.loadLibrary("iree_native");
+  }
+
   private Context() {}
 
   public static void create() {
     nativeCreate();
   }
 
+  public static int getNumber() {
+    return nativeGetNumber();
+  }
+
   private static native void nativeCreate();
+
+  private static native int nativeGetNumber();
 }

@@ -26,4 +26,9 @@ public final class ContextTest {
   public void create_printsMessage() {
     Context.create();
   }
+
+  @Test
+  public void getNumber_getsNumber() {
+    Context.getNumber();
+  }
 }

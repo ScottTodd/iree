@@ -26,8 +26,24 @@ cc_library(
         "noga",
     ],
     deps = [
+        # "@bazel_tools//tools/jdk:jni",
         "//iree/base:logging",
         # TODO(jennik): Update this for OSS side.
     ],
     alwayslink = 1,
+    linkopts = ["-ldl", "-lm"],
+)
+
+cc_binary(
+    name = "libiree_native.so",
+    deps = [
+        ":native_deps",
+    ],
+    linkshared = 1,
+)
+
+# This shouldn't be necessary
+cc_library(
+    name = "iree_native_so",
+    deps = [":libiree_native.so"]
 )

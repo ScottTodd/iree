@@ -17,14 +17,17 @@ package(
     licenses = ["notice"],  # Apache 2.0
 )
 
-java_library(
+android_library(
     name = "Context",
     srcs = ["Context.java"],
     # TODO(jennik): Update this for OSS side.
     tags = [
         "noga",
     ],
-    runtime_deps = [
-        "//bindings/java/com/google/iree/native:native_deps",
+    # Note: make sure this dep is actually built.
+    # I think it might need to be included on an android_binary (or equivalent),
+    # not library?
+    deps = [
+        "//bindings/java/com/google/iree/native:iree_native_so",
     ],
 )
