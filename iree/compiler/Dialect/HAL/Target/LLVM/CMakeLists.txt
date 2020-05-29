@@ -16,21 +16,70 @@ iree_add_all_subdirs()
 
 iree_cc_library(
   NAME
-    LLVM
+    LLVMBase
   HDRS
-    "LLVMTarget.h"
+    "LLVMBaseTarget.h"
   SRCS
-    "LLVMTarget.cpp"
+    "LLVMBaseTarget.cpp"
   DEPS
     ::LLVMIRPasses
     ::LLVMTargetOptions
     LLVMCore
     LLVMSupport
-    LLVMX86CodeGen
     MLIRTargetLLVMIR
     iree::compiler::Conversion::LinalgToLLVM
     iree::compiler::Dialect::HAL::Target
+  PUBLIC
+)
+
+iree_cc_library(
+  NAME
+    LLVMIR
+  HDRS
+    "LLVMIRTarget.h"
+  SRCS
+    "LLVMIRTarget.cpp"
+  DEPS
+    ::LLVMBase
+    ::LLVMTargetOptions
+    LLVMCore
+    LLVMSupport
+    LLVMX86CodeGen
+    iree::compiler::Dialect::HAL::Target
     iree::schemas::llvmir_executable_def_cc_fbs
+  PUBLIC
+)
+
+iree_cc_library(
+  NAME
+    LLVMAOT
+  HDRS
+    "LLVMAOTTarget.h"
+  SRCS
+    "LLVMAOTTarget.cpp"
+  DEPS
+    ::LLVMBase
+    ::LLVMTargetOptions
+    ::TestLibrary
+    LLVMCore
+    LLVMSupport
+    iree::compiler::Dialect::HAL::Target
+    iree::schemas::dylib_executable_def_cc_fbs
+  PUBLIC
+)
+
+iree_cc_embed_data(
+  NAME
+    TestLibrary
+  SRCS
+    "TestLibrary.dll"
+  CC_FILE_OUTPUT
+    "TestLibrary.cpp"
+  H_FILE_OUTPUT
+    "TestLibrary.h"
+  CPP_NAMESPACE
+    "mlir::iree_compiler"
+  FLATTEN
   PUBLIC
 )
 
