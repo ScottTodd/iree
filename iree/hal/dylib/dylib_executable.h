@@ -17,7 +17,7 @@
 
 #include <vector>
 
-#include "absl/types/span.h"
+#include "absl/container/inlined_vector.h"
 #include "iree/base/dynamic_library.h"
 #include "iree/base/status.h"
 #include "iree/hal/allocator.h"
@@ -35,16 +35,19 @@ class DyLibExecutable final : public Executable {
   static StatusOr<ref_ptr<DyLibExecutable>> Load(hal::Allocator* allocator,
                                                  ExecutableSpec spec,
                                                  bool allow_aliasing_data);
-  DyLibExecutable(hal::Allocator* allocator, ExecutableSpec spec,
-                  bool allow_aliasing_data);
+  DyLibExecutable(ExecutableSpec spec, bool allow_aliasing_data);
   ~DyLibExecutable() override;
 
   bool supports_debugging() const override { return false; }
 
  private:
+  Status Initialize();
+
   ExecutableSpec spec_;
   std::vector<uint8_t> cloned_executable_data_;
+
   std::unique_ptr<DynamicLibrary> executable_library_;
+  absl::InlinedVector<void*, 4> entry_functions_;
 };
 
 }  // namespace dylib

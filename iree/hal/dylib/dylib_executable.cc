@@ -17,6 +17,7 @@
 #include <iostream>
 #include <memory>
 
+#include "absl/types/span.h"
 #include "flatbuffers/flatbuffers.h"
 #include "iree/base/file_io.h"
 #include "iree/hal/executable.h"
@@ -29,12 +30,23 @@ namespace dylib {
 // static
 StatusOr<ref_ptr<DyLibExecutable>> DyLibExecutable::Load(
     hal::Allocator* allocator, ExecutableSpec spec, bool allow_aliasing_data) {
-  auto module_def =
-      ::flatbuffers::GetRoot<DyLibExecutableDef>(spec.executable_data.data());
-  auto data =
-      reinterpret_cast<const char*>(module_def->library_embedded()->data());
-  const int size = module_def->library_embedded()->size();
-  LOG(INFO) << "Loaded embedded library into memory, size: " << size;
+  auto executable = make_ref<DyLibExecutable>(spec, allow_aliasing_data);
+  RETURN_IF_ERROR(executable->Initialize());
+  return executable;
+}
+
+Status DyLibExecutable::Initialize() {
+  auto dylib_executable_def =
+      ::flatbuffers::GetRoot<DyLibExecutableDef>(spec_.executable_data.data());
+
+  if (!dylib_executable_def->entry_points() ||
+      dylib_executable_def->entry_points()->size() == 0) {
+    return InvalidArgumentErrorBuilder(IREE_LOC) << "No entry points defined";
+  }
+  if (!dylib_executable_def->library_embedded() ||
+      dylib_executable_def->library_embedded()->size() == 0) {
+    return InvalidArgumentErrorBuilder(IREE_LOC) << "No embedded library";
+  }
 
   // Write the embedded library out to a temp file, since all of the dynamic
   // library APIs work with files. We could instead use in-memory files on
@@ -57,27 +69,37 @@ StatusOr<ref_ptr<DyLibExecutable>> DyLibExecutable::Load(
   temp_file += ".so";
 #endif
 
-  absl::string_view data_view(data, size);
-  RETURN_IF_ERROR(file_io::SetFileContents(temp_file, data_view));
+  absl::string_view embedded_library_data(
+      reinterpret_cast<const char*>(
+          dylib_executable_def->library_embedded()->data()),
+      dylib_executable_def->library_embedded()->size());
+  RETURN_IF_ERROR(file_io::SetFileContents(temp_file, embedded_library_data));
   LOG(INFO) << "Wrote embedded library to " << temp_file;
 
-  ASSIGN_OR_RETURN(auto executable_library,
+  ASSIGN_OR_RETURN(executable_library_,
                    DynamicLibrary::Load(temp_file.c_str()));
   LOG(INFO) << "Loaded library from temp file";
 
-  auto times_two_fn = executable_library->GetSymbol<int (*)(int)>("times_two");
+  // TODO(scotttodd): remove demo code, logging
+  // DO NOT SUBMIT
+  auto times_two_fn = executable_library_->GetSymbol<int (*)(int)>("times_two");
   LOG(INFO) << "Three times two is " << times_two_fn(3);
 
-  return UnimplementedErrorBuilder(IREE_LOC) << "DyLibExecutable::Load NYI";
+  const auto& entry_points = *dylib_executable_def->entry_points();
+  entry_functions_.resize(entry_points.size());
+  for (int i = 0; i < entry_functions_.size(); ++i) {
+    void* symbol = executable_library_->GetSymbol(entry_points[i]->c_str());
+    if (!symbol) {
+      return NotFoundErrorBuilder(IREE_LOC)
+             << "Could not find symbol: " << entry_points[i];
+    }
+    entry_functions_[i] = symbol;
+  }
 
-  // auto executable = make_ref<DyLibExecutable>(
-  //     allocator, spec, allow_aliasing_data, std::move(executable_library));
-
-  // return executable;
+  return OkStatus();
 }
 
-DyLibExecutable::DyLibExecutable(hal::Allocator* allocator, ExecutableSpec spec,
-                                 bool allow_aliasing_data)
+DyLibExecutable::DyLibExecutable(ExecutableSpec spec, bool allow_aliasing_data)
     : spec_(spec) {
   if (!allow_aliasing_data) {
     // Clone data.
