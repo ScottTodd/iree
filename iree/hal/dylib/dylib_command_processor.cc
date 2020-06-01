@@ -17,6 +17,7 @@
 #include <memory>
 #include <vector>
 
+#include "absl/container/inlined_vector.h"
 #include "iree/base/tracing.h"
 #include "iree/hal/buffer.h"
 #include "iree/hal/dylib/dylib_executable.h"
@@ -38,33 +39,29 @@ Status DyLibCommandProcessor::DispatchInline(
     absl::Span<const absl::Span<const DescriptorSet::Binding>> set_bindings) {
   IREE_TRACE_SCOPE0("DyLibCommandProcessor::DispatchInline");
 
-  return UnimplementedErrorBuilder(IREE_LOC)
-         << "DyLibCommandProcessor::DispatchInline NYI";
+  auto* dylib_executable = static_cast<DyLibExecutable*>(executable);
 
-  // auto* dylib_executable = static_cast<DyLibExecutable*>(executable);
+  absl::InlinedVector<UnrankedMemRefType<uint32_t>*, 4> descriptors;
+  absl::InlinedVector<void*, 4> args;
+  for (size_t set = 0; set < set_bindings.size(); ++set) {
+    for (size_t binding = 0; binding < set_bindings[set].size(); ++binding) {
+      const auto& io_binding = set_bindings[set][binding];
+      ASSIGN_OR_RETURN(auto memory, io_binding.buffer->MapMemory<uint8_t>(
+                                        MemoryAccessBitfield::kWrite,
+                                        io_binding.offset, io_binding.length));
+      auto data = memory.mutable_data();
+      auto descriptor = allocUnrankedDescriptor<uint32_t>(data);
+      descriptors.push_back(descriptor);
+      args.push_back(&descriptor->descriptor);
+    }
+  }
+  auto status = dylib_executable->Invoke(entry_point, absl::MakeSpan(args));
 
-  // llvm::SmallVector<UnrankedMemRefType<uint32_t>*, 4> descriptors;
-  // llvm::SmallVector<void*, 4> args;
-  // for (size_t set = 0; set < set_bindings.size(); ++set) {
-  //   for (size_t binding = 0; binding < set_bindings[set].size(); ++binding) {
-  //     const auto& io_binding = set_bindings[set][binding];
-  //     ASSIGN_OR_RETURN(auto memory, io_binding.buffer->MapMemory<uint8_t>(
-  //                                       MemoryAccessBitfield::kWrite,
-  //                                       io_binding.offset,
-  //                                       io_binding.length));
-  //     auto data = memory.mutable_data();
-  //     auto descriptor = allocUnrankedDescriptor<uint32_t>(data);
-  //     descriptors.push_back(descriptor);
-  //     args.push_back(&descriptor->descriptor);
-  //   }
-  // }
-  // auto status = dylib_executable->Invoke(entry_point, args);
+  for (int i = 0; i < descriptors.size(); ++i) {
+    freeUnrankedDescriptor(descriptors[i]);
+  }
 
-  // for (int i = 0; i < descriptors.size(); ++i) {
-  //   freeUnrankedDescriptor(descriptors[i]);
-  // }
-
-  // return status;
+  return status;
 }
 
 }  // namespace dylib

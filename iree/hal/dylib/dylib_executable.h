@@ -18,6 +18,7 @@
 #include <vector>
 
 #include "absl/container/inlined_vector.h"
+#include "absl/types/span.h"
 #include "iree/base/dynamic_library.h"
 #include "iree/base/status.h"
 #include "iree/hal/allocator.h"
@@ -39,6 +40,8 @@ class DyLibExecutable final : public Executable {
   ~DyLibExecutable() override;
 
   bool supports_debugging() const override { return false; }
+
+  Status Invoke(int func_id, absl::Span<void*> args) const;
 
  private:
   Status Initialize();

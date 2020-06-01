@@ -85,13 +85,18 @@ Status DyLibExecutable::Initialize() {
   auto times_two_fn = executable_library_->GetSymbol<int (*)(int)>("times_two");
   LOG(INFO) << "Three times two is " << times_two_fn(3);
 
+  // auto func_symbol =
+  //     executable->ll_jit_->lookup("invoke_" + func_name->str());
+  // "_mlir_ciface_abs_ex_dispatch_0"
+
   const auto& entry_points = *dylib_executable_def->entry_points();
   entry_functions_.resize(entry_points.size());
   for (int i = 0; i < entry_functions_.size(); ++i) {
     void* symbol = executable_library_->GetSymbol(entry_points[i]->c_str());
     if (!symbol) {
-      return NotFoundErrorBuilder(IREE_LOC)
-             << "Could not find symbol: " << entry_points[i];
+      // DO NOT SUBMIT
+      // return NotFoundErrorBuilder(IREE_LOC)
+      //        << "Could not find symbol: " << entry_points[i];
     }
     entry_functions_[i] = symbol;
   }
@@ -109,7 +114,12 @@ DyLibExecutable::DyLibExecutable(ExecutableSpec spec, bool allow_aliasing_data)
   }
 }
 
+// TODO(scotttodd): delete temp file after unloading library?
 DyLibExecutable::~DyLibExecutable() = default;
+
+Status DyLibExecutable::Invoke(int func_id, absl::Span<void*> args) const {
+  return UnimplementedErrorBuilder(IREE_LOC) << "DyLibExecutable::Invoke NYI";
+}
 
 }  // namespace dylib
 }  // namespace hal

@@ -38,8 +38,12 @@ StatusOr<ref_ptr<Executable>> DyLibExecutableCache::PrepareExecutable(
     const ExecutableSpec& spec) {
   IREE_TRACE_SCOPE0("DyLibExecutableCache::PrepareExecutable");
 
-  // TODO(scotttodd): ExecutableCachingMode::AllowPersistentCaching copy to file
-  //                  (otherwise in-memory file)
+  // TODO(scotttodd): Options for using in-memory files where supported, or not
+  //    writing to temp files on disk (and failing if necessary) if not allowed.
+  // TODO(scotttodd): Use stable (possibly temp, but reusable) files when
+  //    ExecutableCachingMode::AllowPersistentCaching is set. For example,
+  //    hash data into a filename and read from / write to GetTempPath() or
+  //    GetCachePath() rather than use GetTempFile().
 
   // Wrap the data (or copy it).
   bool allow_aliasing_data =
