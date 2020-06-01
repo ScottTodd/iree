@@ -27,11 +27,13 @@ namespace iree_compiler {
 namespace IREE {
 namespace HAL {
 
-// TODO(ataei): This is written as a stub in LLVM IR. It would be easier to have
-// this using MLIR and lower it to LLVM like the dispatch function
-// implementation is.
-static void createInvocationFunc(const std::string& name,
-                                 llvm::Module* module) {
+// static
+void LLVMBaseTargetBackend::createInvocationFunc(const std::string& name,
+                                                 llvm::Module* module) {
+  // TODO(ataei): This is written as a stub in LLVM IR. It would be easier to
+  // have this using MLIR and lower it to LLVM like the dispatch function
+  // implementation is.
+
   auto& ctx = module->getContext();
   llvm::IRBuilder<> builder(ctx);
   auto var_func = module->getFunction(name);
@@ -65,8 +67,7 @@ static void createInvocationFunc(const std::string& name,
   builder.CreateRetVoid();
 }
 
-LLVMBaseTargetBackend::LLVMBaseTargetBackend(LLVMTargetOptions options)
-    : options_(options) {}
+LLVMBaseTargetBackend::LLVMBaseTargetBackend() {}
 
 void LLVMBaseTargetBackend::buildTranslationPassPipeline(
     ExecutableTargetOp targetOp, OpPassManager& passManager) {

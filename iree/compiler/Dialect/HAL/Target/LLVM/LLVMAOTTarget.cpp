@@ -32,7 +32,7 @@ namespace HAL {
 class LLVMAOTTargetBackend final : public LLVMBaseTargetBackend {
  public:
   LLVMAOTTargetBackend(LLVMTargetOptions options)
-      : LLVMBaseTargetBackend(options) {}
+      : options_(std::move(options)) {}
 
   // NOTE: we could vary this based on the options, such as by arch/etc.
   std::string name() const override { return "llvm-aot*"; }

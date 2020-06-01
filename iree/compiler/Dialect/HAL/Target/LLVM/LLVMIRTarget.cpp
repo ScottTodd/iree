@@ -21,6 +21,11 @@
 #include "llvm/Support/Mutex.h"
 #include "llvm/Support/TargetSelect.h"
 
+//
+#include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMIRPasses.h"
+#include "llvm/IR/IRBuilder.h"
+#include "mlir/Target/LLVMIR.h"
+
 namespace mlir {
 namespace iree_compiler {
 namespace IREE {
@@ -29,28 +34,92 @@ namespace HAL {
 class LLVMIRTargetBackend final : public LLVMBaseTargetBackend {
  public:
   LLVMIRTargetBackend(LLVMTargetOptions options)
-      : LLVMBaseTargetBackend(options) {}
+      : options_(std::move(options)) {}
 
   // NOTE: we could vary this based on the options, such as by arch/etc.
   std::string name() const override { return "llvm-ir*"; }
 
   LogicalResult serializeExecutable(IREE::HAL::ExecutableTargetOp targetOp,
                                     OpBuilder& executableBuilder) override {
-    // TODO(scotttodd): check if this is needed here, or just in base
+    // // TODO(scotttodd): check if this is needed here, or just in base
+    // // LLVM is not thread safe and currently translation shares an
+    // LLVMContext.
+    // // Since we serialize executables from multiple threads we have to take a
+    // // global lock here.
+    // static llvm::sys::SmartMutex<true> mutex;
+    // llvm::sys::SmartScopedLock<true> lock(mutex);
+
+    // iree::LLVMIRExecutableDefT llvmIrExecutableDef;
+
+    // auto llvmModule = translateTargetOp(targetOp, [&](std::string funcName) {
+    //   llvmIrExecutableDef.entry_points.push_back(funcName);
+    // });
+
+    // if (!llvmModule) {
+    //   return failure();
+    // }
+
+    // // Serialize LLVM module.
+    // std::string bufferString;
+    // llvm::raw_string_ostream ostream(bufferString);
+    // llvmModule->print(ostream, nullptr);
+    // ostream.flush();
+
+    // // Creates executable bytes.
+    // llvmIrExecutableDef.llvmir_module = {bufferString.begin(),
+    //                                      bufferString.end()};
+
+    // ::flatbuffers::FlatBufferBuilder fbb;
+    // auto executableOffset =
+    //     iree::LLVMIRExecutableDef::Pack(fbb, &llvmIrExecutableDef);
+    // iree::FinishLLVMIRExecutableDefBuffer(fbb, executableOffset);
+    // std::vector<uint8_t> bytes;
+    // bytes.resize(fbb.GetSize());
+    // std::memcpy(bytes.data(), fbb.GetBufferPointer(), bytes.size());
+
+    // // Add the binary data to the target executable.
+    // executableBuilder.create<IREE::HAL::ExecutableBinaryOp>(
+    //     targetOp.getLoc(),
+    //     static_cast<uint32_t>(IREE::HAL::ExecutableFormat::LLVM),
+    //     std::move(bytes));
+
+    // return success();
+
     // LLVM is not thread safe and currently translation shares an LLVMContext.
     // Since we serialize executables from multiple threads we have to take a
     // global lock here.
     static llvm::sys::SmartMutex<true> mutex;
     llvm::sys::SmartScopedLock<true> lock(mutex);
 
+    // At this moment we are leaving MLIR LLVM dialect land translating module
+    // into target independent LLVMIR.
+    auto llvmModule = mlir::translateModuleToLLVMIR(targetOp.getInnerModule());
+
+    // Create invocation function an populate entry_points.
     iree::LLVMIRExecutableDefT llvmIrExecutableDef;
-
-    auto llvmModule = translateTargetOp(targetOp, [&](std::string funcName) {
+    auto executableOp = cast<IREE::HAL::ExecutableOp>(targetOp.getParentOp());
+    auto entryPointOps =
+        executableOp.getBlock().getOps<IREE::HAL::ExecutableEntryPointOp>();
+    const bool addCInterface = true;
+    for (auto entryPointOp : entryPointOps) {
+      std::string funcName =
+          addCInterface ? "_mlir_ciface_" + std::string(entryPointOp.sym_name())
+                        : std::string(entryPointOp.sym_name());
       llvmIrExecutableDef.entry_points.push_back(funcName);
-    });
+      createInvocationFunc(funcName, llvmModule.get());
+    }
 
-    if (!llvmModule) {
+    // LLVMIR opt passes.
+    auto targetMachine = createTargetMachine(options_);
+    if (!targetMachine) {
+      targetOp.emitError("Can't create target machine for target triple: " +
+                         options_.targetTriple);
       return failure();
+    }
+    if (failed(runLLVMIRPasses(options_, std::move(targetMachine),
+                               llvmModule.get()))) {
+      return targetOp.emitError(
+          "Can't build LLVMIR opt passes for ExecutableOp module");
     }
 
     // Serialize LLVM module.

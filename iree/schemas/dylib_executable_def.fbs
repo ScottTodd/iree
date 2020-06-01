@@ -29,6 +29,8 @@ table DyLibExecutableDef {
   library_embedded:[byte];
 
   // TODO(scotttodd): Relative file path from this flatbuffer file
+
+  // TODO(scotttodd): pdb debug symbols
 }
 
 root_type DyLibExecutableDef;
