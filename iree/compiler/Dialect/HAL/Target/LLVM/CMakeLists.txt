@@ -22,7 +22,6 @@ iree_cc_library(
   SRCS
     "LLVMBaseTarget.cpp"
   DEPS
-    ::LLVMIRPasses
     ::LLVMTargetOptions
     LLVMCore
     LLVMSupport
@@ -41,6 +40,7 @@ iree_cc_library(
     "LLVMIRTarget.cpp"
   DEPS
     ::LLVMBase
+    ::LLVMIRPasses
     ::LLVMTargetOptions
     LLVMCore
     LLVMSupport
@@ -59,6 +59,7 @@ iree_cc_library(
     "LLVMAOTTarget.cpp"
   DEPS
     ::LLVMBase
+    ::LLVMIRPasses
     ::LLVMTargetOptions
     ::TestLibrary
     LLVMCore

@@ -15,11 +15,9 @@
 #include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMBaseTarget.h"
 
 #include "iree/compiler/Conversion/LinalgToLLVM/Passes.h"
-#include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMIRPasses.h"
 #include "llvm/ADT/DenseMap.h"
 #include "llvm/IR/IRBuilder.h"
 #include "llvm/IR/Module.h"
-#include "llvm/Support/Mutex.h"
 #include "mlir/Target/LLVMIR.h"
 
 namespace mlir {
@@ -67,54 +65,12 @@ void LLVMBaseTargetBackend::createInvocationFunc(const std::string& name,
   builder.CreateRetVoid();
 }
 
-LLVMBaseTargetBackend::LLVMBaseTargetBackend() {}
+LLVMBaseTargetBackend::LLVMBaseTargetBackend(LLVMTargetOptions options)
+    : options_(std::move(options)) {}
 
 void LLVMBaseTargetBackend::buildTranslationPassPipeline(
     ExecutableTargetOp targetOp, OpPassManager& passManager) {
   buildLLVMTransformPassPipeline(passManager);
-}
-
-std::unique_ptr<llvm::Module> LLVMBaseTargetBackend::translateTargetOp(
-    IREE::HAL::ExecutableTargetOp targetOp,
-    std::function<void(std::string)> addEntryPointFunction) {
-  // LLVM is not thread safe and currently translation shares an LLVMContext.
-  // Since we serialize executables from multiple threads we have to take a
-  // global lock here.
-  static llvm::sys::SmartMutex<true> mutex;
-  llvm::sys::SmartScopedLock<true> lock(mutex);
-
-  // At this moment we are leaving MLIR LLVM dialect land translating module
-  // into target independent LLVMIR.
-  auto llvmModule = mlir::translateModuleToLLVMIR(targetOp.getInnerModule());
-
-  // Create invocation function an populate entry_points.
-  auto executableOp = cast<ExecutableOp>(targetOp.getParentOp());
-  auto entryPointOps = executableOp.getBlock().getOps<ExecutableEntryPointOp>();
-  const bool addCInterface = true;
-  for (auto entryPointOp : entryPointOps) {
-    std::string funcName =
-        addCInterface ? "_mlir_ciface_" + std::string(entryPointOp.sym_name())
-                      : std::string(entryPointOp.sym_name());
-    // TODO(scotttodd): Refactor to avoid std::function?
-    //   - Extract later from llvm::Module? Return another container with fns?
-    addEntryPointFunction(funcName);
-    createInvocationFunc(funcName, llvmModule.get());
-  }
-
-  // LLVMIR opt passes.
-  auto targetMachine = createTargetMachine(options_);
-  if (!targetMachine) {
-    targetOp.emitError("Can't create target machine for target triple: " +
-                       options_.targetTriple);
-    return nullptr;
-  }
-  if (failed(runLLVMIRPasses(options_, std::move(targetMachine),
-                             llvmModule.get()))) {
-    targetOp.emitError("Can't build LLVMIR opt passes for ExecutableOp module");
-    return nullptr;
-  }
-
-  return std::move(llvmModule);
 }
 
 }  // namespace HAL

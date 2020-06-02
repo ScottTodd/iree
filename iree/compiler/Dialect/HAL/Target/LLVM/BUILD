@@ -28,7 +28,6 @@ cc_library(
         "LLVMBaseTarget.h",
     ],
     deps = [
-        ":LLVMIRPasses",
         ":LLVMTargetOptions",
         "//iree/compiler/Conversion/LinalgToLLVM",
         "//iree/compiler/Dialect/HAL/Target",
@@ -47,6 +46,7 @@ cc_library(
         "LLVMIRTarget.h",
     ],
     deps = [
+        ":LLVMIRPasses",
         ":LLVMBase",
         ":LLVMTargetOptions",
         "//iree/compiler/Dialect/HAL/Target",
@@ -67,6 +67,7 @@ cc_library(
         "LLVMAOTTarget.h",
     ],
     deps = [
+        ":LLVMIRPasses",
         ":LLVMBase",
         ":LLVMTargetOptions",
         ":TestLibrary",

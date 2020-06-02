@@ -15,11 +15,13 @@
 #include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMAOTTarget.h"
 
 #include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMBaseTarget.h"
+#include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMIRPasses.h"
 #include "iree/compiler/Dialect/HAL/Target/TargetRegistry.h"
 #include "iree/schemas/dylib_executable_def_generated.h"
 #include "llvm/IR/Module.h"
 #include "llvm/Support/Mutex.h"
 #include "llvm/Support/TargetSelect.h"
+#include "mlir/Target/LLVMIR.h"
 
 // TODO(scotttodd): replace with actual LLVM AOT compilation
 #include "iree/compiler/Dialect/HAL/Target/LLVM/TestLibrary.h"
@@ -32,7 +34,7 @@ namespace HAL {
 class LLVMAOTTargetBackend final : public LLVMBaseTargetBackend {
  public:
   LLVMAOTTargetBackend(LLVMTargetOptions options)
-      : options_(std::move(options)) {}
+      : LLVMBaseTargetBackend(options) {}
 
   // NOTE: we could vary this based on the options, such as by arch/etc.
   std::string name() const override { return "llvm-aot*"; }
@@ -48,55 +50,67 @@ class LLVMAOTTargetBackend final : public LLVMBaseTargetBackend {
 
     iree::DyLibExecutableDefT dyLibExecutableDef;
 
-    auto llvmModule = translateTargetOp(targetOp, [&](std::string funcName) {
+    // At this moment we are leaving MLIR LLVM dialect land translating module
+    // into target independent LLVMIR.
+    auto llvmModule = mlir::translateModuleToLLVMIR(targetOp.getInnerModule());
+
+    // Create invocation function an populate entry_points.
+    auto executableOp = cast<ExecutableOp>(targetOp.getParentOp());
+    auto entryPointOps =
+        executableOp.getBlock().getOps<ExecutableEntryPointOp>();
+    const bool addCInterface = true;
+    for (auto entryPointOp : entryPointOps) {
+      std::string funcName =
+          addCInterface ? "_mlir_ciface_" + std::string(entryPointOp.sym_name())
+                        : std::string(entryPointOp.sym_name());
+      // TODO(scotttodd): Refactor to avoid std::function?
+      //   - Extract later from llvm::Module? Return another container with fns?
       dyLibExecutableDef.entry_points.push_back(funcName);
-    });
+      createInvocationFunc(funcName, llvmModule.get());
 
-    if (!llvmModule) {
-      return failure();
+      if (!llvmModule) {
+        return failure();
+      }
+
+      // Proof of concept test:
+      //   * [done] cc_embed_data of test.dll
+      //   * [done] add bytes to flatbuffer
+      //   * [done] extract bytes from flatbuffer in dylib_executable
+      //   * [done] write bytes to tmp file
+      //   * [done] load tmp file absolute path via DynamicLibrary
+
+      // TODO(scotttodd): replace with actual LLVM AOT compilation
+      const auto* testFileToc = TestLibrary_create();
+      dyLibExecutableDef.library_embedded.assign(
+          testFileToc->data, testFileToc->data + testFileToc->size);
+
+      // // Serialize LLVM module.
+      // std::string bufferString;
+      // llvm::raw_string_ostream ostream(bufferString);
+      // llvmModule->print(ostream, nullptr);
+      // ostream.flush();
+
+      // Creates executable bytes.
+      // llvmIrExecutableDef.llvmir_module = {bufferString.begin(),
+      //                                      bufferString.end()};
+
+      ::flatbuffers::FlatBufferBuilder fbb;
+      auto executableOffset =
+          iree::DyLibExecutableDef::Pack(fbb, &dyLibExecutableDef);
+      iree::FinishDyLibExecutableDefBuffer(fbb, executableOffset);
+      std::vector<uint8_t> bytes;
+      bytes.resize(fbb.GetSize());
+      std::memcpy(bytes.data(), fbb.GetBufferPointer(), bytes.size());
+
+      // Add the binary data to the target executable.
+      executableBuilder.create<IREE::HAL::ExecutableBinaryOp>(
+          targetOp.getLoc(),
+          static_cast<uint32_t>(IREE::HAL::ExecutableFormat::DyLib),
+          std::move(bytes));
+
+      return success();
     }
-
-    // Proof of concept test:
-    //   * [done] cc_embed_data of test.dll
-    //   * [done] add bytes to flatbuffer
-    //   * [done] extract bytes from flatbuffer in dylib_executable
-    //   * [done] write bytes to tmp file
-    //   * [done] load tmp file absolute path via DynamicLibrary
-
-    // TODO(scotttodd): replace with actual LLVM AOT compilation
-    const auto* testFileToc = TestLibrary_create();
-    dyLibExecutableDef.library_embedded.assign(
-        testFileToc->data, testFileToc->data + testFileToc->size);
-
-    // // Serialize LLVM module.
-    // std::string bufferString;
-    // llvm::raw_string_ostream ostream(bufferString);
-    // llvmModule->print(ostream, nullptr);
-    // ostream.flush();
-
-    // Creates executable bytes.
-    // llvmIrExecutableDef.llvmir_module = {bufferString.begin(),
-    //                                      bufferString.end()};
-
-    ::flatbuffers::FlatBufferBuilder fbb;
-    auto executableOffset =
-        iree::DyLibExecutableDef::Pack(fbb, &dyLibExecutableDef);
-    iree::FinishDyLibExecutableDefBuffer(fbb, executableOffset);
-    std::vector<uint8_t> bytes;
-    bytes.resize(fbb.GetSize());
-    std::memcpy(bytes.data(), fbb.GetBufferPointer(), bytes.size());
-
-    // Add the binary data to the target executable.
-    executableBuilder.create<IREE::HAL::ExecutableBinaryOp>(
-        targetOp.getLoc(),
-        static_cast<uint32_t>(IREE::HAL::ExecutableFormat::DyLib),
-        std::move(bytes));
-
-    return success();
   }
-
- private:
-  LLVMTargetOptions options_;
 };
 
 void registerLLVMAOTTargetBackends(
@@ -105,7 +119,6 @@ void registerLLVMAOTTargetBackends(
   static TargetBackendRegistration registration("llvm-aot", [=]() {
     // Initalize registered targets.
     llvm::InitializeNativeTarget();
-    // llvm::InitializeNativeTargetAsmPrinter();
     return std::make_unique<LLVMAOTTargetBackend>(queryOptions());
   });
 }

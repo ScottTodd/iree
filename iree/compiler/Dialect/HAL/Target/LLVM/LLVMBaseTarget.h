@@ -26,7 +26,7 @@ namespace HAL {
 
 class LLVMBaseTargetBackend : public TargetBackend {
  public:
-  LLVMBaseTargetBackend();
+  LLVMBaseTargetBackend(LLVMTargetOptions options);
 
   // Adds a sequence of passes to a given pass manager that progressively lower
   // from HLO to LLVM through the linalg dialect.
@@ -45,7 +45,6 @@ class LLVMBaseTargetBackend : public TargetBackend {
   static void createInvocationFunc(const std::string& name,
                                    llvm::Module* module);
 
- private:
   LLVMTargetOptions options_;
 };
 
