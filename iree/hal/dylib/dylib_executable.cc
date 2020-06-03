@@ -51,18 +51,10 @@ Status DyLibExecutable::Initialize() {
   // Write the embedded library out to a temp file, since all of the dynamic
   // library APIs work with files. We could instead use in-memory files on
   // platforms where that is convenient.
-  //
-  // Names are selected to look like platform-specific dynamic library files
-  // to increase the chances of opinionated dynamic library loaders finding
-  // them:
-  //   Windows: `C:\path\to\temp\dylib_executableXXXXXX.dll`
-  //   Posix:   `/path/to/temp/libdylib_executableXXXXXX.so`
-#if defined(IREE_PLATFORM_WINDOWS)
   std::string base_name = "dylib_executable";
-#else
-  std::string base_name = "libdylib_executable";
-#endif
   ASSIGN_OR_RETURN(std::string temp_file, file_io::GetTempFile(base_name));
+  // Add platform-specific file extensions so opinionated dynamic library
+  // loaders are more likely to find the file:
 #if defined(IREE_PLATFORM_WINDOWS)
   temp_file += ".dll";
 #else
@@ -84,10 +76,6 @@ Status DyLibExecutable::Initialize() {
   // DO NOT SUBMIT
   auto times_two_fn = executable_library_->GetSymbol<int (*)(int)>("times_two");
   LOG(INFO) << "Three times two is " << times_two_fn(3);
-
-  // auto func_symbol =
-  //     executable->ll_jit_->lookup("invoke_" + func_name->str());
-  // "_mlir_ciface_abs_ex_dispatch_0"
 
   const auto& entry_points = *dylib_executable_def->entry_points();
   entry_functions_.resize(entry_points.size());
