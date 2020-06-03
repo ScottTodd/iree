@@ -37,7 +37,7 @@ class LLVMAOTTargetBackend final : public LLVMBaseTargetBackend {
       : LLVMBaseTargetBackend(options) {}
 
   // NOTE: we could vary this based on the options, such as by arch/etc.
-  std::string name() const override { return "llvm-aot*"; }
+  std::string name() const override { return "dylib*"; }
 
   LogicalResult serializeExecutable(IREE::HAL::ExecutableTargetOp targetOp,
                                     OpBuilder& executableBuilder) override {
@@ -63,8 +63,6 @@ class LLVMAOTTargetBackend final : public LLVMBaseTargetBackend {
       std::string funcName =
           addCInterface ? "_mlir_ciface_" + std::string(entryPointOp.sym_name())
                         : std::string(entryPointOp.sym_name());
-      // TODO(scotttodd): Refactor to avoid std::function?
-      //   - Extract later from llvm::Module? Return another container with fns?
       dyLibExecutableDef.entry_points.push_back(funcName);
       createInvocationFunc(funcName, llvmModule.get());
 
@@ -116,7 +114,7 @@ class LLVMAOTTargetBackend final : public LLVMBaseTargetBackend {
 void registerLLVMAOTTargetBackends(
     std::function<LLVMTargetOptions()> queryOptions) {
   getLLVMTargetOptionsFromFlags();
-  static TargetBackendRegistration registration("llvm-aot", [=]() {
+  static TargetBackendRegistration registration("dylib-llvm-aot", [=]() {
     // Initalize registered targets.
     llvm::InitializeNativeTarget();
     return std::make_unique<LLVMAOTTargetBackend>(queryOptions());
