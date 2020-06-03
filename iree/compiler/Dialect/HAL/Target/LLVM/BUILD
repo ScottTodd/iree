@@ -20,24 +20,6 @@ package(
 load("//build_tools/embed_data:build_defs.bzl", "cc_embed_data")
 
 cc_library(
-    name = "LLVMBase",
-    srcs = [
-        "LLVMBaseTarget.cpp",
-    ],
-    hdrs = [
-        "LLVMBaseTarget.h",
-    ],
-    deps = [
-        ":LLVMTargetOptions",
-        "//iree/compiler/Conversion/LinalgToLLVM",
-        "//iree/compiler/Dialect/HAL/Target",
-        "@llvm-project//llvm:core",
-        "@llvm-project//llvm:support",
-        "@llvm-project//mlir:TargetLLVMIR",
-    ],
-)
-
-cc_library(
     name = "LLVMIR",
     srcs = [
         "LLVMIRTarget.cpp",
@@ -47,14 +29,15 @@ cc_library(
     ],
     deps = [
         ":LLVMIRPasses",
-        ":LLVMBase",
         ":LLVMTargetOptions",
+        "//iree/compiler/Conversion/LinalgToLLVM",
         "//iree/compiler/Dialect/HAL/Target",
         "//iree/schemas:llvmir_executable_def_cc_fbs",
         "@llvm-project//llvm:core",
         "@llvm-project//llvm:support",
         # TODO(ataei): Link with native target dep.
         "@llvm-project//llvm:x86_code_gen",
+        "@llvm-project//mlir:TargetLLVMIR",
     ],
 )
 
@@ -68,15 +51,14 @@ cc_library(
     ],
     deps = [
         ":LLVMIRPasses",
-        ":LLVMBase",
         ":LLVMTargetOptions",
         ":TestLibrary",
+        "//iree/compiler/Conversion/LinalgToLLVM",
         "//iree/compiler/Dialect/HAL/Target",
         "//iree/schemas:dylib_executable_def_cc_fbs",
         "@llvm-project//llvm:core",
         "@llvm-project//llvm:support",
-        # TODO(ataei): Link with native target dep.
-        # "@llvm-project//llvm:x86_code_gen",
+        "@llvm-project//mlir:TargetLLVMIR",
     ],
 )
 

@@ -14,7 +14,7 @@
 
 #include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMIRTarget.h"
 
-#include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMBaseTarget.h"
+#include "iree/compiler/Conversion/LinalgToLLVM/Passes.h"
 #include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMIRPasses.h"
 #include "iree/compiler/Dialect/HAL/Target/TargetRegistry.h"
 #include "iree/schemas/llvmir_executable_def_generated.h"
@@ -28,13 +28,18 @@ namespace iree_compiler {
 namespace IREE {
 namespace HAL {
 
-class LLVMIRTargetBackend final : public LLVMBaseTargetBackend {
+class LLVMIRTargetBackend final : public TargetBackend {
  public:
   LLVMIRTargetBackend(LLVMTargetOptions options)
-      : LLVMBaseTargetBackend(options) {}
+      : options_(std::move(options)) {}
 
   // NOTE: we could vary this based on the options, such as by arch/etc.
   std::string name() const override { return "llvm-ir*"; }
+
+  void buildTranslationPassPipeline(ExecutableTargetOp targetOp,
+                                    OpPassManager& passManager) override {
+    buildLLVMTransformPassPipeline(passManager);
+  }
 
   LogicalResult serializeExecutable(IREE::HAL::ExecutableTargetOp targetOp,
                                     OpBuilder& executableBuilder) override {
@@ -59,7 +64,7 @@ class LLVMIRTargetBackend final : public LLVMBaseTargetBackend {
           addCInterface ? "_mlir_ciface_" + std::string(entryPointOp.sym_name())
                         : std::string(entryPointOp.sym_name());
       llvmIrExecutableDef.entry_points.push_back(funcName);
-      createInvocationFunc(funcName, llvmModule.get());
+      createLLVMInvocationFunc(funcName, llvmModule.get());
     }
 
     // LLVMIR opt passes.
@@ -101,6 +106,9 @@ class LLVMIRTargetBackend final : public LLVMBaseTargetBackend {
 
     return success();
   }
+
+ private:
+  LLVMTargetOptions options_;
 };
 
 void registerLLVMIRTargetBackends(

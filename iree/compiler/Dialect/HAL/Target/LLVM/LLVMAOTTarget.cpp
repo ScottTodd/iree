@@ -14,7 +14,7 @@
 
 #include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMAOTTarget.h"
 
-#include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMBaseTarget.h"
+#include "iree/compiler/Conversion/LinalgToLLVM/Passes.h"
 #include "iree/compiler/Dialect/HAL/Target/LLVM/LLVMIRPasses.h"
 #include "iree/compiler/Dialect/HAL/Target/TargetRegistry.h"
 #include "iree/schemas/dylib_executable_def_generated.h"
@@ -31,13 +31,18 @@ namespace iree_compiler {
 namespace IREE {
 namespace HAL {
 
-class LLVMAOTTargetBackend final : public LLVMBaseTargetBackend {
+class LLVMAOTTargetBackend final : public TargetBackend {
  public:
   LLVMAOTTargetBackend(LLVMTargetOptions options)
-      : LLVMBaseTargetBackend(options) {}
+      : options_(std::move(options)) {}
 
   // NOTE: we could vary this based on the options, such as by arch/etc.
   std::string name() const override { return "dylib*"; }
+
+  void buildTranslationPassPipeline(ExecutableTargetOp targetOp,
+                                    OpPassManager& passManager) override {
+    buildLLVMTransformPassPipeline(passManager);
+  }
 
   LogicalResult serializeExecutable(IREE::HAL::ExecutableTargetOp targetOp,
                                     OpBuilder& executableBuilder) override {
@@ -64,51 +69,54 @@ class LLVMAOTTargetBackend final : public LLVMBaseTargetBackend {
           addCInterface ? "_mlir_ciface_" + std::string(entryPointOp.sym_name())
                         : std::string(entryPointOp.sym_name());
       dyLibExecutableDef.entry_points.push_back(funcName);
-      createInvocationFunc(funcName, llvmModule.get());
-
-      if (!llvmModule) {
-        return failure();
-      }
-
-      // Proof of concept test:
-      //   * [done] cc_embed_data of test.dll
-      //   * [done] add bytes to flatbuffer
-      //   * [done] extract bytes from flatbuffer in dylib_executable
-      //   * [done] write bytes to tmp file
-      //   * [done] load tmp file absolute path via DynamicLibrary
-
-      // TODO(scotttodd): replace with actual LLVM AOT compilation
-      const auto* testFileToc = TestLibrary_create();
-      dyLibExecutableDef.library_embedded.assign(
-          testFileToc->data, testFileToc->data + testFileToc->size);
-
-      // // Serialize LLVM module.
-      // std::string bufferString;
-      // llvm::raw_string_ostream ostream(bufferString);
-      // llvmModule->print(ostream, nullptr);
-      // ostream.flush();
-
-      // Creates executable bytes.
-      // llvmIrExecutableDef.llvmir_module = {bufferString.begin(),
-      //                                      bufferString.end()};
-
-      ::flatbuffers::FlatBufferBuilder fbb;
-      auto executableOffset =
-          iree::DyLibExecutableDef::Pack(fbb, &dyLibExecutableDef);
-      iree::FinishDyLibExecutableDefBuffer(fbb, executableOffset);
-      std::vector<uint8_t> bytes;
-      bytes.resize(fbb.GetSize());
-      std::memcpy(bytes.data(), fbb.GetBufferPointer(), bytes.size());
-
-      // Add the binary data to the target executable.
-      executableBuilder.create<IREE::HAL::ExecutableBinaryOp>(
-          targetOp.getLoc(),
-          static_cast<uint32_t>(IREE::HAL::ExecutableFormat::DyLib),
-          std::move(bytes));
-
-      return success();
+      createLLVMInvocationFunc(funcName, llvmModule.get());
     }
+
+    if (!llvmModule) {
+      return failure();
+    }
+
+    // Proof of concept test:
+    //   * [done] cc_embed_data of test.dll
+    //   * [done] add bytes to flatbuffer
+    //   * [done] extract bytes from flatbuffer in dylib_executable
+    //   * [done] write bytes to tmp file
+    //   * [done] load tmp file absolute path via DynamicLibrary
+
+    // TODO(scotttodd): replace with actual LLVM AOT compilation
+    const auto* testFileToc = TestLibrary_create();
+    dyLibExecutableDef.library_embedded.assign(
+        testFileToc->data, testFileToc->data + testFileToc->size);
+
+    // // Serialize LLVM module.
+    // std::string bufferString;
+    // llvm::raw_string_ostream ostream(bufferString);
+    // llvmModule->print(ostream, nullptr);
+    // ostream.flush();
+
+    // Creates executable bytes.
+    // llvmIrExecutableDef.llvmir_module = {bufferString.begin(),
+    //                                      bufferString.end()};
+
+    ::flatbuffers::FlatBufferBuilder fbb;
+    auto executableOffset =
+        iree::DyLibExecutableDef::Pack(fbb, &dyLibExecutableDef);
+    iree::FinishDyLibExecutableDefBuffer(fbb, executableOffset);
+    std::vector<uint8_t> bytes;
+    bytes.resize(fbb.GetSize());
+    std::memcpy(bytes.data(), fbb.GetBufferPointer(), bytes.size());
+
+    // Add the binary data to the target executable.
+    executableBuilder.create<IREE::HAL::ExecutableBinaryOp>(
+        targetOp.getLoc(),
+        static_cast<uint32_t>(IREE::HAL::ExecutableFormat::DyLib),
+        std::move(bytes));
+
+    return success();
   }
+
+ private:
+  LLVMTargetOptions options_;
 };
 
 void registerLLVMAOTTargetBackends(
