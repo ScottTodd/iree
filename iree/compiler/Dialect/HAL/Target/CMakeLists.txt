@@ -29,6 +29,7 @@ iree_cc_library(
     MLIRPass
     MLIRSupport
     MLIRTransforms
+    absl::strings
     iree::compiler::Dialect::Flow::IR
     iree::compiler::Dialect::HAL::IR
     iree::compiler::Dialect::HAL::Utils
