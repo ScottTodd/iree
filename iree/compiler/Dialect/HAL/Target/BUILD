@@ -32,6 +32,7 @@ cc_library(
         "//iree/compiler/Dialect/HAL/IR",
         "//iree/compiler/Dialect/HAL/Utils",
         "//iree/compiler/Dialect/IREE/IR",
+        "@com_google_absl//absl/strings",
         "@llvm-project//llvm:Support",
         "@llvm-project//mlir:IR",
         "@llvm-project//mlir:Pass",
