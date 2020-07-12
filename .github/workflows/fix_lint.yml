@@ -1,0 +1,44 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Applies automated fixes to lint issues in a new commit
+
+name: Fix Lint
+
+on: [workflow_dispatch]
+
+jobs:
+  fix_bazel_to_cmake:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checking out repository
+        uses: actions/checkout@v2
+      - name: Running bazel_to_cmake
+        run: ./build_tools/bazel_to_cmake/bazel_to_cmake.py
+      - name: Checking for diffs
+        run: |
+          echo "::set-env name=has_diff::false"
+          git diff --exit-code || echo "::set-env name=has_diff::true"
+      - name: Committing updates
+        if: env.has_diff == 'true'
+        run: |
+          git config --local user.email "iree-github-actions-bot@google.com"
+          git config --local user.name "Fix Lint Action"
+          git commit -am "Automated lint fixes."
+      - name: Pushing changes
+        if: env.has_diff == 'true'
+        uses: ad-m/github-push-action@v0.5.0
+        with:
+          github_token: ${{ secrets.WRITE_ACCESS_TOKEN }}
+          branch: ${{ github.ref }}
