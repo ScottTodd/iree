@@ -182,7 +182,7 @@ class CommandBufferDispatchOpConversion
     // Extract entry point ordinal from the nested symbol reference.
     auto entryPointOp = cast<IREE::HAL::ExecutableEntryPointOp>(
         SymbolTable::lookupNearestSymbolFrom(op, op.entry_point()));
-    auto entryPointOrdinal = rewriter.create<mlir::ConstantOp>(
+    auto entryPointOrdinal = rewriter.createOrFold<mlir::ConstantOp>(
         op.getLoc(), rewriter.getI32IntegerAttr(static_cast<int32_t>(
                          entryPointOp.ordinalAttr().getInt())));
 
