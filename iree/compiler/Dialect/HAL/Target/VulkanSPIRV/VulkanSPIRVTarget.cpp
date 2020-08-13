@@ -360,6 +360,8 @@ class VulkanSPIRVTargetBackend : public TargetBackend {
                        [](Value v) -> bool { return v == nullptr; }))
         return spvFuncOp.emitError("unable to find workgroup count");
 
+      // TODO(scotttodd): SymbolRefAttr to hal.executable.entry_point instead
+      //                  of integer ordinal (note: not spv.EntryPoint)
       builder.create<IREE::HAL::CommandBufferDispatchOp>(
           loc, commandBuffer, executable, /*entryPointOrdinal=*/it.index(),
           workgroupCount[0], workgroupCount[1], workgroupCount[2]);

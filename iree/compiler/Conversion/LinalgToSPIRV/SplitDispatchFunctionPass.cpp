@@ -29,6 +29,7 @@
 #include "iree/compiler/Conversion/CodegenUtils/FunctionUtils.h"
 #include "iree/compiler/Conversion/LinalgToSPIRV/Attributes.h"
 #include "iree/compiler/Conversion/LinalgToSPIRV/Passes.h"
+#include "iree/compiler/Dialect/HAL/IR/HALOps.h"
 #include "iree/compiler/Dialect/IREE/IR/IREEOps.h"
 #include "iree/compiler/Dialect/Shape/IR/ShapeOps.h"
 #include "llvm/ADT/STLExtras.h"
@@ -171,6 +172,18 @@ LogicalResult SplitDispatchFunctionPass::splitDispatchFunction(
   splitKernels.reserve(separableOps.size());
   llvm::SmallPtrSet<Operation *, 16> closure;
 
+  // Reach up to the ExecutableTargetOp where HAL::ExecutableEntryPointOps live,
+  // so we can insert new entry points as we split the dispatch.
+  // TODO(scotttodd): Refactor the pass so this doesn't implicitly assume the
+  //                  structure of the IR and reach outside of the ModuleOp?
+  auto targetOp = dyn_cast<IREE::HAL::ExecutableTargetOp>(
+      oldFn.getParentOp()->getParentOp());
+  auto entryPointOps =
+      targetOp.getBlock().getOps<IREE::HAL::ExecutableEntryPointOp>();
+  auto entryPointOp = *entryPointOps.begin();
+  OpBuilder targetOpBuilder(targetOp);
+  targetOpBuilder.setInsertionPointAfter(entryPointOp);
+
   for (const auto &separableOp : llvm::enumerate(separableOps)) {
     // Create a new function for hosting this op.
     splitKernels.emplace_back(llvm::formatv("{0}_dispatch_{1}", oldFn.getName(),
@@ -200,6 +213,14 @@ LogicalResult SplitDispatchFunctionPass::splitDispatchFunction(
       if (&op == separableOp.value()) break;
     }
     builder.insert(oldFnBlock.getTerminator()->clone(remapper));
+
+    // Create a new HAL::ExecutableEntryPointOp for the spv entry point.
+    std::string entryPointName = llvm::formatv(
+        "{0}_schedule_{1}", entryPointOp.getName(), separableOp.index());
+    targetOpBuilder.create<IREE::HAL::ExecutableEntryPointOp>(
+        entryPointOp.getLoc(), targetOpBuilder.getStringAttr(entryPointName),
+        targetOpBuilder.getI32IntegerAttr(separableOp.index()),
+        entryPointOp.interfaceAttr(), entryPointOp.signatureAttr());
   }
 
   // Add the entry point schedule to the module op.
