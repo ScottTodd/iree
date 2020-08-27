@@ -174,8 +174,13 @@ LogicalResult SplitDispatchFunctionPass::splitDispatchFunction(
 
   // Reach up to the ExecutableTargetOp where HAL::ExecutableEntryPointOps live,
   // so we can insert new entry points as we split the dispatch.
-  // TODO(scotttodd): Refactor the pass so this doesn't implicitly assume the
-  //                  structure of the IR and reach outside of the ModuleOp?
+  // This structure is enforced by attributes:
+  //   hal.executable.target {      <-- grandparent
+  //     hal.executable.entry_point         <-- we may add more of these
+  //     module {                   <-- parent
+  //       func                     <-- we are here
+  //     }
+  //   }
   auto targetOp = dyn_cast<IREE::HAL::ExecutableTargetOp>(
       oldFn.getParentOp()->getParentOp());
   auto entryPointOps =
