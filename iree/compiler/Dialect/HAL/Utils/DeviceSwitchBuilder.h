@@ -111,20 +111,20 @@ class DeviceSwitchCaseBuilder {
 class DeviceSwitchBuilder {
  public:
   DeviceSwitchBuilder(Location loc, TypeRange resultTypes, Value device,
-                      ConversionPatternRewriter &rewriter)
+                      OpBuilder builder)
       : loc_(loc),
         resultTypes_(resultTypes),
         device_(device),
-        rewriter_(rewriter) {
+        builder_(builder) {
     // FIXME: Keep the same listener as the provided builder.
-    rewriter_.setListener(nullptr);
+    builder.setListener(nullptr);
   }
 
   // Pushes a new condition onto the stack and returns a builder that must have
   // all previously nested conditions met in order to execute any conditions.
   DeviceSwitchCaseBuilder nest(Attribute conditionAttr) {
     return DeviceSwitchCaseBuilder(loc_, resultTypes_, device_, conditionAttr,
-                                   caseOps_, rewriter_);
+                                   caseOps_, builder_);
   }
 
   // Adds a new condition region that must satisfy |conditionAttr| and all
@@ -142,51 +142,23 @@ class DeviceSwitchBuilder {
     llvm::SetVector<Value> capturedFromAbove;
     for (auto caseOp : caseOps_) {
       conditionAttrs.push_back(caseOp.conditions().getValue()[0]);
-
-      // The args list for this case is the args list of `caseOp` and any value
-      // that is captured within the region. The `hal.device.switch` op is
-      // isolated from above. So these captured values are made arguments to the
-      // condition.
-      SmallVector<Value, 4> args(caseOp.args().begin(), caseOp.args().end());
-      capturedFromAbove.clear();
-      getUsedValuesDefinedAbove(caseOp.getOperation()->getRegions(),
-                                capturedFromAbove);
-      args.append(capturedFromAbove.begin(), capturedFromAbove.end());
-      conditionArgs.emplace_back(std::move(args));
+      conditionArgs.push_back(caseOp.args());
     }
-    auto switchOp = rewriter_.create<IREE::HAL::DeviceSwitchOp>(
+    auto switchOp = builder_.create<IREE::HAL::DeviceSwitchOp>(
         loc_, resultTypes_, device_, conditionAttrs, conditionArgs);
     for (int i = 0; i < caseOps_.size(); ++i) {
-      Region &targetRegion = switchOp.getRegion(i);
-      Block *entryBlock = new Block;
-      targetRegion.push_back(entryBlock);
-      BlockAndValueMapping mapper;
-      for (auto arg : conditionArgs[i]) {
-        mapper.map(arg, entryBlock->addArgument(arg.getType()));
-      }
-
-      Region &sourceRegion = caseOps_[i].getRegion(0);
-      // When cloning `sourceRegion` into `targetRegion` remap the captured
-      // values to use arguments of the `targetRegion`.
-      rewriter_.cloneRegionBefore(sourceRegion, targetRegion,
-                                  ++(Region::iterator(entryBlock)), mapper);
-      Block *secondBlock = entryBlock->getNextNode();
-      rewriter_.mergeBlocks(secondBlock, entryBlock,
-                            entryBlock->getArguments().take_front(
-                                secondBlock->getNumArguments()));
+      switchOp.getRegion(i).takeBody(caseOps_[i].getRegion(0));
       caseOps_[i].erase();
     }
     return switchOp;
   }
-
-  ConversionPatternRewriter &getRewriter() const { return rewriter_; }
 
  private:
   Location loc_;
   SmallVector<Type, 4> resultTypes_;
   Value device_;
   SmallVector<IREE::HAL::DeviceSwitchOp, 4> caseOps_;
-  ConversionPatternRewriter &rewriter_;
+  OpBuilder builder_;
 };
 
 }  // namespace HAL
