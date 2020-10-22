@@ -1,5 +1,7 @@
 // MobileBert encoder model with placeholder weights, for testing.
 
+// RUN: iree-run-mlir -export-all -iree-hal-target-backends=vmla %s -function-input="1x384xi32" -function-input="1x384xi32" -function-input="1x384xi32" | IreeFileCheck %s
+
 module {
   flow.variable @"__iree_flow_bert/embeddings/FakeLayerNorm/beta" dense<1.0> : tensor<512xf32> attributes {noinline, sym_visibility = "private"}
   flow.variable @"__iree_flow_bert/embeddings/FakeLayerNorm/gamma" dense<0.4> : tensor<512xf32> attributes {noinline, sym_visibility = "private"}
@@ -1114,10 +1116,11 @@ module {
   flow.variable @"__iree_flow_bert/encoder/layer_9/output/dense/kernel" dense<0.0001> : tensor<512x128xf32> attributes {noinline, sym_visibility = "private"}
   flow.variable @"__iree_flow_cls/squad/output_bias" dense<0.1> : tensor<2xf32> attributes {sym_visibility = "private"}
   flow.variable @"__iree_flow_cls/squad/output_weights" dense<1.0> : tensor<2x512xf32> attributes {sym_visibility = "private"}
-  func @serving_default() {
-    %arg0 = iree.unfoldable_constant dense<0> : tensor<1x384xi32>
-    %arg1 = iree.unfoldable_constant dense<0> : tensor<1x384xi32>
-    %arg2 = iree.unfoldable_constant dense<0> : tensor<1x384xi32>
+  // CHECK-LABEL: EXEC @serving_default
+  func @serving_default(%arg0: tensor<1x384xi32>, %arg1: tensor<1x384xi32>, %arg2: tensor<1x384xi32>) -> tensor<1x384xf32> attributes {iree.module.export} {
+    // %arg0 = iree.unfoldable_constant dense<0> : tensor<1x384xi32>
+    // %arg1 = iree.unfoldable_constant dense<0> : tensor<1x384xi32>
+    // %arg2 = iree.unfoldable_constant dense<0> : tensor<1x384xi32>
     %0 = flow.variable.address @"__iree_flow_bert/embeddings/FakeLayerNorm/beta" : !iree.ptr<tensor<512xf32>>
     %1 = flow.variable.address @"__iree_flow_bert/embeddings/FakeLayerNorm/gamma" : !iree.ptr<tensor<512xf32>>
     %2 = flow.variable.address @"__iree_flow_bert/embeddings/embedding_transformation/bias" : !iree.ptr<tensor<512xf32>>
@@ -6703,8 +6706,12 @@ module {
     %5390 = "mhlo.reshape"(%5389) : (tensor<1x1x384xf32>) -> tensor<1x384xf32>
     %5391 = "mhlo.slice"(%5388) {limit_indices = dense<[2, 1, 384]> : tensor<3xi64>, start_indices = dense<[1, 0, 0]> : tensor<3xi64>, strides = dense<1> : tensor<3xi64>} : (tensor<2x1x384xf32>) -> tensor<1x1x384xf32>
     %5392 = "mhlo.reshape"(%5391) : (tensor<1x1x384xf32>) -> tensor<1x384xf32>
-    check.expect_almost_eq_const(%5390, dense<895.256> : tensor<1x384xf32>) : tensor<1x384xf32>
-    check.expect_almost_eq_const(%5392, dense<895.256> : tensor<1x384xf32>) : tensor<1x384xf32>
-    return
+
+    // DO NOT SUBMIT - replace with better check
+    // CHECK: 1x10xf32=[0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1]
+
+    // check.expect_almost_eq_const(%5390, dense<895.256> : tensor<1x384xf32>) : tensor<1x384xf32>
+    // check.expect_almost_eq_const(%5392, dense<895.256> : tensor<1x384xf32>) : tensor<1x384xf32>
+    return %5392 : tensor<1x384xf32>
   }
 }
