@@ -416,6 +416,8 @@ IREE_API_EXPORT iree_status_t IREE_API_CALL iree_vm_stack_function_enter(
   callee_frame->module_state = module_state;
   callee_frame->pc = 0;
 
+  IREE_TRACE_PLOT_VALUE_I64("VM stack depth", callee_frame->depth);
+
   stack->frame_storage_size = new_top;
   stack->top = frame_header;
 
@@ -445,6 +447,7 @@ iree_vm_stack_function_leave(iree_vm_stack_t* stack) {
   }
 
   IREE_TRACE_ZONE_END(stack->top->frame.trace_zone);
+  IREE_TRACE_PLOT_VALUE_I64("VM stack depth", stack->top->frame.depth);
 
   // Restore the frame pointer to the caller.
   stack->frame_storage_size -= stack->top->frame_size;

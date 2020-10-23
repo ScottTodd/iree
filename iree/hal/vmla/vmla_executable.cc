@@ -104,6 +104,9 @@ Status VMLAExecutable::Initialize(iree_vm_instance_t* instance,
                 << "Failed resolving imports for executable module";
   iree_vm_module_release(bytecode_module);
 
+  IREE_TRACE_SET_PLOT_TYPE("Dispatch Total Buffer Size",
+                           IREE_TRACING_PLOT_TYPE_MEMORY);
+
   return std::move(result);
 }
 
@@ -134,6 +137,8 @@ VMLAExecutable::PrepareDispatch(const DispatchParams& params) {
   auto* interface = &dispatch_state->interface;
   IREE_RETURN_IF_ERROR(interface->SetConstants(params.push_constants->values));
 
+  size_t total_size = 0;
+
   for (int set_ordinal = 0; set_ordinal < params.set_bindings.size();
        ++set_ordinal) {
     for (const auto& binding : params.set_bindings[set_ordinal]) {
@@ -148,8 +153,12 @@ VMLAExecutable::PrepareDispatch(const DispatchParams& params) {
                                            iree_allocator_null()));
       IREE_RETURN_IF_ERROR(interface->SetBinding(set_ordinal, binding.binding,
                                                  {std::move(buffer)}));
+
+      total_size += binding.buffer->byte_length();
     }
   }
+
+  IREE_TRACE_PLOT_VALUE_I64("Dispatch Total Buffer Size", total_size);
 
   return std::move(dispatch_state);
 }

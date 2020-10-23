@@ -618,7 +618,8 @@ if(${IREE_ENABLE_RUNTIME_TRACING})
       absl::core_headers
     DEFINES
       # TODO(#2114): Change the mode to 2.
-      "IREE_TRACING_MODE=1"
+      # DO NOT SUBMIT
+      "IREE_TRACING_MODE=3"
     PUBLIC
   )
 else()

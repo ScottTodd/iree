@@ -212,6 +212,8 @@ IREE_API_EXPORT iree_status_t IREE_API_CALL iree_vm_context_create_with_modules(
   IREE_ASSERT_ARGUMENT(out_context);
   *out_context = NULL;
 
+  IREE_TRACE_SET_PLOT_TYPE("VM stack depth", IREE_TRACING_PLOT_TYPE_NUMBER);
+
   iree_host_size_t context_size =
       sizeof(iree_vm_context_t) + sizeof(iree_vm_module_t*) * module_count +
       sizeof(iree_vm_module_state_t*) * module_count;
