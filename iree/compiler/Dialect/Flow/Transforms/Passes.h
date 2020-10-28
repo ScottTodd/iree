@@ -125,6 +125,9 @@ createRematerializeDispatchConstantsPass();
 // Outlines dispatch regions into executables.
 std::unique_ptr<OperationPass<ModuleOp>> createOutlineDispatchRegionsPass();
 
+// Deduplicates executables that are identical.
+std::unique_ptr<OperationPass<ModuleOp>> createDeduplicateExecutablesPass();
+
 // Exports all the dispatch functions to the module.
 std::unique_ptr<OperationPass<ModuleOp>> createCreateFuncsToInvokeExecOpsPass();
 
@@ -191,8 +194,9 @@ inline void registerFlowPasses() {
   createFoldCompatibleDispatchRegionsPass();
   createRematerializeDispatchConstantsPass();
   createOutlineDispatchRegionsPass();
-  createOutlineLargeConstantsPass();
+  createDeduplicateExecutablesPass();
   createCreateFuncsToInvokeExecOpsPass();
+  createOutlineLargeConstantsPass();
   createFormStreamsPass();
   createHoistUnstreamableOpsPass();
   createStripAndSplatConstantVariablesPass();

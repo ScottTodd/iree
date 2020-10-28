@@ -22,6 +22,7 @@ iree_cc_library(
     "Passes.h"
   SRCS
     "CreateFuncsToInvokeExecOps.cpp"
+    "DeduplicateExecutables.cpp"
     "DispatchConfig.cpp"
     "DispatchabilityAnalysis.cpp"
     "FlattenTuplesInCFG.cpp"
