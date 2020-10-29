@@ -43,12 +43,9 @@ namespace {
 // }
 
 bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
-  // std::cerr << "LHS: " << std::endl;
-  // lhs.dump();
-  // std::cerr << "RHS: " << std::endl;
-  // rhs.dump();
   auto lhsModule = lhs.getInnerModule();
   auto rhsModule = rhs.getInnerModule();
+  // TODO(scotttodd): recurse into modules, check funcOp contents
   return OperationEquivalence::isEquivalentTo(lhsModule, rhsModule);
 }
 
@@ -93,48 +90,50 @@ class DeduplicateExecutablesPass
     auto builder = OpBuilder::atBlockBegin(moduleOp.getBody());
 
     auto executableOps = llvm::to_vector<8>(moduleOp.getOps<ExecutableOp>());
-    if (executableOps.size() < 2) return;  // DO NOT SUBMIT
+    // if (executableOps.size() < 2) return;  // DO NOT SUBMIT
 
+    SmallVector<ExecutableOp, 3> duplicateExecutableOps;
     DenseMap<Attribute, Attribute> entryPointRefReplacements;
 
-    auto executable0 = executableOps[0];
-    auto executable1 = executableOps[1];
-    if (areExecutablesEquivalent(executable0, executable1)) {
-      std::cerr << "equivalent" << std::endl;
+    // For each executable, find the first executable which it is equivalent to.
+    // Iteration order:
+    //   3 == 0 ? no
+    //   3 == 1 ? yes -> mark and move on to 2
+    //   2 == 0 ? no
+    //   2 == 1 ? yes -> mark and move on to 1
+    //   1 == 0 ? no -> not a duplicate, keep it
+    //   Done iterating. 0 and 1 stay, 2 and 3 are duplicates of 1.
+    for (int i = executableOps.size() - 1; i >= 0; --i) {
+      auto possiblyDuplicateExecutable = executableOps[i];
+      for (int j = 0; j < i; ++j) {
+        std::cerr << "i: " << i << ", j: " << j << std::endl;
 
-      auto executable0EntryOp = executable0.getDispatchEntryOp();
-      auto executable1EntryOp = executable1.getDispatchEntryOp();
-      auto oldSymbolRefAttr = builder.getSymbolRefAttr(
-          executable1.getName(),
-          {builder.getSymbolRefAttr(executable1EntryOp.sym_name())});
-      auto newSymbolRefAttr = builder.getSymbolRefAttr(
-          executable0.getName(),
-          {builder.getSymbolRefAttr(executable0EntryOp.sym_name())});
-      entryPointRefReplacements[oldSymbolRefAttr] = newSymbolRefAttr;
-      // auto executable0EntryOps =
-      //     llvm::to_vector<8>(executable0.getOps<DispatchEntryOp>());
-      // auto executable1EntryOps =
-      //     llvm::to_vector<8>(executable1.getOps<DispatchEntryOp>());
-      // // TODO(scotttodd): error check
-      // for (int i = 0; i < executable0EntryOps.size(); ++i) {
-      //   auto oldSymbolRefAttr = builder.getSymbolRefAttr(
-      //       executable1.getName(),
-      //       {builder.getSymbolRefAttr(executable1EntryOps[i].sym_name())});
-      //   auto newSymbolRefAttr = builder.getSymbolRefAttr(
-      //       executable0.getName(),
-      //       {builder.getSymbolRefAttr(executable0EntryOps[i].sym_name())});
-      //   entryPointRefReplacements[oldSymbolRefAttr] = newSymbolRefAttr;
-      // }
+        auto comparisonExecutable = executableOps[j];
+        if (!areExecutablesEquivalent(possiblyDuplicateExecutable,
+                                      comparisonExecutable)) {
+          continue;
+        }
 
-      replaceEntryPointUses(moduleOp, entryPointRefReplacements);
+        std::cerr << "Duplicate! replacing " << i << " with " << j << std::endl;
 
-      SymbolTable::replaceAllSymbolUses(executable1.sym_name(),
-                                        executable0.sym_name(),
-                                        &moduleOp.getBodyRegion());
+        // Add to replacement table and break to move to the next possible dup.
+        auto oldSymbolRefAttr = builder.getSymbolRefAttr(
+            possiblyDuplicateExecutable.getName(),
+            {builder.getSymbolRefAttr(
+                possiblyDuplicateExecutable.getDispatchEntryOp().sym_name())});
+        auto newSymbolRefAttr = builder.getSymbolRefAttr(
+            comparisonExecutable.getName(),
+            {builder.getSymbolRefAttr(
+                comparisonExecutable.getDispatchEntryOp().sym_name())});
+        entryPointRefReplacements[oldSymbolRefAttr] = newSymbolRefAttr;
+        duplicateExecutableOps.push_back(possiblyDuplicateExecutable);
+        break;
+      }
+    }
 
-      executable1.erase();
-    } else {
-      std::cerr << "not equivalent" << std::endl;
+    replaceEntryPointUses(moduleOp, entryPointRefReplacements);
+    for (auto executableOp : duplicateExecutableOps) {
+      executableOp.erase();
     }
   }
 };
