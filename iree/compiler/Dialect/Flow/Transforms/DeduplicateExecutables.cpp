@@ -15,7 +15,6 @@
 #include "iree/compiler/Dialect/Flow/IR/FlowOps.h"
 #include "mlir/Dialect/StandardOps/IR/Ops.h"
 #include "mlir/IR/Builders.h"
-// #include "mlir/IR/SymbolTable.h"
 #include "mlir/Pass/Pass.h"
 
 // TODO(scotttodd): pass statistics (number of executables deduped)
@@ -30,72 +29,9 @@ namespace Flow {
 
 namespace {
 
-// bool InterfaceOp::isEquivalentTo(InterfaceOp other) {
-//   auto bindings =
-//   llvm::to_vector<4>(getBlock().getOps<InterfaceBindingOp>()); auto
-//   otherBindings =
-//       llvm::to_vector<4>(other.getBlock().getOps<InterfaceBindingOp>());
-//   return bindings.size() == otherBindings.size() &&
-//          llvm::all_of(llvm::zip(bindings, otherBindings), [](auto bindings) {
-//            return OperationEquivalence::isEquivalentTo(std::get<0>(bindings),
-//                                                        std::get<1>(bindings));
-//          });
-// }
-
-/*
-// Forked from OperationEquivalence::isEquivalentTo
-bool areOpsEquivalent(Operation *lhs, Operation *rhs) {
-  if (lhs == rhs) return true;
-
-  // Compare the operation name.
-  // if (lhs->getName() != rhs->getName())
-  //   return false;
-  // Check operand counts.
-  if (lhs->getNumOperands() != rhs->getNumOperands()) return false;
-  // Compare attributes.
-  if (lhs->getMutableAttrDict() != rhs->getMutableAttrDict()) return false;
-  // Compare result types.
-  ArrayRef<Type> lhsResultTypes = lhs->getResultTypes();
-  ArrayRef<Type> rhsResultTypes = rhs->getResultTypes();
-  if (lhsResultTypes.size() != rhsResultTypes.size()) return false;
-  switch (lhsResultTypes.size()) {
-    case 0:
-      break;
-    case 1:
-      // Compare the single result type.
-      // false
-      if (lhsResultTypes.front() != rhsResultTypes.front()) return false;
-      break;
-    default:
-      // Use the type buffer for the comparison, as we can guarantee it is the
-      // same for any given range of result types. This takes advantage of the
-      // fact the result types >1 are stored in a TupleType and uniqued.
-      if (lhsResultTypes.data() != rhsResultTypes.data()) return false;
-      break;
-  }
-  return true;
-  // // Compare operands.
-  // bool ignoreOperands = flags & Flags::IgnoreOperands;
-  // if (ignoreOperands)
-  //   return true;
-  // // TODO: Allow commutative operations to have different ordering.
-  // return std::equal(lhs->operand_begin(), lhs->operand_end(),
-  //                   rhs->operand_begin());
-}
-*/
-
-bool areFuncsEquivalent(FuncOp lhs, FuncOp rhs) {
-  // Check signatures (inputs, outputs).
-  // WORKING HERE
-  return false;
-}
-
 bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
   auto lhsModule = lhs.getInnerModule();
   auto rhsModule = rhs.getInnerModule();
-  // TODO(scotttodd): recurse into modules, check funcOp contents
-  // return OperationEquivalence::isEquivalentTo(lhsModule, rhsModule);
-
   auto lhsFuncs = llvm::to_vector<1>(lhsModule.getOps<FuncOp>());
   auto rhsFuncs = llvm::to_vector<1>(rhsModule.getOps<FuncOp>());
   auto lhsFunc = *lhsFuncs.begin();
@@ -105,8 +41,6 @@ bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
   // lhsFunc.dump();
   // std::cerr << "rhs func:" << std::endl;
   // rhsFunc.dump();
-
-  // lhsFunc.getRegion().
 
   std::string lhsStr;
   llvm::raw_string_ostream lhsSstream(lhsStr);
@@ -133,14 +67,6 @@ bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
     return true;
   }
 
-  // lhsFunc.getBody()
-
-  // if (!areOpsEquivalent(lhsFunc, rhsFunc)) {
-  //   return false;
-  // }
-
-  // std::cerr << "funcs are equivalent, check bodies next" << std::endl;
-
   return false;
 }
 
@@ -166,26 +92,10 @@ class DeduplicateExecutablesPass
   DeduplicateExecutablesPass() = default;
 
   void runOnOperation() override {
-    // optimize:
-    //   hashmap <hash, flow executable op>
-    //   for each flow executable op:
-    //     hash op (how?)
-    //     if hash exists in hashmap:
-    //       dedup (rewrite references, delete)
-    //     else:
-    //       add to hashmap
-
-    // brute force:
-    //   for each flow executable op:
-    //     for each other flow executable op:
-    //       if equivalent:
-    //         dedup
-
     auto moduleOp = getOperation();
     auto builder = OpBuilder::atBlockBegin(moduleOp.getBody());
 
     auto executableOps = llvm::to_vector<8>(moduleOp.getOps<ExecutableOp>());
-    // if (executableOps.size() < 2) return;  // DO NOT SUBMIT
 
     SmallVector<ExecutableOp, 3> duplicateExecutableOps;
     DenseMap<Attribute, Attribute> entryPointRefReplacements;
