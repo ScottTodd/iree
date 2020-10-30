@@ -42,11 +42,77 @@ namespace {
 //          });
 // }
 
+/*
+// Forked from OperationEquivalence::isEquivalentTo
+bool areOpsEquivalent(Operation *lhs, Operation *rhs) {
+  if (lhs == rhs) return true;
+
+  // Compare the operation name.
+  // if (lhs->getName() != rhs->getName())
+  //   return false;
+  // Check operand counts.
+  if (lhs->getNumOperands() != rhs->getNumOperands()) return false;
+  // Compare attributes.
+  if (lhs->getMutableAttrDict() != rhs->getMutableAttrDict()) return false;
+  // Compare result types.
+  ArrayRef<Type> lhsResultTypes = lhs->getResultTypes();
+  ArrayRef<Type> rhsResultTypes = rhs->getResultTypes();
+  if (lhsResultTypes.size() != rhsResultTypes.size()) return false;
+  switch (lhsResultTypes.size()) {
+    case 0:
+      break;
+    case 1:
+      // Compare the single result type.
+      // false
+      if (lhsResultTypes.front() != rhsResultTypes.front()) return false;
+      break;
+    default:
+      // Use the type buffer for the comparison, as we can guarantee it is the
+      // same for any given range of result types. This takes advantage of the
+      // fact the result types >1 are stored in a TupleType and uniqued.
+      if (lhsResultTypes.data() != rhsResultTypes.data()) return false;
+      break;
+  }
+  return true;
+  // // Compare operands.
+  // bool ignoreOperands = flags & Flags::IgnoreOperands;
+  // if (ignoreOperands)
+  //   return true;
+  // // TODO: Allow commutative operations to have different ordering.
+  // return std::equal(lhs->operand_begin(), lhs->operand_end(),
+  //                   rhs->operand_begin());
+}
+*/
+
+bool areFuncsEquivalent(FuncOp lhs, FuncOp rhs) {
+  // Check signatures (inputs, outputs).
+  // WORKING HERE
+  return false;
+}
+
 bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
   auto lhsModule = lhs.getInnerModule();
   auto rhsModule = rhs.getInnerModule();
   // TODO(scotttodd): recurse into modules, check funcOp contents
-  return OperationEquivalence::isEquivalentTo(lhsModule, rhsModule);
+  // return OperationEquivalence::isEquivalentTo(lhsModule, rhsModule);
+
+  auto lhsFuncs = llvm::to_vector<1>(lhsModule.getOps<FuncOp>());
+  auto rhsFuncs = llvm::to_vector<1>(rhsModule.getOps<FuncOp>());
+  auto lhsFunc = *lhsFuncs.begin();
+  auto rhsFunc = *rhsFuncs.begin();
+
+  std::cerr << "lhs func:" << std::endl;
+  lhsFunc.dump();
+  std::cerr << "rhs func:" << std::endl;
+  rhsFunc.dump();
+
+  if (!areOpsEquivalent(lhsFunc, rhsFunc)) {
+    return false;
+  }
+
+  std::cerr << "funcs are equivalent, check bodies next" << std::endl;
+
+  return false;
 }
 
 // Replaces each usage of an entry point with its original symbol name with a
