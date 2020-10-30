@@ -101,16 +101,45 @@ bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
   auto lhsFunc = *lhsFuncs.begin();
   auto rhsFunc = *rhsFuncs.begin();
 
-  std::cerr << "lhs func:" << std::endl;
-  lhsFunc.dump();
-  std::cerr << "rhs func:" << std::endl;
-  rhsFunc.dump();
+  // std::cerr << "lhs func:" << std::endl;
+  // lhsFunc.dump();
+  // std::cerr << "rhs func:" << std::endl;
+  // rhsFunc.dump();
 
-  if (!areOpsEquivalent(lhsFunc, rhsFunc)) {
-    return false;
+  // lhsFunc.getRegion().
+
+  std::string lhsStr;
+  llvm::raw_string_ostream lhsSstream(lhsStr);
+  auto lhsFuncRegion = lhsFunc.getCallableRegion();
+  for (auto& block : lhsFuncRegion->getBlocks()) {
+    block.print(lhsSstream);
+  }
+  lhsSstream.flush();
+  // std::cerr << "lhsFuncRegion: " << std::endl;
+  // std::cerr << lhsStr;
+
+  std::string rhsStr;
+  llvm::raw_string_ostream rhsSstream(rhsStr);
+  auto rhsFuncRegion = rhsFunc.getCallableRegion();
+  for (auto& block : rhsFuncRegion->getBlocks()) {
+    block.print(rhsSstream);
+  }
+  rhsSstream.flush();
+  // std::cerr << "rhsFuncRegion: " << std::endl;
+  // std::cerr << rhsStr;
+
+  if (lhsStr == rhsStr) {
+    // std::cerr << "equivalent!" << std::endl;
+    return true;
   }
 
-  std::cerr << "funcs are equivalent, check bodies next" << std::endl;
+  // lhsFunc.getBody()
+
+  // if (!areOpsEquivalent(lhsFunc, rhsFunc)) {
+  //   return false;
+  // }
+
+  // std::cerr << "funcs are equivalent, check bodies next" << std::endl;
 
   return false;
 }
@@ -118,7 +147,7 @@ bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
 // Replaces each usage of an entry point with its original symbol name with a
 // new symbol name.
 void replaceEntryPointUses(mlir::ModuleOp moduleOp,
-                           const DenseMap<Attribute, Attribute> &replacements) {
+                           const DenseMap<Attribute, Attribute>& replacements) {
   for (auto funcOp : moduleOp.getOps<mlir::FuncOp>()) {
     funcOp.walk([&](DispatchOp dispatchOp) {
       auto it = replacements.find(dispatchOp.entry_point());
@@ -172,7 +201,7 @@ class DeduplicateExecutablesPass
     for (int i = executableOps.size() - 1; i >= 0; --i) {
       auto possiblyDuplicateExecutable = executableOps[i];
       for (int j = 0; j < i; ++j) {
-        std::cerr << "i: " << i << ", j: " << j << std::endl;
+        // std::cerr << "i: " << i << ", j: " << j << std::endl;
 
         auto comparisonExecutable = executableOps[j];
         if (!areExecutablesEquivalent(possiblyDuplicateExecutable,
@@ -180,7 +209,8 @@ class DeduplicateExecutablesPass
           continue;
         }
 
-        std::cerr << "Duplicate! replacing " << i << " with " << j << std::endl;
+        // std::cerr << "Duplicate! replacing " << i << " with " << j <<
+        // std::endl;
 
         // Add to replacement table and break to move to the next possible dup.
         auto oldSymbolRefAttr = builder.getSymbolRefAttr(
