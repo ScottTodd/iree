@@ -125,18 +125,12 @@ createRematerializeDispatchConstantsPass();
 // Outlines dispatch regions into executables.
 std::unique_ptr<OperationPass<ModuleOp>> createOutlineDispatchRegionsPass();
 
-// Deduplicates executables that are identical.
-std::unique_ptr<OperationPass<ModuleOp>> createDeduplicateExecutablesPass();
-
 // Exports all the dispatch functions to the module.
 std::unique_ptr<OperationPass<ModuleOp>> createCreateFuncsToInvokeExecOpsPass();
 
 //===----------------------------------------------------------------------===//
 // Optimizations
 //===----------------------------------------------------------------------===//
-
-// TODO(benvanik): pass to dedupe similar executables (by making dynamically
-// shaped, adjusting types, etc).
 
 // Outlines large tensor constants into flow.variables at the module level.
 //
@@ -145,6 +139,13 @@ std::unique_ptr<OperationPass<ModuleOp>> createCreateFuncsToInvokeExecOpsPass();
 static constexpr size_t kMinLargeConstantSize = 256;
 std::unique_ptr<OperationPass<ModuleOp>> createOutlineLargeConstantsPass(
     size_t minLargeConstantSize = kMinLargeConstantSize);
+
+// Finds which executables are duplicates of earlier executables.
+std::unique_ptr<OperationPass<ExecutableOp>>
+createFindDuplicateExecutablesPass();
+
+// Deduplicates executables that are identical.
+std::unique_ptr<OperationPass<ModuleOp>> createDeduplicateExecutablesPass();
 
 //===----------------------------------------------------------------------===//
 // Stream Formation and Folding

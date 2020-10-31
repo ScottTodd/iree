@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "iree/compiler/Dialect/Flow/IR/FlowOps.h"
+#include "llvm/ADT/Hashing.h"
 #include "mlir/Dialect/StandardOps/IR/Ops.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/Pass/Pass.h"
@@ -45,25 +46,31 @@ bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
   std::string lhsStr;
   llvm::raw_string_ostream lhsSstream(lhsStr);
   auto lhsFuncRegion = lhsFunc.getCallableRegion();
-  for (auto& block : lhsFuncRegion->getBlocks()) {
+  for (auto &block : lhsFuncRegion->getBlocks()) {
     block.print(lhsSstream);
   }
   lhsSstream.flush();
+  llvm::hash_code lhsHash = llvm::hash_value(lhsStr);
   // std::cerr << "lhsFuncRegion: " << std::endl;
   // std::cerr << lhsStr;
 
   std::string rhsStr;
   llvm::raw_string_ostream rhsSstream(rhsStr);
   auto rhsFuncRegion = rhsFunc.getCallableRegion();
-  for (auto& block : rhsFuncRegion->getBlocks()) {
+  for (auto &block : rhsFuncRegion->getBlocks()) {
     block.print(rhsSstream);
   }
   rhsSstream.flush();
+  llvm::hash_code rhsHash = llvm::hash_value(rhsStr);
   // std::cerr << "rhsFuncRegion: " << std::endl;
   // std::cerr << rhsStr;
 
-  if (lhsStr == rhsStr) {
-    // std::cerr << "equivalent!" << std::endl;
+  // if (lhsStr == rhsStr) {
+  //   // std::cerr << "equivalent!" << std::endl;
+  //   return true;
+  // }
+
+  if (lhsHash == rhsHash) {
     return true;
   }
 
@@ -73,7 +80,7 @@ bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
 // Replaces each usage of an entry point with its original symbol name with a
 // new symbol name.
 void replaceEntryPointUses(mlir::ModuleOp moduleOp,
-                           const DenseMap<Attribute, Attribute>& replacements) {
+                           const DenseMap<Attribute, Attribute> &replacements) {
   for (auto funcOp : moduleOp.getOps<mlir::FuncOp>()) {
     funcOp.walk([&](DispatchOp dispatchOp) {
       auto it = replacements.find(dispatchOp.entry_point());

@@ -25,6 +25,7 @@ cc_library(
         "DeduplicateExecutables.cpp",
         "DispatchConfig.cpp",
         "DispatchabilityAnalysis.cpp",
+        "FindDuplicateExecutables.cpp",
         "FlattenTuplesInCFG.cpp",
         "FoldCompatibleDispatchRegions.cpp",
         "FormStreams.cpp",
