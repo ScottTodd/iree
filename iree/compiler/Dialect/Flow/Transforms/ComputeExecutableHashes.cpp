@@ -30,27 +30,21 @@ namespace {
 class ExecutableFuncOpHashAnalysis {
  public:
   explicit ExecutableFuncOpHashAnalysis(Operation *op) {
-    ExecutableOp executableOp = cast<ExecutableOp>(op);
-
-    // --------------------
-    // DEBUG, DO NOT SUBMIT
-    auto parentModuleOp = dyn_cast<ModuleOp>(executableOp.getParentOp());
-    auto siblingExecutableOps =
-        llvm::to_vector<8>(parentModuleOp.getOps<ExecutableOp>());
-    for (int i = 0; i < siblingExecutableOps.size(); ++i) {
-      auto siblingExecutableOp = siblingExecutableOps[i];
-      if (executableOp == siblingExecutableOp) {
-        // std::cerr << "Computed hash for executable index " << i << std::endl;
-        break;
-      }
-    }
-    // DEBUG, DO NOT SUBMIT
-    // --------------------
-
+    auto executableOp = dyn_cast<ExecutableOp>(op);
     auto module = executableOp.getInnerModule();
+
+    // Assume only one FuncOp on the module.
     auto funcs = llvm::to_vector<1>(module.getOps<FuncOp>());
     auto func = *funcs.begin();
 
+    // Print the blocks of the function into a string and hash it.
+    //
+    // We'd prefer to have a more native (and efficient) way of comparing two
+    // ops, but this works well enough for our current uses.
+    //
+    // This includes the full function signature (arguments and their types,
+    // output(s) and their types) and all nested ops with their attributes and
+    // other printed properties.
     std::string funcStr;
     llvm::raw_string_ostream sstream(funcStr);
     auto funcRegion = func.getCallableRegion();
@@ -58,15 +52,14 @@ class ExecutableFuncOpHashAnalysis {
       block.print(sstream);
     }
     sstream.flush();
-    // hash = llvm::hash_value(funcStr);
+
+    std::cerr << funcStr << std::endl;
 
     llvm::hash_code hash = llvm::hash_value(funcStr);
     // TODO(scotttodd): solution that doesn't require editing IR?
     Builder builder(module.getContext());
-    executableOp.setAttr("hash", builder.getI64IntegerAttr(hash));
+    executableOp.setAttr("func_hash", builder.getI64IntegerAttr(hash));
   }
-
-  // llvm::hash_code hash;
 };
 
 }  // namespace
@@ -75,8 +68,6 @@ class ComputeExecutableHashesPass
     : public PassWrapper<ComputeExecutableHashesPass,
                          OperationPass<ExecutableOp>> {
  public:
-  ComputeExecutableHashesPass() = default;
-
   void runOnOperation() override {
     auto &funcOpHashAnalysis = getAnalysis<ExecutableFuncOpHashAnalysis>();
     markAllAnalysesPreserved();
