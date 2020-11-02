@@ -32,6 +32,21 @@ class ExecutableFuncOpHashAnalysis {
   explicit ExecutableFuncOpHashAnalysis(Operation *op) {
     ExecutableOp executableOp = cast<ExecutableOp>(op);
 
+    // --------------------
+    // DEBUG, DO NOT SUBMIT
+    auto parentModuleOp = dyn_cast<ModuleOp>(executableOp.getParentOp());
+    auto siblingExecutableOps =
+        llvm::to_vector<8>(parentModuleOp.getOps<ExecutableOp>());
+    for (int i = 0; i < siblingExecutableOps.size(); ++i) {
+      auto siblingExecutableOp = siblingExecutableOps[i];
+      if (executableOp == siblingExecutableOp) {
+        // std::cerr << "Computed hash for executable index " << i << std::endl;
+        break;
+      }
+    }
+    // DEBUG, DO NOT SUBMIT
+    // --------------------
+
     auto module = executableOp.getInnerModule();
     auto funcs = llvm::to_vector<1>(module.getOps<FuncOp>());
     auto func = *funcs.begin();
@@ -43,25 +58,15 @@ class ExecutableFuncOpHashAnalysis {
       block.print(sstream);
     }
     sstream.flush();
-    hash = llvm::hash_value(funcStr);
+    // hash = llvm::hash_value(funcStr);
 
-    // --------------------
-    // DEBUG, DO NOT SUBMIT
-    auto parentModuleOp = dyn_cast<ModuleOp>(executableOp.getParentOp());
-    auto siblingExecutableOps =
-        llvm::to_vector<8>(parentModuleOp.getOps<ExecutableOp>());
-    for (int i = 0; i < siblingExecutableOps.size(); ++i) {
-      auto siblingExecutableOp = siblingExecutableOps[i];
-      if (executableOp == siblingExecutableOp) {
-        std::cerr << "Computed hash for executable index " << i << std::endl;
-        break;
-      }
-    }
-    // DEBUG, DO NOT SUBMIT
-    // --------------------
+    llvm::hash_code hash = llvm::hash_value(funcStr);
+    // TODO(scotttodd): solution that doesn't require editing IR?
+    Builder builder(module.getContext());
+    executableOp.setAttr("hash", builder.getI64IntegerAttr(hash));
   }
 
-  llvm::hash_code hash;
+  // llvm::hash_code hash;
 };
 
 }  // namespace

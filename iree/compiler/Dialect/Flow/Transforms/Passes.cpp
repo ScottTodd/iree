@@ -170,9 +170,10 @@ void buildFlowTransformPassPipeline(OpPassManager &passManager) {
 
   // Deduplicate executables created from dispatch regions.
   passManager.addNestedPass<ExecutableOp>(createComputeExecutableHashesPass());
+  // Barrier between computing hashes and comparing them.
+  // TODO(scotttodd): Find a better way to represent this?
+  passManager.addPass(createCanonicalizerPass());
   passManager.addNestedPass<ExecutableOp>(createFindDuplicateExecutablesPass());
-  // passManager.addPass(createComputeExecutableHashesPass());
-  // passManager.addPass(createFindDuplicateExecutablesPass());
   passManager.addPass(IREE::Flow::createDeduplicateExecutablesPass());
 
   // Convert any leftover ops outside of dispatch regions to flow ops.

@@ -30,68 +30,6 @@ namespace Flow {
 
 namespace {
 
-// bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
-//   auto lhsModule = lhs.getInnerModule();
-//   auto rhsModule = rhs.getInnerModule();
-//   auto lhsFuncs = llvm::to_vector<1>(lhsModule.getOps<FuncOp>());
-//   auto rhsFuncs = llvm::to_vector<1>(rhsModule.getOps<FuncOp>());
-//   auto lhsFunc = *lhsFuncs.begin();
-//   auto rhsFunc = *rhsFuncs.begin();
-
-//   // std::cerr << "lhs func:" << std::endl;
-//   // lhsFunc.dump();
-//   // std::cerr << "rhs func:" << std::endl;
-//   // rhsFunc.dump();
-
-//   std::string lhsStr;
-//   llvm::raw_string_ostream lhsSstream(lhsStr);
-//   auto lhsFuncRegion = lhsFunc.getCallableRegion();
-//   for (auto &block : lhsFuncRegion->getBlocks()) {
-//     block.print(lhsSstream);
-//   }
-//   lhsSstream.flush();
-//   llvm::hash_code lhsHash = llvm::hash_value(lhsStr);
-//   // std::cerr << "lhsFuncRegion: " << std::endl;
-//   // std::cerr << lhsStr;
-
-//   std::string rhsStr;
-//   llvm::raw_string_ostream rhsSstream(rhsStr);
-//   auto rhsFuncRegion = rhsFunc.getCallableRegion();
-//   for (auto &block : rhsFuncRegion->getBlocks()) {
-//     block.print(rhsSstream);
-//   }
-//   rhsSstream.flush();
-//   llvm::hash_code rhsHash = llvm::hash_value(rhsStr);
-//   // std::cerr << "rhsFuncRegion: " << std::endl;
-//   // std::cerr << rhsStr;
-
-//   // if (lhsStr == rhsStr) {
-//   //   // std::cerr << "equivalent!" << std::endl;
-//   //   return true;
-//   // }
-
-//   if (lhsHash == rhsHash) {
-//     return true;
-//   }
-
-//   return false;
-// }
-
-// // Replaces each usage of an entry point with its original symbol name with a
-// // new symbol name.
-// void replaceEntryPointUses(mlir::ModuleOp moduleOp,
-//                            const DenseMap<Attribute, Attribute>&
-//                            replacements) {
-//   for (auto funcOp : moduleOp.getOps<mlir::FuncOp>()) {
-//     funcOp.walk([&](DispatchOp dispatchOp) {
-//       auto it = replacements.find(dispatchOp.entry_point());
-//       if (it != replacements.end()) {
-//         dispatchOp.entry_pointAttr(it->second.cast<SymbolRefAttr>());
-//       }
-//     });
-//   }
-// }
-
 // class ExecutableFuncOpHashAnalysis {
 //  public:
 //   explicit ExecutableFuncOpHashAnalysis(Operation *op) {
@@ -147,18 +85,27 @@ class FindDuplicateExecutablesPass
 
     // for (auto otherExecutableOp : siblingExecutableOps) { }
 
+    auto hashAttr = executableOp.getAttrOfType<IntegerAttr>("hash");
+
     for (int i = 0; i < siblingExecutableOps.size(); ++i) {
       auto siblingExecutableOp = siblingExecutableOps[i];
       if (executableOp == siblingExecutableOp) {
-        continue;
+        break;
       }
-      std::cerr << "Comparing against op index " << i << std::endl;
+      // std::cerr << "Comparing against op index " << i << std::endl;
+
+      auto siblingHashAttr =
+          siblingExecutableOp.getAttrOfType<IntegerAttr>("hash");
 
       // auto &siblingOpHashAnalysis = getAnalysis
 
-      // if () {
-      //   //
-      // }
+      if (hashAttr.getValue() == siblingHashAttr.getValue()) {
+        // std::cerr << "  hashes match!" << std::endl;
+        Builder builder(executableOp.getContext());
+        executableOp.setAttr("duplicate", builder.getSymbolRefAttr(
+                                              siblingExecutableOp.sym_name()));
+        break;
+      }
     }
 
     // SmallVector<ExecutableOp, 3> duplicateExecutableOps;

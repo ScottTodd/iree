@@ -107,42 +107,66 @@ class DeduplicateExecutablesPass
     SmallVector<ExecutableOp, 3> duplicateExecutableOps;
     DenseMap<Attribute, Attribute> entryPointRefReplacements;
 
-    // For each executable, find the first executable which it is equivalent to.
-    // Iteration order:
-    //   3 == 0 ? no
-    //   3 == 1 ? yes -> mark and move on to 2
-    //   2 == 0 ? no
-    //   2 == 1 ? yes -> mark and move on to 1
-    //   1 == 0 ? no -> not a duplicate, keep it
-    //   Done iterating. 0 and 1 stay, 2 and 3 are duplicates of 1.
-    for (int i = executableOps.size() - 1; i >= 0; --i) {
-      auto possiblyDuplicateExecutable = executableOps[i];
-      for (int j = 0; j < i; ++j) {
-        // std::cerr << "i: " << i << ", j: " << j << std::endl;
-
-        auto comparisonExecutable = executableOps[j];
-        if (!areExecutablesEquivalent(possiblyDuplicateExecutable,
-                                      comparisonExecutable)) {
-          continue;
-        }
-
-        // std::cerr << "Duplicate! replacing " << i << " with " << j <<
-        // std::endl;
-
-        // Add to replacement table and break to move to the next possible dup.
-        auto oldSymbolRefAttr = builder.getSymbolRefAttr(
-            possiblyDuplicateExecutable.getName(),
-            {builder.getSymbolRefAttr(
-                possiblyDuplicateExecutable.getDispatchEntryOp().sym_name())});
-        auto newSymbolRefAttr = builder.getSymbolRefAttr(
-            comparisonExecutable.getName(),
-            {builder.getSymbolRefAttr(
-                comparisonExecutable.getDispatchEntryOp().sym_name())});
-        entryPointRefReplacements[oldSymbolRefAttr] = newSymbolRefAttr;
-        duplicateExecutableOps.push_back(possiblyDuplicateExecutable);
-        break;
+    for (auto executableOp : executableOps) {
+      auto duplicateOpSym =
+          executableOp.getAttrOfType<SymbolRefAttr>("duplicate");
+      if (!duplicateOpSym) {
+        continue;
       }
+
+      auto duplicateOp =
+          dyn_cast<ExecutableOp>(SymbolTable::lookupNearestSymbolFrom(
+              moduleOp, duplicateOpSym.getLeafReference()));
+
+      auto oldSymbolRefAttr = builder.getSymbolRefAttr(
+          executableOp.getName(),
+          {builder.getSymbolRefAttr(
+              executableOp.getDispatchEntryOp().sym_name())});
+      auto newSymbolRefAttr = builder.getSymbolRefAttr(
+          duplicateOp.getName(),
+          {builder.getSymbolRefAttr(
+              duplicateOp.getDispatchEntryOp().sym_name())});
+      entryPointRefReplacements[oldSymbolRefAttr] = newSymbolRefAttr;
+      duplicateExecutableOps.push_back(executableOp);
     }
+
+    // // For each executable, find the first executable which it is equivalent
+    // to.
+    // // Iteration order:
+    // //   3 == 0 ? no
+    // //   3 == 1 ? yes -> mark and move on to 2
+    // //   2 == 0 ? no
+    // //   2 == 1 ? yes -> mark and move on to 1
+    // //   1 == 0 ? no -> not a duplicate, keep it
+    // //   Done iterating. 0 and 1 stay, 2 and 3 are duplicates of 1.
+    // for (int i = executableOps.size() - 1; i >= 0; --i) {
+    //   auto possiblyDuplicateExecutable = executableOps[i];
+    //   for (int j = 0; j < i; ++j) {
+    //     // std::cerr << "i: " << i << ", j: " << j << std::endl;
+
+    //     auto comparisonExecutable = executableOps[j];
+    //     if (!areExecutablesEquivalent(possiblyDuplicateExecutable,
+    //                                   comparisonExecutable)) {
+    //       continue;
+    //     }
+
+    //     // std::cerr << "Duplicate! replacing " << i << " with " << j <<
+    //     // std::endl;
+
+    //     // Add to replacement table and break to move to the next possible
+    //     dup. auto oldSymbolRefAttr = builder.getSymbolRefAttr(
+    //         possiblyDuplicateExecutable.getName(),
+    //         {builder.getSymbolRefAttr(
+    //             possiblyDuplicateExecutable.getDispatchEntryOp().sym_name())});
+    //     auto newSymbolRefAttr = builder.getSymbolRefAttr(
+    //         comparisonExecutable.getName(),
+    //         {builder.getSymbolRefAttr(
+    //             comparisonExecutable.getDispatchEntryOp().sym_name())});
+    //     entryPointRefReplacements[oldSymbolRefAttr] = newSymbolRefAttr;
+    //     duplicateExecutableOps.push_back(possiblyDuplicateExecutable);
+    //     break;
+    //   }
+    // }
 
     replaceEntryPointUses(moduleOp, entryPointRefReplacements);
     for (auto executableOp : duplicateExecutableOps) {
