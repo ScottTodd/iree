@@ -83,6 +83,12 @@ class DeduplicateExecutablesPass
       executableOp.erase();
     }
 
+    // Clean up our working attributes.
+    for (auto executableOp : moduleOp.getOps<ExecutableOp>()) {
+      executableOp.removeAttr("func_hash");
+      executableOp.removeAttr("duplicate_of");
+    }
+
     // TODO(scotttodd): rewrite executable indices, filling in gaps?
   }
 };

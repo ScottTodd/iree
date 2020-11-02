@@ -51,7 +51,7 @@ class FindDuplicateExecutablesPass
       if (hashAttr.getValue() == siblingHashAttr.getValue()) {
         // Assume that hash collisions never happen.
         // TODO(scotttodd): More reliable, but still efficient, comparison?
-        //   Or a second check after the hash test?
+        //   Or a second check after the hash test? With some smart caching?
         Builder builder(executableOp.getContext());
         executableOp.setAttr(
             "duplicate_of",
