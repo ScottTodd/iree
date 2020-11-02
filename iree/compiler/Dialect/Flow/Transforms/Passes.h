@@ -140,11 +140,15 @@ static constexpr size_t kMinLargeConstantSize = 256;
 std::unique_ptr<OperationPass<ModuleOp>> createOutlineLargeConstantsPass(
     size_t minLargeConstantSize = kMinLargeConstantSize);
 
+// Computes hashes of executable ops for future deduplication.
+std::unique_ptr<OperationPass<ExecutableOp>>
+createComputeExecutableHashesPass();
+
 // Finds which executables are duplicates of earlier executables.
 std::unique_ptr<OperationPass<ExecutableOp>>
 createFindDuplicateExecutablesPass();
 
-// Deduplicates executables that are identical.
+// Deduplicates executables that share hashes.
 std::unique_ptr<OperationPass<ModuleOp>> createDeduplicateExecutablesPass();
 
 //===----------------------------------------------------------------------===//

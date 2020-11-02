@@ -21,6 +21,7 @@ iree_cc_library(
     "DispatchConfig.h"
     "Passes.h"
   SRCS
+    "ComputeExecutableHashes.cpp"
     "CreateFuncsToInvokeExecOps.cpp"
     "DeduplicateExecutables.cpp"
     "DispatchConfig.cpp"

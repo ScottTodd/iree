@@ -30,52 +30,52 @@ namespace Flow {
 
 namespace {
 
-bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
-  auto lhsModule = lhs.getInnerModule();
-  auto rhsModule = rhs.getInnerModule();
-  auto lhsFuncs = llvm::to_vector<1>(lhsModule.getOps<FuncOp>());
-  auto rhsFuncs = llvm::to_vector<1>(rhsModule.getOps<FuncOp>());
-  auto lhsFunc = *lhsFuncs.begin();
-  auto rhsFunc = *rhsFuncs.begin();
+// bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
+//   auto lhsModule = lhs.getInnerModule();
+//   auto rhsModule = rhs.getInnerModule();
+//   auto lhsFuncs = llvm::to_vector<1>(lhsModule.getOps<FuncOp>());
+//   auto rhsFuncs = llvm::to_vector<1>(rhsModule.getOps<FuncOp>());
+//   auto lhsFunc = *lhsFuncs.begin();
+//   auto rhsFunc = *rhsFuncs.begin();
 
-  // std::cerr << "lhs func:" << std::endl;
-  // lhsFunc.dump();
-  // std::cerr << "rhs func:" << std::endl;
-  // rhsFunc.dump();
+//   // std::cerr << "lhs func:" << std::endl;
+//   // lhsFunc.dump();
+//   // std::cerr << "rhs func:" << std::endl;
+//   // rhsFunc.dump();
 
-  std::string lhsStr;
-  llvm::raw_string_ostream lhsSstream(lhsStr);
-  auto lhsFuncRegion = lhsFunc.getCallableRegion();
-  for (auto &block : lhsFuncRegion->getBlocks()) {
-    block.print(lhsSstream);
-  }
-  lhsSstream.flush();
-  llvm::hash_code lhsHash = llvm::hash_value(lhsStr);
-  // std::cerr << "lhsFuncRegion: " << std::endl;
-  // std::cerr << lhsStr;
+//   std::string lhsStr;
+//   llvm::raw_string_ostream lhsSstream(lhsStr);
+//   auto lhsFuncRegion = lhsFunc.getCallableRegion();
+//   for (auto &block : lhsFuncRegion->getBlocks()) {
+//     block.print(lhsSstream);
+//   }
+//   lhsSstream.flush();
+//   llvm::hash_code lhsHash = llvm::hash_value(lhsStr);
+//   // std::cerr << "lhsFuncRegion: " << std::endl;
+//   // std::cerr << lhsStr;
 
-  std::string rhsStr;
-  llvm::raw_string_ostream rhsSstream(rhsStr);
-  auto rhsFuncRegion = rhsFunc.getCallableRegion();
-  for (auto &block : rhsFuncRegion->getBlocks()) {
-    block.print(rhsSstream);
-  }
-  rhsSstream.flush();
-  llvm::hash_code rhsHash = llvm::hash_value(rhsStr);
-  // std::cerr << "rhsFuncRegion: " << std::endl;
-  // std::cerr << rhsStr;
+//   std::string rhsStr;
+//   llvm::raw_string_ostream rhsSstream(rhsStr);
+//   auto rhsFuncRegion = rhsFunc.getCallableRegion();
+//   for (auto &block : rhsFuncRegion->getBlocks()) {
+//     block.print(rhsSstream);
+//   }
+//   rhsSstream.flush();
+//   llvm::hash_code rhsHash = llvm::hash_value(rhsStr);
+//   // std::cerr << "rhsFuncRegion: " << std::endl;
+//   // std::cerr << rhsStr;
 
-  // if (lhsStr == rhsStr) {
-  //   // std::cerr << "equivalent!" << std::endl;
-  //   return true;
-  // }
+//   // if (lhsStr == rhsStr) {
+//   //   // std::cerr << "equivalent!" << std::endl;
+//   //   return true;
+//   // }
 
-  if (lhsHash == rhsHash) {
-    return true;
-  }
+//   if (lhsHash == rhsHash) {
+//     return true;
+//   }
 
-  return false;
-}
+//   return false;
+// }
 
 // // Replaces each usage of an entry point with its original symbol name with a
 // // new symbol name.
@@ -92,24 +92,40 @@ bool areExecutablesEquivalent(ExecutableOp lhs, ExecutableOp rhs) {
 //   }
 // }
 
-class ExecutableFuncOpHashAnalysis {
- public:
-  explicit ExecutableFuncOpHashAnalysis(ExecutableOp *op) {
-    auto parentModuleOp = dyn_cast<ModuleOp>(op->getParentOp());
-    auto siblingExecutableOps =
-        llvm::to_vector<8>(parentModuleOp.getOps<ExecutableOp>());
+// class ExecutableFuncOpHashAnalysis {
+//  public:
+//   explicit ExecutableFuncOpHashAnalysis(Operation *op) {
+//     ExecutableOp executableOp = cast<ExecutableOp>(op);
 
-    for (int i = 0; i < siblingExecutableOps.size(); ++i) {
-      auto siblingExecutableOp = siblingExecutableOps[i];
-      if (*op == siblingExecutableOp) {
-        index = i;
-        break;
-      }
-    }
-  }
+//     auto module = executableOp.getInnerModule();
+//     auto funcs = llvm::to_vector<1>(module.getOps<FuncOp>());
+//     auto func = *funcs.begin();
 
-  int index;
-};
+//     std::string funcStr;
+//     llvm::raw_string_ostream sstream(funcStr);
+//     auto funcRegion = func.getCallableRegion();
+//     for (auto &block : funcRegion->getBlocks()) {
+//       block.print(sstream);
+//     }
+//     sstream.flush();
+//     hash = llvm::hash_value(funcStr);
+
+//     // DEBUG, DO NOT SUBMIT
+//     auto parentModuleOp = dyn_cast<ModuleOp>(executableOp.getParentOp());
+//     auto siblingExecutableOps =
+//         llvm::to_vector<8>(parentModuleOp.getOps<ExecutableOp>());
+//     for (int i = 0; i < siblingExecutableOps.size(); ++i) {
+//       auto siblingExecutableOp = siblingExecutableOps[i];
+//       if (executableOp == siblingExecutableOp) {
+//         std::cerr << "Computed hash for executable index " << i << std::endl;
+//         break;
+//       }
+//     }
+//   }
+
+//   // int index;
+//   llvm::hash_code hash;
+// };
 
 }  // namespace
 
@@ -125,19 +141,25 @@ class FindDuplicateExecutablesPass
     auto siblingExecutableOps =
         llvm::to_vector<8>(parentModuleOp.getOps<ExecutableOp>());
 
-    auto &funcOpHashAnalysis = getAnalysis<ExecutableFuncOpHashAnalysis>();
-    std::cerr << "hash analysis for self has index: "
-              << funcOpHashAnalysis.index << std::endl;
+    // auto &funcOpHashAnalysis = getAnalysis<ExecutableFuncOpHashAnalysis>();
+    // std::cerr << "hash analysis for self has index: "
+    //           << funcOpHashAnalysis.index << std::endl;
 
     // for (auto otherExecutableOp : siblingExecutableOps) { }
 
-    // for (int i = 0; i < siblingExecutableOps.size(); ++i) {
-    //   auto siblingExecutableOp = siblingExecutableOps[i];
-    //   if (executableOp == siblingExecutableOp) {
-    //     continue;
-    //   }
-    //   std::cerr << "Comparing against op index " << i << std::endl;
-    // }
+    for (int i = 0; i < siblingExecutableOps.size(); ++i) {
+      auto siblingExecutableOp = siblingExecutableOps[i];
+      if (executableOp == siblingExecutableOp) {
+        continue;
+      }
+      std::cerr << "Comparing against op index " << i << std::endl;
+
+      // auto &siblingOpHashAnalysis = getAnalysis
+
+      // if () {
+      //   //
+      // }
+    }
 
     // SmallVector<ExecutableOp, 3> duplicateExecutableOps;
     // DenseMap<Attribute, Attribute> entryPointRefReplacements;

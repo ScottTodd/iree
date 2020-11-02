@@ -21,6 +21,7 @@ package(
 cc_library(
     name = "Transforms",
     srcs = [
+        "ComputeExecutableHashes.cpp",
         "CreateFuncsToInvokeExecOps.cpp",
         "DeduplicateExecutables.cpp",
         "DispatchConfig.cpp",
