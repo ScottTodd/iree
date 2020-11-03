@@ -17,11 +17,6 @@
 #include "mlir/IR/Builders.h"
 #include "mlir/Pass/Pass.h"
 
-// TODO(scotttodd): pass statistics (number of executables deduped)
-// https://mlir.llvm.org/docs/PassManagement/#pass-statistics
-
-#include <iostream>  // DO NOT SUBMIT
-
 namespace mlir {
 namespace iree_compiler {
 namespace IREE {
@@ -48,6 +43,9 @@ void replaceEntryPointUses(mlir::ModuleOp moduleOp,
 class DeduplicateExecutablesPass
     : public PassWrapper<DeduplicateExecutablesPass, OperationPass<ModuleOp>> {
  public:
+  explicit DeduplicateExecutablesPass() {}
+  DeduplicateExecutablesPass(const DeduplicateExecutablesPass &pass) {}
+
   void runOnOperation() override {
     auto moduleOp = getOperation();
     auto executableOps = llvm::to_vector<8>(moduleOp.getOps<ExecutableOp>());
@@ -78,6 +76,9 @@ class DeduplicateExecutablesPass
       duplicateExecutableOps.push_back(executableOp);
     }
 
+    totalExecutables = executableOps.size();
+    executablesDeduplicated = duplicateExecutableOps.size();
+
     replaceEntryPointUses(moduleOp, entryPointRefReplacements);
     for (auto executableOp : duplicateExecutableOps) {
       executableOp.erase();
@@ -91,6 +92,14 @@ class DeduplicateExecutablesPass
 
     // TODO(scotttodd): rewrite executable indices, filling in gaps?
   }
+
+ private:
+  Statistic totalExecutables{
+      this, "totalExecutables",
+      "Number of flow.executable ops present before deduplication"};
+  Statistic executablesDeduplicated{
+      this, "executablesDeduplicated",
+      "Number of flow.executable ops removed as duplicates"};
 };
 
 std::unique_ptr<OperationPass<ModuleOp>> createDeduplicateExecutablesPass() {
