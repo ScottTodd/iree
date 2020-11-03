@@ -33,6 +33,10 @@ class ComputeExecutableHashesPass
 
     // Assume only one FuncOp on the module.
     auto funcs = llvm::to_vector<1>(module.getOps<FuncOp>());
+    if (funcs.size() > 1) {
+      module.emitError("expected only one function per flow.executable");
+      return signalPassFailure();
+    }
     auto func = *funcs.begin();
 
     // Print the blocks of the function into a string and hash it.
@@ -52,8 +56,6 @@ class ComputeExecutableHashesPass
     sstream.flush();
 
     llvm::hash_code hash = llvm::hash_value(funcStr);
-    // TODO(scotttodd): solution that doesn't require editing IR?
-    //   getAnalysis -> store module-level state to access in future passes?
     Builder builder(module.getContext());
     executableOp.setAttr("func_hash", builder.getI64IntegerAttr(hash));
   }

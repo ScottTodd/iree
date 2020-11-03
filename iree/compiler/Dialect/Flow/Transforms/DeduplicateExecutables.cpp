@@ -78,6 +78,7 @@ class DeduplicateExecutablesPass
 
     totalExecutables = executableOps.size();
     executablesDeduplicated = duplicateExecutableOps.size();
+    remainingExecutables = totalExecutables - executablesDeduplicated;
 
     replaceEntryPointUses(moduleOp, entryPointRefReplacements);
     for (auto executableOp : duplicateExecutableOps) {
@@ -95,11 +96,14 @@ class DeduplicateExecutablesPass
 
  private:
   Statistic totalExecutables{
-      this, "totalExecutables",
-      "Number of flow.executable ops present before deduplication"};
+      this, "total executable(s)",
+      "Number of flow.executable ops before deduplication"};
   Statistic executablesDeduplicated{
-      this, "executablesDeduplicated",
+      this, "duplicate executable(s)",
       "Number of flow.executable ops removed as duplicates"};
+  Statistic remainingExecutables{
+      this, "unique executable(s)",
+      "Number of flow.executable ops remaining after deduplication"};
 };
 
 std::unique_ptr<OperationPass<ModuleOp>> createDeduplicateExecutablesPass() {
