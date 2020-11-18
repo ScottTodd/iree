@@ -60,6 +60,7 @@ iree_py_test(
     ],
     python_version = "PY3",
     tags = [
+        "driver=llvmaot",
         "driver=vmla",
     ],
     deps = INTREE_TENSORFLOW_PY_DEPS + [
