@@ -1225,8 +1225,8 @@ def HAL_CommandBufferDispatchOp : HAL_Op<"command_buffer.dispatch"> {
   }];
 
   let arguments = (ins
-    HAL_CommandBuffer:$command_buffer,
-    HAL_Executable:$executable,
+    Arg<HAL_CommandBuffer, "", [MemRead, MemWrite]>:$command_buffer,
+    Arg<HAL_Executable, "", [MemRead]>:$executable,
     HAL_OrdinalAttr:$entry_point,
     HAL_Dim:$workgroup_x,
     HAL_Dim:$workgroup_y,

@@ -280,7 +280,9 @@ void VariableLoadOp::getEffects(
   assert(symbolOp);
   auto variableOp = dyn_cast<VariableOp>(symbolOp);
   if (variableOp.is_mutable()) {
+    // ---------------------------------------------
     effects.emplace_back(MemoryEffects::Read::get());
+    // ---------------------------------------------
   }
 }
 
