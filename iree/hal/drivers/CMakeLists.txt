@@ -24,9 +24,9 @@ endif()
 if(${IREE_HAL_DRIVER_VMLA})
   list(APPEND IREE_HAL_DRIVER_MODULES iree::hal::vmla::registration)
 endif()
-if(${IREE_HAL_DRIVER_VULKAN})
-  list(APPEND IREE_HAL_DRIVER_MODULES iree::hal::vulkan::registration)
-endif()
+# if(${IREE_HAL_DRIVER_VULKAN})
+#   list(APPEND IREE_HAL_DRIVER_MODULES iree::hal::vulkan::registration)
+# endif()
 
 iree_cc_library(
   NAME

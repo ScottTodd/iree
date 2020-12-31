@@ -19,6 +19,7 @@
 #include "iree/base/status.h"
 #include "iree/base/tracing.h"
 #include "iree/hal/vulkan/dynamic_symbols.h"
+#include "iree/hal/vulkan/renderdoc_capture_manager.h"
 #include "iree/hal/vulkan/vulkan_driver.h"
 
 ABSL_FLAG(bool, vulkan_validation_layers, true,
@@ -51,15 +52,6 @@ namespace {
 StatusOr<ref_ptr<Driver>> CreateVulkanDriver() {
   IREE_TRACE_SCOPE0("CreateVulkanDriver");
 
-  // Load the Vulkan library. This will fail if the library cannot be found or
-  // does not have the expected functions.
-  IREE_ASSIGN_OR_RETURN(auto syms, DynamicSymbols::CreateFromSystemLoader());
-
-  // Setup driver options from flags. We do this here as we want to enable other
-  // consumers that may not be using modules/command line flags to be able to
-  // set their options however they want.
-  VulkanDriver::Options options;
-
   // TODO: validation layers have bugs when using VK_EXT_debug_report, so if the
   // user requested that we force them off with a warning. Prefer using
   // VK_EXT_debug_utils when available.
@@ -71,52 +63,83 @@ StatusOr<ref_ptr<Driver>> CreateVulkanDriver() {
     absl::SetFlag(&FLAGS_vulkan_validation_layers, false);
   }
 
+  // Load the Vulkan library. This will fail if the library cannot be found or
+  // does not have the expected functions.
+  IREE_ASSIGN_OR_RETURN(auto syms, DynamicSymbols::CreateFromSystemLoader());
+
+  // Setup driver options from flags. We do this here as we want to enable other
+  // consumers that may not be using modules/command line flags to be able to
+  // set their options however they want.
+  iree_hal_vulkan_driver_options_t options;
+  iree_hal_vulkan_driver_options_initialize(&options);
+
+  std::vector<const char*> instance_required_layers;
+  std::vector<const char*> instance_optional_layers;
+  std::vector<const char*> instance_required_extensions;
+  std::vector<const char*> instance_optional_extensions;
+  std::vector<const char*> device_required_layers;
+  std::vector<const char*> device_optional_layers;
+  std::vector<const char*> device_required_extensions;
+  std::vector<const char*> device_optional_extensions;
+
   // REQUIRED: these are required extensions that must be present for IREE to
   // work (such as those relied upon by SPIR-V kernels, etc).
-  options.device_options.extensibility_spec.required_extensions.push_back(
+  device_required_extensions.push_back(
       VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME);
   // Multiple extensions depend on VK_KHR_get_physical_device_properties2.
   // This extension was deprecated in Vulkan 1.1 as its functionality was
   // promoted to core, so we list it as optional even though we require it.
-  options.instance_extensibility.optional_extensions.push_back(
+  instance_optional_extensions.push_back(
       VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME);
 
   // Timeline semaphore support is optional and will be emulated if necessary.
-  options.device_options.extensibility_spec.optional_extensions.push_back(
+  device_optional_extensions.push_back(
       VK_KHR_TIMELINE_SEMAPHORE_EXTENSION_NAME);
   // Polyfill layer - enable if present (instead of our custom emulation).
-  options.instance_extensibility.optional_layers.push_back(
-      "VK_LAYER_KHRONOS_timeline_semaphore");
+  instance_optional_layers.push_back("VK_LAYER_KHRONOS_timeline_semaphore");
 
   if (absl::GetFlag(FLAGS_vulkan_validation_layers)) {
-    options.instance_extensibility.optional_layers.push_back(
-        "VK_LAYER_KHRONOS_validation");
+    instance_optional_layers.push_back("VK_LAYER_KHRONOS_validation");
   }
 
   if (absl::GetFlag(FLAGS_vulkan_debug_report)) {
-    options.instance_extensibility.optional_extensions.push_back(
-        VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
+    instance_optional_extensions.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
   }
   if (absl::GetFlag(FLAGS_vulkan_debug_utils)) {
-    options.instance_extensibility.optional_extensions.push_back(
-        VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    instance_optional_extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
   }
 
   if (absl::GetFlag(FLAGS_vulkan_push_descriptors)) {
-    options.device_options.extensibility_spec.optional_extensions.push_back(
-        VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME);
+    device_optional_extensions.push_back(VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME);
   }
 
+  options.extensibility_spec.required_layers =
+      absl::MakeConstSpan(instance_required_layers);
+  options.extensibility_spec.optional_layers =
+      absl::MakeConstSpan(instance_optional_layers);
+  options.extensibility_spec.required_extensions =
+      absl::MakeConstSpan(instance_required_extensions);
+  options.extensibility_spec.optional_extensions =
+      absl::MakeConstSpan(instance_optional_extensions);
+  options.device_options.extensibility_spec.required_layers =
+      absl::MakeConstSpan(device_required_layers);
+  options.device_options.extensibility_spec.optional_layers =
+      absl::MakeConstSpan(device_optional_layers);
+  options.device_options.extensibility_spec.required_extensions =
+      absl::MakeConstSpan(device_required_extensions);
+  options.device_options.extensibility_spec.optional_extensions =
+      absl::MakeConstSpan(device_optional_extensions);
+
   options.default_device_index = absl::GetFlag(FLAGS_vulkan_default_index);
-  options.enable_renderdoc = absl::GetFlag(FLAGS_vulkan_renderdoc);
   options.device_options.force_timeline_semaphore_emulation =
       absl::GetFlag(FLAGS_vulkan_force_timeline_semaphore_emulation);
 
 #if VMA_RECORDING_ENABLED
-  options.device_options.vma_options.recording_file =
-      absl::GetFlag(FLAGS_vma_recording_file);
-  options.device_options.vma_options.recording_flush_after_call =
-      absl::GetFlag(FLAGS_vma_recording_flush_after_call);
+  auto& record_settings = options.device_options.vma_record_settings;
+  record_settings.flags = absl::GetFlag(FLAGS_vma_recording_flush_after_call)
+                              ? VMA_RECORD_FLUSH_AFTER_CALL_BIT
+                              : 0;
+  record_settings.pFilePath = absl::GetFlag(FLAGS_vma_recording_file);
 #endif  // VMA_RECORDING_ENABLED
 
   // Create the driver and VkInstance.

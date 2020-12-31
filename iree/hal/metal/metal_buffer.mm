@@ -18,6 +18,8 @@
 #include "iree/base/tracing.h"
 #include "iree/hal/metal/metal_direct_allocator.h"
 
+id<MTLBuffer> iree_hal_metal_buffer_handle(iree_hal_buffer_t* base_buffer);
+
 namespace iree {
 namespace hal {
 namespace metal {

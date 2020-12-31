@@ -18,11 +18,6 @@ iree_cc_library(
   NAME
     cc
   HDRS
-    "allocator.h"
-    "buffer.h"
-    "command_buffer.h"
-    "command_queue.h"
-    "debug_capture_manager.h"
     "device.h"
     "device_info.h"
     "driver.h"

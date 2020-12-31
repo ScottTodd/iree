@@ -17,7 +17,9 @@
 
 #import <Metal/Metal.h>
 
-#include "iree/hal/cc/buffer.h"
+#include "iree/hal/api.h"
+
+id<MTLBuffer> iree_hal_metal_buffer_handle(iree_hal_buffer_t* base_buffer);
 
 namespace iree {
 namespace hal {

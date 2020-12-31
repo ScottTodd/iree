@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,17 +15,38 @@
 #ifndef IREE_HAL_CC_RESOURCE_H_
 #define IREE_HAL_CC_RESOURCE_H_
 
-#include <ostream>
-#include <string>
-
 #include "iree/base/ref_ptr.h"
+#include "iree/hal/api.h"
+
+#ifndef __cplusplus
+#error "This header is meant for use with C++ HAL implementations."
+#endif  // __cplusplus
 
 namespace iree {
 namespace hal {
 
-class Resource : public RefObject<Resource> {
+template <typename T>
+class ResourceBase {
  public:
-  virtual ~Resource() = default;
+  ResourceBase(const ResourceBase&) = delete;
+  ResourceBase& operator=(const ResourceBase&) = delete;
+
+  // Adds a reference; used by ref_ptr.
+  friend void ref_ptr_add_ref(T* p) {
+    volatile iree_atomic_ref_count_t* counter = p->base()->resource.ref_count;
+    iree_atomic_ref_count_inc(counter);
+  }
+
+  // Releases a reference, potentially deleting the object; used by ref_ptr.
+  friend void ref_ptr_release_ref(T* p) {
+    volatile iree_atomic_ref_count_t* counter = p->base()->resource.ref_count;
+    if (iree_atomic_ref_count_dec(counter) == 1) {
+      delete p;
+    }
+  }
+
+ protected:
+  ResourceBase() = default;
 };
 
 }  // namespace hal

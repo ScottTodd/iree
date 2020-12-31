@@ -67,6 +67,7 @@ iree_cc_library(
     iree::base::logging
     iree::base::ref_ptr
     iree::base::status
+    iree::base::synchronization
     iree::base::time
     iree::base::tracing
     iree::hal::cc
@@ -106,6 +107,7 @@ iree_cc_library(
     iree::base::core_headers
     iree::base::logging
     iree::base::status
+    iree::base::synchronization
     iree::base::tracing
     iree::hal::cc
     vulkan_memory_allocator
@@ -116,17 +118,13 @@ iree_cc_library(
   NAME
     vulkan
   HDRS
+    "command_queue.h"
     "descriptor_pool_cache.h"
     "descriptor_set_arena.h"
     "direct_command_buffer.h"
     "direct_command_queue.h"
-    "emulated_timeline_semaphore.h"
-    "native_descriptor_set.h"
-    "native_event.h"
-    "native_timeline_semaphore.h"
-    "pipeline_cache.h"
-    "pipeline_executable.h"
-    "pipeline_executable_layout.h"
+    "emulated_semaphore.h"
+    "native_semaphore.h"
     "serializing_command_queue.h"
     "vulkan_device.h"
     "vulkan_driver.h"
@@ -135,13 +133,20 @@ iree_cc_library(
     "descriptor_set_arena.cc"
     "direct_command_buffer.cc"
     "direct_command_queue.cc"
-    "emulated_timeline_semaphore.cc"
+    "emulated_semaphore.cc"
     "native_descriptor_set.cc"
+    "native_descriptor_set.h"
+    "native_descriptor_set_layout.cc"
+    "native_descriptor_set_layout.h"
     "native_event.cc"
-    "native_timeline_semaphore.cc"
-    "pipeline_cache.cc"
-    "pipeline_executable.cc"
-    "pipeline_executable_layout.cc"
+    "native_event.h"
+    "native_executable.cc"
+    "native_executable.h"
+    "native_executable_layout.cc"
+    "native_executable_layout.h"
+    "native_semaphore.cc"
+    "nop_executable_cache.cc"
+    "nop_executable_cache.h"
     "serializing_command_queue.cc"
     "vulkan_device.cc"
     "vulkan_driver.cc"
@@ -161,6 +166,7 @@ iree_cc_library(
     iree::base::intrusive_list
     iree::base::ref_ptr
     iree::base::status
+    iree::base::synchronization
     iree::base::time
     iree::base::tracing
     iree::hal::cc

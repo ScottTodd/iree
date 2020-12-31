@@ -120,17 +120,8 @@ static iree_status_t iree_hal_task_driver_create_device(
       driver->loader_count, driver->loaders, allocator, out_device);
 }
 
-static iree_status_t iree_hal_task_driver_create_default_device(
-    iree_hal_driver_t* base_driver, iree_allocator_t allocator,
-    iree_hal_device_t** out_device) {
-  iree_hal_task_driver_t* driver = (iree_hal_task_driver_t*)base_driver;
-  return iree_hal_task_driver_create_device(
-      base_driver, IREE_HAL_TASK_DEVICE_ID_DEFAULT, allocator, out_device);
-}
-
 static const iree_hal_driver_vtable_t iree_hal_task_driver_vtable = {
     .destroy = iree_hal_task_driver_destroy,
     .query_available_devices = iree_hal_task_driver_query_available_devices,
     .create_device = iree_hal_task_driver_create_device,
-    .create_default_device = iree_hal_task_driver_create_default_device,
 };

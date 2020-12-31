@@ -48,6 +48,24 @@ typedef enum {
   IREE_HAL_VULKAN_DEVICE_OPTIONAL = 0,
 } iree_hal_vulkan_extensibility_set_t;
 
+typedef struct {
+  iree_host_size_t count;
+  const char** values;
+} iree_hal_vulkan_string_list_t;
+
+// Describes required and optional extensibility points.
+typedef struct {
+  // A list of required and optional layers.
+  iree_hal_vulkan_string_list_t required_layers;
+  iree_hal_vulkan_string_list_t optional_layers;
+
+  // A list of required and optional extensions.
+  // Prefer using the _EXTENSION_NAME macros to make tracking easier (such as
+  // 'VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME').
+  iree_hal_vulkan_string_list_t required_extensions;
+  iree_hal_vulkan_string_list_t optional_extensions;
+} iree_hal_vulkan_extensibility_spec_t;
+
 // Bitfield that defines sets of Vulkan features.
 typedef enum {
   // Use VK_LAYER_KHRONOS_standard_validation.
@@ -60,14 +78,38 @@ typedef enum {
   IREE_HAL_VULKAN_ENABLE_PUSH_DESCRIPTORS = 1 << 2,
 } iree_hal_vulkan_features_t;
 
+enum iree_hal_vulkan_device_flag_e {
+  // Uses timeline semaphore emulation even if native support exists.
+  IREE_HAL_VULKAN_DEVICE_FORCE_TIMELINE_SEMAPHORE_EMULATION = 1 << 0,
+};
+typedef uint32_t iree_hal_vulkan_device_flag_t;
+
+typedef struct {
+  // Flags controlling device behavior.
+  iree_hal_vulkan_device_flag_t flags;
+
+  // Extensibility descriptions for the device.
+  iree_hal_vulkan_extensibility_spec_t extensibility_spec;
+} iree_hal_vulkan_device_options_t;
+
 // Vulkan driver creation options.
 typedef struct {
   // Vulkan version that will be requested, e.g. `VK_API_VERSION_1_0`.
   // Driver creation will fail if the required version is not available.
   uint32_t api_version;
 
-  // Vulkan features to request.
-  iree_hal_vulkan_features_t features;
+  // Extensibility descriptions for instances.
+  // See iree_hal_vulkan_device_options_t for device extensibility
+  // descriptions.
+  iree_hal_vulkan_extensibility_spec_t extensibility_spec;
+
+  // Options to use for all devices created by the driver.
+  iree_hal_vulkan_device_options_t device_options;
+
+  // Index of the default Vulkan device to use within the list of available
+  // devices. Devices are discovered via vkEnumeratePhysicalDevices then
+  // considered "available" if compatible with the driver options.
+  int default_device_index = 0;
 } iree_hal_vulkan_driver_options_t;
 
 // A set of queues within a specific queue family on a VkDevice.
@@ -157,7 +199,11 @@ IREE_API_EXPORT iree_status_t IREE_API_CALL iree_hal_vulkan_get_layers(
 // iree::hal::vulkan::VulkanDriver
 //===----------------------------------------------------------------------===//
 
-// TODO(scotttodd): Allow applications to provide their own allocators here
+IREE_API_EXPORT void IREE_API_CALL iree_hal_vulkan_device_options_initialize(
+    iree_hal_vulkan_device_options_t* out_options);
+
+IREE_API_EXPORT void IREE_API_CALL iree_hal_vulkan_driver_options_initialize(
+    iree_hal_vulkan_driver_options_t* out_options);
 
 // Creates a Vulkan HAL driver that manages its own VkInstance.
 //

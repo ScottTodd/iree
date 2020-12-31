@@ -34,14 +34,14 @@ namespace vulkan {
 // Describes required and optional extensibility points.
 struct ExtensibilitySpec {
   // A list of required and optional layers.
-  std::vector<const char*> required_layers;
-  std::vector<const char*> optional_layers;
+  absl::Span<const char* const> required_layers;
+  absl::Span<const char* const> optional_layers;
 
   // A list of required and optional extensions.
   // Prefer using the _EXTENSION_NAME macros to make tracking easier (such as
   // 'VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME').
-  std::vector<const char*> required_extensions;
-  std::vector<const char*> optional_extensions;
+  absl::Span<const char* const> required_extensions;
+  absl::Span<const char* const> optional_extensions;
 };
 
 // Returns a list of layer names available for instances.

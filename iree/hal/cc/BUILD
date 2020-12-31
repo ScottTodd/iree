@@ -25,13 +25,7 @@ package(
 cc_library(
     name = "cc",
     hdrs = [
-        "allocator.h",
-        "buffer.h",
-        "command_buffer.h",
-        "command_queue.h",
-        "debug_capture_manager.h",
         "device.h",
-        "device_info.h",
         "driver.h",
         "resource.h",
     ],

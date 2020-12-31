@@ -200,11 +200,11 @@ IREE_API_EXPORT iree_status_t IREE_API_CALL iree_hal_vulkan_get_layers(
 
 namespace {
 
-VulkanDriver::Options ConvertDriverOptions(
+iree_hal_vulkan_driver_options_t ConvertDriverOptions(
     iree_hal_vulkan_driver_options_t options) {
-  VulkanDriver::Options driver_options;
+  iree_hal_vulkan_driver_options_t driver_options;
   driver_options.api_version = options.api_version;
-  driver_options.instance_extensibility =
+  driver_options.extensibility_spec =
       GetInstanceExtensibilitySpec(options.features);
   driver_options.device_options.extensibility_spec =
       GetDeviceExtensibilitySpec(options.features);
@@ -288,10 +288,10 @@ IREE_API_EXPORT iree_status_t IREE_API_CALL iree_hal_vulkan_driver_wrap_device(
   auto* handle = reinterpret_cast<VulkanDriver*>(driver);
 
   IREE_LOG(INFO) << "Creating VulkanDevice...";
-  QueueSet compute_qs;
+  iree_hal_vulkan_queue_set_t compute_qs;
   compute_qs.queue_family_index = compute_queue_set.queue_family_index;
   compute_qs.queue_indices = compute_queue_set.queue_indices;
-  QueueSet transfer_qs;
+  iree_hal_vulkan_queue_set_t transfer_qs;
   transfer_qs.queue_family_index = transfer_queue_set.queue_family_index;
   transfer_qs.queue_indices = transfer_queue_set.queue_indices;
   IREE_ASSIGN_OR_RETURN(auto device,

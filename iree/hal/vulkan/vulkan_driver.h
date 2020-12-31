@@ -26,7 +26,6 @@
 #include "iree/hal/vulkan/debug_reporter.h"
 #include "iree/hal/vulkan/dynamic_symbols.h"
 #include "iree/hal/vulkan/extensibility_util.h"
-#include "iree/hal/vulkan/renderdoc_capture_manager.h"
 #include "iree/hal/vulkan/vulkan_device.h"
 
 namespace iree {
@@ -35,31 +34,10 @@ namespace vulkan {
 
 class VulkanDriver final : public Driver {
  public:
-  struct Options {
-    // Vulkan version that will be requested.
-    // Driver creation will fail if the required version is not available.
-    uint32_t api_version = VK_API_VERSION_1_0;
-
-    // Extensibility descriptions for instances.
-    // See VulkanDevice::Options for device extensibility descriptions.
-    ExtensibilitySpec instance_extensibility;
-
-    // Options to use for all devices created by the driver.
-    VulkanDevice::Options device_options;
-
-    // Index of the default Vulkan device to use within the list of available
-    // devices. Devices are discovered via vkEnumeratePhysicalDevices then
-    // considered "available" if compatible with the driver options.
-    int default_device_index = 0;
-
-    // Enables RenderDoc integration, connecting via RenderDoc's API and
-    // recording Vulkan calls for offline inspection and debugging.
-    bool enable_renderdoc = false;
-  };
-
   // Creates a VulkanDriver that manages its own VkInstance.
-  static StatusOr<ref_ptr<VulkanDriver>> Create(Options options,
-                                                ref_ptr<DynamicSymbols> syms);
+  static StatusOr<ref_ptr<VulkanDriver>> Create(
+      const iree_hal_vulkan_driver_options_t* options,
+      ref_ptr<DynamicSymbols> syms);
 
   // Creates a VulkanDriver that shares an externally managed VkInstance.
   //
@@ -70,7 +48,8 @@ class VulkanDriver final : public Driver {
   //
   // |instance| must remain valid for the life of the returned VulkanDriver.
   static StatusOr<ref_ptr<VulkanDriver>> CreateUsingInstance(
-      Options options, ref_ptr<DynamicSymbols> syms, VkInstance instance);
+      const iree_hal_vulkan_driver_options_t* options,
+      ref_ptr<DynamicSymbols> syms, VkInstance instance);
 
   ~VulkanDriver() override;
 
@@ -88,29 +67,24 @@ class VulkanDriver final : public Driver {
   // Creates a device that wraps an externally managed VkDevice.
   //
   // The device will schedule commands against the provided queues.
-  StatusOr<ref_ptr<Device>> WrapDevice(VkPhysicalDevice physical_device,
-                                       VkDevice logical_device,
-                                       const QueueSet& compute_queue_set,
-                                       const QueueSet& transfer_queue_set);
-
-  DebugCaptureManager* debug_capture_manager() override {
-    return renderdoc_capture_manager_.get();
-  }
+  StatusOr<ref_ptr<Device>> WrapDevice(
+      VkPhysicalDevice physical_device, VkDevice logical_device,
+      const iree_hal_vulkan_queue_set_t& compute_queue_set,
+      const iree_hal_vulkan_queue_set_t& transfer_queue_set);
 
  private:
-  VulkanDriver(
-      ref_ptr<DynamicSymbols> syms, VkInstance instance, bool owns_instance,
-      VulkanDevice::Options device_options, int default_device_index,
-      std::unique_ptr<DebugReporter> debug_reporter,
-      std::unique_ptr<RenderDocCaptureManager> renderdoc_capture_manager);
+  VulkanDriver(ref_ptr<DynamicSymbols> syms, VkInstance instance,
+               bool owns_instance,
+               iree_hal_vulkan_device_options_t device_options,
+               int default_device_index,
+               std::unique_ptr<DebugReporter> debug_reporter);
 
   ref_ptr<DynamicSymbols> syms_;
   VkInstance instance_;
   bool owns_instance_;
-  VulkanDevice::Options device_options_;
+  iree_hal_vulkan_device_options_t device_options_;
   int default_device_index_;
   std::unique_ptr<DebugReporter> debug_reporter_;
-  std::unique_ptr<RenderDocCaptureManager> renderdoc_capture_manager_;
 };
 
 }  // namespace vulkan
