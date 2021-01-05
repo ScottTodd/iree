@@ -25,6 +25,7 @@ iree_cc_library(
     "driver_module.c"
   DEPS
     iree::hal::api
+    iree::hal::local::task_driver
     iree::hal::local::loaders::vmla_module_loader
   DEFINES
     "IREE_HAL_HAVE_VMLA_DRIVER_MODULE=1"

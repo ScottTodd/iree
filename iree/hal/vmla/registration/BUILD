@@ -36,6 +36,7 @@ cc_library(
     ],
     deps = [
         "//iree/hal:api",
+        "//iree/hal/local:task_driver",
         "//iree/hal/local/loaders:vmla_module_loader",
     ],
 )
