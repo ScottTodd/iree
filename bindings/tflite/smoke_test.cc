@@ -44,18 +44,16 @@ limitations under the License.
 #define IREE_BINDINGS_TFLITE_TESTDATA_ADD_STATIC_EMBEDDED_SIZE \
   iree::bindings::tflite::testdata::add_static_create()->size
 
-// TODO(#3971): currently can't nicely load these due to cmake issues.
 #define IREE_BINDINGS_TFLITE_TESTDATA_ADD_STATIC_PATH \
-  "tensorflow/lite/testdata/add.bin"
+  "bindings/tflite/testdata/add_static.vmfb"
 
 namespace {
-
 TEST(CAPI, Version) { EXPECT_STRNE("", TfLiteVersion()); }
 
 // The original test has been modified here because it uses dynamic shapes
 // even though the model has static shapes defined 🤦. IREE does not support
-// this misbehavior of compiling with static shapes and treating them as dynamic
-// at runtime.
+// this misbehavior of compiling with static shapes and treating them as
+// dynamic at runtime.
 //
 // TODO(#3975): need to remove SIP stuff and pass buffer views.
 TEST(CApiSimple, DISABLED_DynamicSmoke) {
@@ -321,8 +319,7 @@ TEST(CApiSimple, ValidModel) {
   TfLiteModelDelete(model);
 }
 
-// TODO(#3971): fix cmake data deps.
-TEST(CApiSimple, DISABLED_ValidModelFromFile) {
+TEST(CApiSimple, ValidModelFromFile) {
   TfLiteModel* model =
       TfLiteModelCreateFromFile(IREE_BINDINGS_TFLITE_TESTDATA_ADD_STATIC_PATH);
   ASSERT_NE(model, nullptr);
@@ -336,8 +333,7 @@ TEST(CApiSimple, InvalidModel) {
   ASSERT_EQ(model, nullptr);
 }
 
-// TODO(#3971): fix cmake data deps.
-TEST(CApiSimple, DISABLED_InvalidModelFromFile) {
+TEST(CApiSimple, InvalidModelFromFile) {
   TfLiteModel* model = TfLiteModelCreateFromFile("invalid/path/foo.vmfb");
   ASSERT_EQ(model, nullptr);
 }

@@ -78,6 +78,8 @@ function(iree_bytecode_module)
     DEPENDS ${_TRANSLATE_TOOL_EXECUTABLE} ${_RULE_SRC}
   )
 
+  # message("output: ${_RULE_NAME}.vmfb")
+
   if(_RULE_TESTONLY)
     set(_TESTONLY_ARG "TESTONLY")
   endif()

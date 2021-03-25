@@ -50,6 +50,8 @@ iree_cc_test(
     smoke_test
   SRCS
     "smoke_test.cc"
+  DATA
+    bindings::tflite::testdata::add_static.vmfb
   DEPS
     ::shim
     bindings::tflite::testdata::add_dynamic_cc

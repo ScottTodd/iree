@@ -66,11 +66,9 @@ cc_library(
 cc_test(
     name = "smoke_test",
     srcs = ["smoke_test.cc"],
-    # TODO(benvanik): bazel/cmake to include this generated file.
-    # Checked in right now until I can figure it out.
-    # data = [
-    #     "//bindings/tflite/testdata:add.vmfb",
-    # ],
+    data = [
+        "//bindings/tflite/testdata:add_static.vmfb",
+    ],
     deps = [
         ":shim",
         "//bindings/tflite/testdata:add_dynamic_cc",
