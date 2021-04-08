@@ -352,6 +352,24 @@ if(${IREE_BUILD_COMPILER})
 
   iree_cc_binary(
     NAME
+      iree_opt_library
+    OUT
+      iree-opt-library
+    SRCS
+      "iree-opt-library.cc"
+    DEPS
+      ::init_passes_and_dialects
+      ::init_targets
+      LLVMSupport
+      MLIRIR
+      MLIROptLib
+      MLIRSupport
+      ${IREE_OPT_CONDITIONAL_DEPS}
+    HOSTONLY
+  )
+
+  iree_cc_binary(
+    NAME
       iree-run-mlir
     OUT
       iree-run-mlir
