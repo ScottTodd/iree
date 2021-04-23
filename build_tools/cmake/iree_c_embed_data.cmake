@@ -74,6 +74,8 @@ function(iree_c_embed_data)
 
   iree_get_executable_path(_EXE_PATH generate_embed_data)
 
+  message("_ARGS: ${_ARGS}")
+
   add_custom_command(
     OUTPUT "${_RULE_H_FILE_OUTPUT}" "${_RULE_C_FILE_OUTPUT}"
     COMMAND ${_EXE_PATH} ${_ARGS}

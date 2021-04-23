@@ -151,7 +151,11 @@ bool GenerateImpl(const std::string& impl_file,
   const auto& c_output = absl::GetFlag(FLAGS_c_output);
   if (c_output) {
     f << "#include <stddef.h>\n";
+    // f << "#include <stdalign.h>\n";
+    f << "// VC++ does not have C11's stdalign.h.\n";
+    f << "#if !defined(_MSC_VER)\n";
     f << "#include <stdalign.h>\n";
+    f << "#endif  // _MSC_VER\n";
     GenerateTocStruct(f);
   } else {
     f << "#include <cstddef>\n";
@@ -159,7 +163,9 @@ bool GenerateImpl(const std::string& impl_file,
     GenerateNamespaceOpen(f);
   }
   for (size_t i = 0, e = input_files.size(); i < e; ++i) {
-    f << "alignas(alignof(void*)) static char const file_" << i << "[] = {\n";
+    // f << "alignas(alignof(void*)) static char const file_" << i << "[] =
+    // {\n";
+    f << "static char const file_" << i << "[] = {\n";
     std::string contents;
     if (!SlurpFile(input_files[i], &contents)) {
       std::cerr << "Error reading file " << input_files[i] << "\n";
