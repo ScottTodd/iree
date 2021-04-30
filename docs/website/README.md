@@ -1,6 +1,10 @@
-# IREE User-Facing Documentation
+# IREE User-Facing Documentation Website
 
-** * UNDER CONSTRUCTION ** *
+This directory contains the source for IREE's website, hosted on
+[GitHub Pages](https://pages.github.com/).
+
+The website is generated using [MkDocs](https://www.mkdocs.org/), with the
+[Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme.
 
 ## How to edit this documentation
 
@@ -9,8 +13,8 @@ https://www.mkdocs.org/.
 
 Develop (from mkdocs/ folder):
 
-```
-$ mkdocs serve
+```shell
+mkdocs serve
 ```
 
 Deploy:
@@ -18,6 +22,6 @@ Deploy:
 * This force pushes to `gh-pages` on `<your remote>`. Please don't push to the
   main repository :)
 
-```
+```shell
 mkdocs gh-deploy --remote-name <your remote>
 ```
