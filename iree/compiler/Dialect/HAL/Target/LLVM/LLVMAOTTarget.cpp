@@ -304,11 +304,30 @@ class LLVMAOTTargetBackend final : public TargetBackend {
       linkArtifacts.keepAllFiles();
     }
 
-    if (options_.linkEmbedded) {
+    if (targetTriple.isWasm()) {
+      // Load the linked Wasm file and pack into an attr.
+      auto wasmFile = linkArtifacts.libraryFile.read();
+      if (!wasmFile.hasValue()) {
+        return targetOp.emitError() << "failed to read back Wasm temp file at "
+                                    << linkArtifacts.libraryFile.path;
+      }
+      auto bufferAttr = DenseIntElementsAttr::get(
+          VectorType::get({static_cast<int64_t>(wasmFile->size())},
+                          IntegerType::get(executableBuilder.getContext(), 8)),
+          std::move(wasmFile.getValue()));
+
+      // Add the binary to the parent hal.executable.
+      auto executableFormatAttr = executableBuilder.getStringAttr("Wasm");
+      auto binaryOp = executableBuilder.create<IREE::HAL::ExecutableBinaryOp>(
+          targetOp.getLoc(), targetOp.sym_name(), executableFormatAttr,
+          bufferAttr);
+      binaryOp.mime_typeAttr(
+          executableBuilder.getStringAttr("application/wasm"));
+    } else if (options_.linkEmbedded) {
       // Load the linked ELF file and pack into an attr.
       auto elfFile = linkArtifacts.libraryFile.read();
       if (!elfFile.hasValue()) {
-        return targetOp.emitError() << "failed to read back dylib temp file at "
+        return targetOp.emitError() << "failed to read back ELF temp file at "
                                     << linkArtifacts.libraryFile.path;
       }
       auto bufferAttr = DenseIntElementsAttr::get(
@@ -356,13 +375,10 @@ class LLVMAOTTargetBackend final : public TargetBackend {
                                                           debugDatabaseRef);
       iree_DyLibExecutableDef_end_as_root(builder);
 
-      auto executableFormatAttr = targetTriple.isWasm()
-                                      ? executableBuilder.getStringAttr("WASM")
-                                      : executableBuilder.getStringAttr("DLIB");
-
       // Add the binary data to the target executable.
       auto binaryOp = executableBuilder.create<IREE::HAL::ExecutableBinaryOp>(
-          targetOp.getLoc(), targetOp.sym_name(), executableFormatAttr,
+          targetOp.getLoc(), targetOp.sym_name(),
+          executableBuilder.getStringAttr("DLIB"),
           builder.getBufferAttr(executableBuilder.getContext()));
       binaryOp.mime_typeAttr(
           executableBuilder.getStringAttr("application/x-flatbuffers"));

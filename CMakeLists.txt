@@ -126,6 +126,7 @@ set(IREE_ALL_HAL_DRIVERS
   DyLib
   VMLA
   Vulkan
+  Wasm
 )
 
 if(IREE_HAL_DRIVERS_TO_BUILD STREQUAL "all")

@@ -145,6 +145,7 @@ static StringRef mimeTypeToFileExtension(StringRef mimeType) {
   return StringSwitch<StringRef>(mimeType)
       .Case("application/x-flatbuffers", ".fb")
       .Case("application/x-elf", ".so")
+      .Case("application/wasm", ".wasm")
       .Default(".bin");
 }
 
