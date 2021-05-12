@@ -16,6 +16,7 @@
 #include "iree/base/tracing.h"
 #include "iree/hal/local/executable_loader.h"
 #include "iree/hal/local/local_executable.h"
+#include "third_party/wasm3/source/wasm3.h"
 
 //===----------------------------------------------------------------------===//
 // iree_hal_wasm_executable_t
@@ -30,6 +31,10 @@ typedef struct {
   // Name used for the file field in tracy and debuggers.
   // iree_string_view_t identifier;
 
+  IM3Module wasm3_module;
+
+  // TODO(scotttodd): IM3Function list for resolved entry points
+
   // Queried metadata from the library.
   union {
     const iree_hal_executable_library_header_t** header;
@@ -40,8 +45,17 @@ typedef struct {
 extern const iree_hal_local_executable_vtable_t iree_hal_wasm_executable_vtable;
 
 static iree_status_t iree_hal_wasm_executable_query_library(
-    iree_hal_wasm_executable_t* executable) {
+    iree_hal_wasm_executable_t* executable, IM3Runtime wasm3_runtime) {
   // TODO(scotttodd): call the IREE_HAL_EXECUTABLE_LIBRARY_EXPORT_NAME function
+
+  IM3Function wasm3_query_fn = NULL;
+  M3Result result = m3_FindFunction(&wasm3_query_fn, wasm3_runtime,
+                                    IREE_HAL_EXECUTABLE_LIBRARY_EXPORT_NAME);
+  if (result != m3Err_none) {
+    return iree_make_status(IREE_STATUS_INTERNAL,
+                            "m3_FindFunction could not find '%s'",
+                            IREE_HAL_EXECUTABLE_LIBRARY_EXPORT_NAME);
+  }
 
   // // Get the exported symbol used to get the library metadata.
   // iree_hal_executable_library_query_fn_t query_fn = NULL;
@@ -87,6 +101,7 @@ static iree_status_t iree_hal_wasm_executable_query_library(
 }
 
 static iree_status_t iree_hal_wasm_executable_create(
+    IM3Environment wasm3_environment, IM3Runtime wasm3_runtime,
     iree_hal_executable_caching_mode_t caching_mode,
     iree_const_byte_span_t wasm_module_data,
     iree_host_size_t executable_layout_count,
@@ -113,6 +128,29 @@ static iree_status_t iree_hal_wasm_executable_create(
         executable_layouts, executable_layouts_ptr, host_allocator,
         &executable->base);
   }
+
+  if (iree_status_is_ok(status)) {
+    IM3Module wasm3_module;
+    M3Result result =
+        m3_ParseModule(wasm3_environment, &wasm3_module, wasm_module_data.data,
+                       wasm_module_data.data_length);
+    if (result != m3Err_none) {
+      status = iree_make_status(IREE_STATUS_INTERNAL,
+                                "m3_ParseModule failed: '%s'", result);
+    } else {
+      executable->wasm3_module = wasm3_module;
+    }
+  }
+
+  if (iree_status_is_ok(status)) {
+    M3Result result = m3_LoadModule(wasm3_runtime, executable->wasm3_module);
+    if (result != m3Err_none) {
+      status = iree_make_status(IREE_STATUS_INTERNAL,
+                                "m3_LoadModule failed: '%s'", result);
+      m3_FreeModule(executable->wasm3_module);
+    }
+  }
+
   if (iree_status_is_ok(status)) {
     // Attempt to load the ELF module.
     // status = iree_elf_module_initialize_from_memory(
@@ -121,7 +159,7 @@ static iree_status_t iree_hal_wasm_executable_create(
   }
   if (iree_status_is_ok(status)) {
     // Query metadata and get the entry point function pointers.
-    // status = iree_hal_wasm_executable_query_library(executable);
+    status = iree_hal_wasm_executable_query_library(executable, wasm3_runtime);
   }
   if (iree_status_is_ok(status) &&
       !iree_all_bits_set(
@@ -221,6 +259,9 @@ const iree_hal_local_executable_vtable_t iree_hal_wasm_executable_vtable = {
 typedef struct {
   iree_hal_executable_loader_t base;
   iree_allocator_t host_allocator;
+
+  IM3Environment wasm3_env;
+  IM3Runtime wasm3_runtime;
 } iree_hal_wasm_module_loader_t;
 
 extern const iree_hal_executable_loader_vtable_t
@@ -240,7 +281,31 @@ iree_status_t iree_hal_wasm_module_loader_create(
     iree_hal_executable_loader_initialize(&iree_hal_wasm_module_loader_vtable,
                                           &executable_loader->base);
     executable_loader->host_allocator = host_allocator;
+  }
+
+  if (iree_status_is_ok(status)) {
+    executable_loader->wasm3_env = m3_NewEnvironment();
+    if (!executable_loader->wasm3_env) {
+      status =
+          iree_make_status(IREE_STATUS_INTERNAL, "m3_NewEnvironment failed");
+    }
+  }
+
+  if (iree_status_is_ok(status)) {
+    executable_loader->wasm3_runtime =
+        m3_NewRuntime(executable_loader->wasm3_env,
+                      /*i_stackSizeInBytes=*/4096, /*i_userdata=*/NULL);
+    if (!executable_loader->wasm3_runtime) {
+      status = iree_make_status(IREE_STATUS_INTERNAL, "m3_NewRuntime failed");
+    }
+  }
+
+  if (iree_status_is_ok(status)) {
     *out_executable_loader = (iree_hal_executable_loader_t*)executable_loader;
+  } else if (executable_loader) {
+    // TODO(scotttodd): error handling, cleanup
+    // iree_hal_wasm_module_loader_destroy(
+    //     (iree_hal_executable_loader_t*)executable_loader);
   }
 
   IREE_TRACE_ZONE_END(z0);
@@ -253,6 +318,13 @@ static void iree_hal_wasm_module_loader_destroy(
       (iree_hal_wasm_module_loader_t*)base_executable_loader;
   iree_allocator_t host_allocator = executable_loader->host_allocator;
   IREE_TRACE_ZONE_BEGIN(z0);
+
+  if (executable_loader->wasm3_env) {
+    m3_FreeEnvironment(executable_loader->wasm3_env);
+  }
+  if (executable_loader->wasm3_runtime) {
+    m3_FreeRuntime(executable_loader->wasm3_runtime);
+  }
 
   iree_allocator_free(host_allocator, executable_loader);
 
@@ -277,6 +349,7 @@ static iree_status_t iree_hal_wasm_module_loader_try_load(
 
   // Perform the load of the wasm module and wrap it in an executable handle.
   iree_status_t status = iree_hal_wasm_executable_create(
+      executable_loader->wasm3_env, executable_loader->wasm3_runtime,
       executable_spec->caching_mode, executable_spec->executable_data,
       executable_spec->executable_layout_count,
       executable_spec->executable_layouts, executable_loader->host_allocator,

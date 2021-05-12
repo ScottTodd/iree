@@ -129,7 +129,8 @@ iree_cc_library(
     iree::hal
     iree::hal::local
     iree::schemas::dylib_executable_def_c_fbs
-    # wasm_micro_runtime_vmlib
+    # TODO(scotttodd): add flags to ignore warnings in wasm3
+    m3
   DEFINES
     "IREE_HAL_HAVE_WASM_MODULE_LOADER=1"
   PUBLIC
