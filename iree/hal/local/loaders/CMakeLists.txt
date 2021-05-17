@@ -115,6 +115,11 @@ endif()
 ### BAZEL_TO_CMAKE_PRESERVES_ALL_CONTENT_BELOW_THIS_LINE ###
 
 if(${IREE_HAL_DRIVER_WASM})
+
+add_library(wasmtime_static STATIC IMPORTED)
+set_target_properties(wasmtime_static PROPERTIES
+    IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/third_party/wasmtime/lib/wasmtime.lib")
+
 iree_cc_library(
   NAME
     wasm_module_loader
@@ -125,13 +130,30 @@ iree_cc_library(
   DEPS
     iree::base
     iree::base::tracing
-    iree::base::internal::flatcc
     iree::hal
     iree::hal::local
-    iree::schemas::dylib_executable_def_c_fbs
-    # wasm_micro_runtime_vmlib
+    #
+    wasmtime_static
+    #
+    # TODO(scotttodd): move to pragmas in source:
+    #if defined(IREE_PLATFORM_WINDOWS)
+    #pragma comment(lib, "ole32.lib")
+    #pragma comment(lib, "bcrypt.lib")
+    #endif  //
+    ws2_32.lib
+    advapi32.lib
+    userenv.lib
+    ntdll.lib
+    shell32.lib
+    ole32.lib
+    bcrypt.lib
   DEFINES
     "IREE_HAL_HAVE_WASM_MODULE_LOADER=1"
+    "WASM_API_EXTERN="
+    "WASI_API_EXTERN="
+  INCLUDES
+    "${PROJECT_SOURCE_DIR}/third_party/wasmtime/include"
   PUBLIC
 )
+
 endif()

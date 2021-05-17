@@ -16,6 +16,9 @@
 #include "iree/base/tracing.h"
 #include "iree/hal/local/executable_loader.h"
 #include "iree/hal/local/local_executable.h"
+#include "third_party/wasmtime/include/wasi.h"
+#include "third_party/wasmtime/include/wasm.h"
+#include "third_party/wasmtime/include/wasmtime.h"
 
 //===----------------------------------------------------------------------===//
 // iree_hal_wasm_executable_t
@@ -29,6 +32,12 @@ typedef struct {
 
   // Name used for the file field in tracy and debuggers.
   // iree_string_view_t identifier;
+
+  // wasi_instance_t* wasi_instance;
+  // wasmtime_linker_t* wasmtime_linker;
+
+  wasm_module_t* wasm_module;
+  wasm_instance_t* wasm_instance;
 
   // Queried metadata from the library.
   union {
@@ -87,6 +96,7 @@ static iree_status_t iree_hal_wasm_executable_query_library(
 }
 
 static iree_status_t iree_hal_wasm_executable_create(
+    wasm_engine_t* wasm_engine, wasm_store_t* wasm_store,
     iree_hal_executable_caching_mode_t caching_mode,
     iree_const_byte_span_t wasm_module_data,
     iree_host_size_t executable_layout_count,
@@ -113,6 +123,118 @@ static iree_status_t iree_hal_wasm_executable_create(
         executable_layouts, executable_layouts_ptr, host_allocator,
         &executable->base);
   }
+
+  // TODO(scotttodd): move to function
+  if (iree_status_is_ok(status)) {
+    wasm_byte_vec_t wasm_module_bytes;
+    // TODO(scotttodd): fix `warning C4090: '=': different 'const' qualifiers`
+    wasm_module_bytes.data = wasm_module_data.data;
+    wasm_module_bytes.size = wasm_module_data.data_length;
+
+    executable->wasm_module = NULL;
+    wasmtime_error_t* wasm_error = wasmtime_module_new(
+        wasm_engine, &wasm_module_bytes, &executable->wasm_module);
+    if (!executable->wasm_module) {
+      status = iree_make_status(IREE_STATUS_INTERNAL,
+                                "wasmtime_module_new error: '%s'", wasm_error);
+    }
+  }
+
+  // if (iree_status_is_ok(status)) {
+  //   wasi_config_t* wasi_config = wasi_config_new();
+  //   // TODO(scotttodd): error handling (check not NULL)
+  //   wasi_config_inherit_argv(wasi_config);
+  //   wasi_config_inherit_env(wasi_config);
+  //   wasi_config_inherit_stdin(wasi_config);
+  //   wasi_config_inherit_stdout(wasi_config);
+  //   wasi_config_inherit_stderr(wasi_config);
+  //   wasm_trap_t* wasm_trap = NULL;
+  //   executable->wasi_instance = wasi_instance_new(
+  //       wasm_store, "wasi_snapshot_preview1", wasi_config, &wasm_trap);
+  //   if (!executable->wasi_instance) {
+  //     status =
+  //         iree_make_status(IREE_STATUS_INTERNAL, "wasi_instance_new failed");
+  //   }
+  // }
+
+  // if (iree_status_is_ok(status)) {
+  //   executable->wasmtime_linker = wasmtime_linker_new(wasm_store);
+  //   wasmtime_error_t* wasm_error = wasmtime_linker_define_wasi(
+  //       executable->wasmtime_linker, executable->wasi_instance);
+  //   if (wasm_error) {
+  //     status = iree_make_status(IREE_STATUS_INTERNAL,
+  //                               "wasmtime_module_new error: '%s'",
+  //                               wasm_error);
+  //   }
+  // }
+
+  if (iree_status_is_ok(status)) {
+    executable->wasm_instance = NULL;
+    wasm_trap_t* trap = NULL;
+    wasm_extern_vec_t imports = WASM_EMPTY_VEC;
+    wasmtime_error_t* wasm_error =
+        wasmtime_instance_new(wasm_store, executable->wasm_module, &imports,
+                              &executable->wasm_instance, &trap);
+    if (!executable->wasm_instance || wasm_error) {
+      status =
+          iree_make_status(IREE_STATUS_INTERNAL,
+                           "wasmtime_instance_new error: '%s'", wasm_error);
+    }
+  }
+
+  if (iree_status_is_ok(status)) {
+    wasm_exporttype_vec_t module_exports;
+    wasm_module_exports(executable->wasm_module, &module_exports);
+
+    for (int i = 0; i < module_exports.size; ++i) {
+      const wasm_name_t* export_name =
+          wasm_exporttype_name(module_exports.data[i]);
+      status = iree_ok_status();
+    }
+
+    wasm_extern_vec_t instance_externs;
+    wasm_instance_exports(executable->wasm_instance, &instance_externs);
+
+    // (export "memory" (memory 0))
+    // (export "iree_hal_executable_library_query" (func
+    // $iree_hal_executable_library_query))
+
+    for (int i = 0; i < instance_externs.size; ++i) {
+      wasm_externkind_t externkind = wasm_extern_kind(instance_externs.data[i]);
+      switch (externkind) {
+        case WASM_EXTERN_FUNC: {
+          status = iree_ok_status();
+          // wasm_functype_t* functype =
+          // wasm_externtype_as_functype(externtype);
+          break;
+        }
+        case WASM_EXTERN_GLOBAL:
+          status = iree_ok_status();
+          break;
+        case WASM_EXTERN_TABLE:
+          status = iree_ok_status();
+          break;
+        case WASM_EXTERN_MEMORY:
+          status = iree_ok_status();
+          break;
+        default:
+          break;
+      }
+      // const wasm_name_t* externname = wasm_exporttype_
+    }
+
+    // index 0 export is memory
+    // index 1 export is 'iree_hal_executable_library_query' function
+    wasm_func_t* query_func = wasm_extern_as_func(instance_externs.data[1]);
+
+    // TODO(scotttodd): call query_func, try to call `multiply_dispatch_0`
+    //
+    // * maybe `multiply_dispatch_0` should be exported too?
+    //   queryLibraryFunc is the only exported function
+    //   try passing entryPointOp functions to configureModule
+    // * wasmtime_funcref_table_get -> wasm_func_t
+  }
+
   if (iree_status_is_ok(status)) {
     // Attempt to load the ELF module.
     // status = iree_elf_module_initialize_from_memory(
@@ -221,6 +343,11 @@ const iree_hal_local_executable_vtable_t iree_hal_wasm_executable_vtable = {
 typedef struct {
   iree_hal_executable_loader_t base;
   iree_allocator_t host_allocator;
+
+  // TODO(scotttodd): move to per-device
+  //     or store on iree_hal_allocator_t and create one of those per device?
+  wasm_engine_t* wasm_engine;
+  wasm_store_t* wasm_store;
 } iree_hal_wasm_module_loader_t;
 
 extern const iree_hal_executable_loader_vtable_t
@@ -243,6 +370,20 @@ iree_status_t iree_hal_wasm_module_loader_create(
     *out_executable_loader = (iree_hal_executable_loader_t*)executable_loader;
   }
 
+  if (iree_status_is_ok(status)) {
+    executable_loader->wasm_engine = wasm_engine_new();
+    if (!executable_loader->wasm_engine) {
+      status = iree_make_status(IREE_STATUS_INTERNAL, "wasm_engine_new failed");
+    }
+  }
+  if (iree_status_is_ok(status)) {
+    executable_loader->wasm_store =
+        wasm_store_new(executable_loader->wasm_engine);
+    if (!executable_loader->wasm_store) {
+      status = iree_make_status(IREE_STATUS_INTERNAL, "wasm_store_new failed");
+    }
+  }
+
   IREE_TRACE_ZONE_END(z0);
   return status;
 }
@@ -253,6 +394,13 @@ static void iree_hal_wasm_module_loader_destroy(
       (iree_hal_wasm_module_loader_t*)base_executable_loader;
   iree_allocator_t host_allocator = executable_loader->host_allocator;
   IREE_TRACE_ZONE_BEGIN(z0);
+
+  if (executable_loader->wasm_store) {
+    wasm_store_delete(executable_loader->wasm_store);
+  }
+  if (executable_loader->wasm_engine) {
+    wasm_engine_delete(executable_loader->wasm_engine);
+  }
 
   iree_allocator_free(host_allocator, executable_loader);
 
@@ -277,6 +425,7 @@ static iree_status_t iree_hal_wasm_module_loader_try_load(
 
   // Perform the load of the wasm module and wrap it in an executable handle.
   iree_status_t status = iree_hal_wasm_executable_create(
+      executable_loader->wasm_engine, executable_loader->wasm_store,
       executable_spec->caching_mode, executable_spec->executable_data,
       executable_spec->executable_layout_count,
       executable_spec->executable_layouts, executable_loader->host_allocator,
