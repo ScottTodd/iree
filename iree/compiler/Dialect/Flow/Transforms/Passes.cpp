@@ -107,6 +107,7 @@ void buildFlowTransformPassPipeline(OpPassManager &passManager) {
   passManager.addNestedPass<FuncOp>(mlir::createLinalgFoldUnitExtentDimsPass());
   passManager.addNestedPass<FuncOp>(createInterchangeLinalgGenericPass());
   passManager.addNestedPass<FuncOp>(mlir::createCanonicalizerPass());
+  passManager.addNestedPass<FuncOp>(mlir::createLinalgDetensorizePass());
   passManager.addNestedPass<FuncOp>(createFusionOfTensorOpsPass());
   passManager.addNestedPass<FuncOp>(
       IREE::Flow::createConvertToFlowTensorOpsPass());
