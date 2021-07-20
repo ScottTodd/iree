@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "iree/compiler/Dialect/Shape/Transforms/Passes.h"
+#include "iree/compiler/InputConversion/Common/Passes.h"
 #include "mlir/Dialect/Linalg/Passes.h"
 #include "mlir/Dialect/MemRef/Transforms/Passes.h"
 #include "mlir/Pass/PassOptions.h"
@@ -107,7 +108,11 @@ void buildFlowTransformPassPipeline(OpPassManager &passManager) {
   passManager.addNestedPass<FuncOp>(mlir::createLinalgFoldUnitExtentDimsPass());
   passManager.addNestedPass<FuncOp>(createInterchangeLinalgGenericPass());
   passManager.addNestedPass<FuncOp>(mlir::createCanonicalizerPass());
+
+  // Detensorize then convert residual tensor ops -> flow ops.
   passManager.addNestedPass<FuncOp>(mlir::createLinalgDetensorizePass());
+  passManager.addNestedPass<FuncOp>(createConvertUpstreamToIREE());
+
   passManager.addNestedPass<FuncOp>(createFusionOfTensorOpsPass());
   passManager.addNestedPass<FuncOp>(
       IREE::Flow::createConvertToFlowTensorOpsPass());

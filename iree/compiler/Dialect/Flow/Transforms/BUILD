@@ -69,6 +69,7 @@ cc_library(
         "//iree/compiler/Dialect/Shape/IR",
         "//iree/compiler/Dialect/Shape/Transforms",
         "//iree/compiler/Dialect/Shape/Utils:TypeConversion",
+        "//iree/compiler/InputConversion/Common",
         "//iree/compiler/Utils",
         "@llvm-project//llvm:Support",
         "@llvm-project//mlir:Affine",

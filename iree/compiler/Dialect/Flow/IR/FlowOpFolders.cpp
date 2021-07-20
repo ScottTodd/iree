@@ -739,6 +739,16 @@ OpFoldResult TensorStoreOp::fold(ArrayRef<Attribute> operands) {
   return {};
 }
 
+void TensorSplatOp::getCanonicalizationPatterns(
+    OwningRewritePatternList &results, MLIRContext *context) {
+  // results.insert<
+  //     ConvertDimOfDispatchInputLoadToDispatchShape,
+  //     ConvertDispatchInputLoadOfTensorToSubTensor,
+  //     OpWithOffsetSizesAndStridesConstantArgumentFolder<
+  //         DispatchTensorLoadOp, DispatchTensorLoadReturnTypeCanonicalizer,
+  //         DispatchTensorLoadOpCanonicalizer>>(context);
+}
+
 OpFoldResult TensorSplatOp::fold(ArrayRef<Attribute> operands) {
   // TODO(benvanik): only fold when shape is constant.
   if (operands[0]) {

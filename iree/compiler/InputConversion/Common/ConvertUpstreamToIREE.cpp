@@ -8,6 +8,7 @@
 #include "iree/compiler/Dialect/Flow/IR/FlowOps.h"
 #include "iree/compiler/InputConversion/Common/PassDetail.h"
 #include "iree/compiler/InputConversion/Common/Passes.h"
+#include "llvm/Support/Debug.h"  // DO NOT SUBMIT
 #include "mlir/Dialect/Linalg/IR/LinalgOps.h"
 #include "mlir/Dialect/StandardOps/IR/Ops.h"
 #include "mlir/Dialect/Tensor/IR/Tensor.h"
@@ -83,12 +84,43 @@ struct ConvertTensorCastPattern : public OpConversionPattern<tensor::CastOp> {
   }
 };
 
+struct ConvertTensorFromElementsPattern
+    : public OpConversionPattern<tensor::FromElementsOp> {
+  using OpConversionPattern<tensor::FromElementsOp>::OpConversionPattern;
+
+  LogicalResult matchAndRewrite(
+      tensor::FromElementsOp op, ArrayRef<Value> operands,
+      ConversionPatternRewriter &rewriter) const override {
+    auto loc = op.getLoc();
+
+    int64_t dimSize = op.getType().getDimSize(0);
+    if (dimSize == 1) {
+      // TODO(scotttodd): figure out setting FLOW_ShapeDynamicDims:$result_dims
+      //   this appears as
+      //       %c1 = constant 1 : index
+      //       %6 = flow.tensor.splat %5 : tensor<1xi8>{%c1}
+      //   when I think I want
+      //       %6 = flow.tensor.splat %5 : tensor<1xi8>
+      SmallVector<Value> dimSizes(1);
+      dimSizes[0] = rewriter.create<ConstantIndexOp>(loc, 1);
+      rewriter.replaceOpWithNewOp<IREE::Flow::TensorSplatOp>(
+          op, op.getType(), operands.front(), dimSizes);
+    } else {
+      // Failure, or lower to a different op?
+    }
+
+    return success();
+  }
+};
+
 }  // namespace
 
+// TODO(scotttodd): move to Dialect/Flow/Conversions/TensorToFlow
 void populateConvertUpstreamToIREEPatterns(MLIRContext *context,
                                            TypeConverter &typeConverter,
                                            OwningRewritePatternList &patterns) {
   patterns.add<ConvertTensorCastPattern>(typeConverter, context);
+  patterns.add<ConvertTensorFromElementsPattern>(typeConverter, context);
 }
 
 namespace {
@@ -114,6 +146,7 @@ void ConvertUpstreamToIREEPass::runOnOperation() {
 
   ConversionTarget target(*context);
   target.addIllegalOp<tensor::CastOp>();
+  target.addIllegalOp<tensor::FromElementsOp>();
 
   target.addLegalDialect<StandardOpsDialect>();
   target.addLegalDialect<tensor::TensorDialect>();

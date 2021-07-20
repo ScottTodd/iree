@@ -1449,6 +1449,13 @@ void populateFlowDispatchCanonicalizationPatterns(
   DispatchTensorLoadOp::getCanonicalizationPatterns(results, context);
 }
 
+// DO NOT SUBMIT
+// TODO(scotttodd): is this needed? Or just use mlir::CreateCanonicalizerPass()?
+void populateFlowTensorCanonicalizationPatterns(
+    OwningRewritePatternList &results, MLIRContext *context) {
+  SplatOp::getCanonicalizationPatterns(results, context);
+}
+
 }  // namespace Flow
 }  // namespace IREE
 }  // namespace iree_compiler

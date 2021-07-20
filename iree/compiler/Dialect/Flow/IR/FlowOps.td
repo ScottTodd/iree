@@ -900,6 +900,8 @@ def FLOW_TensorSplatOp : FLOW_PureOp<"tensor.splat", [
   }];
 
   // TODO(benvanik): canonicalize splat+slice to smaller splat.
+  // TODO(scotttodd): canonicalize splat+reshape to different splat
+  let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
 
