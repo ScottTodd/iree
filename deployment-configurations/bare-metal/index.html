@@ -9,14 +9,14 @@
       
       
       
-        <link rel="canonical" href="https://google.github.io/iree/ml-frameworks/jax/">
+        <link rel="canonical" href="https://google.github.io/iree/deployment-configurations/bare-metal/">
       
       <link rel="icon" href="../../ghost.svg">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.0">
     
     
       
-        <title>JAX - IREE</title>
+        <title>CPU - Bare-Metal - IREE</title>
       
     
     
@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#jax-integration" class="md-skip">
+        <a href="#run-on-a-bare-metal-platform" class="md-skip">
           Skip to content
         </a>
       
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              JAX
+              CPU - Bare-Metal
             
           </span>
         </div>
@@ -234,16 +234,14 @@
 
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
       <label class="md-nav__link" for="__nav_2">
         ML frameworks
@@ -261,7 +259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tensorflow/" class="md-nav__link">
+      <a href="../../ml-frameworks/tensorflow/" class="md-nav__link">
         TensorFlow
       </a>
     </li>
@@ -273,8 +271,66 @@
   
   
     <li class="md-nav__item">
-      <a href="../tensorflow-lite/" class="md-nav__link">
+      <a href="../../ml-frameworks/tensorflow-lite/" class="md-nav__link">
         TensorFlow Lite
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ml-frameworks/jax/" class="md-nav__link">
+        JAX
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Deployment configurations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Deployment configurations" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Deployment configurations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpu-dylib/" class="md-nav__link">
+        CPU - Dylib
       </a>
     </li>
   
@@ -293,66 +349,93 @@
         
       
       
-      <a href="./" class="md-nav__link md-nav__link--active">
-        JAX
-      </a>
-      
-    </li>
-  
-
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
-      
-      <label class="md-nav__link" for="__nav_3">
-        Deployment configurations
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Deployment configurations" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          CPU - Bare-Metal
           <span class="md-nav__icon md-icon"></span>
-          Deployment configurations
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../deployment-configurations/cpu-dylib/" class="md-nav__link">
-        CPU - Dylib
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../deployment-configurations/bare-metal/" class="md-nav__link">
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         CPU - Bare-Metal
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-the-model-for-bare-metal" class="md-nav__link">
+    Compile the model for bare-metal
+  </a>
+  
+    <nav class="md-nav" aria-label="Compile the model for bare-metal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compiling-the-bare-metal-model-for-static-library-support" class="md-nav__link">
+    Compiling the bare-metal model for static-library support
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-bare-metal-runtime-from-the-source" class="md-nav__link">
+    Build bare-metal runtime from the source
+  </a>
+  
+    <nav class="md-nav" aria-label="Build bare-metal runtime from the source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-cmake-options" class="md-nav__link">
+    Set CMake options
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-iree-macros" class="md-nav__link">
+    Define IREE macros
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bare-metal-execution-example" class="md-nav__link">
+    Bare-metal execution example
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -362,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../deployment-configurations/gpu-vulkan/" class="md-nav__link">
+      <a href="../gpu-vulkan/" class="md-nav__link">
         GPU - Vulkan
       </a>
     </li>
@@ -585,6 +668,75 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-the-model-for-bare-metal" class="md-nav__link">
+    Compile the model for bare-metal
+  </a>
+  
+    <nav class="md-nav" aria-label="Compile the model for bare-metal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compiling-the-bare-metal-model-for-static-library-support" class="md-nav__link">
+    Compiling the bare-metal model for static-library support
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-bare-metal-runtime-from-the-source" class="md-nav__link">
+    Build bare-metal runtime from the source
+  </a>
+  
+    <nav class="md-nav" aria-label="Build bare-metal runtime from the source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-cmake-options" class="md-nav__link">
+    Set CMake options
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-iree-macros" class="md-nav__link">
+    Define IREE macros
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bare-metal-execution-example" class="md-nav__link">
+    Bare-metal execution example
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -596,18 +748,114 @@
               
                 
                 
-                <h1 id="jax-integration">JAX Integration<a class="headerlink" href="#jax-integration" title="Permanent link">&para;</a></h1>
+                <h1 id="run-on-a-bare-metal-platform">Run on a Bare-Metal Platform<a class="headerlink" href="#run-on-a-bare-metal-platform" title="Permanent link">&para;</a></h1>
+<p>IREE supports CPU model execution on a bare-metal platform. That is, a platform
+without operating system support, and the executable is built with the
+machine-specific linker script and/or the board support package (BSP).</p>
+<p>Bare-metal deployment typically uses IREE's LLVM compiler target much like the
+<a href="../cpu-dylib/">CPU - Dylib</a>
+configuration, but using a limited subset of IREE's CPU HAL driver at runtime to
+load and execute compiled programs.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Out-of-tree bare-metal platform tools and source code for the system should be
+ready, such as</p>
+<ul>
+<li>Compilation toolchain</li>
+<li>Platform linker script</li>
+<li>Firmware libraries</li>
+</ul>
+<p>Please follow the
+<a href="../cpu-dylib/#get-compiler-for-cpu-native-instructions">instructions</a>
+to retrieve the IREE compiler.</p>
+<h2 id="compile-the-model-for-bare-metal">Compile the model for bare-metal<a class="headerlink" href="#compile-the-model-for-bare-metal" title="Permanent link">&para;</a></h2>
+<p>The model can be compiled with the following command from the IREE compiler
+build directory</p>
+<div class="highlight"><pre><span></span><code>iree/tools/iree-translate <span class="se">\</span>
+    -iree-mlir-to-vm-bytecode-module <span class="se">\</span>
+<span class="hll">    -iree-hal-target-backends<span class="o">=</span>dylib-llvm-aot <span class="se">\</span>
+</span><span class="hll">    -iree-llvm-link-embedded<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+</span><span class="hll">    -iree-llvm-target-triple<span class="o">=</span>x86_64-pc-linux-elf <span class="se">\</span>
+</span><span class="hll">    -iree-llvm-debug-symbols<span class="o">=</span><span class="nb">false</span> <span class="se">\</span>
+</span>    iree/samples/models/simple_abs.mlir <span class="se">\</span>
+    -o /tmp/simple_abs_dylib.vmfb
+</code></pre></div>
+
+<p>In which</p>
+<ul>
+<li><code>iree-hal-target-backends=dylib-llvm-aot</code>: Build the model for the dynamic
+library CPU HAL driver</li>
+<li><code>iree-llvm-link-embedded=true</code>: Generate the dynamic library with
+<a href="https://lld.llvm.org/">LLD</a> and the artifact can be loaded with the
+<a href="https://github.com/google/iree/blob/main/iree/hal/local/loaders/embedded_library_loader.h">embedded library loader</a>
+without invoking the dynamic library support</li>
+<li><code>iree-llvm-target-triple</code>: Use the <code>&lt;arch&gt;-pc-linux-elf</code> LLVM target triple so
+the artifact has a fixed ABI to be rendered by the
+<a href="https://github.com/google/iree/tree/main/iree/hal/local/elf">elf_module library</a></li>
+<li><code>iree-llvm-debug-symbols=false</code>: To reduce the artifact size</li>
+</ul>
+<p>See <a href="https://github.com/google/iree/blob/main/iree/hal/local/elf/testdata/generate.sh">generate.sh</a>
+for example command-line instructions of some common architectures</p>
+<p>You can replace the MLIR file with the other MLIR model files, following the
+<a href="../cpu-dylib/#compile-the-model">instructions</a></p>
+<h3 id="compiling-the-bare-metal-model-for-static-library-support">Compiling the bare-metal model for static-library support<a class="headerlink" href="#compiling-the-bare-metal-model-for-static-library-support" title="Permanent link">&para;</a></h3>
+<p>See the <a href="https://github.com/google/iree/tree/main/iree/samples/static_library">static_library</a>
+demo sample for an example and instructions on running a model with IREE's
+<code>static_library_loader</code>.</p>
+<p>By default, the demo targets the host machine when compiling. To produce a
+bare-metal compatible model, run <code>iree-translate</code> as in the previous example
+and add the additional <code>-iree-llvm-static-library-output-path=</code> flag to specify
+the static library destination. This will produce a <code>.h\.o</code> file to link
+directly into the target application.</p>
+<h2 id="build-bare-metal-runtime-from-the-source">Build bare-metal runtime from the source<a class="headerlink" href="#build-bare-metal-runtime-from-the-source" title="Permanent link">&para;</a></h2>
+<p>A few CMake options and macros should be set to build a subset of IREE runtime
+libraries compatible with the bare-metal platform. We assume there's no
+multi-thread control nor system library support in the bare-metal system. The
+model execution is in a single-thread synchronous fashion.</p>
+<h3 id="set-cmake-options">Set CMake options<a class="headerlink" href="#set-cmake-options" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>set(IREE_BUILD_COMPILER OFF)</code>: Build IREE runtime only</li>
+<li><code>set(IREE_ENABLE_MLIR OFF)</code>: Disable LLVM/MLIR dependencies for the runtime
+library</li>
+<li><code>set(CMAKE_SYSTEM_NAME Generic)</code>: Tell CMake to skip targeting a specific
+operating system</li>
+<li><code>set(IREE_BINDINGS_TFLITE OFF)</code>: Disable the TFLite binding support</li>
+<li><code>set(IREE_ENABLE_THREADING OFF)</code>: Disable multi-thread library support</li>
+<li><code>set(IREE_HAL_DRIVERS_TO_BUILD "Dylib;VMVX")</code>: Build only the dynamic library
+and VMVX runtime HAL drivers</li>
+<li><code>set(IREE_BUILD_TESTS OFF)</code>: Disable tests until IREE supports running them on
+bare-metal platforms</li>
+<li><code>set(IREE_BUILD_SAMPLES ON)</code>: Build
+<a href="https://github.com/google/iree/tree/main/iree/samples/simple_embedding">simple_embedding</a>
+example</li>
+</ul>
 <div class="admonition todo">
 <p class="admonition-title">Todo</p>
-<p><a href="https://github.com/google/iree/issues/5454">Issue#5454</a>: write this documentation</p>
+<p>Clean the list up after <a href="https://github.com/google/iree/issues/6353">#6353</a>
+is fixed.</p>
 </div>
-<!-- TODO(??): overview (mention XLA? numpy?) -->
-
-<!-- TODO(??): pip install vs build from source -->
-
-<!-- TODO(??): python model code vs intermediate/serialization format(s), if any -->
-
-<!-- TODO(??): Colab notebooks, code samples -->
+<p>Also, set the toolchain-specific cmake file to match the tool path, target
+architecture, target abi, linker script, system library path, etc.</p>
+<h3 id="define-iree-macros">Define IREE macros<a class="headerlink" href="#define-iree-macros" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>-DIREE_PLATFORM_GENERIC</code>: Let IREE to build the runtime library without
+targeting a specific platform</li>
+<li><code>-DIREE_SYNCHRONIZATION_DISABLE_UNSAFE=1</code>: Disable thread synchronization
+support</li>
+<li><code>-DIREE_FILE_IO_ENABLE=0</code>: Disable file I/O</li>
+<li><code>-DIREE_TIME_NOW_FN</code>: A function to return the system time. For the bare-metal
+system, it can be set as <code>-DIREE_TIME_NOW_FN=\"\{ return 0;\}\"</code> as there's no
+asynchronous wait handling</li>
+</ul>
+<p>Examples of how to setup the CMakeLists.txt and .cmake file:</p>
+<ul>
+<li><a href="https://github.com/google/iree/blob/main/build_tools/cmake/riscv.toolchain.cmake">IREE RISC-V toolchain cmake</a></li>
+<li><a href="https://github.com/iml130/iree-bare-metal-arm">IREE Bare-Metal Arm Sample</a></li>
+</ul>
+<h2 id="bare-metal-execution-example">Bare-metal execution example<a class="headerlink" href="#bare-metal-execution-example" title="Permanent link">&para;</a></h2>
+<p>See
+<a href="https://github.com/google/iree/blob/main/iree/samples/simple_embedding/README.md#generic-platform-support">simple_embedding for generic platform</a>
+to see how to use the IREE runtime library to build/run the IREE model for the
+bare-metal target.</p>
                 
               
               
