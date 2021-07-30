@@ -9,21 +9,21 @@
       
       
       
-        <link rel="canonical" href="https://google.github.io/iree/building-from-source/">
+        <link rel="canonical" href="https://google.github.io/iree/blog/2021-07-19-tflite-tosa/">
       
-      <link rel="icon" href="../ghost.svg">
+      <link rel="icon" href="../../ghost.svg">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.0">
     
     
       
-        <title>Building IREE from source - IREE</title>
+        <title>TFLite Support via TOSA - IREE</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.33e2939f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.33e2939f.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
         
       
     
@@ -38,7 +38,7 @@
     
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
     
     
       
@@ -57,7 +57,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
-    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#building-iree-from-source" class="md-skip">
+        <a href="#tflite-support-via-tosa" class="md-skip">
           Skip to content
         </a>
       
@@ -78,7 +78,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="IREE" class="md-header__button md-logo" aria-label="IREE" data-md-component="logo">
+    <a href="../.." title="IREE" class="md-header__button md-logo" aria-label="IREE" data-md-component="logo">
       
   
   ../../ghost.svg
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Building IREE from source
+              TFLite Support via TOSA
             
           </span>
         </div>
@@ -189,7 +189,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="IREE" class="md-nav__button md-logo" aria-label="IREE" data-md-component="logo">
+    <a href="../.." title="IREE" class="md-nav__button md-logo" aria-label="IREE" data-md-component="logo">
       
   
   ../../ghost.svg
@@ -221,7 +221,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -259,7 +259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ml-frameworks/tensorflow/" class="md-nav__link">
+      <a href="../../ml-frameworks/tensorflow/" class="md-nav__link">
         TensorFlow
       </a>
     </li>
@@ -271,7 +271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ml-frameworks/tensorflow-lite/" class="md-nav__link">
+      <a href="../../ml-frameworks/tensorflow-lite/" class="md-nav__link">
         TensorFlow Lite
       </a>
     </li>
@@ -283,7 +283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ml-frameworks/jax/" class="md-nav__link">
+      <a href="../../ml-frameworks/jax/" class="md-nav__link">
         JAX
       </a>
     </li>
@@ -327,7 +327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deployment-configurations/cpu-dylib/" class="md-nav__link">
+      <a href="../../deployment-configurations/cpu-dylib/" class="md-nav__link">
         CPU - Dylib
       </a>
     </li>
@@ -339,7 +339,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deployment-configurations/bare-metal/" class="md-nav__link">
+      <a href="../../deployment-configurations/bare-metal/" class="md-nav__link">
         CPU - Bare-Metal
       </a>
     </li>
@@ -351,7 +351,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deployment-configurations/gpu-vulkan/" class="md-nav__link">
+      <a href="../../deployment-configurations/gpu-vulkan/" class="md-nav__link">
         GPU - Vulkan
       </a>
     </li>
@@ -395,7 +395,7 @@
   
   
     <li class="md-nav__item">
-      <a href="getting-started/" class="md-nav__link">
+      <a href="../../building-from-source/getting-started/" class="md-nav__link">
         Getting started
       </a>
     </li>
@@ -407,7 +407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="optional-features/" class="md-nav__link">
+      <a href="../../building-from-source/optional-features/" class="md-nav__link">
         Optional features
       </a>
     </li>
@@ -419,7 +419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="android/" class="md-nav__link">
+      <a href="../../building-from-source/android/" class="md-nav__link">
         Android cross-compilation
       </a>
     </li>
@@ -431,7 +431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="riscv/" class="md-nav__link">
+      <a href="../../building-from-source/riscv/" class="md-nav__link">
         RISC-V cross-compilation
       </a>
     </li>
@@ -475,7 +475,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bindings/c-api/" class="md-nav__link">
+      <a href="../../bindings/c-api/" class="md-nav__link">
         C API
       </a>
     </li>
@@ -487,7 +487,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bindings/python/" class="md-nav__link">
+      <a href="../../bindings/python/" class="md-nav__link">
         Python
       </a>
     </li>
@@ -499,7 +499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bindings/tensorflow-lite/" class="md-nav__link">
+      <a href="../../bindings/tensorflow-lite/" class="md-nav__link">
         TensorFlow Lite
       </a>
     </li>
@@ -543,7 +543,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../community/projects/" class="md-nav__link">
+      <a href="../../community/projects/" class="md-nav__link">
         Projects
       </a>
     </li>
@@ -562,14 +562,16 @@
 
   
   
+    
+  
   
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
       
       <label class="md-nav__link" for="__nav_7">
         Blog
@@ -585,11 +587,52 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../blog/2021-07-19-tflite-tosa/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          TFLite Support via TOSA
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         TFLite Support via TOSA
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tflite-support-via-tosa" class="md-nav__link">
+    TFLite Support via TOSA
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -615,8 +658,28 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
-    
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tflite-support-via-tosa" class="md-nav__link">
+    TFLite Support via TOSA
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -629,9 +692,45 @@
               
                 
                 
-                <h1 id="building-iree-from-source">Building IREE from source<a class="headerlink" href="#building-iree-from-source" title="Permanent link">&para;</a></h1>
-<p>Under construction.</p>
-<!-- TODO(scotttodd): write overview page and enable navigation.indexes (insiders only) -->
+                  <h1>TFLite Support via TOSA</h1>
+                
+                <p>Monday, July 19, 2021<br>
+ By Rob Suderman and Jenni Kilduff</p>
+<h2 id="tflite-support-via-tosa">TFLite Support via TOSA<a class="headerlink" href="#tflite-support-via-tosa" title="Permanent link">&para;</a></h2>
+<p>IREE can now execute <a href="https://www.tensorflow.org/lite">TensorFlow Lite</a>
+(TFLite) models through the use of
+<a href="https://developer.mlplatform.org/w/tosa/">TOSA</a>, an open standard of common
+tensor operations, and a part of <a href="https://mlir.llvm.org/">MLIR</a> core. TOSA’s
+high-level representation of tensor operations provides a common front-end for
+ingesting models from different frameworks. In this case we ingest a TFLite
+flatbuffer and compile it to TOSA IR, which IREE takes as an input format to
+compile to its various backends.</p>
+<p><img align="left" alt="Compilation diagram" src="../2021-07-19-tflite-tosa-compilation-diagram.png" /></p>
+<p>Using TFLite as a frontend for IREE provides an alternative ingestion method for
+already existing models that could benefit from IREE’s design. This enables
+models already designed for on-device inference to have an alternative path for
+execution without requiring any additional porting, while benefiting from
+IREE’s improvements in buffer management, work dispatch system, and compact
+binary format. With continued improvements to IREE/MLIR’s compilation
+performance, more optimized versions can be compiled and distributed to target
+devices without an update to the clientside environment.</p>
+<p>Today, we have validated floating point support for a variety of models,
+including
+<a href="https://tfhub.dev/s?deployment-format=lite&amp;network-architecture=mobilenet,mobilenet-v2,mobilenet-v3,mobilenet-v1&amp;q=mobilenet">mobilenet</a>
+(v1, v2, and v3) and
+<a href="https://tfhub.dev/tensorflow/lite-model/mobilebert/1/default/1">mobilebert</a>.
+More work is in progress to support fully quantized models, and TFLite’s hybrid
+quantization, along with dynamic shape support.</p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>TFLite with IREE is available in Python and Java.  We have a
+<a href="https://colab.sandbox.google.com/github/google/iree/blob/main/colab/tflite_text_classification.ipynb">colab notebook</a>
+that shows how to use IREE’s python bindings and TFLite compiler tools to
+compile a pre-trained TFLite model from a flatbuffer and run using IREE.  We
+also have an
+<a href="https://github.com/not-jenni/iree-android-tflite-demo">Android Java app</a> that
+was forked from an existing TFLite demo app, swapping out the TFLite library
+for our own AAR.  More information on IREE’s TFLite frontend is available
+<a href="../../ml-frameworks/tensorflow-lite/">here</a>.</p>
                 
               
               
@@ -706,10 +805,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.d892486b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d892486b.min.js"></script>
       
     
   </body>
