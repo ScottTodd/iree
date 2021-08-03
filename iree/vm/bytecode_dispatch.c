@@ -1307,6 +1307,7 @@ iree_status_t iree_vm_bytecode_dispatch(
     DISPATCH_OP_CORE_UNARY_I32(ExtI8I32U, vm_ext_i8i32u);
     DISPATCH_OP_CORE_UNARY_I32(ExtI16I32S, vm_ext_i16i32s);
     DISPATCH_OP_CORE_UNARY_I32(ExtI16I32U, vm_ext_i16i32u);
+    DISPATCH_OP_CORE_UNARY_I32(BitcastX32, vm_clone_i32);
 
     //===------------------------------------------------------------------===//
     // Native bitwise shifts and rotates
@@ -1713,6 +1714,7 @@ iree_status_t iree_vm_bytecode_dispatch(
         int64_t* result = VM_DecResultRegI64("result");
         *result = vm_ext_i32i64u(operand);
       });
+      DISPATCH_OP_EXT_I64_UNARY_I64(BitcastX64, vm_ext_clone_i64);
 
       //===----------------------------------------------------------------===//
       // ExtI64: Native bitwise shifts and rotates

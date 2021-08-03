@@ -113,6 +113,7 @@ def VM_OPC_ExtI8I32S             : VM_OPC<0x39, "ExtI8I32S">;
 def VM_OPC_ExtI8I32U             : VM_OPC<0x3A, "ExtI8I32U">;
 def VM_OPC_ExtI16I32S            : VM_OPC<0x3B, "ExtI16I32S">;
 def VM_OPC_ExtI16I32U            : VM_OPC<0x3C, "ExtI16I32U">;
+def VM_OPC_BitcastX32            : VM_OPC<0x3D, "BitcastX32">;
 
 // Reduction arithmetic:
 
@@ -237,6 +238,7 @@ def VM_CoreOpcodeAttr :
     VM_OPC_ExtI8I32U,
     VM_OPC_ExtI16I32S,
     VM_OPC_ExtI16I32U,
+    VM_OPC_BitcastX32,
 
     VM_OPC_CmpEQI32,
     VM_OPC_CmpNEI32,

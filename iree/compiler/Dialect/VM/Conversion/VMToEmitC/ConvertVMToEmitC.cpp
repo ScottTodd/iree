@@ -2014,6 +2014,8 @@ void populateVMToEmitCPatterns(MLIRContext *context,
       context, "vm_ext_i16i32s");
   patterns.insert<GenericOpConversion<IREE::VM::ExtI16I32UOp>>(
       context, "vm_ext_i16i32u");
+  patterns.insert<GenericOpConversion<IREE::VM::BitcastX32Op>>(context,
+                                                               "vm_clone_i32");
 
   // Native bitwise shift and rotate ops
   patterns.insert<GenericOpConversion<IREE::VM::ShlI32Op>>(context,
@@ -2190,6 +2192,8 @@ void populateVMToEmitCPatterns(MLIRContext *context,
       context, "vm_ext_i32i64s");
   patterns.insert<GenericOpConversion<IREE::VM::ExtI32I64UOp>>(
       context, "vm_ext_i32i64u");
+  patterns.insert<GenericOpConversion<IREE::VM::BitcastX64Op>>(
+      context, "vm_ext_clone_i64");
 
   // ExtI64: Native bitwise shift and rotate ops
   patterns.insert<GenericOpConversion<IREE::VM::ShlI64Op>>(context,

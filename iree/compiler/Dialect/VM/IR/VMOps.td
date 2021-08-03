@@ -2580,6 +2580,17 @@ def VM_CastF32UI32Op :
   let hasFolder = 1;
 }
 
+def VM_BitcastX32Op :
+    VM_ConversionOp<AnyType, AnyType, "bitcast.x32", VM_OPC_BitcastX32> {
+  let summary = [{bitcast from one 32 bit type to another 32 bit type}];
+}
+
+def VM_BitcastX64Op :
+    VM_ConversionOp<AnyType, AnyType, "bitcast.x64", VM_OPC_BitcastX64,
+                    [VM_ExtI64]> {
+  let summary = [{bitcast from one 64 bit type to another 64 bit type}];
+}
+
 //===----------------------------------------------------------------------===//
 // Native reduction (horizontal) arithmetic
 //===----------------------------------------------------------------------===//

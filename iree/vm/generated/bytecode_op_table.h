@@ -68,7 +68,7 @@ typedef enum {
   IREE_VM_OP_CORE_ExtI8I32U = 0x3A,
   IREE_VM_OP_CORE_ExtI16I32S = 0x3B,
   IREE_VM_OP_CORE_ExtI16I32U = 0x3C,
-  IREE_VM_OP_CORE_RSV_0x3D,
+  IREE_VM_OP_CORE_BitcastX32 = 0x3D,
   IREE_VM_OP_CORE_RSV_0x3E,
   IREE_VM_OP_CORE_RSV_0x3F,
   IREE_VM_OP_CORE_CmpEQI32 = 0x40,
@@ -327,7 +327,7 @@ typedef enum {
     OPC(0x3A, ExtI8I32U) \
     OPC(0x3B, ExtI16I32S) \
     OPC(0x3C, ExtI16I32U) \
-    RSV(0x3D) \
+    OPC(0x3D, BitcastX32) \
     RSV(0x3E) \
     RSV(0x3F) \
     OPC(0x40, CmpEQI32) \
@@ -1616,7 +1616,7 @@ typedef enum {
   IREE_VM_OP_EXT_I64_TruncI64I32 = 0x37,
   IREE_VM_OP_EXT_I64_ExtI32I64S = 0x38,
   IREE_VM_OP_EXT_I64_ExtI32I64U = 0x39,
-  IREE_VM_OP_EXT_I64_RSV_0x3A,
+  IREE_VM_OP_EXT_I64_BitcastX64 = 0x3A,
   IREE_VM_OP_EXT_I64_RSV_0x3B,
   IREE_VM_OP_EXT_I64_RSV_0x3C,
   IREE_VM_OP_EXT_I64_RSV_0x3D,
@@ -1875,7 +1875,7 @@ typedef enum {
     OPC(0x37, TruncI64I32) \
     OPC(0x38, ExtI32I64S) \
     OPC(0x39, ExtI32I64U) \
-    RSV(0x3A) \
+    OPC(0x3A, BitcastX64) \
     RSV(0x3B) \
     RSV(0x3C) \
     RSV(0x3D) \

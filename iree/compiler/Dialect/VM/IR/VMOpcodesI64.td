@@ -48,6 +48,7 @@ def VM_OPC_ShrI64U               : VM_OPC<0x36, "ShrI64U">;
 def VM_OPC_TruncI64I32           : VM_OPC<0x37, "TruncI64I32">;
 def VM_OPC_ExtI32I64S            : VM_OPC<0x38, "ExtI32I64S">;
 def VM_OPC_ExtI32I64U            : VM_OPC<0x39, "ExtI32I64U">;
+def VM_OPC_BitcastX64         : VM_OPC<0x3A, "BitcastX64">;
 
 def VM_OPC_CmpEQI64              : VM_OPC<0x40, "CmpEQI64">;
 def VM_OPC_CmpNEI64              : VM_OPC<0x41, "CmpNEI64">;
@@ -100,6 +101,7 @@ def VM_ExtI64OpcodeAttr :
     VM_OPC_TruncI64I32,
     VM_OPC_ExtI32I64S,
     VM_OPC_ExtI32I64U,
+    VM_OPC_BitcastX64,
 
     VM_OPC_CmpEQI64,
     VM_OPC_CmpNEI64,

@@ -88,6 +88,7 @@ static inline int32_t vm_ext_i16i32s(int32_t operand) {
 static inline int32_t vm_ext_i16i32u(int32_t operand) {
   return (uint32_t)((uint16_t)operand);
 }
+static inline int32_t vm_clone_i32(int32_t operand) { return operand; }
 
 //===------------------------------------------------------------------===//
 // Native bitwise shifts and rotates
@@ -201,6 +202,7 @@ static inline int64_t vm_ext_i32i64s(int32_t operand) {
 static inline int64_t vm_ext_i32i64u(int32_t operand) {
   return (uint64_t)((uint32_t)operand);
 }
+static inline int64_t vm_ext_clone_i64(int64_t operand) { return operand; }
 
 //===------------------------------------------------------------------===//
 // ExtI64: Native bitwise shifts and rotates
@@ -317,6 +319,9 @@ static inline int32_t vm_cast_f32si32(float operand) {
 }
 static inline int32_t vm_cast_f32ui32(float operand) {
   return (uint32_t)lroundf(operand);
+}
+static inline int32_t vm_bitcast_f32(float operand) {
+  return *(int32_t*)&operand;
 }
 
 //===------------------------------------------------------------------===//
