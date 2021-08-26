@@ -231,16 +231,21 @@ class ConvertHALInterfaceBindingSubspanOp
 
     auto bindingType =
         bindingsArg.getType().cast<IREE::Util::ListType>().getElementType();
-    auto getOp = rewriter.create<IREE::Util::ListGetOp>(
-        op.getLoc(), bindingType, bindingsArg,
-        rewriter.createOrFold<arith::ConstantIndexOp>(
-            op.getLoc(), interfaceBindingOp.binding().getZExtValue()));
+    auto memrefValue =
+        rewriter
+            .create<IREE::Util::ListGetOp>(
+                op.getLoc(), bindingType, bindingsArg,
+                rewriter.createOrFold<arith::ConstantIndexOp>(
+                    op.getLoc(), interfaceBindingOp.binding().getZExtValue()))
+            .result();
+    // DO NOT SUBMIT subview and then add fold subview patterns?
+    // size with memref.dim-offset or whatever?
     rewriter.replaceOpWithNewOp<UnrealizedConversionCastOp>(
         op,
         getTypeConverter()
             ->convertType(op.result().getType())
             .cast<MemRefType>(),
-        getOp.result());
+        memrefValue);
     return success();
   }
 };
