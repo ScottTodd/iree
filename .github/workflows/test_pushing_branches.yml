@@ -26,6 +26,9 @@ jobs:
       - name: Fetching base target branch
         run: git fetch --no-tags --prune --depth=1 origin "${{ github.event.inputs.branch }}:${{ github.event.inputs.branch }}"
 
+      - name: Printing git history
+        run: git log --graph --oneline
+
       - name: Updating branch
         uses: ad-m/github-push-action@v0.6.0
         with:
