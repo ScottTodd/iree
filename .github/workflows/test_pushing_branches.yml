@@ -23,6 +23,9 @@ jobs:
           token: ${{ secrets.WRITE_ACCESS_TOKEN }}
           ref: ${{ github.event.inputs.new_ref }}
 
+      - name: Fetching base target branch
+        run: git fetch --no-tags --prune --depth=1 origin "${{ github.event.inputs.branch }}:${{ github.event.inputs.branch }}"
+
       - name: Updating branch
         uses: ad-m/github-push-action@v0.6.0
         with:
