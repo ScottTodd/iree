@@ -1,0 +1,30 @@
+name: Test Pushing Branches
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_ref:
+        description: 'New git reference to push to the branch'
+        required: true
+        default: ''
+      branch:
+        description: 'git branch to push to'
+        required: true
+        default: ''
+
+jobs:
+  test_pushing_branches:
+    name: "Test Pushing Branches"
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checking out repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.WRITE_ACCESS_TOKEN }}
+          ref: ${{ github.event.inputs.new_ref }}
+
+      - name: Updating branch
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.WRITE_ACCESS_TOKEN }}
+          branch: ${{ github.event.inputs.branch }}
