@@ -2912,7 +2912,7 @@ def VM_CmpNZI64Op :
 def VM_CmpEQF32OOp :
     VM_BinaryComparisonOp<F32, "cmp.eq.f32.o", VM_OPC_CmpEQF32O,
                           [VM_ExtF32, Commutative]> {
-  let summary = [{floating-point equality comparison operation}];
+  let summary = [{ordered floating-point equality comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -2920,7 +2920,7 @@ def VM_CmpEQF32OOp :
 def VM_CmpEQF64OOp :
     VM_BinaryComparisonOp<F64, "cmp.eq.f64.o", VM_OPC_CmpEQF64O,
                           [VM_ExtF64, Commutative]> {
-  let summary = [{floating-point equality comparison operation}];
+  let summary = [{ordered floating-point equality comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -2928,7 +2928,7 @@ def VM_CmpEQF64OOp :
 def VM_CmpEQF32UOp :
     VM_BinaryComparisonOp<F32, "cmp.eq.f32.u", VM_OPC_CmpEQF32U,
                           [VM_ExtF32, Commutative]> {
-  let summary = [{floating-point equality comparison operation}];
+  let summary = [{unordered floating-point equality comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -2936,7 +2936,7 @@ def VM_CmpEQF32UOp :
 def VM_CmpEQF64UOp :
     VM_BinaryComparisonOp<F64, "cmp.eq.f64.u", VM_OPC_CmpEQF64U,
                           [VM_ExtF64, Commutative]> {
-  let summary = [{floating-point equality comparison operation}];
+  let summary = [{unordered floating-point equality comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -2944,7 +2944,7 @@ def VM_CmpEQF64UOp :
 def VM_CmpNEF32OOp :
     VM_BinaryComparisonOp<F32, "cmp.ne.f32.o", VM_OPC_CmpNEF32O,
                           [VM_ExtF32, Commutative]> {
-  let summary = [{floating-point inequality comparison operation}];
+  let summary = [{ordered floating-point inequality comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -2952,7 +2952,7 @@ def VM_CmpNEF32OOp :
 def VM_CmpNEF64OOp :
     VM_BinaryComparisonOp<F64, "cmp.ne.f64.o", VM_OPC_CmpNEF64O,
                           [VM_ExtF64, Commutative]> {
-  let summary = [{floating-point inequality comparison operation}];
+  let summary = [{ordered floating-point inequality comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -2960,7 +2960,7 @@ def VM_CmpNEF64OOp :
 def VM_CmpNEF32UOp :
     VM_BinaryComparisonOp<F32, "cmp.ne.f32.u", VM_OPC_CmpNEF32U,
                           [VM_ExtF32, Commutative]> {
-  let summary = [{floating-point inequality comparison operation}];
+  let summary = [{unordered floating-point inequality comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -2968,7 +2968,7 @@ def VM_CmpNEF32UOp :
 def VM_CmpNEF64UOp :
     VM_BinaryComparisonOp<F64, "cmp.ne.f64.u", VM_OPC_CmpNEF64U,
                           [VM_ExtF64, Commutative]> {
-  let summary = [{floating-point inequality comparison operation}];
+  let summary = [{unordered floating-point inequality comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -2976,7 +2976,7 @@ def VM_CmpNEF64UOp :
 def VM_CmpLTF32OOp :
     VM_BinaryComparisonOp<F32, "cmp.lt.f32.o", VM_OPC_CmpLTF32O,
                           [VM_ExtF32]> {
-  let summary = [{floating-point less-than comparison operation}];
+  let summary = [{ordered floating-point less-than comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -2984,7 +2984,7 @@ def VM_CmpLTF32OOp :
 def VM_CmpLTF64OOp :
     VM_BinaryComparisonOp<F64, "cmp.lt.f64.o", VM_OPC_CmpLTF64O,
                           [VM_ExtF64]> {
-  let summary = [{floating-point less-than comparison operation}];
+  let summary = [{ordered floating-point less-than comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -2992,7 +2992,7 @@ def VM_CmpLTF64OOp :
 def VM_CmpLTF32UOp :
     VM_BinaryComparisonOp<F32, "cmp.lt.f32.u", VM_OPC_CmpLTF32U,
                           [VM_ExtF32]> {
-  let summary = [{floating-point less-than comparison operation}];
+  let summary = [{unordered floating-point less-than comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -3000,7 +3000,7 @@ def VM_CmpLTF32UOp :
 def VM_CmpLTF64UOp :
     VM_BinaryComparisonOp<F64, "cmp.lt.f64.u", VM_OPC_CmpLTF64U,
                           [VM_ExtF64]> {
-  let summary = [{floating-point less-than comparison operation}];
+  let summary = [{unordered floating-point less-than comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -3008,35 +3008,35 @@ def VM_CmpLTF64UOp :
 def VM_CmpLTEF32OOp :
     VM_BinaryComparisonOp<F32, "cmp.lte.f32.o", VM_OPC_CmpLTEF32O,
                                 [VM_ExtF32]> {
-  let summary = [{floating-point less-than-or-equal comparison operation}];
+  let summary = [{ordered floating-point less-than-or-equal comparison operation}];
   let hasFolder = 1;
 }
 
 def VM_CmpLTEF64OOp :
     VM_BinaryComparisonOp<F64, "cmp.lte.f64.o", VM_OPC_CmpLTEF64O,
                           [VM_ExtF64]> {
-  let summary = [{floating-point less-than-or-equal comparison operation}];
+  let summary = [{ordered floating-point less-than-or-equal comparison operation}];
   let hasFolder = 1;
 }
 
 def VM_CmpLTEF32UOp :
     VM_BinaryComparisonOp<F32, "cmp.lte.f32.u", VM_OPC_CmpLTEF32U,
                           [VM_ExtF32]> {
-  let summary = [{floating-point less-than-or-equal comparison operation}];
+  let summary = [{unordered floating-point less-than-or-equal comparison operation}];
   let hasFolder = 1;
 }
 
 def VM_CmpLTEF64UOp :
     VM_BinaryComparisonOp<F64, "cmp.lte.f64.u", VM_OPC_CmpLTEF64U,
                           [VM_ExtF64]> {
-  let summary = [{floating-point less-than-or-equal comparison operation}];
+  let summary = [{unordered floating-point less-than-or-equal comparison operation}];
   let hasFolder = 1;
 }
 
 def VM_CmpGTF32OOp :
     VM_BinaryComparisonPseudoOp<F32, "cmp.gt.f32.o",
                                 [VM_ExtF32]> {
-  let summary = [{floating-point greater-than comparison operation}];
+  let summary = [{ordered floating-point greater-than comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -3044,7 +3044,7 @@ def VM_CmpGTF32OOp :
 def VM_CmpGTF64OOp :
     VM_BinaryComparisonPseudoOp<F64, "cmp.gt.f64.o",
                                 [VM_ExtF64]> {
-  let summary = [{floating-point greater-than comparison operation}];
+  let summary = [{ordered floating-point greater-than comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -3052,7 +3052,7 @@ def VM_CmpGTF64OOp :
 def VM_CmpGTF32UOp :
     VM_BinaryComparisonPseudoOp<F32, "cmp.gt.f32.u",
                                 [VM_ExtF32]> {
-  let summary = [{floating-point greater-than comparison operation}];
+  let summary = [{unordered floating-point greater-than comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -3060,7 +3060,7 @@ def VM_CmpGTF32UOp :
 def VM_CmpGTF64UOp :
     VM_BinaryComparisonPseudoOp<F64, "cmp.gt.f64.u",
                                 [VM_ExtF64]> {
-  let summary = [{floating-point greater-than comparison operation}];
+  let summary = [{unordered floating-point greater-than comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -3068,7 +3068,7 @@ def VM_CmpGTF64UOp :
 def VM_CmpGTEF32OOp :
     VM_BinaryComparisonPseudoOp<F32, "cmp.gte.f32.o",
                                 [VM_ExtF32]> {
-  let summary = [{floating-point greater-than-or-equal comparison operation}];
+  let summary = [{ordered floating-point greater-than-or-equal comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -3076,7 +3076,7 @@ def VM_CmpGTEF32OOp :
 def VM_CmpGTEF64OOp :
     VM_BinaryComparisonPseudoOp<F64, "cmp.gte.f64.o",
                                 [VM_ExtF64]> {
-  let summary = [{floating-point greater-than-or-equal comparison operation}];
+  let summary = [{ordered floating-point greater-than-or-equal comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -3084,7 +3084,7 @@ def VM_CmpGTEF64OOp :
 def VM_CmpGTEF32UOp :
     VM_BinaryComparisonPseudoOp<F32, "cmp.gte.f32.u",
                                 [VM_ExtF32]> {
-  let summary = [{floating-point greater-than-or-equal comparison operation}];
+  let summary = [{unordered floating-point greater-than-or-equal comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
@@ -3092,7 +3092,7 @@ def VM_CmpGTEF32UOp :
 def VM_CmpGTEF64UOp :
     VM_BinaryComparisonPseudoOp<F64, "cmp.gte.f64.u",
                                 [VM_ExtF64]> {
-  let summary = [{floating-point greater-than-or-equal comparison operation}];
+  let summary = [{unordered floating-point greater-than-or-equal comparison operation}];
   let hasCanonicalizer = 1;
   let hasFolder = 1;
 }
