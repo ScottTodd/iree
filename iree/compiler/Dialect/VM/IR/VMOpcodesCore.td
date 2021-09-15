@@ -94,6 +94,7 @@ def VM_OPC_DivI32U               : VM_OPC<0x26, "DivI32U">;
 def VM_OPC_RemI32S               : VM_OPC<0x27, "RemI32S">;
 def VM_OPC_RemI32U               : VM_OPC<0x28, "RemI32U">;
 def VM_OPC_FMAI32                : VM_OPC<0x29, "FMAI32">;
+def VM_OPC_AbsI32                : VM_OPC<0x2A, "AbsI32">;
 
 // Integer bit manipulation:
 def VM_OPC_NotI32                : VM_OPC<0x30, "NotI32">;
@@ -223,6 +224,7 @@ def VM_CoreOpcodeAttr :
     VM_OPC_RemI32S,
     VM_OPC_RemI32U,
     VM_OPC_FMAI32,
+    VM_OPC_AbsI32,
 
     VM_OPC_NotI32,
     VM_OPC_AndI32,

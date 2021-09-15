@@ -49,7 +49,7 @@ typedef enum {
   IREE_VM_OP_CORE_RemI32S = 0x27,
   IREE_VM_OP_CORE_RemI32U = 0x28,
   IREE_VM_OP_CORE_FMAI32 = 0x29,
-  IREE_VM_OP_CORE_RSV_0x2A,
+  IREE_VM_OP_CORE_AbsI32 = 0x2A,
   IREE_VM_OP_CORE_RSV_0x2B,
   IREE_VM_OP_CORE_RSV_0x2C,
   IREE_VM_OP_CORE_RSV_0x2D,
@@ -308,7 +308,7 @@ typedef enum {
     OPC(0x27, RemI32S) \
     OPC(0x28, RemI32U) \
     OPC(0x29, FMAI32) \
-    RSV(0x2A) \
+    OPC(0x2A, AbsI32) \
     RSV(0x2B) \
     RSV(0x2C) \
     RSV(0x2D) \
@@ -1600,7 +1600,7 @@ typedef enum {
   IREE_VM_OP_EXT_I64_RemI64S = 0x27,
   IREE_VM_OP_EXT_I64_RemI64U = 0x28,
   IREE_VM_OP_EXT_I64_FMAI64 = 0x29,
-  IREE_VM_OP_EXT_I64_RSV_0x2A,
+  IREE_VM_OP_EXT_I64_AbsI64 = 0x2A,
   IREE_VM_OP_EXT_I64_RSV_0x2B,
   IREE_VM_OP_EXT_I64_RSV_0x2C,
   IREE_VM_OP_EXT_I64_RSV_0x2D,
@@ -1859,7 +1859,7 @@ typedef enum {
     OPC(0x27, RemI64S) \
     OPC(0x28, RemI64U) \
     OPC(0x29, FMAI64) \
-    RSV(0x2A) \
+    OPC(0x2A, AbsI64) \
     RSV(0x2B) \
     RSV(0x2C) \
     RSV(0x2D) \
@@ -2073,4 +2073,3 @@ typedef enum {
     RSV(0xFD) \
     RSV(0xFE) \
     RSV(0xFF)
-

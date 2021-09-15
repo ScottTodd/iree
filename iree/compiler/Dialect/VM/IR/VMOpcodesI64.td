@@ -37,6 +37,7 @@ def VM_OPC_DivI64U               : VM_OPC<0x26, "DivI64U">;
 def VM_OPC_RemI64S               : VM_OPC<0x27, "RemI64S">;
 def VM_OPC_RemI64U               : VM_OPC<0x28, "RemI64U">;
 def VM_OPC_FMAI64                : VM_OPC<0x29, "FMAI64">;
+def VM_OPC_AbsI64                : VM_OPC<0x2A, "AbsI64">;
 
 def VM_OPC_NotI64                : VM_OPC<0x30, "NotI64">;
 def VM_OPC_AndI64                : VM_OPC<0x31, "AndI64">;
@@ -89,6 +90,7 @@ def VM_ExtI64OpcodeAttr :
     VM_OPC_RemI64S,
     VM_OPC_RemI64U,
     VM_OPC_FMAI64,
+    VM_OPC_AbsI64,
 
     VM_OPC_NotI64,
     VM_OPC_AndI64,
