@@ -2044,6 +2044,18 @@ def VM_FMAI64Op :
   let hasCanonicalizer = 1;
 }
 
+def VM_AbsI32Op :
+    VM_UnaryArithmeticOp<I32, "abs.i32", VM_OPC_AbsI32> {
+  let summary = [{integer absolute-value operation}];
+  let hasFolder = 1;
+}
+
+def VM_AbsI64Op :
+    VM_UnaryArithmeticOp<I64, "abs.i64", VM_OPC_AbsI64, [VM_ExtI64]> {
+  let summary = [{integer absolute-value operation}];
+  let hasFolder = 1;
+}
+
 //===----------------------------------------------------------------------===//
 // Floating-point arithmetic
 //===----------------------------------------------------------------------===//

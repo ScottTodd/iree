@@ -1292,6 +1292,7 @@ iree_status_t iree_vm_bytecode_dispatch(
     DISPATCH_OP_CORE_BINARY_I32(RemI32S, vm_rem_i32s);
     DISPATCH_OP_CORE_BINARY_I32(RemI32U, vm_rem_i32u);
     DISPATCH_OP_CORE_TERNARY_I32(FMAI32, vm_fma_i32);
+    DISPATCH_OP_CORE_UNARY_I32(AbsI32, vm_abs_i32);
     DISPATCH_OP_CORE_UNARY_I32(NotI32, vm_not_i32);
     DISPATCH_OP_CORE_BINARY_I32(AndI32, vm_and_i32);
     DISPATCH_OP_CORE_BINARY_I32(OrI32, vm_or_i32);
@@ -1689,6 +1690,7 @@ iree_status_t iree_vm_bytecode_dispatch(
       DISPATCH_OP_EXT_I64_BINARY_I64(RemI64S, vm_rem_i64s);
       DISPATCH_OP_EXT_I64_BINARY_I64(RemI64U, vm_rem_i64u);
       DISPATCH_OP_EXT_I64_TERNARY_I64(FMAI64, vm_fma_i64);
+      DISPATCH_OP_EXT_I64_UNARY_I64(AbsI64, vm_abs_i64);
       DISPATCH_OP_EXT_I64_UNARY_I64(NotI64, vm_not_i64);
       DISPATCH_OP_EXT_I64_BINARY_I64(AndI64, vm_and_i64);
       DISPATCH_OP_EXT_I64_BINARY_I64(OrI64, vm_or_i64);
