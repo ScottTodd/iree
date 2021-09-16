@@ -2029,6 +2029,84 @@ void CmpEQF64UOp::getCanonicalizationPatterns(OwningRewritePatternList &results,
   results.insert<SwapInvertedCmpOps<CmpEQF64UOp, CmpNEF64UOp>>(context);
 }
 
+// --------------------------------------------------------
+// ---------------------------------------- DO NOT SUBMIT
+
+namespace {
+
+/// Rewrites a vm.cmp.f*.near pseudo op to a ULP-based comparison.
+template <typename T>
+struct RewritePseudoCmpNear : public OpRewritePattern<T> {
+  using OpRewritePattern<T>::OpRewritePattern;
+  LogicalResult matchAndRewrite(T op,
+                                PatternRewriter &rewriter) const override {
+    // Algorithm from this reference:
+    // https://www.gamedeveloper.com/programming/in-depth-comparing-floating-point-numbers-2012-edition
+
+    // if (sign(lhs) != sign(rhs)) {
+    //   return lhs == rhs;
+    // } else {
+    //   lhsInt = bitcastf32i32(lhs);
+    //   rhsInt = bitcastf32i32(rhs);
+    //   signedUlpsDiff = lhsInt - rhsInt;
+    //   absUlpsDiff = abs(signedUlpsDiff);
+    //   return absUlpsDiff < maxUlpsDiff;
+    // }
+
+    // TODO(scotttodd): edge cases
+
+    Type i32Type = rewriter.getI32Type();
+    auto lhsInt = rewriter.createOrFold<IREE::VM::BitcastF32I32Op>(
+        op.getLoc(), i32Type, op.lhs());
+    auto rhsInt = rewriter.createOrFold<IREE::VM::BitcastF32I32Op>(
+        op.getLoc(), i32Type, op.rhs());
+    auto signedUlpsDiff = rewriter.createOrFold<IREE::VM::SubI32Op>(
+        op.getLoc(), i32Type, lhsInt, rhsInt);
+    auto absUlpsDiff = rewriter.createOrFold<IREE::VM::AbsI32Op>(
+        op.getLoc(), i32Type, signedUlpsDiff);
+    // The constant chosen here is arbitrary. Higher values increase the
+    // distance between arguments that is tolerated.
+    auto maxUlpsDiff = rewriter.createOrFold<ConstI32Op>(op.getLoc(), 100);
+    auto compare = rewriter.replaceOpWithNewOp<IREE::VM::CmpLTI32SOp>(
+        op, i32Type, absUlpsDiff, maxUlpsDiff);
+    return success();
+  }
+};
+
+}  // namespace
+
+// template <typename T>
+// static OpFoldResult foldCmpLTESOp(T op, ArrayRef<Attribute> operands) {
+//   if (op.lhs() == op.rhs()) {
+//     // x <= x = true
+//     return oneOfType(op.getType());
+//   }
+//   return constFoldBinaryOp<IntegerAttr>(
+//       operands, [&](const APInt &a, const APInt &b) { return a.sle(b); });
+// }
+
+// OpFoldResult CmpLTEI32SOp::fold(ArrayRef<Attribute> operands) {
+//   return foldCmpLTESOp(*this, operands);
+// }
+
+// OpFoldResult CmpLTEI64SOp::fold(ArrayRef<Attribute> operands) {
+//   return foldCmpLTESOp(*this, operands);
+// }
+
+void CmpEQF32NearOp::getCanonicalizationPatterns(
+    OwningRewritePatternList &results, MLIRContext *context) {
+  results.insert<RewritePseudoCmpNear<CmpEQF32NearOp>>(context);
+}
+
+// void CmpLTEI64SOp::getCanonicalizationPatterns(
+//     OwningRewritePatternList &results, MLIRContext *context) {
+//   results.insert<RewritePseudoCmpLTEToLT<CmpLTEI64SOp,
+//   CmpLTI64SOp>>(context);
+// }
+
+// ---------------------------------------- DO NOT SUBMIT
+// --------------------------------------------------------
+
 template <CmpFOrdering ordering, typename T>
 static OpFoldResult foldCmpNEFOp(T op, ArrayRef<Attribute> operands) {
   if (op.lhs() == op.rhs()) {
@@ -2809,6 +2887,91 @@ void CheckNZOp::getCanonicalizationPatterns(OwningRewritePatternList &results,
                                             MLIRContext *context) {
   results.insert<RewriteCheckToCondFail<CheckNZOp, CmpNZI32Op, CmpNZI64Op,
                                         CmpNZF32OOp, CmpNZF64OOp, CmpNZRefOp>>(
+      context);
+}
+
+// namespace {
+
+// /// Rewrites check nearly eq ops to a ULP-based comparison and cond_fail.
+// struct RewriteCheckNearlyEQ : public OpRewritePattern<CheckNearlyEQOp> {
+//   using OpRewritePattern<CheckNearlyEQOp>::OpRewritePattern;
+//   LogicalResult matchAndRewrite(CheckNearlyEQOp op,
+//                                 PatternRewriter &rewriter) const override {
+//     // TODO(scotttodd): move this to cmp.eq.f32.near and just use
+//     //                  RewriteCheckToCondFail
+
+//     Type i32Type = rewriter.getI32Type();
+//     Value condValue;
+//     Type operandType = op.getOperation()->getOperand(0).getType();
+//     if (operandType.template isa<RefType>() || operandType.isInteger(32) ||
+//         operandType.isInteger(64)) {
+//       // Exact comparison is possible for these types.
+//       // TODO(scotttodd): define this op with AnyFloat instead?
+//       rewriter.replaceOpWithNewOp<IREE::VM::CheckEQOp>(op, op.lhs(),
+//       op.rhs(),
+//                                                        op.messageAttr());
+//       return success();
+//     } else if (operandType.isF32()) {
+//       // Algorithm from this reference:
+//       //
+//       https://www.gamedeveloper.com/programming/in-depth-comparing-floating-point-numbers-2012-edition
+
+//       // if (sign(lhs) != sign(rhs)) {
+//       //   return lhs == rhs;
+//       // } else {
+//       //   lhsInt = bitcastf32i32(lhs);
+//       //   rhsInt = bitcastf32i32(rhs);
+//       //   signedUlpsDiff = lhsInt - rhsInt;
+//       //   absUlpsDiff = abs(signedUlpsDiff);
+//       //   return absUlpsDiff < maxUlpsDiff;
+//       // }
+
+//       // TODO(scotttodd): edge cases
+
+//       auto lhsInt = rewriter.createOrFold<IREE::VM::BitcastF32I32Op>(
+//           op.getLoc(), i32Type, op.lhs());
+//       auto rhsInt = rewriter.createOrFold<IREE::VM::BitcastF32I32Op>(
+//           op.getLoc(), i32Type, op.rhs());
+//       auto signedUlpsDiff = rewriter.createOrFold<IREE::VM::SubI32Op>(
+//           op.getLoc(), i32Type, lhsInt, rhsInt);
+//       auto absUlpsDiff = rewriter.createOrFold<IREE::VM::AbsI32Op>(
+//           op.getLoc(), i32Type, signedUlpsDiff);
+//       auto maxUlpsDiff = rewriter.createOrFold<ConstI32Op>(op.getLoc(), 10);
+//       auto compare = rewriter.createOrFold<IREE::VM::CmpLTI32SOp>(
+//           op.getLoc(), i32Type, absUlpsDiff, maxUlpsDiff);
+
+//       auto statusCode = rewriter.createOrFold<ConstI32Op>(
+//           op.getLoc(), /*IREE_STATUS_FAILED_PRECONDITION=*/9);
+//       rewriter.replaceOpWithNewOp<IREE::VM::CondFailOp>(op, compare,
+//       statusCode,
+//                                                         op.messageAttr());
+//       return success();
+//     } else if (operandType.isF64()) {
+//       // TODO(scotttodd): f64 version
+//     } else {
+//       return failure();
+//     }
+//     // condValue = rewriter.createOrFold<XorI32Op>(
+//     //     op.getLoc(), i32Type, condValue,
+//     //     rewriter.createOrFold<IREE::VM::ConstI32Op>(op.getLoc(), 1));
+//     // auto statusCode = rewriter.createOrFold<ConstI32Op>(
+//     //     op.getLoc(), /*IREE_STATUS_FAILED_PRECONDITION=*/9);
+//     // rewriter.replaceOpWithNewOp<IREE::VM::CondFailOp>(op, condValue,
+//     // statusCode,
+//     //                                                   op.messageAttr());
+//     // return success();
+//     return failure();
+//   }
+// };
+
+// }  // namespace
+
+void CheckNearlyEQOp::getCanonicalizationPatterns(
+    OwningRewritePatternList &results, MLIRContext *context) {
+  // results.insert<RewriteCheckNearlyEQ>(context);
+  results.insert<
+      RewriteCheckToCondFail<CheckNearlyEQOp, CmpEQI32Op, CmpEQI64Op,
+                             CmpEQF32NearOp, CmpEQF64NearOp, CmpEQRefOp>>(
       context);
 }
 

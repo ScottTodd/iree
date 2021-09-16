@@ -35,6 +35,38 @@ vm.module @comparison_ops_f32 {
   // compiler and are here as a way to test the runtime behavior of the
   // pseudo-op expansions.
 
+  vm.export @test_cmp_eq_f32_near
+  vm.func @test_cmp_eq_f32_near() {
+    %true = vm.const.i32 1 : i32
+    %false = vm.const.i32 0 : i32
+
+    %cn2 = vm.const.f32 -2.0 : f32
+    %cn2_dno = util.do_not_optimize(%cn2) : f32
+    %c2 = vm.const.f32 2.0 : f32
+    %c2_dno = util.do_not_optimize(%c2) : f32
+
+    // %cmp_0 = vm.cmp.eq.f32.near %cn2_dno, %c2_dno : f32
+    // vm.check.eq %cmp_0, %false, "-2 !≈ 2" : i32
+    // %cmp_1 = vm.cmp.eq.f32.near %c2_dno, %cn2_dno : f32
+    // vm.check.eq %cmp_1, %false, "2 !≈ -2" : i32
+    %cmp_2 = vm.cmp.eq.f32.near %c2_dno, %c2_dno : f32
+    vm.check.eq %cmp_2, %true, "2 ≈ 2" : i32
+    %cmp_3 = vm.cmp.eq.f32.near %cn2_dno, %cn2_dno : f32
+    vm.check.eq %cmp_3, %true, "-2 ≈ -2" : i32
+
+    %c1a = vm.const.f32 1.00002 : f32
+    %c1a_dno = util.do_not_optimize(%c1a) : f32
+    %c1b = vm.const.f32 1.00003 : f32
+    %c1b_dno = util.do_not_optimize(%c1b) : f32
+
+    %cmp_4 = vm.cmp.eq.f32.near %c1a_dno, %c1b_dno : f32
+    vm.check.eq %cmp_4, %true, "1.00002 ~ 1.00003" : i32
+    %cmp_5 = vm.cmp.eq.f32.near %c1a_dno, %c2_dno : f32
+    vm.check.eq %cmp_5, %false, "1.00002 !≈ 2" : i32
+
+    vm.return
+  }
+
   vm.export @test_cmp_lte_f32
   vm.func @test_cmp_lte_f32() {
     %true = vm.const.i32 1 : i32

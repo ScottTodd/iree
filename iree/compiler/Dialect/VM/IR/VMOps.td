@@ -2953,6 +2953,22 @@ def VM_CmpEQF64UOp :
   let hasFolder = 1;
 }
 
+def VM_CmpEQF32NearOp :
+    VM_BinaryComparisonPseudoOp<F32, "cmp.eq.f32.near",
+                          [VM_ExtF32, Commutative]> {
+  let summary = [{near floating-point equality comparison operation}];
+  let hasCanonicalizer = 1;
+  // let hasFolder = 1;
+}
+
+def VM_CmpEQF64NearOp :
+    VM_BinaryComparisonPseudoOp<F64, "cmp.eq.f64.near",
+                          [VM_ExtF64, Commutative]> {
+  let summary = [{near floating-point equality comparison operation}];
+  // let hasCanonicalizer = 1;
+  // let hasFolder = 1;
+}
+
 def VM_CmpNEF32OOp :
     VM_BinaryComparisonOp<F32, "cmp.ne.f32.o", VM_OPC_CmpNEF32O,
                           [VM_ExtF32, Commutative]> {
@@ -3731,6 +3747,10 @@ class VM_BinaryCheckOp<string mnemonic, list<OpTrait> traits = []> :
 }
 
 def VM_CheckEQOp : VM_BinaryCheckOp<"check.eq", [Commutative]> {
+  let hasCanonicalizer = 1;
+}
+
+def VM_CheckNearlyEQOp : VM_BinaryCheckOp<"check.nearly_eq", [Commutative]> {
   let hasCanonicalizer = 1;
 }
 

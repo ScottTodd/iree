@@ -114,6 +114,18 @@ vm.module @check_folds {
     // CHECK-NEXT: vm.fail %[[STATUS]], "expected eq"
   }
 
+  // CHECK-LABEL: @check_nearly_eq_i32
+  vm.func @check_nearly_eq_i32(%arg0 : i32, %arg1 : i32) {
+    // CHECK: %[[COND:.+]] = vm.cmp.ne.i32 %arg0, %arg1 : i32
+    // CHECK-NEXT: vm.cond_br %[[COND]], ^bb2({{.+}}), ^bb1
+    vm.check.nearly_eq %arg0, %arg1, "expected nearly eq" : i32
+    // CHECK-NEXT: ^bb1:
+    // CHECK-NEXT: vm.return
+    vm.return
+    // CHECK-NEXT: ^bb2(%[[STATUS:.+]]: i32):
+    // CHECK-NEXT: vm.fail %[[STATUS]], "expected nearly eq"
+  }
+
   // CHECK-LABEL: @check_nz_i32
   vm.func @check_nz_i32(%arg0 : i32) {
     // CHECK: %[[COND:.+]] = vm.cmp.nz.i32 %arg0 : i32
