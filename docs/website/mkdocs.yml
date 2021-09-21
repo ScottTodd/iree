@@ -117,4 +117,5 @@ nav:
   - 'Community':
       - Projects: 'community/projects.md'
   - 'Blog':
+      - Evaluating IREE: 'blog/2021-09-21-evaluating-iree.md'
       - TFLite Support via TOSA: 'blog/2021-07-19-tflite-tosa.md'
