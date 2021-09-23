@@ -1,9 +1,20 @@
+---
+title: Evaluating IREE
+---
+
  Tuesday, September 21, 2021<br>
  By Scott Todd
 
 ```
 Planning notes:
 
+* Title brainstorm
+  * Evaluating IREE
+  * Exploring IREE
+  * Exploring compilation
+  * Exploring performance
+  * Compiler settings and performance
+  * Tuning, exploring, evaluating
 * Upload all files used in the blog post to a .zip on Drive or GCS
 * If posting a Colab notebook, pin the pip install version
 * If using native tools, pin the git commit
@@ -57,7 +68,6 @@ TODO: write this
 * `IR Dump Before mlir::iree_compiler::IREE::HAL::SerializeTargetExecutablesPass`
 
 ```
-D:\dev\projects\iree-build
 λ iree\tools\iree-translate.exe D:\dev\projects\iree-data\models\text_classification\text_classification.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb
 
 λ zipinfo D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb
@@ -81,6 +91,20 @@ Zip file size: 663022 bytes, number of entries: 1
 ?---------  3.0 unx    15398 bx stor 80-000-00 00:00 _text_classification_linked_llvm_system_dll_x86_64_binary.fb
 1 file, 15398 bytes uncompressed, 15398 bytes compressed:  0.0%
 ```
+
+With embedded ELF
+
+```
+λ iree\tools\iree-translate.exe D:\dev\projects\iree-data\models\text_classification\text_classification.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_embeddednodebugsymbols.vmfb --iree-llvm-debug-symbols=false --iree-llvm-link-embedded=true
+
+λ zipinfo D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_embeddednodebugsymbols.vmfb
+Archive:  D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_embeddednodebugsymbols.vmfb
+Zip file size: 662352 bytes, number of entries: 1
+?---------  3.0 unx    14720 bx stor 80-000-00 00:00 _text_classification_linked_llvm_embedded_elf_x86_64_binary.so
+1 file, 14720 bytes uncompressed, 14720 bytes compressed:  0.0%
+```
+
+* with static linking (look into vmfb)
 
 ## Running the compiled program with `iree-run-module` and `iree-run-trace`
 
@@ -107,7 +131,6 @@ TODO: write this
 ## Appendix
 
 ```
-D:\dev\projects\iree-build
 λ iree\tools\iree-translate.exe D:\dev\projects\iree-data\models\text_classification\text_classification.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb --iree-llvm-list-targets
   Registered Targets:
     aarch64    - AArch64 (little endian)

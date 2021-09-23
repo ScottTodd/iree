@@ -1,7 +1,11 @@
+---
+title: TFLite Support via TOSA
+---
+
  Monday, July 19, 2021<br>
  By Rob Suderman and Jenni Kilduff
 
-## TFLite Support via TOSA
+# TFLite Support via TOSA
 
 IREE can now execute [TensorFlow Lite](https://www.tensorflow.org/lite)
 (TFLite) models through the use of
