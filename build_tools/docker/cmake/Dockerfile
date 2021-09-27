@@ -10,8 +10,8 @@
 # to get the /usr/share path.
 # See https://github.com/moby/moby/issues/41383
 ARG CMAKE_MAJOR_VERSION=3
-ARG CMAKE_MINOR_VERSION=13
-ARG CMAKE_PATCH_VERSION=5
+ARG CMAKE_MINOR_VERSION=16
+ARG CMAKE_PATCH_VERSION=3
 
 FROM gcr.io/iree-oss/util@sha256:40846b4aea5886af3250399d6adfdb3e1195a8b0177706bb0375e812d62dc49c AS install-cmake
 ARG CMAKE_MAJOR_VERSION
@@ -25,7 +25,7 @@ RUN wget "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION?}/
 RUN chmod +x "./cmake-${CMAKE_VERSION?}-Linux-x86_64.sh"
 RUN "./cmake-${CMAKE_VERSION?}-Linux-x86_64.sh" --skip-license --prefix=/usr/
 
-FROM gcr.io/iree-oss/base@sha256:9b73f4e2b1239f65a19f2022e54f4b15310b805570831fbe2cf8b4dc928f1d10 AS final
+FROM gcr.io/iree-oss/base@sha256:e5ad55549adc27d5d1927b7857ff308d9b75fa1be8a110ed848b24e3816127c5 AS final
 ARG CMAKE_MAJOR_VERSION
 ARG CMAKE_MINOR_VERSION
 

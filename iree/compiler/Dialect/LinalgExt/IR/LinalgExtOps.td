@@ -245,6 +245,58 @@ def LinalgExt_FftOp : LinalgExt_Op<"fft", [
   }];
 }
 
+def LinalgExt_ReverseOp : LinalgExt_Op<"reverse", [
+  DeclareOpInterfaceMethods<
+      TiledOpInterface,
+      ["generateScalarImplementation", "getTiledImplementation"]>,
+  DeclareOpInterfaceMethods<LinalgExtInterface,
+                            // ReverseOp does not have a region, so we have to
+                            // overwrite the method.
+                            ["payloadUsesValueFromOperand"]>]> {
+  let summary = "Reverse operator";
+  let description = [{
+    A temporary solution for lowering reverse ops into IREE, allowing IREE to
+    tile and distribute them.
+    }
+  }];
+
+  let arguments = (ins Variadic<AnyShaped>:$inputs,
+                       Variadic<AnyShaped>:$outputs,
+                       I64ElementsAttr:$dimensions
+  );
+  let results = (outs Variadic<AnyRankedTensor>:$results);
+  let assemblyFormat = [{
+    `dimensions` `(` $dimensions `)`
+    attr-dict (`ins` `(` $inputs^ `:` type($inputs) `)`)?
+    (`outs` `(` $outputs^ `:` type($outputs) `)`)?
+    (`:` type($results)^)?
+  }];
+  let extraClassDeclaration = extraLinalgExtOpClassDeclaration # [{
+    Value input() {
+      return getInputOperand(0)->get();
+    }
+    Value output() {
+      return getOutputOperand(0)->get();
+    }
+    ShapedType getOperandType() {
+      return input().getType().cast<ShapedType>();
+    }
+    int64_t getOperandRank() {
+      return getOperandType().getRank();
+    }
+    ArrayRef<int64_t> getOprerandShape() {
+      return getOperandType().getShape();
+    }
+    SmallVector<int64_t> dims() {
+      SmallVector<int64_t> ret;
+      for (const APInt& elem : dimensions()) {
+        ret.push_back(elem.getLimitedValue());
+      }
+      return ret;
+    }
+  }];
+}
+
 //===----------------------------------------------------------------------===//
 // Pure ops
 //===----------------------------------------------------------------------===//
