@@ -127,6 +127,12 @@ With source listing
 λ iree\tools\iree-translate.exe D:\dev\projects\iree-data\models\text_classification\text_classification.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_embeddednodebugsymbols.vmfb --iree-llvm-link-embedded=true --iree-vm-bytecode-source-listing=D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_sourcelisting.mlir
 ```
 
+MobileSSD default options:
+
+```
+iree\tools\iree-translate.exe D:\dev\projects\iree-tmp\blog\mobile_ssd_v2_float_coco_imported.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\mobile_ssd_v2_float_coco_llvmaot.vmfb
+```
+
 ## Running the compiled program
 
 ### Running `iree-run-trace`
@@ -169,6 +175,17 @@ EXEC @main
 result[0]: hal.buffer_view
 1x2xf32=[0.100271 0.899729]
 ```
+
+```
+.\iree\tools\iree-run-module.exe --driver=dylib --entry_function=main --function_input=1x320x320x3xf32 --module_file=D:\dev\projects\iree-tmp\blog\mobile_ssd_v2_float_coco_llvmaot.vmfb --print_statistics
+
+...
+
+[[ iree_hal_allocator_t memory statistics ]]
+  HOST_LOCAL:      1228800B peak /      1228800B allocated /      1228800B freed /            0B live
+DEVICE_LOCAL:     70124392B peak /     70124392B allocated /     70124392B freed /            0B live
+```
+
 
 ## Profiling runtime performance with Tracy
 
