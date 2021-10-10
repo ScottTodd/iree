@@ -26,6 +26,7 @@ iree_cc_library(
     "Passes.cpp"
     "PropagateTimepoints.cpp"
     "RefineUsage.cpp"
+    "ScheduleAllocation.cpp"
     "ScheduleExecution.cpp"
     "ScheduleWaves.cpp"
     "VerifyLowerings.cpp"
