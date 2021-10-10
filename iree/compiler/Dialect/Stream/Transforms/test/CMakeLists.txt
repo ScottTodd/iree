@@ -20,6 +20,8 @@ iree_lit_test_suite(
     "materialize_copy_on_write.mlir"
     "outline_constants.mlir"
     "refine_usage.mlir"
+    "schedule_execution.mlir"
+    "schedule_waves.mlir"
   DATA
     iree::tools::IreeFileCheck
     iree::tools::iree-opt

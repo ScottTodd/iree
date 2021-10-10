@@ -25,6 +25,8 @@ iree_cc_library(
     "PassDetail.h"
     "Passes.cpp"
     "RefineUsage.cpp"
+    "ScheduleExecution.cpp"
+    "ScheduleWaves.cpp"
     "VerifyLowerings.cpp"
   DEPS
     ::PassesIncGen
