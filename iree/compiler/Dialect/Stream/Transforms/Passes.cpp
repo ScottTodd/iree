@@ -113,6 +113,11 @@ void buildStreamAsyncPassPipeline(OpPassManager &passManager,
   passManager.addNestedPass<mlir::FuncOp>(
       IREE::Stream::createEncodeTensorsPass());
   addCleanupPatterns(passManager);
+
+  // Materialize copy-on-write behavior with explicit stream.async.* ops.
+  // Canonicalization can destroy these semantics and should not be run before
+  // we perform our scheduling.
+  passManager.addPass(IREE::Stream::createMaterializeCopyOnWritePass());
 }
 
 //===----------------------------------------------------------------------===//

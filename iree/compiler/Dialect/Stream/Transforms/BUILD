@@ -16,7 +16,9 @@ cc_library(
     name = "Transforms",
     srcs = [
         "ConvertToStream.cpp",
+        "ElideAsyncCopies.cpp",
         "EncodeTensors.cpp",
+        "MaterializeCopyOnWrite.cpp",
         "OutlineConstants.cpp",
         "PassDetail.h",
         "Passes.cpp",

@@ -45,6 +45,14 @@ def EncodeTensors :
   }];
 }
 
+def MaterializeCopyOnWrite :
+    Pass<"iree-stream-materialize-copy-on-write", ""> {
+  let summary = "Materializes copy-on-write (🐄) behavior as explicit ops.";
+  let constructor = [{
+    mlir::iree_compiler::IREE::Stream::createMaterializeCopyOnWritePass()
+  }];
+}
+
 //===----------------------------------------------------------------------===//
 // Diagnostics
 //===----------------------------------------------------------------------===//
