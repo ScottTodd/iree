@@ -53,6 +53,22 @@ def MaterializeCopyOnWrite :
   }];
 }
 
+def ElideAsyncCopies :
+    Pass<"iree-stream-elide-async-copies", "mlir::ModuleOp"> {
+  let summary = "Elides copies when they are not performing meaningful work.";
+  let constructor = [{
+    mlir::iree_compiler::IREE::Stream::createElideAsyncCopiesPass()
+  }];
+}
+
+def RefineUsage :
+    Pass<"iree-stream-refine-usage", "mlir::ModuleOp"> {
+  let summary = "Refines resource usage bits and inserts transfers where appropriate.";
+  let constructor = [{
+    mlir::iree_compiler::IREE::Stream::createRefineUsagePass()
+  }];
+}
+
 //===----------------------------------------------------------------------===//
 // Diagnostics
 //===----------------------------------------------------------------------===//
