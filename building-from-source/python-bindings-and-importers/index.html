@@ -9,14 +9,14 @@
       
       
       
-        <link rel="canonical" href="https://google.github.io/iree/community/projects/">
+        <link rel="canonical" href="https://google.github.io/iree/building-from-source/python-bindings-and-importers/">
       
       <link rel="icon" href="../../ghost.svg">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.3">
     
     
       
-        <title>Projects - IREE</title>
+        <title>Python bindings and importers - IREE</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#community-projects" class="md-skip">
+        <a href="#python-bindings-and-importers" class="md-skip">
           Skip to content
         </a>
       
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Projects
+              Python bindings and importers
             
           </span>
         </div>
@@ -447,14 +447,16 @@
 
   
   
+    
+  
   
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       
       
@@ -476,7 +478,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../building-from-source/">Building from source</a>
+          <a href="../">Building from source</a>
           
             <label for="__nav_4">
               <span class="md-nav__icon md-icon"></span>
@@ -500,7 +502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../building-from-source/getting-started/" class="md-nav__link">
+      <a href="../getting-started/" class="md-nav__link">
         Getting started
       </a>
     </li>
@@ -512,11 +514,105 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../building-from-source/optional-features/" class="md-nav__link">
-        Optional features
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Python bindings and importers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Python bindings and importers
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-python-bindings" class="md-nav__link">
+    Building Python bindings
+  </a>
+  
+    <nav class="md-nav" aria-label="Building Python bindings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    Environment setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-with-cmake" class="md-nav__link">
+    Building with CMake
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-tensorflow-frontend-bindings" class="md-nav__link">
+    Building TensorFlow frontend bindings
+  </a>
+  
+    <nav class="md-nav" aria-label="Building TensorFlow frontend bindings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup_1" class="md-nav__link">
+    Environment setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-tensorflow-components-with-bazel" class="md-nav__link">
+    Building TensorFlow components with Bazel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-iree-components-with-cmake" class="md-nav__link">
+    Building IREE components with CMake
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -528,7 +624,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../building-from-source/android/" class="md-nav__link">
+      <a href="../android/" class="md-nav__link">
         Android cross-compilation
       </a>
     </li>
@@ -542,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../building-from-source/riscv/" class="md-nav__link">
+      <a href="../riscv/" class="md-nav__link">
         RISC-V cross-compilation
       </a>
     </li>
@@ -661,58 +757,39 @@
 
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
       
       
       
         
           
+            
+          
         
       
       
-        <label class="md-nav__link" for="__nav_6">
-          Community
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../extensions/">Extensions</a>
+          
+        </div>
       
-      <nav class="md-nav" aria-label="Community" data-md-level="1">
+      <nav class="md-nav" aria-label="Extensions" data-md-level="1">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
-          Community
+          Extensions
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-              
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        Projects
-      </a>
-      
-    </li>
-  
-
             
           
         </ul>
@@ -743,6 +820,53 @@
             
           
         
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../community/">Community</a>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Community" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Community
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+        
+          
+            
+          
+        
           
         
           
@@ -756,14 +880,14 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../../blog/">Blog</a>
           
-            <label for="__nav_7">
+            <label for="__nav_8">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Blog" data-md-level="1">
-        <label class="md-nav__title" for="__nav_7">
+        <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           Blog
         </label>
@@ -839,6 +963,75 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-python-bindings" class="md-nav__link">
+    Building Python bindings
+  </a>
+  
+    <nav class="md-nav" aria-label="Building Python bindings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    Environment setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-with-cmake" class="md-nav__link">
+    Building with CMake
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-tensorflow-frontend-bindings" class="md-nav__link">
+    Building TensorFlow frontend bindings
+  </a>
+  
+    <nav class="md-nav" aria-label="Building TensorFlow frontend bindings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup_1" class="md-nav__link">
+    Environment setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-tensorflow-components-with-bazel" class="md-nav__link">
+    Building TensorFlow components with Bazel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-iree-components-with-cmake" class="md-nav__link">
+    Building IREE components with CMake
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -850,28 +1043,235 @@
               
                 
                 
-                <h1 id="community-projects">Community projects<a class="headerlink" href="#community-projects" title="Permanent link">&para;</a></h1>
+                <h1 id="python-bindings-and-importers">Python bindings and importers<a class="headerlink" href="#python-bindings-and-importers" title="Permanent link">&para;</a></h1>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>These components are more complicated to build from source than the rest of
+the project. If your usage does not require making source changes, prefer
+to install from the official binary distributions instead.</p>
+</div>
+<p>This page covers how to build IREE's Python-based bindings and import tools from
+source. These components are built using CMake as well as other dependencies and
+each section extends the basic build steps in the
+<a href="../getting-started/">getting started</a> page.</p>
+<h2 id="building-python-bindings">Building Python bindings<a class="headerlink" href="#building-python-bindings" title="Permanent link">&para;</a></h2>
+<p>This section describes how to build and interactively use built-from-source
+Python bindings for the following packages:</p>
+<table>
+<thead>
+<tr>
+<th>Python Import</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>import iree.compiler</code></td>
+<td>IREE's generic compiler tools and helpers</td>
+</tr>
+<tr>
+<td><code>import iree.runtime</code></td>
+<td>IREE's runtime, including CPU and GPU backends</td>
+</tr>
+</tbody>
+</table>
+<p>Also see <a href="../../bindings/python/">instructions for installing pre-built binaries</a>.</p>
+<p><strong>Pre-requisites:</strong></p>
+<ul>
+<li>A relatively recent Python3 installation &gt;=3.7 (we aim to support
+  <a href="https://endoflife.date/python">non-eol Python versions</a>).</li>
+<li>Installation of python dependencies as specified in
+  <a href="https://github.com/google/iree/blob/main/bindings/python/build_requirements.txt"><code>bindings/python/build_requirements.txt</code></a>.</li>
+</ul>
+<p><strong>CMake Variables:</strong></p>
 <ul>
 <li>
-<p>The <a href="https://github.com/iml130/iree-bare-metal-arm">IREE Bare-Metal Arm Sample</a>
-    demonstrates how build IREE with the
-    <a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm">GNU Arm Embedded Toolchain</a>
-    for bare-metal Arm targets using the open-source firmware library
-    <a href="https://github.com/libopencm3/libopencm3">libopencm3</a>.</p>
+<p><strong><code>IREE_BUILD_PYTHON_BINDINGS</code></strong> : <code>BOOL</code></p>
+<p>Enables building of Python bindings under <code>bindings/python</code> in the repository.
+Defaults to <code>OFF</code>.</p>
 </li>
 <li>
-<p>The <a href="https://github.com/iml130/iree-template-cpp">IREE C++ Template</a>
-    demonstrates how to integrate IREE into a third-party project with CMake.
-    The project demonstrates the usage of runtime support and how to use a
-    custom dialect alongside with the runtime.</p>
-</li>
-<li>
-<p>The <a href="https://github.com/google/iree-llvm-sandbox">IREE LLVM Sandbox</a>
-    contains experimental work by the IREE team closely related to LLVM and
-    MLIR, usually with the aim of contributing back to those upstream projects
-    in some form.</p>
+<p><strong><code>Python3_EXECUTABLE</code></strong> : <code>PATH</code></p>
+<p>Full path to the Python3 executable to build against. If not specified, CMake
+will auto-detect this, which often yields incorrect results on systems
+with multiple Python versions. Explicitly setting this is recommended.
+Note that mixed case of the option.</p>
 </li>
 </ul>
+<h3 id="environment-setup">Environment setup<a class="headerlink" href="#environment-setup" title="Permanent link">&para;</a></h3>
+<p>We recommend using virtual environments to manage python packages, such
+as through <code>venv</code>, which may need to be installed via your system
+package manager (<a href="https://docs.python.org/3/library/venv.html">about</a>,
+<a href="https://docs.python.org/3/tutorial/venv.html">tutorial</a>):</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Linux and MacOS</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="c1"># Make sure your &#39;python&#39; is what you expect. Note that on multi-python</span>
+<span class="c1"># systems, this may have a version suffix, and on many Linuxes and MacOS where</span>
+<span class="c1"># python2 and python3 co-exist, you may also want to use `python3`.</span>
+which python
+python --version
+
+<span class="c1"># Create a persistent virtual environment (first time only).</span>
+python -m venv iree.venv
+
+<span class="c1"># Activate the virtual environment (per shell).</span>
+<span class="c1"># Now the `python` command will resolve to your virtual environment</span>
+<span class="c1"># (even on systems where you typically use `python3`).</span>
+<span class="nb">source</span> iree.venv/bin/activate
+
+<span class="c1"># Upgrade PIP. On Linux, many packages cannot be installed for older</span>
+<span class="c1"># PIP versions. See: https://github.com/pypa/manylinux</span>
+python -m pip install --upgrade pip
+
+<span class="c1"># Install IREE build pre-requisites.</span>
+python -m pip install -r ./bindings/python/build_requirements.txt
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Windows</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
+<span class="p">.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">activate</span><span class="p">.</span><span class="n">bat</span>
+<span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="p">-</span><span class="n">-upgrade</span> <span class="n">pip</span>
+<span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">bindings</span><span class="p">\</span><span class="n">python</span><span class="p">\</span><span class="n">build_requirements</span><span class="p">.</span><span class="n">txt</span>
+</code></pre></div>
+
+</div>
+</div>
+<p>When you are done with the venv, you can close it by closing your shell
+or running <code>deactivate</code>.</p>
+<h3 id="building-with-cmake">Building with CMake<a class="headerlink" href="#building-with-cmake" title="Permanent link">&para;</a></h3>
+<p>From the <code>iree-build</code> directory:</p>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Linux and MacOS</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>cmake <span class="se">\</span>
+    -GNinja <span class="se">\</span>
+    -DCMAKE_BUILD_TYPE<span class="o">=</span>RelWithDebInfo <span class="se">\</span>
+    -DIREE_BUILD_PYTHON_BINDINGS<span class="o">=</span>ON <span class="se">\</span>
+    -DPython3_EXECUTABLE<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>which python<span class="k">)</span><span class="s2">&quot;</span> <span class="se">\</span>
+    .
+cmake --build .
+
+<span class="c1"># Add ./bindings/python and compiler-api/python_package to PYTHONPATH and</span>
+<span class="c1"># use the API.</span>
+<span class="nb">source</span> .env <span class="o">&amp;&amp;</span> <span class="nb">export</span> PYTHONPATH
+<span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/bindings/python&quot;</span>
+python -c <span class="s2">&quot;import iree.compiler&quot;</span>
+python -c <span class="s2">&quot;import iree.runtime&quot;</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Windows</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">cmake</span> <span class="n">-GNinja</span> <span class="n">-DCMAKE_BUILD_TYPE</span><span class="p">=</span><span class="n">RelWithDebInfo</span> <span class="n">-DIREE_BUILD_PYTHON_BINDINGS</span><span class="p">=</span><span class="n">ON</span> <span class="p">.</span>
+<span class="n">cmake</span> <span class="p">-</span><span class="n">-build</span> <span class="p">.</span>
+
+<span class="c"># Add bindings\python and compiler-api\python_package to PYTHONPATH and use</span>
+<span class="c"># the API.</span>
+<span class="nb">set </span><span class="n">PYTHONPATH</span><span class="p">=</span><span class="s2">&quot;$pwd\compiler-api\python_package;$pwd\bindings\python;%PYTHONPATH%&quot;</span>
+<span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;import iree.compiler&quot;</span>
+<span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;import iree.runtime&quot;</span>
+</code></pre></div>
+
+</div>
+</div>
+<p>Tests can now be run individually via python or via ctest.</p>
+<h2 id="building-tensorflow-frontend-bindings">Building TensorFlow frontend bindings<a class="headerlink" href="#building-tensorflow-frontend-bindings" title="Permanent link">&para;</a></h2>
+<p>This section describes how to build compiler tools and Python bindings for
+importing models from various TensorFlow-ecosystem frontends, including
+TensorFlow, XLA (used for JAX), and TFLite. It extends the instructions in
+<a href="#building-python-bindings">Building Python Bindings</a> above with additional
+steps that are TensorFlow specific. There are various ways to achieve these
+ends, but this section describes the canonical method that the core
+developers recommend. Upon completing these steps, you will have access to
+additional Python packages:</p>
+<table>
+<thead>
+<tr>
+<th>Python Import</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>import iree.compiler.tools.tf</code></td>
+<td>Tools for importing from <a href="https://www.tensorflow.org/">TensorFlow</a></td>
+</tr>
+<tr>
+<td><code>import iree.compiler.tools.tflite</code></td>
+<td>Tools for importing from <a href="https://www.tensorflow.org/lite">TensorFlow Lite</a></td>
+</tr>
+<tr>
+<td><code>import iree.compiler.tools.xla</code></td>
+<td>Tools for importing from <a href="https://www.tensorflow.org/xla">XLA</a></td>
+</tr>
+</tbody>
+</table>
+<p>These tools packages are needed in order for the frontend specific, high-level
+APIs under <code>import iree.compiler.tf</code>, <code>import iree.compiler.tflite</code>,
+<code>import iree.compiler.xla</code>, and <code>import iree.jax</code> to be fully functional.</p>
+<h3 id="environment-setup_1">Environment setup<a class="headerlink" href="#environment-setup_1" title="Permanent link">&para;</a></h3>
+<p>The
+<a href="https://github.com/google/iree/blob/main/integrations/tensorflow/bindings/python/build_requirements.txt">build_requirements.txt</a>
+file lists prerequisites, such as a recent version of <code>tf-nightly</code>:</p>
+<div class="highlight"><pre><span></span><code>python -m pip install -r <span class="se">\</span>
+    ./integrations/tensorflow/bindings/python/build_requirements.txt
+</code></pre></div>
+
+<h3 id="building-tensorflow-components-with-bazel">Building TensorFlow components with Bazel<a class="headerlink" href="#building-tensorflow-components-with-bazel" title="Permanent link">&para;</a></h3>
+<p>TensorFlow frontends can only be built with <a href="https://bazel.build/">Bazel</a>,
+and this must be done as a manual step (we used to have automation for this,
+but Bazel integrates poorly with automation and it made diagnosis and cross
+platform usage unreliable). The recommended version of Bazel (used by CI
+systems) can be found in the
+<a href="https://github.com/google/iree/blob/main/.bazelversion">.bazelversion</a>
+file. In addition, Bazel is hard to use out of tree, so these steps will
+involve working from the source tree (instead of the build tree).</p>
+<details class="note" open="open"><summary>Note</summary><p>Due to the difficulties using Bazel and compiling TensorFlow, only
+compilation on Linux with clang is supported. Other OS's and compilers are
+"best effort" with patches to improve support welcome.</p>
+</details>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Linux and MacOS</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="c1"># From the iree source directory.</span>
+<span class="nb">cd</span> integrations/tensorflow
+<span class="nv">CC</span><span class="o">=</span>clang <span class="nv">CXX</span><span class="o">=</span>clang python ../../configure_bazel.py
+bazel build iree_tf_compiler:importer-binaries
+</code></pre></div>
+
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Windows</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="c"># From the iree source directory.</span>
+<span class="nb">cd </span><span class="n">integrations</span><span class="p">\</span><span class="n">tensorflow</span>
+<span class="n">python</span> <span class="p">..\..\</span><span class="n">configure_bazel</span><span class="p">.</span><span class="n">py</span>
+<span class="n">bazel</span> <span class="n">build</span> <span class="n">iree_tf_compiler</span><span class="err">:</span><span class="n">importer-binaries</span>
+</code></pre></div>
+
+</div>
+</div>
+<p>Importer binaries can be found under <code>bazel-bin/iree_tf_compiler</code> and can
+be used from the command line if desired.</p>
+<details class="note" open="open"><summary>Note</summary><p>Bazel's default configuration tends to build almost everything twice,
+for reasons that can only be surmised to be based in some technically
+correct but practically challenged viewpoint. It is also incompatible with
+ccache and other mechanisms for performing less incremental work. It is
+recommended to address both of these with a <code>.bazelrc</code> file in your
+home directory:</p>
+<div class="highlight"><pre><span></span><code>build --disk_cache=/path/to/home/.bazelcache
+build --nodistinct_host_configuration
+</code></pre></div>
+
+<p>We can't set these for you because of other inscrutable reasons.</p>
+</details>
+<h3 id="building-iree-components-with-cmake">Building IREE components with CMake<a class="headerlink" href="#building-iree-components-with-cmake" title="Permanent link">&para;</a></h3>
+<p>The main IREE build will embed binaries built above and enable additional
+Python APIs. Within the build, the binaries are symlinked, so can be
+rebuilt per above without re-running these steps for edit-and-continue
+style work.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># From the iree-build/ directory.</span>
+cmake -DIREE_BUILD_TENSORFLOW_ALL<span class="o">=</span>ON .
+cmake --build .
+
+<span class="c1"># Validate.</span>
+python -c <span class="s2">&quot;import iree.tools.tf as _; print(_.get_tool(&#39;iree-import-tf&#39;))&quot;</span>
+python -c <span class="s2">&quot;import iree.tools.tflite as _; print(_.get_tool(&#39;iree-import-tflite&#39;))&quot;</span>
+python -c <span class="s2">&quot;import iree.tools.xla as _; print(_.get_tool(&#39;iree-import-xla&#39;))&quot;</span>
+</code></pre></div>
                 
               
               

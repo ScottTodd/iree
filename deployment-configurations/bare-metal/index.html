@@ -610,8 +610,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../building-from-source/optional-features/" class="md-nav__link">
-        Optional features
+      <a href="../../building-from-source/python-bindings-and-importers/" class="md-nav__link">
+        Python bindings and importers
       </a>
     </li>
   
@@ -770,33 +770,26 @@
       
         
           
+            
+          
         
       
       
-        <label class="md-nav__link" for="__nav_6">
-          Community
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../extensions/">Extensions</a>
+          
+        </div>
       
-      <nav class="md-nav" aria-label="Community" data-md-level="1">
+      <nav class="md-nav" aria-label="Extensions" data-md-level="1">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
-          Community
+          Extensions
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../community/projects/" class="md-nav__link">
-        Projects
-      </a>
-    </li>
-  
-
             
           
         </ul>
@@ -827,6 +820,53 @@
             
           
         
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../community/">Community</a>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Community" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Community
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+        
+          
+            
+          
+        
           
         
           
@@ -840,14 +880,14 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../../blog/">Blog</a>
           
-            <label for="__nav_7">
+            <label for="__nav_8">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Blog" data-md-level="1">
-        <label class="md-nav__title" for="__nav_7">
+        <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           Blog
         </label>
@@ -1028,7 +1068,6 @@ build directory</p>
 <div class="highlight"><pre><span></span><code>iree/tools/iree-translate <span class="se">\</span>
     -iree-mlir-to-vm-bytecode-module <span class="se">\</span>
 <span class="hll">    -iree-hal-target-backends<span class="o">=</span>dylib-llvm-aot <span class="se">\</span>
-</span><span class="hll">    -iree-llvm-link-embedded<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
 </span><span class="hll">    -iree-llvm-target-triple<span class="o">=</span>x86_64-pc-linux-elf <span class="se">\</span>
 </span><span class="hll">    -iree-llvm-debug-symbols<span class="o">=</span><span class="nb">false</span> <span class="se">\</span>
 </span>    iree/samples/models/simple_abs.mlir <span class="se">\</span>
@@ -1039,10 +1078,6 @@ build directory</p>
 <ul>
 <li><code>iree-hal-target-backends=dylib-llvm-aot</code>: Build the model for the dynamic
 library CPU HAL driver</li>
-<li><code>iree-llvm-link-embedded=true</code>: Generate the dynamic library with
-<a href="https://lld.llvm.org/">LLD</a> and the artifact can be loaded with the
-<a href="https://github.com/google/iree/blob/main/iree/hal/local/loaders/embedded_library_loader.h">embedded library loader</a>
-without invoking the dynamic library support</li>
 <li><code>iree-llvm-target-triple</code>: Use the <code>&lt;arch&gt;-pc-linux-elf</code> LLVM target triple so
 the artifact has a fixed ABI to be rendered by the
 <a href="https://github.com/google/iree/tree/main/iree/hal/local/elf">elf_module library</a></li>
