@@ -15,6 +15,7 @@ cc_library(
     srcs = [
         "AssignTargetDevices.cpp",
         "BenchmarkBatchDispatches.cpp",
+        "CombineInterfaces.cpp",
         "ConvertToHAL.cpp",
         "ConvertToHAL2.cpp",
         "ElideRedundantCommands.cpp",

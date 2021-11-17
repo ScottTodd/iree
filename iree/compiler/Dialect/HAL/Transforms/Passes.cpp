@@ -227,6 +227,9 @@ void buildHALTransformPassPipeline2(OpPassManager &passManager,
   // device communicate across the ABI boundary.
   passManager.addPass(createMaterializeInterfaces2Pass());
 
+  // TODO(scotttodd): docs
+  passManager.addPass(createCombineInterfacesPass());
+
   // TODO(benvanik): move translation after conversion; today translation
   // inserts the workgroup count logic we need to convert but we could instead
   // insert placeholder ops that are expanded after translation.

@@ -78,6 +78,8 @@ std::unique_ptr<OperationPass<ModuleOp>> createMemoizeDeviceQueriesPass();
 std::unique_ptr<OperationPass<ModuleOp>> createMaterializeInterfacesPass();
 std::unique_ptr<OperationPass<ModuleOp>> createMaterializeInterfaces2Pass();
 
+std::unique_ptr<OperationPass<ModuleOp>> createCombineInterfacesPass();
+
 // Propagates hal.interface.workload.* information when constant.
 std::unique_ptr<OperationPass<IREE::HAL::ExecutableVariantOp>>
 createPropagateConstantWorkgroupInfoPass();
@@ -168,6 +170,7 @@ inline void registerHALPasses() {
   createMaterializeConstantPoolBuffersPass();
   createMaterializeInterfacesPass();
   createMaterializeInterfaces2Pass();
+  createCombineInterfacesPass();
   createMaterializeResourceCachesPass(targetOptions);
   createMemoizeDeviceQueriesPass();
   createPackAllocationsPass();
