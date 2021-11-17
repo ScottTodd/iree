@@ -18,6 +18,9 @@
 #include "mlir/IR/Matchers.h"
 #include "mlir/Pass/Pass.h"
 
+// DO NOT SUBMIT
+#include "llvm/Support/Debug.h"
+
 namespace mlir {
 namespace iree_compiler {
 namespace IREE {
@@ -164,6 +167,9 @@ static LogicalResult processOp(IREE::HAL::CommandBufferPushConstantsOp op,
 
 static LogicalResult processOp(IREE::HAL::CommandBufferPushDescriptorSetOp op,
                                CommandBufferState &state) {
+  llvm::dbgs() << "\n// CommandBufferPushDescriptorSetOp:\n";
+  op.dump();
+
   auto *setState = state.getDescriptorSet(op.set());
   if (!setState) return failure();
 
@@ -190,14 +196,22 @@ static LogicalResult processOp(IREE::HAL::CommandBufferPushDescriptorSetOp op,
 
   // Bail early if no redundant bindings.
   if (isLayoutEqual && redundantIndices.none()) {
+    llvm::dbgs() << "// no redundant bindings\n";
     return success();  // no-op
   }
 
   // If all bits are set we can just kill the op.
   if (isLayoutEqual && redundantIndices.all()) {
+    llvm::dbgs() << "// all indices are redundant\n";
     op.erase();
     return success();
   }
+
+  // TODO(scotttodd): subset pruning
+  //   * remove each index that is redundant
+  //   * fold empty index list away
+
+  llvm::dbgs() << "// fallthrough\n";
 
   return success();
 }
