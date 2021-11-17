@@ -167,8 +167,8 @@ static LogicalResult processOp(IREE::HAL::CommandBufferPushConstantsOp op,
 
 static LogicalResult processOp(IREE::HAL::CommandBufferPushDescriptorSetOp op,
                                CommandBufferState &state) {
-  llvm::dbgs() << "\n// CommandBufferPushDescriptorSetOp:\n";
-  op.dump();
+  // llvm::dbgs() << "\n// CommandBufferPushDescriptorSetOp:\n";
+  // op.dump();
 
   auto *setState = state.getDescriptorSet(op.set());
   if (!setState) return failure();
@@ -196,13 +196,13 @@ static LogicalResult processOp(IREE::HAL::CommandBufferPushDescriptorSetOp op,
 
   // Bail early if no redundant bindings.
   if (isLayoutEqual && redundantIndices.none()) {
-    llvm::dbgs() << "// no redundant bindings\n";
+    // llvm::dbgs() << "// no redundant bindings\n";
     return success();  // no-op
   }
 
   // If all bits are set we can just kill the op.
   if (isLayoutEqual && redundantIndices.all()) {
-    llvm::dbgs() << "// all indices are redundant\n";
+    // llvm::dbgs() << "// all indices are redundant\n";
     op.erase();
     return success();
   }
@@ -211,7 +211,7 @@ static LogicalResult processOp(IREE::HAL::CommandBufferPushDescriptorSetOp op,
   //   * remove each index that is redundant
   //   * fold empty index list away
 
-  llvm::dbgs() << "// fallthrough\n";
+  // llvm::dbgs() << "// fallthrough\n";
 
   return success();
 }
