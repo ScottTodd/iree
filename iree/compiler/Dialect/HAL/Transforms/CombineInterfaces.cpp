@@ -48,18 +48,32 @@ class CombineInterfacesPass
   }
 
   void runOnOperation() override {
+    auto moduleOp = getOperation();
     // TODO(scotttodd): implementation
 
     // "the materialize interfaces (2) pass adds an attribute to each dispatch
     // with which bindings things map to"
+    //
     // "so I think the easiest thing would be to have a pass that runs after
     // materialize interfaces (2) but before lowering into HAL that just updates
     // the interfaces and the binding symbols there ignoring the names, it could
     // just change the hal.interfaces (adjust the set/binding numbers) then no
     // other IR needs to change"
+    //
+    // "all you need to make sure of after your pass exits is that as many
+    // hal.executables have the same hal.interfaces as possible"
 
+    // --------------------------------------------------------------------- //
+    // Analysis
+
+    int64_t maxPushConstants = 0;
     LLVM_DEBUG({ llvm::dbgs() << "Analyzing interfaces:\n"; });
-    getOperation()->walk([&](IREE::HAL::InterfaceOp interfaceOp) {
+    moduleOp->walk([&](IREE::HAL::InterfaceOp interfaceOp) {
+      int64_t pushConstants = interfaceOp.push_constants()
+                                  .getValueOr(APInt::getZero(64))
+                                  .getSExtValue();
+      maxPushConstants = std::max(maxPushConstants, pushConstants);
+
       // Note: public interface and private interface, both matching
       auto executableOp =
           interfaceOp->getParentOfType<IREE::HAL::ExecutableOp>();
@@ -68,18 +82,21 @@ class CombineInterfacesPass
           llvm::dbgs() << "Executable '" << executableOp.getName()
                        << "' has public interface:\n";
           interfaceOp.dump();
+          llvm::dbgs() << "  pushConstants: " << pushConstants
+                       << " (max: " << maxPushConstants << ")\n";
         }
       });
     });
 
     LLVM_DEBUG({ llvm::dbgs() << "Analyzing dispatches:\n"; });
-    getOperation()->walk([&](IREE::Stream::CmdDispatchOp dispatchOp) {
+    moduleOp->walk([&](IREE::Stream::CmdDispatchOp dispatchOp) {
       auto bindingSymbols = dispatchOp->getAttr("hal.interface.bindings")
                                 .dyn_cast_or_null<ArrayAttr>();
       LLVM_DEBUG({
-        llvm::dbgs() << "Bindings: ";
-        for (auto bindingSymbol : bindingSymbols) {
-          llvm::dbgs() << bindingSymbol << ", ";
+        llvm::dbgs() << "  Bindings: ";
+        for (int i = 0; i < bindingSymbols.size(); ++i) {
+          llvm::dbgs() << bindingSymbols[i];
+          if (i < bindingSymbols.size() - 1) llvm::dbgs() << ", ";
         }
         llvm::dbgs() << "\n";
       });
@@ -91,6 +108,18 @@ class CombineInterfacesPass
       //   assert(bindingOp && "binding not found");
       //   return bindingOp;
       // }));
+    });
+
+    // --------------------------------------------------------------------- //
+    // Updating
+    OpBuilder builder(getOperation());
+
+    LLVM_DEBUG({
+      llvm::dbgs() << "Setting push constants to " << maxPushConstants << "\n";
+    });
+    // TODO(scotttodd): save list of interface ops to avoid walking again
+    moduleOp->walk([&](IREE::HAL::InterfaceOp interfaceOp) {
+      interfaceOp.push_constantsAttr(builder.getIndexAttr(maxPushConstants));
     });
 
     return;
