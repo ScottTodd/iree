@@ -39,6 +39,7 @@ void ExecutableLayout::print(llvm::raw_ostream &os) const {
        << setBinding.value().first << " binding " << setBinding.value().second
        << "\n";
   }
+  os << "\n";
 }
 
 // Finds all dispatches within |rootOp| and groups them by executable export.
@@ -64,6 +65,11 @@ static ExecutableLayout deriveExportLayout(
       exportOp.function_ref());
   assert(funcOp && "export target not found");
 
+  LLVM_DEBUG({
+    llvm::dbgs() << "deriveExportLayout(@" << executableOp.sym_name() << "::@"
+                 << exportOp.sym_name() << "):\n";
+  });
+
   // TODO(#3502): a real derivation based on dispatch sites.
   // We want to get all slowly changing bindings earlier in the sets with the
   // goal of having set 0 be nearly command buffer static so that we only do one
@@ -83,10 +89,14 @@ static ExecutableLayout deriveExportLayout(
   // kind of rubbish.
   unsigned operandCount = 0;
   unsigned bindingCount = 0;
+  LLVM_DEBUG({ llvm::dbgs() << "Arguments:\n"; });
   for (auto arg : funcOp.getArgumentTypes()) {
+    LLVM_DEBUG({ llvm::dbgs() << "  `" << arg << "`"; });
     if (arg.isa<IREE::Stream::BindingType>()) {
+      LLVM_DEBUG({ llvm::dbgs() << " (binding " << bindingCount << ")\n"; });
       ++bindingCount;
     } else {
+      LLVM_DEBUG({ llvm::dbgs() << " (operand " << operandCount << ")\n"; });
       ++operandCount;
     }
   }
@@ -100,11 +110,18 @@ static ExecutableLayout deriveExportLayout(
   // NOTE: we could check the actual constant values being uniform within a
   // single command buffer (as that's all that really matters) but this is all
   // just a temporary hack so ¯\_(ツ)_/¯.
+  LLVM_DEBUG({
+    llvm::dbgs() << "Analyzing " << dispatchOps.size()
+                 << " dispatch site(s):\n";
+  });
   llvm::BitVector staticBindings(bindingCount, /*t=*/true);
   for (auto dispatchOp : dispatchOps) {
     auto resourceOffsets = dispatchOp.resource_offsets();
     for (unsigned i = 0; i < bindingCount; ++i) {
-      if (!matchPattern(resourceOffsets[i], m_Zero())) staticBindings.reset(i);
+      if (!matchPattern(resourceOffsets[i], m_Zero())) {
+        LLVM_DEBUG({ llvm::dbgs() << "  binding " << i << " is dynamic\n"; });
+        staticBindings.reset(i);
+      }
     }
   }
 
@@ -162,8 +179,9 @@ static ExecutableLayout deriveExportLayout(
   executableLayout.setLayouts.push_back(setLayout);
 
   LLVM_DEBUG({
-    llvm::dbgs() << "deriveExportLayout(@" << executableOp.sym_name() << "::@"
-                 << exportOp.sym_name() << "):\n";
+    // llvm::dbgs() << "deriveExportLayout(@" << executableOp.sym_name() <<
+    // "::@"
+    //              << exportOp.sym_name() << "):\n";
     executableLayout.print(llvm::dbgs());
   });
 
@@ -183,6 +201,8 @@ static BindingLayoutAnalysis::ExportLayoutMap deriveExportLayouts(
 BindingLayoutAnalysis::BindingLayoutAnalysis(Operation *rootOp) {
   exportDispatches = findAllDispatchSites(rootOp);
   exportLayouts = deriveExportLayouts(rootOp, exportDispatches);
+  // combine layouts here?
+  //   compute superset of all layouts
 }
 
 const SmallVector<IREE::Stream::CmdDispatchOp>
