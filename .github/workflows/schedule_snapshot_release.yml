@@ -1,8 +1,8 @@
 name: Schedule snapshot release
 
 on:
-  schedule:
-    - cron: '0 6,18 * * *'
+  # schedule:
+  #   - cron: '0 6,18 * * *'
 
   workflow_dispatch:
 
@@ -11,7 +11,7 @@ jobs:
     name: "Tag snapshot release"
     runs-on: ubuntu-18.04
     # Don't run this in everyone's forks.
-    if: github.repository == 'google/iree'
+    # if: github.repository == 'google/iree'
     steps:
       - name: Checking out repository
         uses: actions/checkout@v2
