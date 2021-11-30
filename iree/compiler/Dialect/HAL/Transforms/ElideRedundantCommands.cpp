@@ -18,6 +18,9 @@
 #include "mlir/IR/Matchers.h"
 #include "mlir/Pass/Pass.h"
 
+//
+#include "llvm/Support/Debug.h"
+
 namespace mlir {
 namespace iree_compiler {
 namespace IREE {
@@ -188,16 +191,60 @@ static LogicalResult processOp(IREE::HAL::CommandBufferPushDescriptorSetOp op,
     }
   }
 
+  // Bail early if the layout is different.
+  // We could make this smarter by checking compatibility instead:
+  // https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#descriptorsets-compatibility
+  if (!isLayoutEqual) {
+    return success();
+  }
+
+  // remove each index that is redundant
+  // fold empty list erases the op
+
   // Bail early if no redundant bindings.
-  if (isLayoutEqual && redundantIndices.none()) {
+  if (redundantIndices.none()) {
     return success();  // no-op
   }
 
   // If all bits are set we can just kill the op.
-  if (isLayoutEqual && redundantIndices.all()) {
+  if (redundantIndices.all()) {
     op.erase();
     return success();
   }
+
+  // If some bindings are redundant, erase them individually.
+  llvm::dbgs() << "// some redundant indices in op:\n";
+  op.dump();
+
+  auto ordinalsCopy = op.binding_ordinals();
+  auto buffersCopy = op.binding_buffers();
+  auto offsetsCopy = op.binding_offsets();
+  auto lengthsCopy = op.binding_lengths();
+  op.binding_ordinalsMutable().clear();
+  op.binding_buffersMutable().clear();
+  op.binding_offsetsMutable().clear();
+  op.binding_lengthsMutable().clear();
+
+  for (int64_t index = 0; index < descriptorCount; ++index) {
+    if (redundantIndices.test(index)) continue;
+    llvm::dbgs() << "// keeping index " << index << "\n";
+    op.binding_ordinalsMutable().append(ordinalsCopy[index]);
+    op.binding_buffersMutable().append(buffersCopy[index]);
+    op.binding_offsetsMutable().append(offsetsCopy[index]);
+    op.binding_lengthsMutable().append(lengthsCopy[index]);
+  }
+
+  // for (int64_t index = descriptorCount - 1; index >= 0; --index) {
+  //   if (redundantIndices.test(index)) {
+  //     llvm::dbgs() << "erasing index " << index << "\n";
+  //     op.binding_ordinalsMutable().erase(index - 1);
+  //     op.binding_buffersMutable().erase(index - 1);
+  //     op.binding_offsetsMutable().erase(index - 1);
+  //     op.binding_lengthsMutable().erase(index - 1);
+  //   }
+  // }
+  llvm::dbgs() << "// after:\n";
+  op.dump();
 
   return success();
 }
