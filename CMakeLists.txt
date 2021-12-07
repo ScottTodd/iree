@@ -136,6 +136,7 @@ set(IREE_ALL_TARGET_BACKENDS
   Metal-SPIRV
   ROCM
   Vulkan-SPIRV
+  WebGPU
   VMVX
 )
 
