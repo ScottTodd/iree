@@ -474,9 +474,21 @@ if(IREE_BUILD_PYTHON_BINDINGS)
 endif()
 
 if(IREE_TARGET_BACKEND_METAL-SPIRV)
-  iree_set_spirv_cross_cmake_options()
   # SPIRV-Cross is needed to cross compile SPIR-V into MSL source code.
+  # TODO(scotttodd): Use tint for SPIR-V -> MSL instead
+  message(STATUS "Metal-SPIRV backend enabled, including SPIRV-Cross")
+  iree_set_spirv_cross_cmake_options()
   add_subdirectory(third_party/spirv_cross EXCLUDE_FROM_ALL)
+endif()
+
+if(IREE_TARGET_BACKEND_WEBGPU)
+  # Tint is needed to compile SPIR-V into WGSL source code.
+  # Tint also requires SPIRV-Tools, which requires SPIRV-Headers.
+  message(STATUS "WebGPU backend enabled, including SPIRV-Headers, SPIRV-Tools, and Tint")
+  add_subdirectory(third_party/spirv_headers EXCLUDE_FROM_ALL)
+  add_subdirectory(third_party/spirv-tools EXCLUDE_FROM_ALL)
+  iree_set_tint_cmake_options()
+  add_subdirectory(third_party/tint EXCLUDE_FROM_ALL)
 endif()
 
 #-------------------------------------------------------------------------------
