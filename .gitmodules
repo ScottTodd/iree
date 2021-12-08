@@ -53,3 +53,6 @@
 [submodule "third_party/musl"]
 	path = third_party/musl
 	url = https://github.com/powderluv/musl.git
+[submodule "third_party/tint"]
+	path = third_party/tint
+	url = https://dawn.googlesource.com/tint
