@@ -9,6 +9,7 @@
 #include "iree/compiler/Codegen/Dialect/IREECodegenDialect.h"
 #include "iree/compiler/Codegen/Passes.h"
 #include "iree/compiler/Dialect/HAL/Target/TargetRegistry.h"
+#include "iree/compiler/Dialect/HAL/Target/WebGPU/SPIRVToWGSL.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/FileSystem.h"
 #include "llvm/Support/ToolOutputFile.h"
@@ -17,6 +18,7 @@
 #include "mlir/Dialect/SPIRV/IR/SPIRVOps.h"
 #include "mlir/Dialect/SPIRV/IR/TargetAndABI.h"
 #include "mlir/Target/SPIRV/Serialization.h"
+#include "spirv-tools/libspirv.hpp"
 
 namespace mlir {
 namespace iree_compiler {
@@ -101,16 +103,45 @@ class WebGPUTargetBackend : public TargetBackend {
       return variantOp.emitError() << "failed to serialize spv.module";
     }
     if (options_.keepShaderModules) {
-      saveSpirvBinary(variantOp, spvBinary);
+      saveShaderToTempFile(variantOp, "spv",
+                           reinterpret_cast<const char *>(spvBinary.data()),
+                           spvBinary.size_in_bytes());
+
+      // Disassemble the shader and save that too.
+      spvtools::SpirvTools spirvTools(SPV_ENV_VULKAN_1_0);
+      std::string spvDisassembled;
+      if (spirvTools.Disassemble(
+              spvBinary.data(), spvBinary.size(), &spvDisassembled,
+              SPV_BINARY_TO_TEXT_OPTION_INDENT |
+                  SPV_BINARY_TO_TEXT_OPTION_FRIENDLY_NAMES)) {
+        saveShaderToTempFile(variantOp, "spvasm", spvDisassembled.data(),
+                             spvDisassembled.size());
+      } else {
+        llvm::errs() << "Failed to disassemble SPIR-V binary\n";
+      }
     }
 
-    // TODO(scotttodd): Cross compile SPIR-V to WGSL source code.
+    // Compile SPIR-V to WGSL source code.
+    auto wgsl = compileSPIRVToWGSL(spvBinary);
+    if (!wgsl.hasValue()) {
+      // TODO(scotttodd): restructure branching and write disassembled SPIR-V
+      //                  to stderr / an error diagnostic (don't want to
+      //                  disassemble if successful + option not set)
+      return variantOp.emitError()
+             << "failed to compile SPIR-V to WGSL. Consider inspecting the "
+                "shader program using -iree-webgpu-keep-shader-modules";
+    }
+    if (options_.keepShaderModules) {
+      saveShaderToTempFile(variantOp, "wgsl", wgsl.getValue().data(),
+                           wgsl.getValue().length());
+    }
 
     // TODO(scotttodd): Pack the WGSL and metadata into a flatbuffer.
 
     // TODO(scotttodd): Add the binary data to the target executable.
 
-    return variantOp.emitError("WebGPU/WGSL serialization not yet implemented");
+    return variantOp.emitError()
+           << "WebGPU/WGSL serialization not yet implemented";
   }
 
  private:
@@ -137,12 +168,13 @@ class WebGPUTargetBackend : public TargetBackend {
         configAttr);
   }
 
-  void saveSpirvBinary(IREE::HAL::ExecutableVariantOp variantOp,
-                       ArrayRef<uint32_t> binary) {
+  void saveShaderToTempFile(IREE::HAL::ExecutableVariantOp variantOp,
+                            llvm::StringRef suffix, const char *data,
+                            size_t size) {
     llvm::SmallString<32> filePath;
     if (std::error_code error = llvm::sys::fs::createTemporaryFile(
-            variantOp.getName(), "spv", filePath)) {
-      llvm::errs() << "failed to generate file for SPIR-V binary: "
+            variantOp.getName(), suffix, filePath)) {
+      llvm::errs() << "failed to generate temp file for shader: "
                    << error.message();
       return;
     }
@@ -150,16 +182,15 @@ class WebGPUTargetBackend : public TargetBackend {
     auto file = std::make_unique<llvm::ToolOutputFile>(filePath, error,
                                                        llvm::sys::fs::OF_None);
     if (error) {
-      llvm::errs() << "failed to open file for SPIR-V binary '" << filePath
+      llvm::errs() << "failed to open temp file for shader '" << filePath
                    << "': " << error.message();
       return;
     }
 
     mlir::emitRemark(variantOp.getLoc())
-        << "SPIR-V binary for " << variantOp.getName() << " preserved:\n"
+        << "Shader file for " << variantOp.getName() << " preserved:\n"
         << "    " << filePath;
-    file->os().write(reinterpret_cast<const char *>(binary.data()),
-                     binary.size() * sizeof(uint32_t));
+    file->os().write(data, size);
     file->keep();
   }
 

@@ -18,8 +18,10 @@ iree_cc_library(
   NAME
     WebGPU
   HDRS
+    "SPIRVToWGSL.h"
     "WebGPUTarget.h"
   SRCS
+    "SPIRVToWGSL.cpp"
     "WebGPUTarget.cpp"
   DEPS
     LLVMSupport
@@ -27,9 +29,11 @@ iree_cc_library(
     MLIRIR
     MLIRSPIRV
     MLIRSPIRVSerialization
+    SPIRV-Tools
     iree::compiler::Codegen::Dialect::IREECodegenDialect
     iree::compiler::Codegen::SPIRV
     iree::compiler::Dialect::HAL::Target
+    libtint
   PUBLIC
 )
 

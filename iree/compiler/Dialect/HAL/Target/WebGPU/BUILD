@@ -23,9 +23,11 @@ endif()
 cc_library(
     name = "WebGPU",
     srcs = [
+        "SPIRVToWGSL.cpp",
         "WebGPUTarget.cpp",
     ],
     hdrs = [
+        "SPIRVToWGSL.h",
         "WebGPUTarget.h",
     ],
     deps = [
@@ -37,5 +39,6 @@ cc_library(
         "@llvm-project//mlir:IR",
         "@llvm-project//mlir:SPIRVDialect",
         "@llvm-project//mlir:SPIRVSerialization",
+        # TODO(scotttodd): Bazel port of CMake's `libtint` target
     ],
 )
