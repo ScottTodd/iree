@@ -126,7 +126,8 @@ class WebGPUTargetBackend : public TargetBackend {
     if (!wgsl.hasValue()) {
       // TODO(scotttodd): restructure branching and write disassembled SPIR-V
       //                  to stderr / an error diagnostic (don't want to
-      //                  disassemble if successful + option not set)
+      //                  disassemble if successful + option not set, also
+      //                  don't want to disassemble twice :P)
       return variantOp.emitError()
              << "failed to compile SPIR-V to WGSL. Consider inspecting the "
                 "shader program using -iree-webgpu-keep-shader-modules";
@@ -187,6 +188,7 @@ class WebGPUTargetBackend : public TargetBackend {
       return;
     }
 
+    // TODO(scotttodd): refactor to group these messages
     mlir::emitRemark(variantOp.getLoc())
         << "Shader file for " << variantOp.getName() << " preserved:\n"
         << "    " << filePath;
