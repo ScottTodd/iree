@@ -161,12 +161,15 @@ class WebGPUTargetBackend : public TargetBackend {
     // TODO(scotttodd): populate source map
     auto shaderModuleRef = iree_WGSLShaderModuleDef_end(builder);
 
-    iree_WGSLExecutableDef_shader_modules_add(builder, shaderModuleRef);
+    auto shaderModulesVec = iree_WGSLShaderModuleDef_vec_create(
+        builder, &shaderModuleRef, /*len=*/1);
+    iree_WGSLExecutableDef_shader_modules_add(builder, shaderModulesVec);
 
     // TODO(scotttodd): real entry_points
-    iree_WGSLExecutableDef_entry_points_start(builder);
-    iree_WGSLExecutableDef_entry_points_push_create(builder, 0);
-    iree_WGSLExecutableDef_entry_points_end(builder);
+    uint32_t entryPoint = 0;
+    auto entryPointsRef =
+        flatbuffers_uint32_vec_create(builder, &entryPoint, /*len=*/1);
+    iree_WGSLExecutableDef_entry_points_add(builder, entryPointsRef);
 
     iree_WGSLExecutableDef_end_as_root(builder);
 
