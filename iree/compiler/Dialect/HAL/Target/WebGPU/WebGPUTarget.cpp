@@ -107,20 +107,32 @@ class WebGPUTargetBackend : public TargetBackend {
     }
     auto spvModuleOp = *spirvModuleOps.begin();
 
-    // Rename entry points to dN, where N is the entry point ordinal.
+    // The schema expects each shader module to have entry points named "dN",
+    // where N is the entry point ordinal.
+    // For each executable entry point op, rename the entry point symbol using
+    // that convention and keep track of the mapping between entry point
+    // ordinals to which shader module they reference.
+    auto entryPointOps = llvm::to_vector<4>(
+        variantOp.getOps<IREE::HAL::ExecutableEntryPointOp>());
+    llvm::SmallVector<uint32_t, 4> entryPointOrdinals(entryPointOps.size());
     SymbolTableCollection symbolTable;
-    SymbolUserMap symbolUsers(symbolTable, spvModuleOp);
-    int entryPointOrdinalCount = 0;
-    spvModuleOp.walk([&](spirv::EntryPointOp entryPointOp) {
+    SymbolUserMap symbolUsers(symbolTable, variantOp);
+    for (auto entryPointOp : entryPointOps) {
       auto entryPointFunc = dyn_cast<spirv::FuncOp>(
-          SymbolTable::lookupSymbolIn(spvModuleOp, entryPointOp.fn()));
+          SymbolTable::lookupSymbolIn(spvModuleOp, entryPointOp.sym_name()));
 
-      std::string symbolName = llvm::formatv("d{0}", entryPointOrdinalCount++);
+      std::string symbolName = llvm::formatv("d{0}", entryPointOp.ordinal());
       mlir::StringAttr nameAttr =
-          mlir::StringAttr::get(spvModuleOp->getContext(), symbolName);
+          mlir::StringAttr::get(variantOp->getContext(), symbolName);
+
       symbolUsers.replaceAllUsesWith(entryPointFunc, nameAttr);
+      entryPointOp.setName(symbolName);  // Same symbol reference? Not in table?
       SymbolTable::setSymbolName(entryPointFunc, symbolName);
-    });
+
+      // We only have one shader module right now, so all point to index 0.
+      // TODO(#7824): Support multiple shader modules per executable
+      entryPointOrdinals[entryPointOp.ordinal().getZExtValue()] = 0;
+    }
 
     // Serialize the spirv::ModuleOp into binary format.
     SmallVector<uint32_t, 256> spvBinary;
@@ -176,13 +188,6 @@ class WebGPUTargetBackend : public TargetBackend {
         builder, &shaderModuleRef, /*len=*/1);
     iree_WGSLExecutableDef_shader_modules_add(builder, shaderModulesVec);
 
-    // Mapping of entry point ordinals to shader module indices.
-    // We only have one shader module right now, so all point to index 0.
-    // TODO(#7824): Use shader modules instead of distinct executables
-    llvm::SmallVector<uint32_t, 4> entryPointOrdinals(entryPointOrdinalCount);
-    for (int i = 0; i < entryPointOrdinalCount; ++i) {
-      entryPointOrdinals[i] = 0;
-    }
     auto entryPointsRef = flatbuffers_uint32_vec_create(
         builder, entryPointOrdinals.data(), entryPointOrdinals.size());
     iree_WGSLExecutableDef_entry_points_add(builder, entryPointsRef);
