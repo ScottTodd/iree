@@ -14,6 +14,7 @@
 #include "iree/schemas/wgsl_executable_def_builder.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/FileSystem.h"
+#include "llvm/Support/FormatVariadic.h"
 #include "llvm/Support/ToolOutputFile.h"
 #include "mlir/Dialect/GPU/GPUDialect.h"
 #include "mlir/Dialect/SPIRV/IR/SPIRVDialect.h"
@@ -106,10 +107,20 @@ class WebGPUTargetBackend : public TargetBackend {
     }
     auto spvModuleOp = *spirvModuleOps.begin();
 
-    // SmallVector<StringRef, 8> entryPointNames;
-    // spvModuleOp.walk([&](spirv::EntryPointOp entryPointOp) {
-    //   entryPointNames.push_back(entryPointOp.fn());
-    // });
+    // Rename entry points to dN, where N is the entry point ordinal.
+    SymbolTableCollection symbolTable;
+    SymbolUserMap symbolUsers(symbolTable, spvModuleOp);
+    int entryPointOrdinalCount = 0;
+    spvModuleOp.walk([&](spirv::EntryPointOp entryPointOp) {
+      auto entryPointFunc = dyn_cast<spirv::FuncOp>(
+          SymbolTable::lookupSymbolIn(spvModuleOp, entryPointOp.fn()));
+
+      std::string symbolName = llvm::formatv("d{0}", entryPointOrdinalCount++);
+      mlir::StringAttr nameAttr =
+          mlir::StringAttr::get(spvModuleOp->getContext(), symbolName);
+      symbolUsers.replaceAllUsesWith(entryPointFunc, nameAttr);
+      SymbolTable::setSymbolName(entryPointFunc, symbolName);
+    });
 
     // Serialize the spirv::ModuleOp into binary format.
     SmallVector<uint32_t, 256> spvBinary;
@@ -165,10 +176,15 @@ class WebGPUTargetBackend : public TargetBackend {
         builder, &shaderModuleRef, /*len=*/1);
     iree_WGSLExecutableDef_shader_modules_add(builder, shaderModulesVec);
 
-    // TODO(scotttodd): real entry_points
-    uint32_t entryPoint = 0;
-    auto entryPointsRef =
-        flatbuffers_uint32_vec_create(builder, &entryPoint, /*len=*/1);
+    // Mapping of entry point ordinals to shader module indices.
+    // We only have one shader module right now, so all point to index 0.
+    // TODO(#7824): Use shader modules instead of distinct executables
+    llvm::SmallVector<uint32_t, 4> entryPointOrdinals(entryPointOrdinalCount);
+    for (int i = 0; i < entryPointOrdinalCount; ++i) {
+      entryPointOrdinals[i] = 0;
+    }
+    auto entryPointsRef = flatbuffers_uint32_vec_create(
+        builder, entryPointOrdinals.data(), entryPointOrdinals.size());
     iree_WGSLExecutableDef_entry_points_add(builder, entryPointsRef);
 
     iree_WGSLExecutableDef_end_as_root(builder);
