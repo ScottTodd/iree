@@ -10,6 +10,8 @@
 #include "iree/compiler/Codegen/Passes.h"
 #include "iree/compiler/Dialect/HAL/Target/TargetRegistry.h"
 #include "iree/compiler/Dialect/HAL/Target/WebGPU/SPIRVToWGSL.h"
+#include "iree/compiler/Utils/FlatbufferUtils.h"
+#include "iree/schemas/wgsl_executable_def_builder.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/FileSystem.h"
 #include "llvm/Support/ToolOutputFile.h"
@@ -49,10 +51,17 @@ static spirv::TargetEnvAttr getWebGPUTargetEnv(MLIRContext *context) {
   auto triple = spirv::VerCapExtAttr::get(
       spirv::Version::V_1_0, {spirv::Capability::Shader},
       {spirv::Extension::SPV_KHR_storage_buffer_storage_class}, context);
-  return spirv::TargetEnvAttr::get(triple, spirv::Vendor::Unknown,
-                                   spirv::DeviceType::Unknown,
-                                   spirv::TargetEnvAttr::kUnknownDeviceID,
-                                   spirv::getDefaultResourceLimits(context));
+  // TODO(scotttodd): resource limits (subgroup_size defaults to 0x7FFFFFFF)
+  // auto resourceLimits = spirv::getDefaultResourceLimits(context);
+  auto resourceLimits = spirv::ResourceLimitsAttr ::get(
+      /*max_compute_shared_memory_size=*/nullptr,
+      /*max_compute_workgroup_invocations=*/nullptr,
+      /*max_compute_workgroup_size=*/nullptr,
+      /*subgroup_size=*/IntegerAttr::get(IntegerType::get(context, 32), 4),
+      /*cooperative_matrix_properties_nv=*/nullptr, context);
+  return spirv::TargetEnvAttr::get(
+      triple, spirv::Vendor::Unknown, spirv::DeviceType::Unknown,
+      spirv::TargetEnvAttr::kUnknownDeviceID, resourceLimits);
 }
 
 class WebGPUTargetBackend : public TargetBackend {
@@ -97,6 +106,11 @@ class WebGPUTargetBackend : public TargetBackend {
     }
     auto spvModuleOp = *spirvModuleOps.begin();
 
+    // SmallVector<StringRef, 8> entryPointNames;
+    // spvModuleOp.walk([&](spirv::EntryPointOp entryPointOp) {
+    //   entryPointNames.push_back(entryPointOp.fn());
+    // });
+
     // Serialize the spirv::ModuleOp into binary format.
     SmallVector<uint32_t, 256> spvBinary;
     if (failed(spirv::serialize(spvModuleOp, spvBinary)) || spvBinary.empty()) {
@@ -137,12 +151,34 @@ class WebGPUTargetBackend : public TargetBackend {
                            wgsl.getValue().length());
     }
 
-    // TODO(scotttodd): Pack the WGSL and metadata into a flatbuffer.
+    // Pack the WGSL and metadata into a flatbuffer.
+    FlatbufferBuilder builder;
+    iree_WGSLExecutableDef_start_as_root(builder);
 
-    // TODO(scotttodd): Add the binary data to the target executable.
+    iree_WGSLShaderModuleDef_start(builder);
+    auto wgslRef = builder.createString(wgsl.getValue());
+    iree_WGSLShaderModuleDef_code_add(builder, wgslRef);
+    // TODO(scotttodd): populate source map
+    auto shaderModuleRef = iree_WGSLShaderModuleDef_end(builder);
 
-    return variantOp.emitError()
-           << "WebGPU/WGSL serialization not yet implemented";
+    iree_WGSLExecutableDef_shader_modules_add(builder, shaderModuleRef);
+
+    // TODO(scotttodd): real entry_points
+    iree_WGSLExecutableDef_entry_points_start(builder);
+    iree_WGSLExecutableDef_entry_points_push_create(builder, 0);
+    iree_WGSLExecutableDef_entry_points_end(builder);
+
+    iree_WGSLExecutableDef_end_as_root(builder);
+
+    // Add the binary data to the target executable.
+    auto binaryOp = executableBuilder.create<IREE::HAL::ExecutableBinaryOp>(
+        variantOp.getLoc(), variantOp.sym_name(),
+        variantOp.target().getFormat(),
+        builder.getBufferAttr(executableBuilder.getContext()));
+    binaryOp.mime_typeAttr(
+        executableBuilder.getStringAttr("application/x-flatbuffers"));
+
+    return success();
   }
 
  private:

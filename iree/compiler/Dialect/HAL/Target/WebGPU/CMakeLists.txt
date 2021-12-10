@@ -33,6 +33,8 @@ iree_cc_library(
     iree::compiler::Codegen::Dialect::IREECodegenDialect
     iree::compiler::Codegen::SPIRV
     iree::compiler::Dialect::HAL::Target
+    iree::compiler::Utils
+    iree::schemas::wgsl_executable_def_c_fbs
     libtint
   PUBLIC
 )

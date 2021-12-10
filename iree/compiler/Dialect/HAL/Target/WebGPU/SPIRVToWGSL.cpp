@@ -20,6 +20,9 @@ namespace HAL {
 
 namespace {
 
+// This is the .spvasm from iree/samples/models/simple_abs.mlir, but with
+// a duplicate `OpDecorate %_struct_2 Block` removed to hack around
+// "error: can't handle a struct with more than one decoration: struct 2 has 2"
 std::string kHardcodedShader =
     "; SPIR-V\n"
     "; Version: 1.0\n"
