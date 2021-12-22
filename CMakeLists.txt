@@ -109,6 +109,7 @@ option(IREE_HAL_DRIVER_DYLIB_SYNC "Enables the 'dylib-sync' runtime HAL driver" 
 option(IREE_HAL_DRIVER_VMVX "Enables the 'vmvx' runtime HAL driver" ${IREE_HAL_DRIVER_DEFAULTS})
 option(IREE_HAL_DRIVER_VMVX_SYNC "Enables the 'vmvx-sync' runtime HAL driver" ${IREE_HAL_DRIVER_DEFAULTS})
 option(IREE_HAL_DRIVER_VULKAN "Enables the 'vulkan' runtime HAL driver" ${IREE_HAL_DRIVER_VULKAN_DEFAULT})
+option(IREE_HAL_DRIVER_WASM "Enables the 'wasm' runtime HAL driver" ${IREE_HAL_DRIVER_DEFAULTS})
 
 option(IREE_TARGET_BACKEND_CUDA "Enables the 'cuda' compiler target backend" ${IREE_BUILD_COMPILER})
 option(IREE_TARGET_BACKEND_DYLIB_LLVM_AOT "Enables the 'dylib-llvm-aot' compiler target backend" ${IREE_BUILD_COMPILER})
@@ -126,6 +127,7 @@ message(VERBOSE "IREE build runtime HAL driver 'dylib-sync': ${IREE_HAL_DRIVER_D
 message(VERBOSE "IREE build runtime HAL driver 'vmvx': ${IREE_HAL_DRIVER_VMVX}")
 message(VERBOSE "IREE build runtime HAL driver 'vmvx-sync': ${IREE_HAL_DRIVER_VMVX_SYNC}")
 message(VERBOSE "IREE build runtime HAL driver 'vulkan': ${IREE_HAL_DRIVER_VULKAN}")
+message(VERBOSE "IREE build runtime HAL driver 'wasm': ${IREE_HAL_DRIVER_WASM}")
 
 message(VERBOSE "IREE build compiler target backend 'cuda': ${IREE_TARGET_BACKEND_CUDA}")
 message(VERBOSE "IREE build compiler target backend 'dylib-llvm-aot': ${IREE_TARGET_BACKEND_DYLIB_LLVM_AOT}")
@@ -408,7 +410,6 @@ add_subdirectory(build_tools/third_party/cuda EXCLUDE_FROM_ALL)
 add_subdirectory(build_tools/third_party/libyaml EXCLUDE_FROM_ALL)
 add_subdirectory(build_tools/third_party/stblib EXCLUDE_FROM_ALL)
 add_subdirectory(build_tools/third_party/vulkan_memory_allocator EXCLUDE_FROM_ALL)
-add_subdirectory(build_tools/third_party/wasm-micro-runtime EXCLUDE_FROM_ALL)
 
 iree_set_googletest_cmake_options()
 add_subdirectory(third_party/googletest EXCLUDE_FROM_ALL)
@@ -463,6 +464,10 @@ if(IREE_TARGET_BACKEND_WEBGPU)
   add_subdirectory(third_party/spirv_headers EXCLUDE_FROM_ALL)
   add_subdirectory(build_tools/third_party/spirv-tools EXCLUDE_FROM_ALL)
   add_subdirectory(build_tools/third_party/tint EXCLUDE_FROM_ALL)
+endif()
+
+if(IREE_HAL_DRIVER_WASM)
+  add_subdirectory(build_tools/third_party/wasm-micro-runtime EXCLUDE_FROM_ALL)
 endif()
 
 #-------------------------------------------------------------------------------
