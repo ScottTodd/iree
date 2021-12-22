@@ -732,10 +732,12 @@ void registerLLVMAOTTargetBackends(
   static TargetBackendRegistration registration0("cpu", backendFactory);
   // #hal.executable.target<"llvm", ...
   static TargetBackendRegistration registration1("llvm", backendFactory);
+  // #hal.executable.target<"wasm", ...
+  static TargetBackendRegistration registration2("wasm", backendFactory);
 
   // TODO(benvanik): remove legacy dylib name.
-  static TargetBackendRegistration registration2("dylib", backendFactory);
-  static TargetBackendRegistration registration3("dylib-llvm-aot",
+  static TargetBackendRegistration registration3("dylib", backendFactory);
+  static TargetBackendRegistration registration4("dylib-llvm-aot",
                                                  backendFactory);
 
 #undef INIT_LLVM_TARGET
