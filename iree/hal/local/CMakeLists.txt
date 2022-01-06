@@ -104,6 +104,7 @@ iree_cc_library(
 )
 
 # task_driver is used by asynchronuous drivers.
+# TODO(scotttodd): OR EMSCRIPTEN
 if(NOT (${IREE_HAL_DRIVER_DYLIB} OR ${IREE_HAL_DRIVER_VMVX}))
   return()
 endif()

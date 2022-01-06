@@ -332,6 +332,8 @@ if(NOT ${IREE_ENABLE_THREADING})
   return()
 endif()
 
+find_package(Threads REQUIRED)
+
 iree_cc_library(
   NAME
     threading
@@ -350,6 +352,7 @@ iree_cc_library(
     iree::base
     iree::base::core_headers
     iree::base::tracing
+    Threads::Threads
   PUBLIC
 )
 
@@ -386,6 +389,7 @@ iree_cc_library(
     iree::base
     iree::base::core_headers
     iree::base::tracing
+    Threads::Threads
   PUBLIC
 )
 

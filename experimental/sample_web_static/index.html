@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>IREE Static Web Sample</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="background-color: #0d0f15; color: #ABB2BF">
+  <h1>IREE Static Web Sample</h1>
+
+  <script>
+    var Module = {
+      print: function (text) {
+        console.log(text);
+      },
+      printErr: function (text) {
+        console.error(text);
+      },
+      onRuntimeInitialized: function () {
+        console.log("wasm module onRuntimeInitialized");
+        // testLoadedModule();
+      },
+    };
+
+    // going to want to run the invocation off worker
+    // so may need some web worker boilerplate
+
+
+  // function testLoadedModule() {
+  //   int_sqrt = Module.cwrap('int_sqrt', 'number', ['number']);
+  //   console.log(int_sqrt(12));
+  // };
+  </script>
+  <script src="sample-web-static.js"></script>
+</body>
+
+</html>

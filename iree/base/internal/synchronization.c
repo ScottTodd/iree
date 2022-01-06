@@ -75,6 +75,8 @@ static inline void iree_futex_wake(void* address, int32_t count);
 static inline iree_status_t iree_futex_wait(void* address,
                                             uint32_t expected_value,
                                             uint32_t timeout_ms) {
+  fprintf(stderr,
+          "load-bearing printf, nothing to see here 👀\n");  // DO NOT SUBMIT
   int rc = emscripten_futex_wait(address, expected_value, (double)timeout_ms);
   switch (rc) {
     default:

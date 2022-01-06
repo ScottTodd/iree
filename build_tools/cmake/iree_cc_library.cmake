@@ -120,6 +120,10 @@ function(iree_cc_library)
         ${IREE_DEFAULT_COPTS}
         ${_RULE_COPTS}
     )
+    # if(THREADS_HAVE_PTHREAD_ARG AND ${IREE_ENABLE_THREADING})
+      # message("adding -pthread compile option to ${_NAME}")
+      target_compile_options(${_NAME} PUBLIC "-pthread")
+    # endif()
     target_link_options(${_NAME}
       PRIVATE
         ${IREE_DEFAULT_LINKOPTS}

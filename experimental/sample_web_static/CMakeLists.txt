@@ -1,0 +1,51 @@
+# Copyright 2022 The IREE Authors
+#
+# Licensed under the Apache License v2.0 with LLVM Exceptions.
+# See https://llvm.org/LICENSE.txt for license information.
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
+set(_SIMPLE_MUL_OBJECT_NAME "iree_experimental_sample_web_static_simple_mul")
+add_library(${_SIMPLE_MUL_OBJECT_NAME} STATIC generated/simple_mul_static.o)
+SET_TARGET_PROPERTIES(${_SIMPLE_MUL_OBJECT_NAME} PROPERTIES LINKER_LANGUAGE C)
+
+set(_NAME "iree_experimental_sample_web_static")
+add_executable(${_NAME} "")
+target_include_directories(${_NAME} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/generated>
+)
+target_sources(${_NAME}
+  PRIVATE
+    main.c
+    generated/simple_mul_static.h
+    generated/simple_mul_bytecode.h
+    generated/simple_mul_bytecode.c
+)
+set_target_properties(${_NAME} PROPERTIES OUTPUT_NAME "sample-web-static")
+
+# Note: we have to be very careful about dependencies here.
+#
+# The general purpose libraries link in multiple executable loaders and HAL
+# drivers/devices, which include code not compatible with Emscripten.
+target_link_libraries(${_NAME}
+  ${_SIMPLE_MUL_OBJECT_NAME}
+  iree_runtime_runtime
+  iree_hal_local_loaders_static_library_loader
+  # iree_hal_local_sync_driver
+  iree_hal_local_task_driver
+  iree_task_api
+)
+
+target_link_options(${_NAME} PRIVATE
+  # https://emscripten.org/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#interacting-with-code-ccall-cwrap
+  "-sEXPORTED_FUNCTIONS=['_main','_int_sqrt']"
+  "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
+  #
+  "-sASSERTIONS=1"
+  # https://emscripten.org/docs/porting/pthreads.html#compiling-with-pthreads-enabled
+  "-pthread"
+  # "-sINITIAL_MEMORY=134217728"
+  # "-sINITIAL_MEMORY=67108864"  # 64MB
+  "-sPTHREAD_POOL_SIZE=2"
+  # https://emscripten.org/docs/porting/pthreads.html#additional-flags
+  "-sPROXY_TO_PTHREAD"
+)
