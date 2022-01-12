@@ -70,7 +70,9 @@ emcmake "${CMAKE_BIN?}" -G Ninja .. \
   -DIREE_BUILD_COMPILER=OFF \
   -DIREE_BUILD_TESTS=OFF
 
-"${CMAKE_BIN?}" --build . --target iree_experimental_sample_web_static
+"${CMAKE_BIN?}" --build . --target \
+  iree_experimental_sample_web_static_sync \
+  iree_experimental_sample_web_static_multithreaded
 popd
 
 ###############################################################################
