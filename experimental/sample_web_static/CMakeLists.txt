@@ -40,7 +40,7 @@ target_link_libraries(${_NAME}
 
 target_link_options(${_NAME} PRIVATE
   # https://emscripten.org/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#interacting-with-code-ccall-cwrap
-  "-sEXPORTED_FUNCTIONS=['_main','_int_sqrt']"
+  "-sEXPORTED_FUNCTIONS=['_setup_sample', '_cleanup_sample', '_run_sample']"
   "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
   #
   "-sASSERTIONS=1"
@@ -79,7 +79,7 @@ target_link_libraries(${_NAME}
 
 target_link_options(${_NAME} PRIVATE
   # https://emscripten.org/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#interacting-with-code-ccall-cwrap
-  "-sEXPORTED_FUNCTIONS=['_main','_int_sqrt']"
+  "-sEXPORTED_FUNCTIONS=['_setup_sample', '_cleanup_sample', '_run_sample']"
   "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
   #
   "-sASSERTIONS=1"
@@ -88,5 +88,5 @@ target_link_options(${_NAME} PRIVATE
   # "-sINITIAL_MEMORY=67108864"  # 64MB
   "-sPTHREAD_POOL_SIZE=2"
   # https://emscripten.org/docs/porting/pthreads.html#additional-flags
-  "-sPROXY_TO_PTHREAD"
+  # "-sPROXY_TO_PTHREAD"
 )

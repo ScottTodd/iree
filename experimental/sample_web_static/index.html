@@ -20,18 +20,26 @@
       },
       onRuntimeInitialized: function () {
         console.log("wasm module onRuntimeInitialized");
-        // testLoadedModule();
+        testLoadedModule();
       },
+      // https://emscripten.org/docs/api_reference/module.html#Module.noInitialRun
+      noInitialRun: true,
     };
 
     // going to want to run the invocation off worker
     // so may need some web worker boilerplate
 
 
-  // function testLoadedModule() {
-  //   int_sqrt = Module.cwrap('int_sqrt', 'number', ['number']);
-  //   console.log(int_sqrt(12));
-  // };
+  function testLoadedModule() {
+    setupSample = Module.cwrap("setup_sample", "number", []);
+    cleanupSample = Module.cwrap("cleanup_sample", null, ["number"]);
+    runSample = Module.cwrap("run_sample", null, ["number"]);
+
+    state = setupSample();
+    runSample(state);
+    cleanupSample(state);
+  };
+
   </script>
   <script src="sample-web-static-sync.js"></script>
   <!-- <script src="sample-web-static-multithreaded.js"></script> -->
