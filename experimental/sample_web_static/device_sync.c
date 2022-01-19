@@ -4,7 +4,7 @@
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-#include "generated/simple_mul_static.h"
+#include "generated/mnist_static.h"
 #include "iree/hal/local/loaders/static_library_loader.h"
 #include "iree/hal/local/sync_device.h"
 
@@ -15,8 +15,9 @@ iree_status_t create_device_with_static_loader(iree_allocator_t host_allocator,
 
   // Load the statically embedded library.
   const iree_hal_executable_library_header_t** static_library =
-      simple_mul_dispatch_0_library_query(
-          IREE_HAL_EXECUTABLE_LIBRARY_LATEST_VERSION, /*reserved=*/NULL);
+      mnist_linked_llvm_library_query(
+          IREE_HAL_EXECUTABLE_LIBRARY_LATEST_VERSION,
+          /*reserved=*/NULL);
   const iree_hal_executable_library_header_t** libraries[1] = {static_library};
 
   iree_hal_executable_loader_t* library_loader = NULL;

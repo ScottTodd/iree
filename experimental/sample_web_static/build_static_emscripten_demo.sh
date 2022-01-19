@@ -28,15 +28,17 @@ ROOT_DIR=$(git rev-parse --show-toplevel)
 ###############################################################################
 
 INSTALL_ROOT="D:\dev\projects\iree-build\install\bin"
-TRANSLATE_TOOL="${INSTALL_ROOT?}\iree-translate.exe"
-EMBED_DATA_TOOL="${INSTALL_ROOT?}\generate_embed_data.exe"
-INPUT_NAME="simple_mul"
+TRANSLATE_TOOL="${INSTALL_ROOT?}/iree-translate.exe"
+EMBED_DATA_TOOL="${INSTALL_ROOT?}/generate_embed_data.exe"
+INPUT_NAME="mnist"
+INPUT_PATH="${ROOT_DIR?}/iree/samples/models/mnist.mlir"
 
 mkdir -p generated/
 
 echo "=== Translating MLIR to static library output (.vmfb, .h, .o) ==="
-${TRANSLATE_TOOL?} ${INPUT_NAME}.mlir \
+${TRANSLATE_TOOL?} ${INPUT_PATH} \
   --iree-mlir-to-vm-bytecode-module \
+  --iree-input-type=mhlo \
   --iree-hal-target-backends=llvm \
   --iree-llvm-target-triple=wasm32-unknown-unknown \
   --iree-llvm-link-embedded=false \

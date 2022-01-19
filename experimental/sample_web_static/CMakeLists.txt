@@ -4,9 +4,9 @@
 # See https://llvm.org/LICENSE.txt for license information.
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-set(_SIMPLE_MUL_OBJECT_NAME "iree_experimental_sample_web_static_simple_mul")
-add_library(${_SIMPLE_MUL_OBJECT_NAME} STATIC generated/simple_mul_static.o)
-SET_TARGET_PROPERTIES(${_SIMPLE_MUL_OBJECT_NAME} PROPERTIES LINKER_LANGUAGE C)
+set(_MNIST_OBJECT_NAME "iree_experimental_sample_web_static_mnist")
+add_library(${_MNIST_OBJECT_NAME} STATIC generated/mnist_static.o)
+SET_TARGET_PROPERTIES(${_MNIST_OBJECT_NAME} PROPERTIES LINKER_LANGUAGE C)
 
 #-------------------------------------------------------------------------------
 # Sync
@@ -21,9 +21,9 @@ target_sources(${_NAME}
   PRIVATE
     main.c
     device_sync.c
-    generated/simple_mul_static.h
-    generated/simple_mul_bytecode.h
-    generated/simple_mul_bytecode.c
+    generated/mnist_static.h
+    generated/mnist_bytecode.h
+    generated/mnist_bytecode.c
 )
 set_target_properties(${_NAME} PROPERTIES OUTPUT_NAME "sample-web-static-sync")
 
@@ -32,7 +32,7 @@ set_target_properties(${_NAME} PROPERTIES OUTPUT_NAME "sample-web-static-sync")
 # The general purpose libraries link in multiple executable loaders and HAL
 # drivers/devices, which include code not compatible with Emscripten.
 target_link_libraries(${_NAME}
-  ${_SIMPLE_MUL_OBJECT_NAME}
+  ${_MNIST_OBJECT_NAME}
   iree_runtime_runtime
   iree_hal_local_loaders_static_library_loader
   iree_hal_local_sync_driver
@@ -59,9 +59,9 @@ target_sources(${_NAME}
   PRIVATE
     main.c
     device_multithreaded.c
-    generated/simple_mul_static.h
-    generated/simple_mul_bytecode.h
-    generated/simple_mul_bytecode.c
+    generated/mnist_static.h
+    generated/mnist_bytecode.h
+    generated/mnist_bytecode.c
 )
 set_target_properties(${_NAME} PROPERTIES OUTPUT_NAME "sample-web-static-multithreaded")
 
@@ -70,7 +70,7 @@ set_target_properties(${_NAME} PROPERTIES OUTPUT_NAME "sample-web-static-multith
 # The general purpose libraries link in multiple executable loaders and HAL
 # drivers/devices, which include code not compatible with Emscripten.
 target_link_libraries(${_NAME}
-  ${_SIMPLE_MUL_OBJECT_NAME}
+  ${_MNIST_OBJECT_NAME}
   iree_runtime_runtime
   iree_hal_local_loaders_static_library_loader
   iree_hal_local_task_driver

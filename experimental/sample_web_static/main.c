@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-#include "generated/simple_mul_bytecode.h"
+#include "generated/mnist_bytecode.h"
 #include "iree/runtime/api.h"
 #include "iree/vm/bytecode_module.h"
 
@@ -47,8 +47,7 @@ void iree_sample_state_initialize(iree_sample_state_t* out_state) {
 }
 
 iree_status_t create_bytecode_module(iree_vm_module_t** out_module) {
-  const struct iree_file_toc_t* module_file_toc =
-      iree_static_simple_mul_create();
+  const struct iree_file_toc_t* module_file_toc = iree_static_mnist_create();
   iree_const_byte_span_t module_data =
       iree_make_const_byte_span(module_file_toc->data, module_file_toc->size);
   return iree_vm_bytecode_module_create(module_data, iree_allocator_null(),
@@ -89,7 +88,7 @@ iree_sample_state_t* setup_sample() {
     status = iree_runtime_session_append_module(state->session, state->module);
   }
 
-  const char kMainFunctionName[] = "module.simple_mul";
+  const char kMainFunctionName[] = "module.predict";
   if (iree_status_is_ok(status)) {
     status = iree_runtime_call_initialize_by_name(
         state->session, iree_make_cstring_view(kMainFunctionName),
@@ -123,73 +122,73 @@ void run_sample(iree_sample_state_t* state) {
 
   iree_runtime_call_reset(&state->call);
 
-  // Populate initial values for 4 * 2 = 8.
-  const int kElementCount = 4;
-  iree_hal_dim_t shape[1] = {kElementCount};
-  iree_hal_buffer_view_t* arg0_buffer_view = NULL;
-  iree_hal_buffer_view_t* arg1_buffer_view = NULL;
-  float kFloat4[] = {4.0f, 4.0f, 4.0f, 4.0f};
-  float kFloat2[] = {2.0f, 2.0f, 2.0f, 2.0f};
+  // // Populate initial values for 4 * 2 = 8.
+  // const int kElementCount = 4;
+  // iree_hal_dim_t shape[1] = {kElementCount};
+  // iree_hal_buffer_view_t* arg0_buffer_view = NULL;
+  // iree_hal_buffer_view_t* arg1_buffer_view = NULL;
+  // float kFloat4[] = {4.0f, 4.0f, 4.0f, 4.0f};
+  // float kFloat2[] = {2.0f, 2.0f, 2.0f, 2.0f};
 
-  iree_hal_memory_type_t input_memory_type =
-      IREE_HAL_MEMORY_TYPE_HOST_LOCAL | IREE_HAL_MEMORY_TYPE_DEVICE_VISIBLE;
-  if (iree_status_is_ok(status)) {
-    status = iree_hal_buffer_view_allocate_buffer(
-        iree_hal_device_allocator(state->device), shape, IREE_ARRAYSIZE(shape),
-        IREE_HAL_ELEMENT_TYPE_FLOAT_32, IREE_HAL_ENCODING_TYPE_DENSE_ROW_MAJOR,
-        input_memory_type,
-        IREE_HAL_BUFFER_USAGE_DISPATCH | IREE_HAL_BUFFER_USAGE_TRANSFER,
-        iree_make_const_byte_span((void*)kFloat4,
-                                  sizeof(float) * kElementCount),
-        &arg0_buffer_view);
-  }
-  if (iree_status_is_ok(status)) {
-    status = iree_hal_buffer_view_allocate_buffer(
-        iree_hal_device_allocator(state->device), shape, IREE_ARRAYSIZE(shape),
-        IREE_HAL_ELEMENT_TYPE_FLOAT_32, IREE_HAL_ENCODING_TYPE_DENSE_ROW_MAJOR,
-        input_memory_type,
-        IREE_HAL_BUFFER_USAGE_DISPATCH | IREE_HAL_BUFFER_USAGE_TRANSFER,
-        iree_make_const_byte_span((void*)kFloat2,
-                                  sizeof(float) * kElementCount),
-        &arg1_buffer_view);
-  }
-  if (iree_status_is_ok(status)) {
-    status = iree_runtime_call_inputs_push_back_buffer_view(&state->call,
-                                                            arg0_buffer_view);
-  }
-  iree_hal_buffer_view_release(arg0_buffer_view);
-  if (iree_status_is_ok(status)) {
-    status = iree_runtime_call_inputs_push_back_buffer_view(&state->call,
-                                                            arg1_buffer_view);
-  }
-  iree_hal_buffer_view_release(arg1_buffer_view);
+  // iree_hal_memory_type_t input_memory_type =
+  //     IREE_HAL_MEMORY_TYPE_HOST_LOCAL | IREE_HAL_MEMORY_TYPE_DEVICE_VISIBLE;
+  // if (iree_status_is_ok(status)) {
+  //   status = iree_hal_buffer_view_allocate_buffer(
+  //       iree_hal_device_allocator(state->device), shape,
+  //       IREE_ARRAYSIZE(shape), IREE_HAL_ELEMENT_TYPE_FLOAT_32,
+  //       IREE_HAL_ENCODING_TYPE_DENSE_ROW_MAJOR, input_memory_type,
+  //       IREE_HAL_BUFFER_USAGE_DISPATCH | IREE_HAL_BUFFER_USAGE_TRANSFER,
+  //       iree_make_const_byte_span((void*)kFloat4,
+  //                                 sizeof(float) * kElementCount),
+  //       &arg0_buffer_view);
+  // }
+  // if (iree_status_is_ok(status)) {
+  //   status = iree_hal_buffer_view_allocate_buffer(
+  //       iree_hal_device_allocator(state->device), shape,
+  //       IREE_ARRAYSIZE(shape), IREE_HAL_ELEMENT_TYPE_FLOAT_32,
+  //       IREE_HAL_ENCODING_TYPE_DENSE_ROW_MAJOR, input_memory_type,
+  //       IREE_HAL_BUFFER_USAGE_DISPATCH | IREE_HAL_BUFFER_USAGE_TRANSFER,
+  //       iree_make_const_byte_span((void*)kFloat2,
+  //                                 sizeof(float) * kElementCount),
+  //       &arg1_buffer_view);
+  // }
+  // if (iree_status_is_ok(status)) {
+  //   status = iree_runtime_call_inputs_push_back_buffer_view(&state->call,
+  //                                                           arg0_buffer_view);
+  // }
+  // iree_hal_buffer_view_release(arg0_buffer_view);
+  // if (iree_status_is_ok(status)) {
+  //   status = iree_runtime_call_inputs_push_back_buffer_view(&state->call,
+  //                                                           arg1_buffer_view);
+  // }
+  // iree_hal_buffer_view_release(arg1_buffer_view);
 
-  if (iree_status_is_ok(status)) {
-    status = iree_runtime_call_invoke(&state->call, /*flags=*/0);
-  }
+  // if (iree_status_is_ok(status)) {
+  //   status = iree_runtime_call_invoke(&state->call, /*flags=*/0);
+  // }
 
-  iree_hal_buffer_view_t* ret_buffer_view = NULL;
-  if (iree_status_is_ok(status)) {
-    status = iree_runtime_call_outputs_pop_front_buffer_view(&state->call,
-                                                             &ret_buffer_view);
-  }
+  // iree_hal_buffer_view_t* ret_buffer_view = NULL;
+  // if (iree_status_is_ok(status)) {
+  //   status = iree_runtime_call_outputs_pop_front_buffer_view(&state->call,
+  //                                                            &ret_buffer_view);
+  // }
 
-  // Read back the results and ensure we got the right values.
-  float results[] = {0.0f, 0.0f, 0.0f, 0.0f};
-  if (iree_status_is_ok(status)) {
-    status =
-        iree_hal_buffer_read_data(iree_hal_buffer_view_buffer(ret_buffer_view),
-                                  0, results, sizeof(results));
-  }
-  if (iree_status_is_ok(status)) {
-    for (iree_host_size_t i = 0; i < IREE_ARRAYSIZE(results); ++i) {
-      fprintf(stdout, "result[%" PRIhsz "]: %f\n", i, results[i]);
-      if (results[i] != 8.0f) {
-        status = iree_make_status(IREE_STATUS_UNKNOWN, "result mismatches");
-        break;
-      }
-    }
-  }
+  // // Read back the results and ensure we got the right values.
+  // float results[] = {0.0f, 0.0f, 0.0f, 0.0f};
+  // if (iree_status_is_ok(status)) {
+  //   status =
+  //       iree_hal_buffer_read_data(iree_hal_buffer_view_buffer(ret_buffer_view),
+  //                                 0, results, sizeof(results));
+  // }
+  // if (iree_status_is_ok(status)) {
+  //   for (iree_host_size_t i = 0; i < IREE_ARRAYSIZE(results); ++i) {
+  //     fprintf(stdout, "result[%" PRIhsz "]: %f\n", i, results[i]);
+  //     if (results[i] != 8.0f) {
+  //       status = iree_make_status(IREE_STATUS_UNKNOWN, "result mismatches");
+  //       break;
+  //     }
+  //   }
+  // }
 
   if (!iree_status_is_ok(status)) {
     iree_status_fprint(stderr, status);
