@@ -9,7 +9,7 @@
   <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
 </head>
 
-<body style="background-color: #35363b; color: #ABB2BF">
+<body style="background-color: #2b2c30; color: #ABB2BF">
   <h1>IREE Static Web Sample</h1>
 
   <canvas id="drawingCanvas" width="256" height="256"
@@ -18,6 +18,14 @@
   </canvas>
   <canvas id="rescaledCanvas" width="28" height="28"
           style="border:2px solid #000000; background-color: #FFFFFF;">
+  </canvas>
+
+  <br>
+  <div style="border:2px solid #000000; background-color: #CCCCCC; padding: 8px; color: #111111" width="400px" height="300px">
+    <button id="predictButton" disabled onclick="predictDigit()">Predict handwritten digit</button>
+    <br>
+    Prediction result: <div id="predictionResult"></div>
+  </div>
 
   <script>
     var Module = {
@@ -30,6 +38,8 @@
       onRuntimeInitialized: function () {
         console.log("wasm module onRuntimeInitialized");
         testLoadedModule();
+
+        document.getElementById("predictButton").disabled = false;
       },
       // https://emscripten.org/docs/api_reference/module.html#Module.noInitialRun
       noInitialRun: true,
@@ -38,16 +48,19 @@
     // going to want to run the invocation off worker
     // so may need some web worker boilerplate
 
+    function testLoadedModule() {
+      setupSample = Module.cwrap("setup_sample", "number", []);
+      cleanupSample = Module.cwrap("cleanup_sample", null, ["number"]);
+      runSample = Module.cwrap("run_sample", null, ["number"]);
 
-  function testLoadedModule() {
-    setupSample = Module.cwrap("setup_sample", "number", []);
-    cleanupSample = Module.cwrap("cleanup_sample", null, ["number"]);
-    runSample = Module.cwrap("run_sample", null, ["number"]);
+      state = setupSample();
+      runSample(state);
+      cleanupSample(state);
+    };
 
-    state = setupSample();
-    runSample(state);
-    cleanupSample(state);
-  };
+    function predictDigit() {
+      console.log("predicting digit...");
+    }
 
   </script>
   <script src="sample-web-static-sync.js"></script>
