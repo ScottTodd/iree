@@ -28,6 +28,11 @@
   </div>
 
   <script>
+    let setupSample;
+    let cleanupSample;
+    let runSample;
+    let state;
+
     var Module = {
       print: function (text) {
         console.log(text);
@@ -37,7 +42,12 @@
       },
       onRuntimeInitialized: function () {
         console.log("wasm module onRuntimeInitialized");
-        testLoadedModule();
+
+        setupSample = Module.cwrap("setup_sample", "number", []);
+        cleanupSample = Module.cwrap("cleanup_sample", null, ["number"]);
+        runSample = Module.cwrap("run_sample", "number", ["number", "number"]);
+
+        state = setupSample();
 
         document.getElementById("predictButton").disabled = false;
       },
@@ -45,21 +55,44 @@
       noInitialRun: true,
     };
 
-    // going to want to run the invocation off worker
-    // so may need some web worker boilerplate
-
-    function testLoadedModule() {
-      setupSample = Module.cwrap("setup_sample", "number", []);
-      cleanupSample = Module.cwrap("cleanup_sample", null, ["number"]);
-      runSample = Module.cwrap("run_sample", null, ["number"]);
-
-      state = setupSample();
-      runSample(state);
-      cleanupSample(state);
-    };
-
     function predictDigit() {
       console.log("predicting digit...");
+
+      const rawImageData = getRescaledCanvasData();
+      const imageDataBuffer = preprocessImageData(rawImageData);
+
+      result = runSample(state, imageDataBuffer);
+      console.log("prediction result from wasm: ", result);
+      // TODO(scotttodd): display in DOM
+
+      Module._free(imageDataBuffer);
+    }
+
+    // https://becominghuman.ai/passing-and-returning-webassembly-array-parameters-a0f572c65d97
+    // https://developers.google.com/web/updates/2018/03/emscripting-a-c-library#get_an_image_from_javascript_into_wasm
+    function preprocessImageData(rawImageData) {
+      // * getImageData() returns a Uint8ClampedArray with RGBA image data
+      // * this MNIST model takes tensor<1x28x28x1xf32> with grayscale pixels
+      //   in [0.0, 1.0]
+
+      // This conversion is terrible, but this is a toy demo with a small image
+      // Hopefully there aren't any logic / iteration order issues...
+      const imagePixelCount = 28 * 28;
+      const typedArray = new Float32Array(imagePixelCount);
+      for (let y = 0; y < 28; ++y) {
+        for (let x = 0; x < 28; ++x) {
+          const typedIndex = y * 28 + x;
+          const rawIndex = 4 * (y * 28 + x) + 3;  // Assume colorSpace srgb
+          typedArray[typedIndex] = rawImageData.data[rawIndex] / 255.0;
+        }
+      }
+      console.log("typedArray: ", typedArray);
+
+      // Copy into WASM heap.
+      // Note: we could have done the conversion in-place, but this is demo code
+      const buffer = Module._malloc(imagePixelCount * Float32Array.BYTES_PER_ELEMENT);
+      Module.HEAPF32.set(typedArray, buffer >> 2);
+      return buffer;
     }
 
   </script>
