@@ -735,6 +735,8 @@ IREE_API_EXPORT iree_status_t iree_hal_buffer_map_range(
   IREE_TRACE_ZONE_BEGIN(z0);
   memset(out_buffer_mapping, 0, sizeof(*out_buffer_mapping));
 
+  // fprintf(stdout, "iree_hal_buffer_map_range: %p\n", buffer);
+
   IREE_RETURN_AND_END_ZONE_IF_ERROR(
       z0, iree_hal_buffer_validate_access(
               iree_hal_buffer_allowed_access(buffer), memory_access));

@@ -4,6 +4,7 @@
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
+#include <emscripten/emscripten.h>
 #include <float.h>
 #include <stdio.h>
 
@@ -24,6 +25,13 @@ iree_sample_state_t* setup_sample();
 void cleanup_sample(iree_sample_state_t* state);
 
 int run_sample(iree_sample_state_t* state, float* image_data);
+
+int run_sample_twice(iree_sample_state_t* state, float* image_data) {
+  fprintf(stdout, "run first time...\n");
+  run_sample(state, image_data);
+  fprintf(stdout, "run second time...\n");
+  return run_sample(state, image_data);
+}
 
 //===----------------------------------------------------------------------===//
 // Implementation
@@ -121,53 +129,81 @@ void cleanup_sample(iree_sample_state_t* state) {
 int run_sample(iree_sample_state_t* state, float* image_data) {
   iree_status_t status = iree_ok_status();
 
-  iree_runtime_call_reset(&state->call);
-
   iree_hal_buffer_view_t* arg_buffer_view = NULL;
   iree_hal_dim_t buffer_shape[] = {1, 28, 28, 1};
-  iree_hal_memory_type_t input_memory_type =
-      IREE_HAL_MEMORY_TYPE_HOST_LOCAL | IREE_HAL_MEMORY_TYPE_DEVICE_VISIBLE;
   if (iree_status_is_ok(status)) {
-    status = iree_hal_buffer_view_allocate_buffer(
+    fprintf(stdout, "iree_hal_buffer_view_allocate_buffer (input)\n");
+    // status = iree_hal_buffer_view_allocate_buffer(
+    //     iree_hal_device_allocator(state->device), buffer_shape,
+    //     IREE_ARRAYSIZE(buffer_shape), IREE_HAL_ELEMENT_TYPE_FLOAT_32,
+    //     IREE_HAL_ENCODING_TYPE_DENSE_ROW_MAJOR,
+    //     IREE_HAL_MEMORY_TYPE_HOST_LOCAL |
+    //     IREE_HAL_MEMORY_TYPE_DEVICE_VISIBLE, IREE_HAL_BUFFER_USAGE_DISPATCH |
+    //     IREE_HAL_BUFFER_USAGE_TRANSFER,
+    //     iree_make_const_byte_span((void*)image_data, sizeof(float) * 28 *
+    //     28), &arg_buffer_view);
+    status = iree_hal_buffer_view_wrap_or_clone_heap_buffer(
         iree_hal_device_allocator(state->device), buffer_shape,
         IREE_ARRAYSIZE(buffer_shape), IREE_HAL_ELEMENT_TYPE_FLOAT_32,
-        IREE_HAL_ENCODING_TYPE_DENSE_ROW_MAJOR, input_memory_type,
+        IREE_HAL_ENCODING_TYPE_DENSE_ROW_MAJOR,
+        IREE_HAL_MEMORY_TYPE_HOST_LOCAL | IREE_HAL_MEMORY_TYPE_DEVICE_VISIBLE,
+        IREE_HAL_MEMORY_ACCESS_READ,
         IREE_HAL_BUFFER_USAGE_DISPATCH | IREE_HAL_BUFFER_USAGE_TRANSFER,
-        iree_make_const_byte_span((void*)image_data, sizeof(float) * 28 * 28),
-        &arg_buffer_view);
+        iree_make_byte_span((void*)image_data, sizeof(float) * 28 * 28),
+        iree_allocator_null(), &arg_buffer_view);
   }
   if (iree_status_is_ok(status)) {
+    fprintf(stdout, "iree_runtime_call_inputs_push_back_buffer_view\n");
     status = iree_runtime_call_inputs_push_back_buffer_view(&state->call,
                                                             arg_buffer_view);
   }
+  fprintf(stdout, "iree_hal_buffer_view_release (input)\n");
   iree_hal_buffer_view_release(arg_buffer_view);
 
   if (iree_status_is_ok(status)) {
+    fprintf(stdout, "iree_runtime_call_invoke\n");
     status = iree_runtime_call_invoke(&state->call, /*flags=*/0);
   }
 
   // Get the result buffers from the invocation.
   iree_hal_buffer_view_t* ret_buffer_view = NULL;
   if (iree_status_is_ok(status)) {
+    fprintf(stdout, "iree_runtime_call_outputs_pop_front_buffer_view\n");
     status = iree_runtime_call_outputs_pop_front_buffer_view(&state->call,
                                                              &ret_buffer_view);
   }
 
   // Read back the results. The output of the mnist model is a 1x10 prediction
   // confidence values for each digit in [0, 9].
-  float predictions[1 * 10] = {0.0f};
+  float predictions[10] = {0.0f};
   if (iree_status_is_ok(status)) {
-    iree_hal_buffer_read_data(iree_hal_buffer_view_buffer(ret_buffer_view), 0,
-                              predictions, sizeof(predictions));
+    // fprintf(stdout, "predictions buffer:\n");
+    // status = iree_hal_buffer_view_fprint(
+    //     stdout, ret_buffer_view,
+    //     /*max_element_count=*/4096,
+    //     iree_runtime_session_host_allocator(state->session));
+    // fprintf(stdout, "\n");
+
+    // TODO(scotttodd): fix "RuntimeError: table index is out of bounds" here
+    fprintf(stdout, "iree_hal_buffer_read_data\n");
+    status =
+        iree_hal_buffer_read_data(iree_hal_buffer_view_buffer(ret_buffer_view),
+                                  0, predictions, sizeof(predictions));
   }
+  fprintf(stdout, "iree_hal_buffer_view_release (output)\n");
   iree_hal_buffer_view_release(ret_buffer_view);
+
+  fprintf(stdout, "iree_runtime_call_reset (start)\n");
+  iree_runtime_call_reset(&state->call);
+  fprintf(stdout, "iree_runtime_call_reset (finished)\n");
 
   if (iree_status_is_ok(status)) {
     // Get the highest index from the output.
     float result_val = FLT_MIN;
     int result_idx = 0;
     for (iree_host_size_t i = 0; i < IREE_ARRAYSIZE(predictions); ++i) {
-      fprintf(stdout, "prediction for [%" PRIhsz "]: %f\n", i, predictions[i]);
+      // fprintf(stdout, "prediction for [%" PRIhsz "]: %f\n", i,
+      // predictions[i]);
       if (predictions[i] > result_val) {
         result_val = predictions[i];
         result_idx = i;

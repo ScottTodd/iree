@@ -44,10 +44,15 @@ target_link_libraries(${_NAME}
 
 target_link_options(${_NAME} PRIVATE
   # https://emscripten.org/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#interacting-with-code-ccall-cwrap
-  "-sEXPORTED_FUNCTIONS=['_setup_sample', '_cleanup_sample', '_run_sample']"
+  "-sEXPORTED_FUNCTIONS=['_setup_sample', '_cleanup_sample', '_run_sample', '_run_sample_twice']"
+  # "-sEXPORTED_FUNCTIONS=['_setup_sample', '_cleanup_sample', '_run_sample', '_SAFE_HEAP_LOAD_i32_4_A', '_SAFE_HEAP_LOAD_i64_8_A']"
   "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
   #
-  "-sASSERTIONS=1"
+  "-sASSERTIONS=2"
+  # "-sSAFE_HEAP=1"
+  # "-sWARN_UNALIGNED=1"
+  #
+  # "-sINITIAL_MEMORY=67108864"  # 64MB
 
   "-gsource-map"
   # "--source-map-base=${CMAKE_CURRENT_SOURCE_DIR}"

@@ -93,6 +93,7 @@ iree_status_t iree_hal_heap_buffer_create(
                                                &buffer, &data)
           : iree_hal_heap_buffer_allocate_split(allocation_size, data_allocator,
                                                 host_allocator, &buffer, &data);
+  // fprintf(stdout, "iree_hal_heap_buffer_create: %p\n", buffer);
 
   if (iree_status_is_ok(status)) {
     iree_hal_buffer_initialize(host_allocator, allocator, &buffer->base,
@@ -153,6 +154,8 @@ static void iree_hal_heap_buffer_destroy(iree_hal_buffer_t* base_buffer) {
   iree_hal_heap_buffer_t* buffer = (iree_hal_heap_buffer_t*)base_buffer;
   iree_allocator_t host_allocator = base_buffer->host_allocator;
   IREE_TRACE_ZONE_BEGIN(z0);
+
+  // fprintf(stdout, "iree_hal_heap_buffer_destroy: %p\n", base_buffer);
 
   IREE_STATISTICS({
     if (buffer->statistics != NULL) {

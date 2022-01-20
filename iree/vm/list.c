@@ -68,6 +68,7 @@ IREE_VM_DEFINE_TYPE_ADAPTERS(iree_vm_list, iree_vm_list_t);
 static void iree_vm_list_reset_range(iree_vm_list_t* list,
                                      iree_host_size_t offset,
                                      iree_host_size_t length) {
+  // fprintf(stdout, "iree_vm_list_reset_range\n");
   switch (list->storage_mode) {
     case IREE_VM_LIST_STORAGE_MODE_VALUE: {
       void* base_ptr =
@@ -78,6 +79,7 @@ static void iree_vm_list_reset_range(iree_vm_list_t* list,
     case IREE_VM_LIST_STORAGE_MODE_REF: {
       iree_vm_ref_t* ref_storage = (iree_vm_ref_t*)list->storage;
       for (iree_host_size_t i = offset; i < offset + length; ++i) {
+        // fprintf(stdout, "iree_vm_list_reset_range -> iree_vm_ref_release\n");
         iree_vm_ref_release(&ref_storage[i]);
       }
       break;

@@ -10,7 +10,8 @@
 #include "iree/runtime/testdata/simple_mul_module_c.h"
 
 static void iree_runtime_demo_run_session(iree_runtime_instance_t* instance);
-static void iree_runtime_demo_perform_mul(iree_runtime_session_t* session);
+static void iree_runtime_demo_perform_mul(iree_runtime_session_t* session,
+                                          iree_runtime_call_t* call);
 
 //===----------------------------------------------------------------------===//
 // 1. Entry point / shared iree_runtime_instance_t setup
@@ -59,8 +60,21 @@ static void iree_runtime_demo_run_session(iree_runtime_instance_t* instance) {
       session, iree_make_const_byte_span(module_file->data, module_file->size),
       iree_allocator_null()));
 
+  iree_runtime_call_t call;
+  IREE_CHECK_OK(iree_runtime_call_initialize_by_name(
+      session, iree_make_cstring_view("module.simple_mul"), &call));
+
   // Run your functions; you should reuse the session to make multiple calls.
-  iree_runtime_demo_perform_mul(session);
+  fprintf(stdout, "iree_runtime_demo_perform_mul\n");
+  iree_runtime_demo_perform_mul(session, &call);
+  iree_runtime_call_reset(&call);
+  fprintf(stdout, "iree_runtime_demo_perform_mul\n");
+  iree_runtime_demo_perform_mul(session, &call);
+  iree_runtime_call_reset(&call);
+  fprintf(stdout, "iree_runtime_demo_perform_mul\n");
+  iree_runtime_demo_perform_mul(session, &call);
+
+  iree_runtime_call_deinitialize(&call);
 
   iree_runtime_session_release(session);
 }
@@ -70,10 +84,11 @@ static void iree_runtime_demo_run_session(iree_runtime_instance_t* instance) {
 //===----------------------------------------------------------------------===//
 
 // func @simple_mul(%arg0: tensor<4xf32>, %arg1: tensor<4xf32>) -> tensor<4xf32>
-static void iree_runtime_demo_perform_mul(iree_runtime_session_t* session) {
-  iree_runtime_call_t call;
-  IREE_CHECK_OK(iree_runtime_call_initialize_by_name(
-      session, iree_make_cstring_view("module.simple_mul"), &call));
+static void iree_runtime_demo_perform_mul(iree_runtime_session_t* session,
+                                          iree_runtime_call_t* call) {
+  // iree_runtime_call_t call;
+  // IREE_CHECK_OK(iree_runtime_call_initialize_by_name(
+  //     session, iree_make_cstring_view("module.simple_mul"), &call));
 
   // %arg0: tensor<4xf32>
   iree_hal_buffer_view_t* arg0 = NULL;
@@ -90,7 +105,7 @@ static void iree_runtime_demo_perform_mul(iree_runtime_session_t* session) {
   IREE_CHECK_OK(iree_hal_buffer_view_fprint(
       stdout, arg0, /*max_element_count=*/4096,
       iree_runtime_session_host_allocator(session)));
-  IREE_CHECK_OK(iree_runtime_call_inputs_push_back_buffer_view(&call, arg0));
+  IREE_CHECK_OK(iree_runtime_call_inputs_push_back_buffer_view(call, arg0));
   iree_hal_buffer_view_release(arg0);
 
   fprintf(stdout, "\n * \n");
@@ -110,20 +125,26 @@ static void iree_runtime_demo_perform_mul(iree_runtime_session_t* session) {
   IREE_CHECK_OK(iree_hal_buffer_view_fprint(
       stdout, arg1, /*max_element_count=*/4096,
       iree_runtime_session_host_allocator(session)));
-  IREE_CHECK_OK(iree_runtime_call_inputs_push_back_buffer_view(&call, arg1));
+  IREE_CHECK_OK(iree_runtime_call_inputs_push_back_buffer_view(call, arg1));
   iree_hal_buffer_view_release(arg1);
 
-  IREE_CHECK_OK(iree_runtime_call_invoke(&call, /*flags=*/0));
+  IREE_CHECK_OK(iree_runtime_call_invoke(call, /*flags=*/0));
 
   fprintf(stdout, "\n = \n");
 
   // -> tensor<4xf32>
   iree_hal_buffer_view_t* ret0 = NULL;
-  IREE_CHECK_OK(iree_runtime_call_outputs_pop_front_buffer_view(&call, &ret0));
+  IREE_CHECK_OK(iree_runtime_call_outputs_pop_front_buffer_view(call, &ret0));
   IREE_CHECK_OK(iree_hal_buffer_view_fprint(
       stdout, ret0, /*max_element_count=*/4096,
       iree_runtime_session_host_allocator(session)));
-  iree_hal_buffer_view_release(ret0);
 
-  iree_runtime_call_deinitialize(&call);
+  float results[4] = {0.0f};
+  IREE_CHECK_OK(iree_hal_buffer_read_data(iree_hal_buffer_view_buffer(ret0), 0,
+                                          results, sizeof(results)));
+  fprintf(stdout, "\nresults: [%f, %f, %f, %f]\n", results[0], results[1],
+          results[2], results[3]);
+
+  iree_hal_buffer_view_release(ret0);
+  fprintf(stdout, "\n");
 }

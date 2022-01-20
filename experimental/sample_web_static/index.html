@@ -47,6 +47,7 @@
         setupSample = Module.cwrap("setup_sample", "number", []);
         cleanupSample = Module.cwrap("cleanup_sample", null, ["number"]);
         runSample = Module.cwrap("run_sample", "number", ["number", "number"]);
+        runSampleTwice = Module.cwrap("run_sample_twice", "number", ["number", "number"]);
 
         state = setupSample();
 
@@ -60,10 +61,12 @@
     function predictDigit() {
       console.log("predicting digit...");
 
+      // const state = setupSample();
       const rawImageData = getRescaledCanvasData();
       const imageDataBuffer = preprocessImageData(rawImageData);
 
-      result = runSample(state, imageDataBuffer);
+      const result = runSampleTwice(state, imageDataBuffer);
+      // const result = runSample(state, imageDataBuffer);
       console.log("prediction result from wasm: ", result);
       if (result != -1) {
         predictionResultElement.innerHTML = result;
@@ -71,7 +74,13 @@
         predictionResultElement.innerHTML = "Error";
       }
 
+      // const result2 = runSample(state, imageDataBuffer);
+      // console.log("prediction result2 from wasm: ", result2);
+
+
       Module._free(imageDataBuffer);
+
+      // cleanupSample(state);
     }
 
     // https://becominghuman.ai/passing-and-returning-webassembly-array-parameters-a0f572c65d97
@@ -92,7 +101,7 @@
           typedArray[typedIndex] = rawImageData.data[rawIndex] / 255.0;
         }
       }
-      console.log("typedArray: ", typedArray);
+      // console.log("typedArray: ", typedArray);
 
       // Copy into WASM heap.
       // Note: we could have done the conversion in-place, but this is demo code

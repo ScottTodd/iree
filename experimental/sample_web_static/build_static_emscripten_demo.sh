@@ -67,14 +67,15 @@ pushd ${ROOT_DIR?}/build-emscripten
 #       but some targets are gated on specific CMake options.
 emcmake "${CMAKE_BIN?}" -G Ninja .. \
   -DIREE_HOST_BINARY_ROOT=$PWD/../build-host/install \
+  -DCMAKE_BUILD_TYPE=Debug \
   -DIREE_HAL_DRIVER_DEFAULTS=OFF \
   -DIREE_HAL_DRIVER_DYLIB=ON \
   -DIREE_BUILD_COMPILER=OFF \
   -DIREE_BUILD_TESTS=OFF
 
 "${CMAKE_BIN?}" --build . --target \
-  iree_experimental_sample_web_static_sync \
-  iree_experimental_sample_web_static_multithreaded
+  iree_experimental_sample_web_static_sync
+  # iree_experimental_sample_web_static_multithreaded
 popd
 
 ###############################################################################

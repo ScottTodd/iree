@@ -102,11 +102,20 @@ static iree_status_t iree_vm_invoke_marshal_outputs(
     }
     return iree_ok_status();
   }
+  // fprintf(stdout, "iree_vm_invoke_marshal_outputs, outputs size: %" PRIhsz
+  // "\n",
+  //         iree_vm_list_size(outputs));
 
   // Resize the output list to hold all results (and kill anything that may
   // have been in there).
   IREE_RETURN_IF_ERROR(iree_vm_list_resize(outputs, 0));
   IREE_RETURN_IF_ERROR(iree_vm_list_resize(outputs, expected_output_count));
+
+  // fprintf(stdout,
+  //         "iree_vm_invoke_marshal_outputs after resize, outputs size: %"
+  //         PRIhsz
+  //         "\n",
+  //         iree_vm_list_size(outputs));
 
   uint8_t* p = results.data;
   for (iree_host_size_t cconv_i = 0, arg_i = 0; cconv_i < cconv_results.size;

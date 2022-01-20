@@ -111,8 +111,15 @@ iree_vm_ref_lookup_registered_type(iree_string_view_t full_name) {
 static void iree_vm_ref_trace(const char* msg, iree_vm_ref_t* ref) {
   volatile iree_atomic_ref_count_t* counter = iree_vm_get_ref_counter_ptr(ref);
   iree_string_view_t name = iree_vm_ref_type_name(ref->type);
+#if defined(IREE_COMPILER_MSVC)
+  int counter_value = counter->__val;
+#else
+  int counter_value = *counter;
+#endif  // IREE_COMPILER_MSVC
   fprintf(stderr, "%s %.*s 0x%p %d\n", msg, (int)name.size, name.data, ref->ptr,
-          counter->__val);
+          counter_value);
+  fprintf(stderr, "%s %.*s 0x%p %d\n", msg, (int)name.size, name.data, ref->ptr,
+          counter_value);
 }
 #else
 #define iree_vm_ref_trace(...)
