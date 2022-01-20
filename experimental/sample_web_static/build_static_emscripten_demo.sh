@@ -87,6 +87,7 @@ cp ${ROOT_DIR?}/experimental/sample_web_static/index.html \
   ${ROOT_DIR?}/build-emscripten/experimental/sample_web_static
 
 echo "=== Running local webserver ==="
+echo "    open at http://localhost:8000/build-emscripten/experimental/sample_web_static/"
 
 # local_server.py is needed when using SharedArrayBuffer, with multithreading
 # python3 local_server.py \
@@ -95,4 +96,5 @@ echo "=== Running local webserver ==="
 # http.server on its own is fine for single threaded use, and this doesn't
 # break CORS for external resources like easeljs from a CDN
 python3 -m http.server \
-  --directory ${ROOT_DIR?}/build-emscripten/experimental/sample_web_static
+  --directory ${ROOT_DIR?}
+  # --directory ${ROOT_DIR?}/build-emscripten/experimental/sample_web_static

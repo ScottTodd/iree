@@ -48,6 +48,10 @@ target_link_options(${_NAME} PRIVATE
   "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
   #
   "-sASSERTIONS=1"
+
+  "-gsource-map"
+  # "--source-map-base=${CMAKE_CURRENT_SOURCE_DIR}"
+  "--source-map-base="
 )
 
 #-------------------------------------------------------------------------------
