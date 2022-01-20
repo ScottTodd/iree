@@ -4,6 +4,10 @@
 # See https://llvm.org/LICENSE.txt for license information.
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
+if(NOT EMSCRIPTEN)
+  return()
+endif()
+
 set(_MNIST_OBJECT_NAME "iree_experimental_sample_web_static_mnist")
 add_library(${_MNIST_OBJECT_NAME} STATIC generated/mnist_static.o)
 SET_TARGET_PROPERTIES(${_MNIST_OBJECT_NAME} PROPERTIES LINKER_LANGUAGE C)
