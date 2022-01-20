@@ -32,15 +32,16 @@
     let cleanupSample;
     let runSample;
     let state;
+    let predictionResultElement;
 
     var Module = {
-      print: function (text) {
+      print: function(text) {
         console.log(text);
       },
-      printErr: function (text) {
+      printErr: function(text) {
         console.error(text);
       },
-      onRuntimeInitialized: function () {
+      onRuntimeInitialized: function() {
         console.log("wasm module onRuntimeInitialized");
 
         setupSample = Module.cwrap("setup_sample", "number", []);
@@ -49,6 +50,7 @@
 
         state = setupSample();
 
+        predictionResultElement = document.getElementById("predictionResult");
         document.getElementById("predictButton").disabled = false;
       },
       // https://emscripten.org/docs/api_reference/module.html#Module.noInitialRun
@@ -63,7 +65,11 @@
 
       result = runSample(state, imageDataBuffer);
       console.log("prediction result from wasm: ", result);
-      // TODO(scotttodd): display in DOM
+      if (result != -1) {
+        predictionResultElement.innerHTML = result;
+      } else {
+        predictionResultElement.innerHTML = "Error";
+      }
 
       Module._free(imageDataBuffer);
     }
