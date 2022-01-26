@@ -6,21 +6,45 @@
 
 set(CUDA_HEADERS_API_ROOT "${IREE_ROOT_DIR}/third_party/cuda/include")
 
-unset(CUDA_INCLUDE_DIR CACHE)
-unset(CUPTI_INCLUDE_DIR CACHE)
+# unset(CUDA_INCLUDE_DIR CACHE)
+# unset(CUPTI_INCLUDE_DIR CACHE)
 
 # Check for the CUDA install and enable if possible. Pull relevant headers into the build
 if(IREE_HAL_DRIVER_CUDA AND IREE_ENABLE_RUNTIME_TRACING)
+  # enable_language(CUDA)
+
+
+
+  find_package(CUDAToolkit)
+
+  message(STATUS "CUDAToolkit_FOUND:           ${CUDAToolkit_FOUND}")
+  message(STATUS "CUDAToolkit_VERSION:         ${CUDAToolkit_VERSION}")
+  message(STATUS "CUDAToolkit_VERSION_MAJOR:   ${CUDAToolkit_VERSION_MAJOR}")
+  message(STATUS "CUDAToolkit_VERSION_MINOR:   ${CUDAToolkit_VERSION_MINOR}")
+  message(STATUS "CUDAToolkit_VERSION_PATCH:   ${CUDAToolkit_VERSION_PATCH}")
+  message(STATUS "CUDAToolkit_BIN_DIR:         ${CUDAToolkit_BIN_DIR}")
+  message(STATUS "CUDAToolkit_INCLUDE_DIRS:    ${CUDAToolkit_INCLUDE_DIRS}")
+  message(STATUS "CUDAToolkit_LIBRARY_DIR:     ${CUDAToolkit_LIBRARY_DIR}")
+  message(STATUS "CUDAToolkit_LIBRARY_ROOT:    ${CUDAToolkit_LIBRARY_ROOT}")
+  message(STATUS "CUDAToolkit_TARGET_DIR:      ${CUDAToolkit_TARGET_DIR}")
+  message(STATUS "CUDAToolkit_NVCC_EXECUTABLE: ${CUDAToolkit_NVCC_EXECUTABLE}")
+
+  message(STATUS "CMAKE_CUDA_COMPILER before language: ${CMAKE_CUDA_COMPILER}")
+
   include(CheckLanguage)
   check_language(CUDA)
-  if (CMAKE_CUDA_COMPILER)
-    enable_language(CUDA)
-  else()
-    message(SEND_ERROR
-      "Building IREE with the CUDA driver requires a working CUDA install.")
-  endif()
+  enable_language(CUDA)
 
-  find_package(CUDAToolkit) # Defines the CUDAToolkit_LIBRARY_ROOT variable
+  message(STATUS "CMAKE_CUDA_COMPILER after language: ${CMAKE_CUDA_COMPILER}")
+
+  # if (CMAKE_CUDA_COMPILER)
+  #   enable_language(CUDA)
+  # else()
+  #   message(SEND_ERROR
+  #     "Building IREE with the CUDA driver requires a working CUDA install.")
+  # endif()
+
+  # find_package(CUDAToolkit) # Defines the CUDAToolkit_LIBRARY_ROOT variable
 
   find_path(
     CUDA_INCLUDE_DIR
@@ -39,7 +63,7 @@ if(IREE_HAL_DRIVER_CUDA AND IREE_ENABLE_RUNTIME_TRACING)
 endif() # //IREE_HAL_DRIVER_CUDA AND IREE_ENABLE_RUNTIME_TRACING
 
 
-if (CUDA_INCLUD_DIR AND CUPTI_INCLUDE_DIR)
+if (CUDA_INCLUDE_DIR AND CUPTI_INCLUDE_DIR)
   external_cc_library(
     PACKAGE
       cuda_headers

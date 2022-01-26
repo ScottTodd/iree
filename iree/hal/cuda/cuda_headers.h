@@ -8,8 +8,10 @@
 #define IREE_HAL_CUDA_CUDA_HEADERS_H_
 
 #include "cuda.h"  // IWYU pragma: export
+#include "iree/base/tracing.h"
 
-#if IREE_ENABLE_CUPTI  // CUPTI is only used for tracing.
+#if IREE_TRACING_FEATURES & IREE_TRACING_FEATURE_INSTRUMENTATION
+// #if IREE_TRACING_FEATURES  // CUPTI is only used for tracing.
 
 /* Activity, callback, event and metric APIs */
 #include <cupti_activity.h>
