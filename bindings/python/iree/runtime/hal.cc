@@ -469,6 +469,12 @@ void SetupHalBindings(pybind11::module m) {
 
   py::class_<HalBufferView>(m, "HalBufferView")
       .def("map", HalMappedMemory::Create)
+      .def_property_readonly("buffer",
+                             [](HalBufferView& self) {
+                               auto* buffer =
+                                   iree_hal_buffer_view_buffer(self.raw_ptr());
+                               return HalBuffer::BorrowFromRawPtr(buffer);
+                             })
       .def_property_readonly(
           "shape",
           [](HalBufferView& self) {

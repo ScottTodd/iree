@@ -102,6 +102,7 @@ class DeviceHalTest(unittest.TestCase):
     ary = iree.runtime.asdevicearray(self.device,
                                      init_ary,
                                      implicit_host_transfer=True)
+    # help(ary._buffer_view)
     reshaped = ary.reshape((4, 3))
     self.assertEqual((4, 3), reshaped.shape)
 

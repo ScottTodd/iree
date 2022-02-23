@@ -143,11 +143,32 @@ class DeviceArray(numpy.lib.mixins.NDArrayOperatorsMixin):
     host_ary = self.to_host()
     return host_ary.astype(dtype, casting=casting, copy=copy)
 
-  def reshape(self, *args):
-    # TODO(scotttodd): add a native impl with a new buffer_view of the same data
-    # TODO(scotttodd): return DeviceArray instead of host ndarray?
-    host_ary = self.to_host()
-    return host_ary.reshape(*args)
+  # def reshape(self, *args):
+  #   # TODO(scotttodd): add a native impl with a new buffer_view of the same data
+  #   # TODO(scotttodd): return DeviceArray instead of host ndarray?
+  #   host_ary = self.to_host()
+  #   return host_ary.reshape(*args)
+
+  def reshape(self, newshape):
+    buffer = self._buffer_view.buffer
+    # TODO(scotttodd): look up element_size, pass existing size/type?
+    element_size = 4
+    reshaped_view = buffer.create_view(newshape, element_size)
+
+    # TypeError: create_view(): incompatible function arguments. The following
+    # argument types are supported:
+    #   1. (self: iree.runtime.binding.HalBuffer,
+    #       shape: iree::python::HalShape,
+    #       element_size: int) -> iree::python::HalBufferView
+    #
+    # Invoked with: <HalBuffer 48 bytes (at offset 0 into 48),
+    #                memory_type=DEVICE_LOCAL|HOST_VISIBLE,
+    #                allowed_access=ALL,
+    #                allowed_usage=ALL>,
+    #              [3, 4], 4
+
+    return DeviceArray(self._device, reshaped_view,
+                       self._implicit_host_transfer, self._override_dtype)
 
   def __iter__(self):
     host_ary = self.to_host()
