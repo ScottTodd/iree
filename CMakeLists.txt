@@ -125,6 +125,7 @@ option(IREE_ENABLE_ASAN "Enable address sanitizer" OFF)
 option(IREE_ENABLE_MSAN "Enable memory sanitizer" OFF)
 option(IREE_ENABLE_TSAN "Enable thread sanitizer" OFF)
 option(IREE_ENABLE_CCACHE "Use ccache if installed to speed up rebuilds." OFF)
+option(IREE_ENABLE_COVERAGE "Generate code coverage reporting for tests" OFF)
 
 if(${IREE_ENABLE_CCACHE})
   find_program(CCACHE_PROGRAM ccache)
