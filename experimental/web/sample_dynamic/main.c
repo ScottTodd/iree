@@ -49,8 +49,10 @@ void unload_program(iree_program_state_t* program_state);
 //   described in iree/tools/utils/vm_util and used in IREE's CLI tools.
 //   For example, the CLI `--function_input=f32=1 --function_input=f32=2`
 //   should be passed here as `f32=1;f32=2`.
+// * |iterations| is the number of times to call the function, for benchmarking
 const char* call_function(iree_program_state_t* program_state,
-                          const char* function_name, const char* inputs);
+                          const char* function_name, const char* inputs,
+                          int iterations);
 
 //===----------------------------------------------------------------------===//
 // Implementation
@@ -363,7 +365,8 @@ static iree_status_t print_outputs_from_call(
 }
 
 const char* call_function(iree_program_state_t* program_state,
-                          const char* function_name, const char* inputs) {
+                          const char* function_name, const char* inputs,
+                          int iterations) {
   iree_status_t status = iree_ok_status();
 
   // Fully qualify the function name. This sample only supports loading one
@@ -390,18 +393,26 @@ const char* call_function(iree_program_state_t* program_state,
         iree_make_cstring_view(inputs));
   }
 
+  fprintf(stdout, "Running %d iteration(s) of function '%s'...\n", iterations,
+          function_name);
+
   // Note: Timing has ~millisecond precision on the web to mitigate timing /
   // side-channel security threats.
   // https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#reduced_time_precision
   iree_time_t start_time = iree_time_now();
-  if (iree_status_is_ok(status)) {
-    status = iree_runtime_call_invoke(&call, /*flags=*/0);
+  for (int i = 0; i < iterations; ++i) {
+    if (iree_status_is_ok(status)) {
+      status = iree_runtime_call_invoke(&call, /*flags=*/0);
+    }
   }
   iree_time_t end_time = iree_time_now();
   iree_time_t time_elapsed = end_time - start_time;
+  iree_time_t median_time = (iree_time_t)((float)time_elapsed / iterations);
   fprintf(stdout,
-          "(Approximate) time for calling '%s': %" PRId64 " nanoseconds\n",
-          function_name, time_elapsed);
+          "Ran '%s' function %d time(s); total time: %" PRId64
+          "ms, mean time: %" PRId64 "ms / iteration\n",
+          function_name, iterations, time_elapsed / 1000000,
+          median_time / 1000000);
 
   iree_string_builder_t outputs_builder;
   iree_string_builder_initialize(iree_allocator_system(), &outputs_builder);

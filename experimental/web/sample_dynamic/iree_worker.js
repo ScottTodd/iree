@@ -29,8 +29,8 @@ var Module = {
     wasmLoadProgramFn =
         Module.cwrap('load_program', 'number', ['number', 'number', 'number']);
     wasmUnloadProgramFn = Module.cwrap('unload_program', null, ['number']);
-    wasmCallFunctionFn =
-        Module.cwrap('call_function', 'string', ['number', 'string', 'string']);
+    wasmCallFunctionFn = Module.cwrap(
+        'call_function', 'string', ['number', 'string', 'string', 'number']);
 
     sampleState = wasmSetupSampleFn();
 
@@ -93,7 +93,7 @@ function unloadProgram(id, programState) {
 }
 
 function callFunction(id, functionParams) {
-  const {programState, functionName, inputs} = functionParams;
+  const {programState, functionName, inputs, iterations} = functionParams;
 
   let inputsJoined;
   if (Array.isArray(inputs)) {
@@ -110,7 +110,7 @@ function callFunction(id, functionParams) {
   }
 
   const returnValue =
-      wasmCallFunctionFn(programState, functionName, inputsJoined);
+      wasmCallFunctionFn(programState, functionName, inputsJoined, iterations);
 
   if (returnValue === '') {
     postMessage({

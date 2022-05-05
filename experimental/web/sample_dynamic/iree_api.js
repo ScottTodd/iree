@@ -97,13 +97,14 @@ function ireeUnloadProgram(programState) {
 // Calls a function on a loaded program, asynchronously.
 //
 // Returns a semicolon delimited list of formatted outputs on success.
-function ireeCallFunction(programState, functionName, inputs) {
+function ireeCallFunction(programState, functionName, inputs, iterations) {
   return _callIntoWorker({
     'messageType': 'callFunction',
     'payload': {
       'programState': programState,
       'functionName': functionName,
       'inputs': inputs,
+      'iterations': iterations !== undefined ? iterations : 1,
     },
   });
 }

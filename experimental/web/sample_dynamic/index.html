@@ -72,8 +72,8 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
     <form>
       <p>
         <label for="function-name-input" class="form-label">Function name:</label>
-        <input type="text" id="function-name-input"
-              class="form-control" style="width:400px; font-family: monospace;" value="main"></input>
+        <input type="text" id="function-name-input" class="form-control"
+               style="width:400px; font-family: monospace;" value="main"></input>
       </p>
 
       <p>
@@ -81,6 +81,12 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
         <br><span class="form-text">In the form <code>dim1xdim2xtype=val1,val2,...</code>, one per line</span>
         <textarea type="text" id="function-arguments-input" spellcheck="false" class="form-control"
                   style="min-width:400px; width:initial; min-height:100px; resize:both; font-family: monospace;"></textarea>
+      </p>
+
+      <p>
+        <label for="benchmark-iterations-input" class="form-label">Benchmark iterations:</label>
+        <input type="number" id="benchmark-iterations-input" class="form-control"
+               style="width:400px; font-family: monospace;" value="1" min="1"></input>
       </p>
 
       <button id="call-function" class="btn btn-primary" type="button"
@@ -162,6 +168,7 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
     const callFunctionButton = document.getElementById("call-function");
     const functionNameInput = document.getElementById("function-name-input");
     const functionArgumentsInput = document.getElementById("function-arguments-input");
+    const benchmarkIterationsInput = document.getElementById("benchmark-iterations-input");
     const functionOutputsElement = document.getElementById("function-outputs");
 
     async function finishLoadingProgram(newProgram, newProgramName) {
@@ -188,6 +195,10 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
         functionArgumentsInput.value = searchParams.get("arguments");
       }
 
+      if (searchParams.has("iterations")) {
+        benchmarkIterationsInput.value = searchParams.get("iterations");
+      }
+
       if (searchParams.has("program")) {
         const programPath = searchParams.get("program");
 
@@ -200,6 +211,11 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
     }
 
     async function tryLoadFromBuffer(programDataBuffer, programName) {
+      // Clear 'program' from the URL.
+      const searchParams = new URLSearchParams(window.location.search);
+      searchParams.delete("program");
+      replaceUrlWithSearchParams(searchParams);
+
       await initializePromise;
       const program = await ireeLoadProgram(programDataBuffer);
 
@@ -246,9 +262,10 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
       }
 
       const functionName = functionNameInput.value;
-      const functionArguments = functionArgumentsInput.value.split("\n");
+      const inputs = functionArgumentsInput.value.split("\n");
+      const iterations = benchmarkIterationsInput.value;
 
-      ireeCallFunction(loadedProgram, functionName, functionArguments)
+      ireeCallFunction(loadedProgram, functionName, inputs, iterations)
           .then((result) => {
             functionOutputsElement.value = result.replace(";", "\n");
           })
@@ -269,6 +286,7 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
       const searchParams = new URLSearchParams(window.location.search);
       searchParams.set("function", functionNameInput.value);
       searchParams.set("arguments", functionArgumentsInput.value);
+      searchParams.set("iterations", benchmarkIterationsInput.value);
       replaceUrlWithSearchParams(searchParams);
     }
 
@@ -277,6 +295,7 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
       searchParams.delete("program");
       searchParams.delete("function");
       searchParams.delete("arguments");
+      searchParams.delete("iterations");
       replaceUrlWithSearchParams(searchParams);
     }
     // ------------------------------------------------------------------------
