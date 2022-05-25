@@ -111,8 +111,8 @@ class WasmLinkerTool : public LinkerTool {
         // TODO(scotttodd): Add a flag controlling these - some combination is
         //   required when using multithreading + SharedArrayBuffer, but they
         //   must be left off when running single threaded.
-        // "--import-memory",
-        // "--shared-memory",
+        "--import-memory",
+        "--shared-memory",
 
         "-o " + artifacts.libraryFile.path,
     };

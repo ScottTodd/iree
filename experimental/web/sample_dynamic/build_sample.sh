@@ -80,7 +80,8 @@ emcmake "${CMAKE_BIN?}" -G Ninja .. \
   -DIREE_BUILD_TESTS=OFF
 
 "${CMAKE_BIN?}" --build . --target \
-  iree_experimental_web_sample_dynamic_sync
+  iree_experimental_web_sample_dynamic_sync \
+  iree_experimental_web_sample_dynamic_multithreaded
 
 popd
 
