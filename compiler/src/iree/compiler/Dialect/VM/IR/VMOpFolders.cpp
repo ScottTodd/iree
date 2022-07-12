@@ -1625,7 +1625,12 @@ static OpFoldResult foldCmpEQOp(T op, ArrayRef<Attribute> operands) {
 }
 
 OpFoldResult CmpEQI32Op::fold(ArrayRef<Attribute> operands) {
-  return foldCmpEQOp(*this, operands);
+  // return foldCmpEQOp(*this, operands);
+
+  OpFoldResult result = foldCmpEQOp(*this, operands);
+  llvm::errs() << "CmpEQI32Op OpFoldResult:\n";
+  result.dump();
+  return result;
 }
 
 void CmpEQI32Op::getCanonicalizationPatterns(RewritePatternSet &results,
@@ -2011,7 +2016,12 @@ static OpFoldResult foldCmpEQFOp(T op, ArrayRef<Attribute> operands) {
 }
 
 OpFoldResult CmpEQF32OOp::fold(ArrayRef<Attribute> operands) {
-  return foldCmpEQFOp<ORDERED>(*this, operands);
+  // return foldCmpEQFOp<ORDERED>(*this, operands);
+
+  OpFoldResult result = foldCmpEQFOp<ORDERED>(*this, operands);
+  llvm::errs() << "CmpEQF32OOp OpFoldResult:\n";
+  result.dump();
+  return result;
 }
 
 OpFoldResult CmpEQF64OOp::fold(ArrayRef<Attribute> operands) {
@@ -2056,6 +2066,10 @@ struct RewritePseudoCmpNear : public OpRewritePattern<T> {
   using OpRewritePattern<T>::OpRewritePattern;
   LogicalResult matchAndRewrite(T op,
                                 PatternRewriter &rewriter) const override {
+    // if (op.lhs().)
+    // if lhs and rhs are both constant, fail
+    return failure();
+
     // Units in the Last Place (ULP) comparison algorithm from this reference:
     // https://www.gamedeveloper.com/programming/in-depth-comparing-floating-point-numbers-2012-edition
     // See also the C++ implementation in the constant folder below.
@@ -2127,8 +2141,14 @@ static OpFoldResult foldCmpEQNearOp(T op, ArrayRef<Attribute> operands) {
       operands, [&](const APFloat &a, const APFloat &b) {
         // See the corresponding rewrite pattern above for references used here.
         if (a.isNegative() != b.isNegative()) {
-          return a.compare(b) == APFloat::cmpEqual;
+          llvm::errs() << "signs mismatch, returning comparison check\n";
+          // return a.compare(b) == APFloat::cmpEqual;
+
+          // return result == APFloat::cmpLessThan || result ==
+          // APFloat::cmpEqual;
+          return true;
         } else {
+          llvm::errs() << "signs match, returning ULP diff check\n";
           auto lhsInt = a.bitcastToAPInt();
           auto rhsInt = b.bitcastToAPInt();
           auto signedUlpsDiff = lhsInt - rhsInt;
@@ -2139,7 +2159,11 @@ static OpFoldResult foldCmpEQNearOp(T op, ArrayRef<Attribute> operands) {
 }
 
 OpFoldResult CmpEQF32NearOp::fold(ArrayRef<Attribute> operands) {
-  return foldCmpEQNearOp(*this, operands);
+  // return foldCmpEQNearOp(*this, operands);
+  OpFoldResult result = foldCmpEQNearOp(*this, operands);
+  llvm::errs() << "CmpEQF32NearOp OpFoldResult:\n";
+  result.dump();
+  return result;
 }
 
 OpFoldResult CmpEQF64NearOp::fold(ArrayRef<Attribute> operands) {
@@ -2148,10 +2172,10 @@ OpFoldResult CmpEQF64NearOp::fold(ArrayRef<Attribute> operands) {
 
 void CmpEQF32NearOp::getCanonicalizationPatterns(RewritePatternSet &results,
                                                  MLIRContext *context) {
-  results.insert<RewritePseudoCmpNear<CmpEQF32NearOp, ConstF32Op, ConstI32Op,
-                                      CmpGTEF32OOp, CmpEQF32OOp, CmpLTI32SOp,
-                                      BitcastF32I32Op, SubI32Op, AbsI32Op>>(
-      context);
+  // results.insert<RewritePseudoCmpNear<CmpEQF32NearOp, ConstF32Op, ConstI32Op,
+  //                                     CmpGTEF32OOp, CmpEQF32OOp, CmpLTI32SOp,
+  //                                     BitcastF32I32Op, SubI32Op, AbsI32Op>>(
+  //     context);
 }
 
 void CmpEQF64NearOp::getCanonicalizationPatterns(RewritePatternSet &results,
@@ -2313,7 +2337,12 @@ static OpFoldResult foldCmpGTFOp(T op, ArrayRef<Attribute> operands) {
 }
 
 OpFoldResult CmpGTF32OOp::fold(ArrayRef<Attribute> operands) {
-  return foldCmpGTFOp<ORDERED>(*this, operands);
+  // return foldCmpGTFOp<ORDERED>(*this, operands);
+
+  OpFoldResult result = foldCmpGTFOp<ORDERED>(*this, operands);
+  llvm::errs() << "CmpGTF32OOp OpFoldResult:\n";
+  result.dump();
+  return result;
 }
 
 OpFoldResult CmpGTF64OOp::fold(ArrayRef<Attribute> operands) {
