@@ -12,10 +12,6 @@ FROM ubuntu@sha256:fd25e706f3dea2a5ff705dbc3353cf37f08307798f3e360a13e9385840f73
 ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 
 ######## Basic stuff ########
-# Default compiler environment variables for IREE.
-# Matches the version of clang installed below.
-ENV CC /usr/bin/clang-9
-ENV CXX /usr/bin/clang++-9
 
 RUN apt-get update \
   && apt-get install -y \
@@ -27,6 +23,14 @@ RUN apt-get update \
     # IREE transitive dependencies
     libsdl2-dev \
     libssl-dev \
+    # Dependencies for the Tracy profiler tools
+    libcapstone-dev \
+    libtbb-dev \
+    libzstd-dev \
+    # libglfw3-dev \
+    # libfreetype6-dev \
+    # libgtk-3-dev \
+    # libdbus-1-dev \
     # A much better CMake builder
     ninja-build \
     # For building child images. Best practices would tell us to use multi-stage
@@ -172,14 +176,10 @@ ENV VULKAN_SDK="/opt/vulkan-sdk/${VULKAN_SDK_VERSION}/x86_64"
 
 ENV PATH="${VULKAN_SDK}/bin:$PATH"
 
-# Symlink the Vulkan loader to a system library directory. This is needed to
-# allow Vulkan applications to find the Vulkan loader. It also avoids using
-# LD_LIBRARY_PATH, which is not supported well by Docker.
-RUN ln -s "${VULKAN_SDK}/lib/libvulkan.so" /usr/lib/x86_64-linux-gnu/ \
-  && ln -s "${VULKAN_SDK}/lib/libvulkan.so.1" /usr/lib/x86_64-linux-gnu/
+# Note: the Vulkan loader (libvulkan.so) was already installed to /usr/lib/ by
+# one of the system deps installed via apt above.
 
 ##############
-
 
 ######## GCC ########
 WORKDIR /
@@ -196,6 +196,21 @@ RUN echo "deb http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu bionic mai
   && apt-get install -y gcc-9 g++-9
 
 ##############
+
+######## TBB ########
+# TBB is a dependency of Tracy and there is not a packaged source for a version
+# that is compatible with the STL shipped on this OS. So we use a script to
+# fetch/build/install exactly what is needed.
+COPY install_tbb.sh /usr/local/bin
+RUN bash /usr/local/bin/install_tbb.sh
+
+##############
+
+# Default compiler environment variables for IREE.
+# Note: we set this _after_ installing TBB, since that install script uses gcc.
+# Matches the version of clang installed above.
+ENV CC /usr/bin/clang-9
+ENV CXX /usr/bin/clang++-9
 
 ### Clean up
 RUN apt-get clean \

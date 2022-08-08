@@ -45,7 +45,7 @@ ENV BAZEL_LINKOPTS ""
 ENV BAZEL_LINKLIBS "-lstdc++ -lm"
 
 ######## TBB ########
-# TBB is a dependency of Tracy and there is not a packaged source for a versoin
+# TBB is a dependency of Tracy and there is not a packaged source for a version
 # that is compatible with the STL shipped on this OS. So we use a script to
 # fetch/build/install exactly what is needed.
 COPY install_tbb_manylinux2014.sh /usr/local/bin
