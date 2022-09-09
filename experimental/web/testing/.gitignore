@@ -1,0 +1,4 @@
+node_modules/
+
+# Not sure if this is worth sharing, see https://stackoverflow.com/q/44206782
+package-lock.json
