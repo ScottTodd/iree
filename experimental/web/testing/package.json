@@ -1,0 +1,11 @@
+{
+  "name": "iree-web-tests",
+  "version": "0.0.1",
+  "description": "Tests for IREE's integration with the web platform",
+  "main": "test_worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "The IREE Authors",
+  "license": "Apache-2.0"
+}
