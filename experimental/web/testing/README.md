@@ -7,7 +7,9 @@ Testing support for IREE's web platform port:
 * Scripting to parse the list of tests provided by `ctest` into the format
   expected by the HTML/JS test suite runner
 
-## Quickstart
+## Manual testing/debugging with `build_test.sh` and `serve_tests.sh`
+
+### Quickstart
 
 1. Install IREE's host tools (e.g. by building the `install` target with CMake)
 2. Install the Emscripten SDK by
@@ -16,7 +18,7 @@ Testing support for IREE's web platform port:
 4. From this directory, run `bash ./build_sample.sh [path to install] && bash ./serve_sample.sh`
 5. Open the localhost address linked in the script output
 
-## Implementation Details
+### Implementation Details
 
 * Our tests (and benchmarks) generate binary files that when executed run tests
   then return an exit code
@@ -32,3 +34,35 @@ Testing support for IREE's web platform port:
   list of HTML elements linking to the test runner webpage with properties set
 * The [`index_template.html`](index_template.html) webpage absorbs that list
   of hyperlinks and runs them in an `<iframe>`
+
+## Automated testing with npm, Karma, etc.
+
+TODO(scotttodd): elaborate on docs
+
+run tests in browsers
+
+this may replace `build_tests.sh` / `serve_tests.sh`
+
+### Setup
+
+1. Install IREE's host tools (e.g. by building the `install` target with CMake)
+2. Install the Emscripten SDK by
+   [following these directions](https://emscripten.org/docs/getting_started/downloads.html)
+3. Initialize your Emscripten environment (e.g. run `emsdk_env.bat`)
+4. Install the development dependencies using npm (the Emscripten SDK includes
+   npm):
+
+   ```
+   npm install
+
+   # On Windows (http://karma-runner.github.io/6.4/intro/installation.html)
+   npm install -g karma-cli
+   ```
+
+TODO(scotttodd): package.json 'scripts' for running `build.sh`?
+
+### Running tests
+
+```
+karma start --browsers ChromeCanary_with_WebGPU
+```
