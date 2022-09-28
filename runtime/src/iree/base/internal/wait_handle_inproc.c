@@ -307,6 +307,7 @@ iree_status_t iree_wait_one(iree_wait_handle_t* handle,
   if (handle->type == IREE_WAIT_PRIMITIVE_TYPE_LOCAL_FUTEX) {
     iree_futex_handle_t* futex =
         (iree_futex_handle_t*)handle->value.local_futex;
+    fprintf(stdout, "iree_wait_one -> iree_notification_await start\n");
     if (!iree_notification_await(&futex->notification,
                                  (iree_condition_fn_t)iree_futex_handle_check,
                                  futex, iree_make_deadline(deadline_ns))) {
@@ -316,6 +317,7 @@ iree_status_t iree_wait_one(iree_wait_handle_t* handle,
     return iree_make_status(IREE_STATUS_UNIMPLEMENTED,
                             "unhandled primitive type");
   }
+  fprintf(stdout, "iree_wait_one end\n");
 
   IREE_TRACE_ZONE_END(z0);
   return status;

@@ -92,6 +92,7 @@ iree_hal_module_alloc_state(void* self, iree_allocator_t host_allocator,
   state->shared_device = module->shared_device;
   iree_hal_device_retain(state->shared_device);
 
+  // TODO(scotttodd): add iree_loop_t to module constructor
   state->loop_status = iree_ok_status();
   IREE_RETURN_AND_END_ZONE_IF_ERROR(
       z0, iree_hal_executable_cache_create(
