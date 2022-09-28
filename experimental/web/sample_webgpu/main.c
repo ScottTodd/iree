@@ -121,6 +121,7 @@ iree_program_state_t* load_program(iree_sample_state_t* sample_state,
 
   iree_runtime_session_options_t session_options;
   iree_runtime_session_options_initialize(&session_options);
+  session_options.context_flags = IREE_VM_CONTEXT_FLAG_TRACE_EXECUTION;
   if (iree_status_is_ok(status)) {
     status = iree_runtime_session_create_with_device(
         sample_state->instance, &session_options, sample_state->device,
@@ -263,6 +264,7 @@ static iree_status_t parse_input_into_call(
 static iree_status_t parse_inputs_into_call(
     iree_runtime_call_t* call, iree_hal_allocator_t* device_allocator,
     iree_string_view_t inputs) {
+  fprintf(stdout, "parse_inputs_into_call\n");
   if (inputs.size == 0) return iree_ok_status();
 
   // Inputs are provided in a semicolon-delimited list.
@@ -282,6 +284,7 @@ static iree_status_t parse_inputs_into_call(
 
 static iree_status_t print_outputs_from_call(
     iree_runtime_call_t* call, iree_string_builder_t* outputs_builder) {
+  fprintf(stdout, "print_outputs_from_call\n");
   iree_vm_list_t* variants_list = iree_runtime_call_outputs(call);
   for (iree_host_size_t i = 0; i < iree_vm_list_size(variants_list); ++i) {
     iree_vm_variant_t variant = iree_vm_variant_empty();
@@ -402,6 +405,7 @@ const char* call_function(iree_program_state_t* program_state,
   iree_time_t start_time = iree_time_now();
   for (int i = 0; i < iterations; ++i) {
     if (iree_status_is_ok(status)) {
+      fprintf(stdout, "iree_runtime_call_invoke\n");
       status = iree_runtime_call_invoke(&call, /*flags=*/0);
     }
   }
