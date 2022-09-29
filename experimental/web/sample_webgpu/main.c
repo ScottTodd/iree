@@ -13,6 +13,7 @@
 #include "iree/hal/drivers/webgpu/platform/webgpu.h"
 #include "iree/modules/hal/module.h"
 #include "iree/runtime/api.h"
+#include "iree/vm/api.h"
 #include "iree/vm/bytecode_module.h"
 
 //===----------------------------------------------------------------------===//
@@ -370,6 +371,25 @@ static iree_status_t print_outputs_from_call(
   return iree_ok_status();
 }
 
+iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
+                              iree_status_t status, iree_vm_list_t* outputs) {
+  iree_vm_async_invoke_state_t* invoke_state =
+      (iree_vm_async_invoke_state_t*)user_data;
+
+  if (iree_status_is_ok(status)) {
+    fprintf(stdout, "iree_vm_async_invoke_callback_fn_t success\n");
+  } else {
+    fprintf(stderr, "iree_vm_async_invoke_callback_fn_t error:\n");
+    iree_status_fprint(stderr, status);
+    iree_status_free(status);
+  }
+
+  iree_vm_list_release(outputs);
+
+  iree_allocator_free(iree_allocator_system(), (void*)invoke_state);
+  return iree_ok_status();
+}
+
 const char* call_function(iree_program_state_t* program_state,
                           const char* function_name, const char* inputs,
                           int iterations) {
@@ -403,12 +423,37 @@ const char* call_function(iree_program_state_t* program_state,
   // side-channel security threats.
   // https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#reduced_time_precision
   iree_time_t start_time = iree_time_now();
-  for (int i = 0; i < iterations; ++i) {
-    if (iree_status_is_ok(status)) {
-      fprintf(stdout, "iree_runtime_call_invoke\n");
-      status = iree_runtime_call_invoke(&call, /*flags=*/0);
-    }
+  // for (int i = 0; i < iterations; ++i) {
+  //   if (iree_status_is_ok(status)) {
+  //     fprintf(stdout, "iree_runtime_call_invoke\n");
+  //     status = iree_runtime_call_invoke(&call, /*flags=*/0);
+  //   }
+  // }
+
+  iree_vm_async_invoke_state_t* invoke_state = NULL;
+  if (iree_status_is_ok(status)) {
+    status = iree_allocator_malloc(iree_allocator_system(),
+                                   sizeof(iree_vm_async_invoke_state_t),
+                                   (void**)&invoke_state);
   }
+  // TODO(scotttodd): emscripten / browser loop here
+  iree_status_t loop_status = iree_ok_status();
+  iree_loop_t loop = iree_loop_inline(&loop_status);
+  if (iree_status_is_ok(status)) {
+    iree_vm_context_t* vm_context = iree_runtime_session_context(call.session);
+    iree_vm_function_t vm_function = call.function;
+    iree_vm_list_t* inputs = call.inputs;
+    iree_vm_list_t* outputs = call.outputs;
+
+    fprintf(stdout, "iree_vm_async_invoke start\n");
+    status = iree_vm_async_invoke(loop, invoke_state, vm_context, vm_function,
+                                  IREE_VM_INVOCATION_FLAG_NONE, /*policy=*/NULL,
+                                  inputs, outputs, iree_allocator_system(),
+                                  invoke_callback,
+                                  /*user_data=*/invoke_state);
+    fprintf(stdout, "iree_vm_async_invoke return\n");
+  }
+
   iree_time_t end_time = iree_time_now();
   iree_time_t time_elapsed = end_time - start_time;
 
