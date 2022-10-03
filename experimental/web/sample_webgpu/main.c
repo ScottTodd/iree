@@ -335,6 +335,10 @@ static iree_status_t print_outputs_from_call(
         iree_hal_buffer_view_t* buffer_view =
             iree_hal_buffer_view_deref(variant.ref);
 
+        // TODO(scotttodd): buffer_view_format using
+        // iree_hal_create_transfer_command_buffer
+
+        fprintf(stdout, "iree_hal_buffer_view_format (query)\n");
         // Query total length (excluding NUL terminator).
         iree_host_size_t result_length = 0;
         iree_status_t status = iree_hal_buffer_view_format(
@@ -342,6 +346,7 @@ static iree_status_t print_outputs_from_call(
         if (!iree_status_is_out_of_range(status)) return status;
         ++result_length;  // include NUL
 
+        fprintf(stdout, "iree_hal_buffer_view_format (format into)\n");
         // Allocate scratch heap memory for the result and format into it.
         char* result_str = NULL;
         IREE_RETURN_IF_ERROR(iree_allocator_malloc(
