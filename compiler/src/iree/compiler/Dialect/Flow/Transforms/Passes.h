@@ -127,6 +127,9 @@ std::unique_ptr<Pass> createConvertToFlowPass();
 // iree-flow-infer-numeric-narrowing.
 std::unique_ptr<Pass> createOptimizeNumericsPass();
 
+// Sets encoding for tensors to allow tiled execution of operations.
+std::unique_ptr<Pass> createSetEncodingPass();
+
 // Strips the signed/unsigned portion off of tensors.
 std::unique_ptr<InterfacePass<mlir::FunctionOpInterface>>
 createStripSignednessPass();
@@ -195,6 +198,9 @@ createDeduplicateExecutablesPass();
 
 // Create a pass to split reduction dimension.
 std::unique_ptr<Pass> createSplitReductionPass();
+
+// Create a pass to collapse reduction dimensions
+std::unique_ptr<Pass> createCollapseDimsPass();
 
 //===----------------------------------------------------------------------===//
 // Module Analysis and Finalization

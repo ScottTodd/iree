@@ -152,6 +152,9 @@ std::unique_ptr<Pass> createTransformDialectInterpreterPass(
 std::unique_ptr<OperationPass<func::FuncOp>> createGPUVectorizationPass(
     bool generateContract = true);
 
+/// Tile reductions and generate serial loops around reductions.
+std::unique_ptr<OperationPass<func::FuncOp>> createGPUTileReductionPass();
+
 // Distributes vector ops to all threads/warps in a GPU workgroup.
 // `getWarpSize` is for deciding the warp size to use; it takes the
 // current function containing those vector ops as the argument.
@@ -211,7 +214,8 @@ std::unique_ptr<OperationPass<ModuleOp>>
 createVerifyLinalgTransformLegalityPass();
 
 /// Performs the final conversion to LLVM dialect.
-std::unique_ptr<OperationPass<ModuleOp>> createConvertToLLVMPass();
+std::unique_ptr<OperationPass<ModuleOp>> createConvertToLLVMPass(
+    bool reassociateFpReordering = false);
 
 std::unique_ptr<OperationPass<func::FuncOp>>
 createLLVMCPUEmitVectorizationRemarksPass();
@@ -260,6 +264,9 @@ void populateUnfusedFMAOpsPassPatterns(MLIRContext *context,
 /// code-generation. This pipeline does not vectorize, but instead just converts
 /// to memrefs
 void addCPUDefaultPassPipeline(OpPassManager &passManager);
+
+/// Populates the passes to lower ops through data tiling transformations.
+void addCPUDataTilingPipeline(OpPassManager &passManager);
 
 /// Populates the passes to lower to tiled/distributed/bufferized ops, suitable
 /// for library call dispatch and lowering to loops.
@@ -327,6 +334,10 @@ createLLVMCPULinkExecutablesPass();
 /// Assigns executable constant ordinals across all LLVMCPU variants.
 std::unique_ptr<OperationPass<IREE::HAL::ExecutableVariantOp>>
 createLLVMCPUAssignConstantOrdinalsPass();
+
+/// Assigns executable import ordinals across all LLVMCPU variants.
+std::unique_ptr<OperationPass<IREE::HAL::ExecutableVariantOp>>
+createLLVMCPUAssignImportOrdinalsPass();
 
 /// Populates passes needed to link HAL executables across LLVMCPU targets.
 void buildLLVMCPULinkingPassPipeline(OpPassManager &passManager);
@@ -420,29 +431,32 @@ createLLVMGPUReduceSharedMemoryBankConflicts(int64_t paddingSizeBits = 128);
 /// Converts vector ops to gpu dialect.
 std::unique_ptr<OperationPass<func::FuncOp>> createLLVMGPUVectorToGPU();
 
+//. Pass to pad out tensors up to static dimensions.
+std::unique_ptr<OperationPass<func::FuncOp>> createLLVMGPUTensorPadPass();
+
 //------------------------------------------------------------------------------
 // SPIR-V Passes
 //------------------------------------------------------------------------------
 
 /// Pass pipeline to lower IREE HAL executables by tiling and distributing to
 /// workgroups and invocations. Each invocation handles a scalar.
-void addSPIRVTileAndDistributePassPipeline(OpPassManager &pm);
+void addSPIRVBaseDistributePassPipeline(OpPassManager &pm);
 
 /// Pass pipeline to lower IREE HAL executables by tiling and distributing to
 /// workgroups and invocations and vectorizing. Each invocation handles a
 /// vector.
-void addSPIRVTileAndVectorizePassPipeline(OpPassManager &pm);
+void addSPIRVBaseVectorizePassPipeline(OpPassManager &pm);
 
 /// Pass pipeline to lower IREE HAL executables by tiling and distributing
 /// to workgroups and subgroups and then vectorizing to SPIR-V cooperative
 /// matrix code.
-void addSPIRVTileAndVectorizeToCooperativeOpsPassPipeline(OpPassManager &pm);
+void addSPIRVCooperativeMatrixVectorizePassPipeline(OpPassManager &pm);
 
 /// Pass pipeline to lower IREE HAL executables by tiling and distributing to
 /// workgroups, promoting to use workgroup memory, and then tiling and
 /// distributing to invocations and vectorizing. Each invocation handles a
 /// vector.
-void addSPIRVTileAndVectorizeWithWorkgroupMemoryPassPipeline(OpPassManager &pm);
+void addSPIRVMatmulPromoteVectorizePassPipeline(OpPassManager &pm);
 
 /// Pass pipeline to lower IREE HAL executables by tiling and distributing
 /// reduction to workgroups and then subgroups.
@@ -502,6 +516,9 @@ std::unique_ptr<OperationPass<ModuleOp>> createSPIRVVectorizeLoadStore();
 // padding, while the slow path is for boundary tiles where we do need padding.
 std::unique_ptr<OperationPass<func::FuncOp>>
 createSPIRVCreateFastSlowPathPass();
+
+/// Emulates 64-bit integer ops with 32-bit integer ops.
+std::unique_ptr<OperationPass<ModuleOp>> createSPIRVEmulateI64Pass();
 
 //----------------------------------------------------------------------------//
 // SPIRV Codegen Pass Pipelines.

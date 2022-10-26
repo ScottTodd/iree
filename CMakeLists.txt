@@ -47,6 +47,7 @@ include(CMakeDependentOption)
 
 option(IREE_ENABLE_RUNTIME_TRACING "Enables instrumented runtime tracing." OFF)
 option(IREE_ENABLE_COMPILER_TRACING "Enables instrumented compiler tracing." OFF)
+option(IREE_ENABLE_RENDERDOC_PROFILING "Enables profiling HAL devices with the RenderDoc tool." OFF)
 option(IREE_ENABLE_THREADING "Builds IREE in with thread library support." ON)
 option(IREE_ENABLE_CLANG_TIDY "Builds IREE in with clang tidy enabled on IREE's libraries." OFF)
 
@@ -386,6 +387,7 @@ include(iree_microbenchmark_suite)
 include(iree_hal_cts_test_suite)
 include(iree_static_linker_test)
 include(iree_fetch_artifact)
+include(iree_run_module_test)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
@@ -470,8 +472,11 @@ if(IREE_ERROR_ON_MISSING_SUBMODULES AND Python3_FOUND AND Git_FOUND)
     OUTPUT_VARIABLE SHORT_HASH)
   string(REGEX REPLACE "\n$" "" SHORT_HASH "${SHORT_HASH}")
   if(SHORT_HASH_RESULT EQUAL "0" AND NOT "${IREE_GIT_SHORT_HASH}" STREQUAL "${SHORT_HASH}")
+    if(NOT IREE_BUILD_COMPILER)
+      set(CHECK_SUBMODULE_ARGS "--runtime_only")
+    endif()
     execute_process(
-      COMMAND ${Python3_EXECUTABLE} build_tools/scripts/git/check_submodule_init.py
+      COMMAND ${Python3_EXECUTABLE} build_tools/scripts/git/check_submodule_init.py ${CHECK_SUBMODULE_ARGS}
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
       RESULT_VARIABLE SUBMODULE_INIT_RESULT
     )
@@ -717,7 +722,7 @@ if(IREE_TARGET_BACKEND_WEBGPU)
   #   * https://dawn.googlesource.com/tint/
   #   * https://chromium.googlesource.com/vulkan-deps/+/refs/heads/main/DEPS
   # or they can be updated independently
-  set(IREE_TINT_TAG         "200492e32b94f042d9942154fb4fa7f93bb8289a")  # 2022-08-17
+  set(IREE_TINT_TAG         "874d1b66186ff8d0cb249bc73ccaea08144c36b0")  # 2022-10-21
   set(IREE_SPIRV_TOOLS_TAG  "ff07cfd86fa229525659f6b81058b3171a67bef1")  # 2021-12-10
 
   iree_set_spirv_headers_cmake_options()
@@ -759,6 +764,13 @@ endif()
 # Testing rules that require generation will add dependencies to this target.
 # This allows them to be EXCLUDE_FROM_ALL but still invokable.
 add_custom_target(iree-test-deps COMMENT "Building IREE test deps")
+
+# Testing rules that generate test scripts for iree-run-module-test will add
+# dependencies to this target. It is a subset of `iree-test-deps`.
+add_custom_target(iree-run-module-test-deps
+  COMMENT
+    "Building IREE run module test targets"
+)
 
 #-------------------------------------------------------------------------------
 # IREE top-level libraries

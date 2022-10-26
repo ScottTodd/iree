@@ -35,8 +35,11 @@ iree_lit_test_suite(
     data = [
         "reduction_codegen_spec.mlir",
         "softmax_codegen_spec.mlir",
-        # FIXME: This cannot be retired yet as there is some writeonly vs readwrite
-        # issue and we even end up emitting out of bounds accesses.
+        #
+        # FIXME: Fused codegen must be used with the custom dispatch region formation
+        # because IREE's pulls in tensor.empty by default.
+        # This results in threadprivate allocations and prevents vector distribution.
+        #
         "softmax_dispatch_spec.mlir",
         "softmax_fused_codegen_spec.mlir",
     ],
