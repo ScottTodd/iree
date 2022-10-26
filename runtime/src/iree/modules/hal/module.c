@@ -1113,6 +1113,8 @@ static iree_status_t iree_hal_module_fence_await_begin(
     iree_vm_stack_t* stack, iree_host_size_t fence_count,
     iree_hal_fence_t** fences, iree_timeout_t timeout, iree_zone_id_t zone_id,
     iree_status_t* out_wait_status) {
+  fprintf(stdout, "iree_hal_module_fence_await_begin()\n");
+
   // To avoid additional allocations when waiting on multiple fences we enter
   // the wait frame with the maximum required wait source capacity and perform
   // a simple deduplication when building the list. Ideally this helps get us on

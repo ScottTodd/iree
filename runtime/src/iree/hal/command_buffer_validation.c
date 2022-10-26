@@ -55,33 +55,34 @@ static iree_status_t iree_hal_command_buffer_validate_buffer_compatibility(
     iree_hal_buffer_t* buffer,
     iree_hal_buffer_compatibility_t required_compatibility,
     iree_hal_buffer_usage_t intended_usage) {
-  iree_hal_buffer_compatibility_t allowed_compatibility =
-      iree_hal_allocator_query_compatibility(
-          iree_hal_device_allocator(validation_state->device),
-          (iree_hal_buffer_params_t){
-              .type = iree_hal_buffer_memory_type(buffer),
-              .usage = iree_hal_buffer_allowed_usage(buffer) & intended_usage,
-          },
-          iree_hal_buffer_allocation_size(buffer));
-  if (!iree_all_bits_set(allowed_compatibility, required_compatibility)) {
-#if IREE_STATUS_MODE
-    // Buffer cannot be used on the queue for the given usage.
-    iree_bitfield_string_temp_t temp0, temp1;
-    iree_string_view_t allowed_usage_str = iree_hal_buffer_usage_format(
-        iree_hal_buffer_allowed_usage(buffer), &temp0);
-    iree_string_view_t intended_usage_str =
-        iree_hal_buffer_usage_format(intended_usage, &temp1);
-    return iree_make_status(
-        IREE_STATUS_PERMISSION_DENIED,
-        "requested buffer usage is not supported for the buffer on this queue; "
-        "buffer allows %.*s, operation requires %.*s (allocator compatibility "
-        "mismatch)",
-        (int)allowed_usage_str.size, allowed_usage_str.data,
-        (int)intended_usage_str.size, intended_usage_str.data);
-#else
-    return iree_status_from_code(IREE_STATUS_PERMISSION_DENIED);
-#endif  // IREE_STATUS_MODE
-  }
+  //   iree_hal_buffer_compatibility_t allowed_compatibility =
+  //       iree_hal_allocator_query_compatibility(
+  //           iree_hal_device_allocator(validation_state->device),
+  //           (iree_hal_buffer_params_t){
+  //               .type = iree_hal_buffer_memory_type(buffer),
+  //               .usage = iree_hal_buffer_allowed_usage(buffer) &
+  //               intended_usage,
+  //           },
+  //           iree_hal_buffer_allocation_size(buffer));
+  //   if (!iree_all_bits_set(required_compatibility, allowed_compatibility)) {
+  // #if IREE_STATUS_MODE
+  //     // Buffer cannot be used on the queue for the given usage.
+  //     iree_bitfield_string_temp_t temp0, temp1;
+  //     iree_string_view_t allowed_usage_str = iree_hal_buffer_usage_format(
+  //         iree_hal_buffer_allowed_usage(buffer), &temp0);
+  //     iree_string_view_t intended_usage_str =
+  //         iree_hal_buffer_usage_format(intended_usage, &temp1);
+  //     return iree_make_status(
+  //         IREE_STATUS_PERMISSION_DENIED,
+  //         "requested buffer usage is not supported for the buffer on this
+  //         queue; " "buffer allows %.*s, operation requires %.*s (allocator
+  //         compatibility " "mismatch)", (int)allowed_usage_str.size,
+  //         allowed_usage_str.data, (int)intended_usage_str.size,
+  //         intended_usage_str.data);
+  // #else
+  //     return iree_status_from_code(IREE_STATUS_PERMISSION_DENIED);
+  // #endif  // IREE_STATUS_MODE
+  //   }
   return iree_ok_status();
 }
 

@@ -11,6 +11,8 @@
 
 #include "iree/base/loop.h"
 
+// #if defined(IREE_PLATFORM_EMSCRIPTEN)
+
 #ifdef __cplusplus
 extern "C" {
 #endif  // __cplusplus
@@ -91,5 +93,7 @@ static void iree_loop_emscripten_deinitialize(
 #ifdef __cplusplus
 }  // extern "C"
 #endif  // __cplusplus
+
+// #endif  // IREE_PLATFORM_EMSCRIPTEN
 
 #endif  // IREE_BASE_LOOP_EMSCRIPTEN_H_

@@ -104,9 +104,9 @@ static iree_status_t iree_hal_webgpu_buffer_map_range(
   // if transfer + mapping only (matching webgpu limits) _or_ is_mapped==true
   // -> use webgpu API
   // else: emulated
-  // return iree_hal_buffer_emulated_map_range(
-  //     buffer->device, base_buffer, mapping_mode, memory_access,
-  //     local_byte_offset, local_byte_length, mapping);
+  return iree_hal_buffer_emulated_map_range(
+      buffer->device, base_buffer, mapping_mode, memory_access,
+      local_byte_offset, local_byte_length, mapping);
 
   if (!iree_all_bits_set(buffer->base.memory_type,
                          IREE_HAL_MEMORY_TYPE_HOST_VISIBLE)) {

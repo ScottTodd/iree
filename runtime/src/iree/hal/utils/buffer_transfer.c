@@ -102,6 +102,17 @@ IREE_API_EXPORT iree_status_t iree_hal_device_submit_transfer_range_and_wait(
     iree_device_size_t source_offset, iree_hal_transfer_buffer_t target,
     iree_device_size_t target_offset, iree_device_size_t data_length,
     iree_hal_transfer_buffer_flags_t flags, iree_timeout_t timeout) {
+  fprintf(stdout, "iree_hal_device_submit_transfer_range_and_wait\n");
+
+  iree_bitfield_string_temp_t temp0, temp1;
+  iree_string_view_t source_memory_type_str = iree_hal_memory_type_format(
+      iree_hal_buffer_memory_type(source.device_buffer), &temp0);
+  iree_string_view_t target_memory_type_str = iree_hal_memory_type_format(
+      iree_hal_buffer_memory_type(target.device_buffer), &temp1);
+  fprintf(stdout, "  memory types: source_buffer=%.*s, target_buffer=%.*s\n",
+          (int)source_memory_type_str.size, source_memory_type_str.data,
+          (int)target_memory_type_str.size, target_memory_type_str.data);
+
   // If the source and target are both mappable into host memory (or are host
   // memory) then we can use the fast zero-alloc path. This may actually be
   // slower than doing a device queue transfer depending on the size of the data
@@ -129,6 +140,8 @@ IREE_API_EXPORT iree_status_t iree_hal_device_submit_transfer_range_and_wait(
         device, source, source_offset, target, target_offset, data_length,
         flags, timeout);
   }
+
+  fprintf(stdout, "  one of the buffers is not mappable\n");
 
   // If the source is a host buffer under 64KB then we can do a more efficient
   // (though still relatively costly) update instead of needing a staging
@@ -211,6 +224,7 @@ IREE_API_EXPORT iree_status_t iree_hal_device_submit_transfer_range_and_wait(
 
   // Read back the staging buffer into memory, if needed.
   if (iree_status_is_ok(status) && !target.device_buffer) {
+    fprintf(stdout, "  !target.device_buffer -> iree_hal_buffer_map_read\n");
     status = iree_hal_buffer_map_read(target_buffer, 0, target.host_buffer.data,
                                       data_length);
   }
@@ -311,6 +325,7 @@ IREE_API_EXPORT iree_status_t iree_hal_buffer_emulated_map_range(
     iree_hal_memory_access_t memory_access,
     iree_device_size_t local_byte_offset, iree_device_size_t local_byte_length,
     iree_hal_buffer_mapping_t* mapping) {
+  fprintf(stdout, ">> iree_hal_buffer_emulated_map_range start\n");
   IREE_ASSERT_ARGUMENT(device);
   IREE_ASSERT_ARGUMENT(buffer);
   IREE_ASSERT_ARGUMENT(mapping);
@@ -380,6 +395,7 @@ IREE_API_EXPORT iree_status_t iree_hal_buffer_emulated_map_range(
   }
 
   if (iree_status_is_ok(status)) {
+    fprintf(stdout, ">>> map-ception start\n");
     // Map the scratch buffer: map-ception.
     // Code-wise it looks like this may loop back onto this emulated path
     // but no implementation should be using this emulation if they have host
@@ -388,6 +404,7 @@ IREE_API_EXPORT iree_status_t iree_hal_buffer_emulated_map_range(
                                        IREE_HAL_MAPPING_MODE_SCOPED,
                                        memory_access, 0, local_byte_length,
                                        &emulation_state->host_local_mapping);
+    fprintf(stdout, "<<< map-ception finish\n");
   }
 
   // Retain the scratch buffer for the duration of the mapping.
@@ -404,6 +421,7 @@ IREE_API_EXPORT iree_status_t iree_hal_buffer_emulated_map_range(
     iree_allocator_free(host_allocator, emulation_state);
   }
   IREE_TRACE_ZONE_END(z0);
+  fprintf(stdout, "<< iree_hal_buffer_emulated_map_range finish\n");
   return status;
 }
 
@@ -411,6 +429,7 @@ IREE_API_EXPORT iree_status_t iree_hal_buffer_emulated_unmap_range(
     iree_hal_device_t* device, iree_hal_buffer_t* buffer,
     iree_device_size_t local_byte_offset, iree_device_size_t local_byte_length,
     iree_hal_buffer_mapping_t* mapping) {
+  fprintf(stdout, "iree_hal_buffer_emulated_unmap_range\n");
   IREE_ASSERT_ARGUMENT(device);
   IREE_ASSERT_ARGUMENT(buffer);
   IREE_ASSERT_ARGUMENT(mapping);

@@ -265,7 +265,7 @@ static iree_status_t parse_input_into_call(
 static iree_status_t parse_inputs_into_call(
     iree_runtime_call_t* call, iree_hal_allocator_t* device_allocator,
     iree_string_view_t inputs) {
-  fprintf(stdout, "parse_inputs_into_call\n");
+  fprintf(stdout, "** parse_inputs_into_call **\n");
   if (inputs.size == 0) return iree_ok_status();
 
   // Inputs are provided in a semicolon-delimited list.
@@ -283,9 +283,71 @@ static iree_status_t parse_inputs_into_call(
   return iree_ok_status();
 }
 
+static iree_status_t print_buffer_view(iree_hal_device_t* device,
+                                       iree_hal_buffer_view_t* buffer_view) {
+  fprintf(stdout, "print_buffer_view()\n");
+
+  // iree_hal_device_transfer_d2h?
+  // iree_hal_device_transfer_and_wait?
+  //   iree_hal_create_transfer_command_buffer
+  //   iree_hal_semaphore_create
+  //   iree_hal_device_queue_execute
+  //   iree_hal_semaphore_wait
+
+  // Async:
+  //   iree_hal_create_transfer_command_buffer
+  //   iree_hal_semaphore_create
+  //   iree_hal_device_queue_execute
+  //   iree_loop_call
+  //     iree_hal_semaphore_wait  (blocking? spin until ready?)
+  //
+
+  // allocate device buffer on host
+  //   (iree_hal_heap_buffer_create)
+  // read into device buffer (transfer)
+  //    webgpu map async -> callback
+  // buffer_view_format on that host buffer
+
+  iree_status_t status = iree_ok_status();
+
+  iree_hal_buffer_t* buffer = iree_hal_buffer_view_buffer(buffer_view);
+  iree_device_size_t buffer_view_byte_length =
+      iree_hal_buffer_view_byte_length(buffer_view);
+
+  iree_hal_memory_type_t memory_type = iree_hal_buffer_memory_type(buffer);
+  if (iree_all_bits_set(memory_type, IREE_HAL_MEMORY_TYPE_HOST_LOCAL)) {
+    fprintf(stdout, "** memory type is HOST_LOCAL **\n");
+  }
+
+  void* buffer_data = NULL;
+  IREE_RETURN_IF_ERROR(iree_allocator_malloc(
+      iree_allocator_system(), buffer_view_byte_length, &buffer_data));
+
+  if (iree_status_is_ok(status)) {
+    // HACK HACK HACK
+    // TODO(scotttodd): buffer_view offset?
+    fprintf(stdout, "iree_hal_device_transfer_d2h\n");
+    status = iree_hal_device_transfer_d2h(
+        device, buffer,
+        /*source_offset=*/0, buffer_data,
+        /*data_length=*/buffer_view_byte_length,
+        IREE_HAL_TRANSFER_BUFFER_FLAG_DEFAULT, iree_infinite_timeout());
+  }
+
+  if (iree_status_is_ok(status)) {
+    // HACK HACK HACK
+    float output = ((float*)buffer_data)[0];
+    fprintf(stdout, "output: %f\n", output);
+  }
+
+  iree_allocator_free(iree_allocator_system(), buffer_data);
+
+  return status;
+}
+
 static iree_status_t print_outputs_from_call(
     iree_runtime_call_t* call, iree_string_builder_t* outputs_builder) {
-  fprintf(stdout, "print_outputs_from_call\n");
+  fprintf(stdout, "** print_outputs_from_call **\n");
   iree_vm_list_t* variants_list = iree_runtime_call_outputs(call);
   for (iree_host_size_t i = 0; i < iree_vm_list_size(variants_list); ++i) {
     iree_vm_variant_t variant = iree_vm_variant_empty();
@@ -335,9 +397,10 @@ static iree_status_t print_outputs_from_call(
         iree_hal_buffer_view_t* buffer_view =
             iree_hal_buffer_view_deref(variant.ref);
 
-        // TODO(scotttodd): buffer_view_format using
-        // iree_hal_create_transfer_command_buffer
+        iree_hal_device_t* device = iree_runtime_session_device(call->session);
+        IREE_RETURN_IF_ERROR(print_buffer_view(device, buffer_view));
 
+        /*
         fprintf(stdout, "iree_hal_buffer_view_format (query)\n");
         // Query total length (excluding NUL terminator).
         iree_host_size_t result_length = 0;
@@ -356,6 +419,7 @@ static iree_status_t print_outputs_from_call(
         IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
             outputs_builder, "%.*s", (int)result_length, result_str));
         iree_allocator_free(iree_allocator_system(), result_str);
+        */
       } else {
         IREE_RETURN_IF_ERROR(iree_string_builder_append_cstring(
             outputs_builder, "(no printer)"));
@@ -458,6 +522,8 @@ const char* call_function(iree_program_state_t* program_state,
                                   /*user_data=*/invoke_state);
     fprintf(stdout, "iree_vm_async_invoke return\n");
   }
+
+  // TODO(scotttodd): issue callback, async. Just return early status here?
 
   iree_time_t end_time = iree_time_now();
   iree_time_t time_elapsed = end_time - start_time;
