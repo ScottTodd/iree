@@ -285,9 +285,16 @@ static iree_status_t parse_inputs_into_call(
   return iree_ok_status();
 }
 
+typedef struct iree_buffer_map_userdata_t {
+  iree_hal_buffer_view_t* buffer_view;
+  iree_hal_buffer_t* target_buffer;
+} iree_buffer_map_userdata_t;
+
 // TODO(scotttodd): move async mapping into webgpu/buffer.h/.c
 static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus status,
-                                     void* userdata) {
+                                     void* userdata_ptr) {
+  iree_buffer_map_userdata_t* userdata =
+      (iree_buffer_map_userdata_t*)userdata_ptr;
   fprintf(stdout, "buffer_map_sync_callback\n");
   switch (status) {
     case WGPUBufferMapAsyncStatus_Success:
@@ -304,6 +311,23 @@ static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus status,
       fprintf(stdout, "  status: DeviceLost\n");
       break;
   }
+
+  if (status == WGPUBufferMapAsyncStatus_Success) {
+    // TODO(scotttodd): Use buffer_view_format on a host buffer with this data
+    // TODO(scotttodd): bubble result(s) up to the caller (async + callback API)
+
+    iree_device_size_t data_length =
+        iree_hal_buffer_view_byte_length(userdata->buffer_view);
+    WGPUBuffer buffer_handle =
+        iree_hal_webgpu_buffer_handle(userdata->target_buffer);
+    float* data_ptr = (float*)wgpuBufferGetConstMappedRange(
+        buffer_handle, /*offset=*/0, data_length);
+    // float output = ((float*)data_ptr)[0];
+    float output = data_ptr[0];
+    fprintf(stdout, "output: %f\n", output);
+  }
+
+  iree_allocator_free(iree_allocator_system(), userdata);
 }
 
 static iree_status_t print_buffer_view(iree_hal_device_t* device,
@@ -337,11 +361,6 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
   iree_device_size_t data_length =
       iree_hal_buffer_view_byte_length(buffer_view);
   iree_hal_buffer_t* buffer = iree_hal_buffer_view_buffer(buffer_view);
-
-  // iree_hal_memory_type_t memory_type = iree_hal_buffer_memory_type(buffer);
-  // if (iree_all_bits_set(memory_type, IREE_HAL_MEMORY_TYPE_HOST_LOCAL)) {
-  //   fprintf(stdout, "** memory type is HOST_LOCAL **\n");
-  // }
 
   // ----------------------------------------------
   // CHECK memory type and allowed usage
@@ -415,13 +434,23 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
   //   contain BufferUsage::MapRead.
   //   - While calling [Buffer].MapAsync(MapMode::Read, 0, 4, ...).
 
+  iree_buffer_map_userdata_t* userdata = NULL;
+  if (iree_status_is_ok(status)) {
+    status = iree_allocator_malloc(iree_allocator_system(),
+                                   sizeof(iree_buffer_map_userdata_t),
+                                   (void**)&userdata);
+    userdata->buffer_view = buffer_view;
+    userdata->target_buffer = target_buffer;
+  }
+
   if (iree_status_is_ok(status)) {
     // WGPUBuffer buffer_handle = iree_hal_webgpu_buffer_handle(buffer);
     WGPUBuffer buffer_handle = iree_hal_webgpu_buffer_handle(target_buffer);
+
     fprintf(stdout, "Calling wgpuBufferMapAsync\n");
     wgpuBufferMapAsync(buffer_handle, WGPUMapMode_Read, /*offset=*/0,
                        /*size=*/data_length, buffer_map_sync_callback,
-                       /*userdata=*/NULL);
+                       /*userdata=*/userdata);
   }
 
   // void* buffer_data = NULL;
