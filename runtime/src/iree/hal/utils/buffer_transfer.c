@@ -30,7 +30,7 @@
 // |wait_value|. Behavior is undefined if no semaphore is provided and there are
 // in-flight operations concurrently using the buffer ranges.
 // Returns only after all transfers have completed and been flushed.
-static iree_status_t iree_hal_device_transfer_and_wait(
+IREE_API_EXPORT iree_status_t iree_hal_device_transfer_and_wait(
     iree_hal_device_t* device, iree_hal_semaphore_t* wait_semaphore,
     uint64_t wait_value, iree_host_size_t transfer_count,
     const iree_hal_transfer_command_t* transfer_commands,
@@ -148,6 +148,7 @@ IREE_API_EXPORT iree_status_t iree_hal_device_submit_transfer_range_and_wait(
   // buffer.
   if (!source.device_buffer && target.device_buffer &&
       data_length <= IREE_HAL_COMMAND_BUFFER_MAX_UPDATE_SIZE) {
+    fprintf(stdout, "  small -> IREE_HAL_TRANSFER_COMMAND_TYPE_UPDATE\n");
     const iree_hal_transfer_command_t transfer_command = {
         .type = IREE_HAL_TRANSFER_COMMAND_TYPE_UPDATE,
         .update =
@@ -169,6 +170,7 @@ IREE_API_EXPORT iree_status_t iree_hal_device_submit_transfer_range_and_wait(
   // Allocate the staging buffer for upload to the device.
   iree_hal_buffer_t* source_buffer = source.device_buffer;
   if (!source_buffer) {
+    fprintf(stdout, "  !source_buffer -> allocate\n");
     // Allocate staging memory with a copy of the host data. We only initialize
     // the portion being transferred.
     // TODO(benvanik): use import if supported to avoid the allocation/copy.
@@ -190,6 +192,7 @@ IREE_API_EXPORT iree_status_t iree_hal_device_submit_transfer_range_and_wait(
   // Allocate the staging buffer for download from the device.
   iree_hal_buffer_t* target_buffer = target.device_buffer;
   if (!target_buffer) {
+    fprintf(stdout, "  !target_buffer -> allocate\n");  // need this
     // Allocate uninitialized staging memory for the transfer target.
     // We only allocate enough for the portion we are transfering.
     // TODO(benvanik): use import if supported to avoid the allocation/copy.
@@ -217,9 +220,11 @@ IREE_API_EXPORT iree_status_t iree_hal_device_submit_transfer_range_and_wait(
                 .length = data_length,
             },
     };
+    fprintf(stdout, "  IREE_HAL_TRANSFER_COMMAND_TYPE_COPY start\n");
     status = iree_hal_device_transfer_and_wait(device, /*wait_semaphore=*/NULL,
                                                /*wait_value=*/0ull, 1,
                                                &transfer_command, timeout);
+    fprintf(stdout, "  IREE_HAL_TRANSFER_COMMAND_TYPE_COPY end\n");
   }
 
   // Read back the staging buffer into memory, if needed.

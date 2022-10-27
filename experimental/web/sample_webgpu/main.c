@@ -10,7 +10,9 @@
 
 #include "iree/base/api.h"
 #include "iree/hal/api.h"
+#include "iree/hal/drivers/webgpu/buffer.h"
 #include "iree/hal/drivers/webgpu/platform/webgpu.h"
+#include "iree/hal/utils/buffer_transfer.h"
 #include "iree/modules/hal/module.h"
 #include "iree/runtime/api.h"
 #include "iree/vm/api.h"
@@ -283,6 +285,27 @@ static iree_status_t parse_inputs_into_call(
   return iree_ok_status();
 }
 
+// TODO(scotttodd): move async mapping into webgpu/buffer.h/.c
+static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus status,
+                                     void* userdata) {
+  fprintf(stdout, "buffer_map_sync_callback\n");
+  switch (status) {
+    case WGPUBufferMapAsyncStatus_Success:
+      fprintf(stdout, "  status: Success\n");
+      break;
+    case WGPUBufferMapAsyncStatus_Error:
+      fprintf(stdout, "  status: Error\n");
+      break;
+    default:
+    case WGPUBufferMapAsyncStatus_Unknown:
+      fprintf(stdout, "  status: Unknown\n");
+      break;
+    case WGPUBufferMapAsyncStatus_DeviceLost:
+      fprintf(stdout, "  status: DeviceLost\n");
+      break;
+  }
+}
+
 static iree_status_t print_buffer_view(iree_hal_device_t* device,
                                        iree_hal_buffer_view_t* buffer_view) {
   fprintf(stdout, "print_buffer_view()\n");
@@ -302,45 +325,127 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
   //     iree_hal_semaphore_wait  (blocking? spin until ready?)
   //
 
-  // allocate device buffer on host
+  // allocate buffer on host
   //   (iree_hal_heap_buffer_create)
-  // read into device buffer (transfer)
+  // read into buffer (transfer)
   //    webgpu map async -> callback
   // buffer_view_format on that host buffer
+  // wgpuBufferUnmap
 
   iree_status_t status = iree_ok_status();
 
-  iree_hal_buffer_t* buffer = iree_hal_buffer_view_buffer(buffer_view);
-  iree_device_size_t buffer_view_byte_length =
+  iree_device_size_t data_length =
       iree_hal_buffer_view_byte_length(buffer_view);
+  iree_hal_buffer_t* buffer = iree_hal_buffer_view_buffer(buffer_view);
 
-  iree_hal_memory_type_t memory_type = iree_hal_buffer_memory_type(buffer);
-  if (iree_all_bits_set(memory_type, IREE_HAL_MEMORY_TYPE_HOST_LOCAL)) {
-    fprintf(stdout, "** memory type is HOST_LOCAL **\n");
+  // iree_hal_memory_type_t memory_type = iree_hal_buffer_memory_type(buffer);
+  // if (iree_all_bits_set(memory_type, IREE_HAL_MEMORY_TYPE_HOST_LOCAL)) {
+  //   fprintf(stdout, "** memory type is HOST_LOCAL **\n");
+  // }
+
+  // ----------------------------------------------
+  // CHECK memory type and allowed usage
+  //   'DEVICE_LOCAL|HOST_VISIBLE'
+  //   'TRANSFER|DISPATCH_STORAGE|MAPPING'
+  iree_bitfield_string_temp_t temp0, temp1;
+  iree_string_view_t memory_type_str =
+      iree_hal_memory_type_format(iree_hal_buffer_memory_type(buffer), &temp0);
+  iree_string_view_t allowed_usage_str = iree_hal_buffer_usage_format(
+      iree_hal_buffer_allowed_usage(buffer), &temp1);
+  fprintf(stdout, "  buffer memory type  : '%.*s'\n", (int)memory_type_str.size,
+          memory_type_str.data);
+  fprintf(stdout, "  buffer allowed usage: '%.*s'\n",
+          (int)allowed_usage_str.size, allowed_usage_str.data);
+  // ----------------------------------------------
+
+  // ----------------------------------------------
+  // Transfer from device memory to mappable host memory.
+  iree_hal_buffer_t* target_buffer = NULL;
+  iree_device_size_t target_offset = 0;
+  const iree_hal_buffer_params_t target_params = {
+      .type =
+          IREE_HAL_MEMORY_TYPE_HOST_LOCAL | IREE_HAL_MEMORY_TYPE_DEVICE_VISIBLE,
+      .usage = IREE_HAL_BUFFER_USAGE_TRANSFER | IREE_HAL_BUFFER_USAGE_MAPPING,
+  };
+  status = iree_hal_allocator_allocate_buffer(
+      iree_hal_device_allocator(device), target_params, data_length,
+      iree_const_byte_span_empty(), &target_buffer);
+  // Issue synchronous device copy.
+  if (iree_status_is_ok(status)) {
+    const iree_hal_transfer_command_t transfer_command = {
+        .type = IREE_HAL_TRANSFER_COMMAND_TYPE_COPY,
+        .copy =
+            {
+                .source_buffer = buffer,
+                .source_offset = 0,
+                .target_buffer = target_buffer,
+                .target_offset = target_offset,
+                .length = data_length,
+            },
+    };
+    fprintf(stdout, "  IREE_HAL_TRANSFER_COMMAND_TYPE_COPY start\n");
+    status = iree_hal_device_transfer_and_wait(
+        device, /*wait_semaphore=*/NULL,
+        /*wait_value=*/0ull, 1, &transfer_command, iree_infinite_timeout());
+    fprintf(stdout, "  IREE_HAL_TRANSFER_COMMAND_TYPE_COPY end\n");
   }
+  // CHECK memory type and allowed usage again
+  //   'HOST_LOCAL|DEVICE_VISIBLE'
+  //   'TRANSFER|MAPPING'
+  iree_bitfield_string_temp_t temp2, temp3;
+  iree_string_view_t target_memory_type_str = iree_hal_memory_type_format(
+      iree_hal_buffer_memory_type(target_buffer), &temp2);
+  iree_string_view_t target_allowed_usage_str = iree_hal_buffer_usage_format(
+      iree_hal_buffer_allowed_usage(target_buffer), &temp3);
+  fprintf(stdout, "  target buffer memory type  : '%.*s'\n",
+          (int)target_memory_type_str.size, target_memory_type_str.data);
+  fprintf(stdout, "  target buffer allowed usage: '%.*s'\n",
+          (int)target_allowed_usage_str.size, target_allowed_usage_str.data);
+  // ----------------------------------------------
 
-  void* buffer_data = NULL;
-  IREE_RETURN_IF_ERROR(iree_allocator_malloc(
-      iree_allocator_system(), buffer_view_byte_length, &buffer_data));
+  // Original buffer:
+  //   The buffer usages
+  //   (BufferUsage::(CopySrc|CopyDst|Storage|BufferUsage::80000000)) do not
+  //   contain BufferUsage::MapRead.
+  //   - While calling [Buffer].MapAsync(MapMode::Read, 0, 4, ...).
+  //
+  // Target buffer:
+  //   The buffer usages
+  //   (BufferUsage::(CopySrc|CopyDst)) do not
+  //   contain BufferUsage::MapRead.
+  //   - While calling [Buffer].MapAsync(MapMode::Read, 0, 4, ...).
 
   if (iree_status_is_ok(status)) {
-    // HACK HACK HACK
-    // TODO(scotttodd): buffer_view offset?
-    fprintf(stdout, "iree_hal_device_transfer_d2h\n");
-    status = iree_hal_device_transfer_d2h(
-        device, buffer,
-        /*source_offset=*/0, buffer_data,
-        /*data_length=*/buffer_view_byte_length,
-        IREE_HAL_TRANSFER_BUFFER_FLAG_DEFAULT, iree_infinite_timeout());
+    // WGPUBuffer buffer_handle = iree_hal_webgpu_buffer_handle(buffer);
+    WGPUBuffer buffer_handle = iree_hal_webgpu_buffer_handle(target_buffer);
+    fprintf(stdout, "Calling wgpuBufferMapAsync\n");
+    wgpuBufferMapAsync(buffer_handle, WGPUMapMode_Read, /*offset=*/0,
+                       /*size=*/data_length, buffer_map_sync_callback,
+                       /*userdata=*/NULL);
   }
 
-  if (iree_status_is_ok(status)) {
-    // HACK HACK HACK
-    float output = ((float*)buffer_data)[0];
-    fprintf(stdout, "output: %f\n", output);
-  }
+  // void* buffer_data = NULL;
+  // IREE_RETURN_IF_ERROR(iree_allocator_malloc(
+  //     iree_allocator_system(), data_length, &buffer_data));
 
-  iree_allocator_free(iree_allocator_system(), buffer_data);
+  // if (iree_status_is_ok(status)) {
+  //   // HACK HACK HACK
+  //   // TODO(scotttodd): buffer_view offset?
+  //   fprintf(stdout, "iree_hal_device_transfer_d2h\n");
+  //   status = iree_hal_device_transfer_d2h(
+  //       device, buffer,
+  //       /*source_offset=*/0, buffer_data,
+  //       /*data_length=*/data_length,
+  //       IREE_HAL_TRANSFER_BUFFER_FLAG_DEFAULT, iree_infinite_timeout());
+  // }
+
+  // if (iree_status_is_ok(status)) {
+  //   // HACK HACK HACK
+  //   float output = ((float*)buffer_data)[0];
+  //   fprintf(stdout, "output: %f\n", output);
+  // }
+
+  // iree_allocator_free(iree_allocator_system(), buffer_data);
 
   return status;
 }
@@ -400,26 +505,25 @@ static iree_status_t print_outputs_from_call(
         iree_hal_device_t* device = iree_runtime_session_device(call->session);
         IREE_RETURN_IF_ERROR(print_buffer_view(device, buffer_view));
 
-        /*
-        fprintf(stdout, "iree_hal_buffer_view_format (query)\n");
-        // Query total length (excluding NUL terminator).
-        iree_host_size_t result_length = 0;
-        iree_status_t status = iree_hal_buffer_view_format(
-            buffer_view, SIZE_MAX, 0, NULL, &result_length);
-        if (!iree_status_is_out_of_range(status)) return status;
-        ++result_length;  // include NUL
+        // fprintf(stdout, "iree_hal_buffer_view_format (query)\n");
+        // // Query total length (excluding NUL terminator).
+        // iree_host_size_t result_length = 0;
+        // iree_status_t status = iree_hal_buffer_view_format(
+        //     buffer_view, SIZE_MAX, 0, NULL, &result_length);
+        // if (!iree_status_is_out_of_range(status)) return status;
+        // ++result_length;  // include NUL
 
-        fprintf(stdout, "iree_hal_buffer_view_format (format into)\n");
-        // Allocate scratch heap memory for the result and format into it.
-        char* result_str = NULL;
-        IREE_RETURN_IF_ERROR(iree_allocator_malloc(
-            iree_allocator_system(), result_length, (void**)&result_str));
-        IREE_RETURN_IF_ERROR(iree_hal_buffer_view_format(
-            buffer_view, SIZE_MAX, result_length, result_str, &result_length));
-        IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-            outputs_builder, "%.*s", (int)result_length, result_str));
-        iree_allocator_free(iree_allocator_system(), result_str);
-        */
+        // fprintf(stdout, "iree_hal_buffer_view_format (format into)\n");
+        // // Allocate scratch heap memory for the result and format into it.
+        // char* result_str = NULL;
+        // IREE_RETURN_IF_ERROR(iree_allocator_malloc(
+        //     iree_allocator_system(), result_length, (void**)&result_str));
+        // IREE_RETURN_IF_ERROR(iree_hal_buffer_view_format(
+        //     buffer_view, SIZE_MAX, result_length, result_str,
+        //     &result_length));
+        // IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+        //     outputs_builder, "%.*s", (int)result_length, result_str));
+        // iree_allocator_free(iree_allocator_system(), result_str);
       } else {
         IREE_RETURN_IF_ERROR(iree_string_builder_append_cstring(
             outputs_builder, "(no printer)"));
