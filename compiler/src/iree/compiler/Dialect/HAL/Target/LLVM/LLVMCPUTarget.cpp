@@ -286,6 +286,8 @@ class LLVMCPUTargetBackend final : public TargetBackend {
       if (options.debugLevel >= 1) {
         // TODO(scotttodd): Copy findFirstFileLoc() from VulkanSPIRVTarget?
         if (auto loc = exportOp.getLoc().dyn_cast<FileLineColLoc>()) {
+          // TODO(scotttodd): print entire source to sourceFile instead of name
+          // TODO(scotttodd): move to debug level 2, and set that on tracing CI?
           sourceFile = loc.getFilename().str();
           sourceLine = loc.getLine();
         }

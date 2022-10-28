@@ -124,14 +124,14 @@ static llvm::StructType *makeDispatchAttrsType(llvm::LLVMContext &context) {
   return type;
 }
 
-// %struct.iree_hal_executable_src_loc_v0_t = type {
+// %struct.iree_hal_executable_src_file_v0_t = type {
 //   i32,
 //   i32,
 //   i8*
 // }
 static llvm::StructType *makeSrcLocType(llvm::LLVMContext &context) {
   if (auto *existingType = llvm::StructType::getTypeByName(
-          context, "iree_hal_executable_src_loc_v0_t")) {
+          context, "iree_hal_executable_src_file_v0_t")) {
     return existingType;
   }
   auto *i32Type = llvm::IntegerType::getInt32Ty(context);
@@ -142,7 +142,7 @@ static llvm::StructType *makeSrcLocType(llvm::LLVMContext &context) {
                                             i32Type,
                                             i8PtrType,
                                         },
-                                        "iree_hal_executable_src_loc_v0_t",
+                                        "iree_hal_executable_src_file_v0_t",
                                         /*isPacked=*/false);
   return type;
 }
@@ -153,7 +153,7 @@ static llvm::StructType *makeSrcLocType(llvm::LLVMContext &context) {
 //   %struct.iree_hal_executable_dispatch_attrs_v0_t*,
 //   i8**,
 //   i8**,
-//   %struct.iree_hal_executable_src_loc_v0_t*,
+//   %struct.iree_hal_executable_src_file_v0_t*,
 // }
 static llvm::StructType *makeExportTableType(llvm::LLVMContext &context) {
   if (auto *existingType = llvm::StructType::getTypeByName(

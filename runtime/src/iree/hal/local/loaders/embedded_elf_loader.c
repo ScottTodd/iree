@@ -85,6 +85,28 @@ static iree_status_t iree_hal_elf_executable_query_library(
   return iree_ok_status();
 }
 
+// TODO(scotttodd): share this code with the other loaders
+static iree_status_t iree_hal_elf_executable_setup_tracing(
+    iree_hal_elf_executable_t* executable) {
+#if (IREE_TRACING_FEATURES)
+  const iree_hal_executable_library_v0_t* library = executable->library.v0;
+  if (!library->exports.src_files) return iree_ok_status();
+
+  for (uint32_t i = 0; i < library->exports.count; ++i) {
+    const char* file_name = library->exports.names[i];
+    size_t file_name_length = strlen(file_name);
+    fprintf(stdout, "entry point '%s'\n", file_name);  // DO NOT SUBMIT
+    iree_tracing_register_custom_file_contents(
+        file_name, file_name_length,
+        library->exports.src_files[i].file_contents,
+        library->exports.src_files[i].file_contents_length);
+  }
+  // iree_tracing_register_custom_file_contents(/*file_name=*/NULL, 0,
+  //                                            /*file_contents=*/NULL, 0);
+#endif
+  return iree_ok_status();
+}
+
 // Resolves all of the imports declared by the executable using the given
 // |import_provider|.
 static iree_status_t iree_hal_elf_executable_resolve_imports(
@@ -191,6 +213,9 @@ static iree_status_t iree_hal_elf_executable_create(
     status =
         iree_hal_elf_executable_resolve_imports(executable, import_provider);
   }
+  if (iree_status_is_ok(status)) {
+    status = iree_hal_elf_executable_setup_tracing(executable);
+  }
 
   // TODO(benvanik): move alloc and verification to an executable_library_util.
   const bool disable_verification =
@@ -269,6 +294,9 @@ static iree_status_t iree_hal_elf_executable_issue_call(
                             "entry point ordinal out of bounds");
   }
 
+  // TODO(scotttodd): IREE_TRACE_REGISTER_CUSTOM_FILE_CONTENTS(path, ...)
+  // TODO(scotttodd): IREE_TRACE_ZONE_BEGIN_EXTERNAL
+
 #if IREE_TRACING_FEATURES & IREE_TRACING_FEATURE_INSTRUMENTATION
   iree_string_view_t entry_point_name = iree_string_view_empty();
   if (library->exports.names != NULL) {
@@ -280,20 +308,23 @@ static iree_status_t iree_hal_elf_executable_issue_call(
   const char* source_file = NULL;
   size_t source_file_length = 0;
   uint32_t source_line;
-  if (library->exports.src_locs != NULL) {
-    // We have source location data, so use it.
-    source_file = library->exports.src_locs[ordinal].path;
-    source_file_length = library->exports.src_locs[ordinal].path_length;
-    source_line = library->exports.src_locs[ordinal].line;
+  // TODO(scotttodd): rework this and clean up it - use entry point names as
+  // source files names, then only use the file_contents at load time
+  if (library->exports.src_files != NULL) {
+    // We have source file data, so use it.
+    source_file = library->exports.src_files[ordinal].file_contents;
+    source_file_length =
+        library->exports.src_files[ordinal].file_contents_length;
+    source_line = library->exports.src_files[ordinal].line;
   } else {
-    // No source location data, so make do with what we have.
+    // No source file data, so make do with what we have.
     source_file = executable->identifier.data;
     source_file_length = executable->identifier.size;
     source_line = ordinal;
   }
-  IREE_TRACE_ZONE_BEGIN_EXTERNAL(z0, source_file, source_file_length,
-                                 source_line, entry_point_name.data,
-                                 entry_point_name.size, NULL, 0);
+  IREE_TRACE_ZONE_BEGIN_EXTERNAL(
+      z0, entry_point_name.data, entry_point_name.size, source_line,
+      entry_point_name.data, entry_point_name.size, NULL, 0);
   if (library->exports.tags != NULL) {
     const char* tag = library->exports.tags[ordinal];
     if (tag) {

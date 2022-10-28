@@ -139,13 +139,16 @@ static iree_status_t iree_hal_static_executable_issue_call(
   const char* source_file = NULL;
   size_t source_file_length = 0;
   uint32_t source_line;
-  if (library->exports.src_locs != NULL) {
-    // We have source location data, so use it.
-    source_file = library->exports.src_locs[ordinal].path;
-    source_file_length = library->exports.src_locs[ordinal].path_length;
-    source_line = library->exports.src_locs[ordinal].line;
+  // TODO(scotttodd): rework this and clean up it - use entry point names as
+  // source files names, then only use the file_contents at load time
+  if (library->exports.src_files != NULL) {
+    // We have source file data, so use it.
+    source_file = library->exports.src_files[ordinal].file_contents;
+    source_file_length =
+        library->exports.src_files[ordinal].file_contents_length;
+    source_line = library->exports.src_files[ordinal].line;
   } else {
-    // No source location data, so make do with what we have.
+    // No source file data, so make do with what we have.
     source_file = executable->identifier.data;
     source_file_length = executable->identifier.size;
     source_line = ordinal;

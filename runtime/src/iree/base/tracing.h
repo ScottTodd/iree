@@ -240,6 +240,11 @@ void iree_tracing_mutex_after_lock(uint32_t lock_id);
 void iree_tracing_mutex_after_try_lock(uint32_t lock_id, bool was_acquired);
 void iree_tracing_mutex_after_unlock(uint32_t lock_id);
 
+void iree_tracing_register_custom_file_contents(const char* file_name,
+                                                size_t file_name_length,
+                                                const char* file_contents,
+                                                size_t file_contents_length);
+
 #endif  // IREE_TRACING_FEATURES
 
 #ifdef __cplusplus

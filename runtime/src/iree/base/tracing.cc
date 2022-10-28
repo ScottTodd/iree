@@ -199,6 +199,30 @@ void iree_tracing_mutex_after_unlock(uint32_t lock_id) {
   tracy::Profiler::QueueSerialFinish();
 }
 
+void iree_tracing_register_custom_file_contents(const char* file_name,
+                                                size_t file_name_length,
+                                                const char* file_contents,
+                                                size_t file_contents_length) {
+  // TODO(scotttodd): call_once
+  // TODO(scotttodd): pass map of file names -> file contents into data
+  // TODO(scotttodd): make thread-safe (grab a mutex?)
+  tracy::Profiler::SourceCallbackRegister(
+      [](void* data, const char* filename, size_t& size) -> char* {
+        fprintf(stdout, "Tracy source callback for file '%s'\n", filename);
+
+        // TODO(scotttodd): look up filename in map, copy file contents
+        auto buf = (char*)tracy::tracy_malloc_fast(4);
+        std::string test_str = "test";
+        strcpy(buf, test_str.c_str());
+        size = 4;
+        return buf;
+      },
+      /*data=*/nullptr);
+
+  // TODO(scotttodd): make thread-safe (grab a mutex?)
+  // TODO(scotttodd): insert into map of file names -> file contents
+}
+
 #endif  // IREE_TRACING_FEATURES
 
 #ifdef __cplusplus
