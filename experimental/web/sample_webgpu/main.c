@@ -69,9 +69,11 @@ const char* call_function(iree_program_state_t* program_state,
 typedef struct iree_sample_state_t {
   iree_runtime_instance_t* instance;
   iree_hal_device_t* device;
+  iree_hal_allocator_t* heap_allocator;
 } iree_sample_state_t;
 
 typedef struct iree_program_state_t {
+  iree_sample_state_t* sample_state;
   iree_runtime_session_t* session;
   iree_vm_module_t* module;
 } iree_program_state_t;
@@ -99,6 +101,12 @@ iree_sample_state_t* setup_sample() {
     status = create_device(iree_allocator_system(), &sample_state->device);
   }
 
+  if (iree_status_is_ok(status)) {
+    status = iree_hal_allocator_create_heap(
+        iree_make_cstring_view("heap"), iree_allocator_system(),
+        iree_allocator_system(), &sample_state->heap_allocator);
+  }
+
   if (!iree_status_is_ok(status)) {
     iree_status_fprint(stderr, status);
     iree_status_free(status);
@@ -110,6 +118,7 @@ iree_sample_state_t* setup_sample() {
 }
 
 void cleanup_sample(iree_sample_state_t* sample_state) {
+  iree_hal_allocator_release(sample_state->heap_allocator);
   iree_hal_device_release(sample_state->device);
   iree_runtime_instance_release(sample_state->instance);
   free(sample_state);
@@ -121,6 +130,7 @@ iree_program_state_t* load_program(iree_sample_state_t* sample_state,
   iree_status_t status = iree_allocator_malloc(iree_allocator_system(),
                                                sizeof(iree_program_state_t),
                                                (void**)&program_state);
+  program_state->sample_state = sample_state;
 
   iree_runtime_session_options_t session_options;
   iree_runtime_session_options_initialize(&session_options);
@@ -288,15 +298,16 @@ static iree_status_t parse_inputs_into_call(
 typedef struct iree_buffer_map_userdata_t {
   iree_hal_buffer_view_t* buffer_view;
   iree_hal_buffer_t* target_buffer;
+  iree_hal_allocator_t* heap_allocator;
 } iree_buffer_map_userdata_t;
 
 // TODO(scotttodd): move async mapping into webgpu/buffer.h/.c
-static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus status,
+static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus map_status,
                                      void* userdata_ptr) {
   iree_buffer_map_userdata_t* userdata =
       (iree_buffer_map_userdata_t*)userdata_ptr;
   fprintf(stdout, "buffer_map_sync_callback\n");
-  switch (status) {
+  switch (map_status) {
     case WGPUBufferMapAsyncStatus_Success:
       fprintf(stdout, "  status: Success\n");
       break;
@@ -312,7 +323,9 @@ static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus status,
       break;
   }
 
-  if (status == WGPUBufferMapAsyncStatus_Success) {
+  if (map_status == WGPUBufferMapAsyncStatus_Success) {
+    iree_status_t status = iree_ok_status();
+
     // TODO(scotttodd): Use buffer_view_format on a host buffer with this data
     // TODO(scotttodd): bubble result(s) up to the caller (async + callback API)
 
@@ -320,18 +333,112 @@ static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus status,
         iree_hal_buffer_view_byte_length(userdata->buffer_view);
     WGPUBuffer buffer_handle =
         iree_hal_webgpu_buffer_handle(userdata->target_buffer);
-    float* data_ptr = (float*)wgpuBufferGetConstMappedRange(
-        buffer_handle, /*offset=*/0, data_length);
-    // float output = ((float*)data_ptr)[0];
-    float output = data_ptr[0];
-    fprintf(stdout, "output: %f\n", output);
+
+    // float* data_ptr = (float*)wgpuBufferGetConstMappedRange(
+    //     buffer_handle, /*offset=*/0, data_length);
+    // // float output = ((float*)data_ptr)[0];
+    // float output = data_ptr[0];
+    // fprintf(stdout, "output: %f\n", output);
+
+    // For this sample we want to print arbitrary buffers, which is easiest
+    // using the |iree_hal_buffer_view_format| function. Internally, that
+    // function requires synchronous buffer mapping, so we'll first wrap the
+    // already (async) mapped GPU memory into a heap buffer. In a less general
+    // application (or one not requiring pretty logging like this), we could
+    // skip a few buffer copies and other data transformations here.
+
+    const void* data_ptr =
+        wgpuBufferGetConstMappedRange(buffer_handle, /*offset=*/0, data_length);
+
+    // Clone into memory that isn't readonly.
+    // TODO(scotttodd): import as readonly? const void* -> void*?
+    void* data_cloned = NULL;
+    // if (iree_status_is_ok(status)) {
+    //   status = iree_allocator_clone(iree_allocator_system(),
+    //                                 (iree_const_byte_span_t){
+    //                                     .data = (const uint8_t*)data_ptr,
+    //                                     .data_length = data_length,
+    //                                 },
+    //                                 &data_cloned);
+    // }
+    iree_host_size_t cloned_data_length =
+        iree_host_align(data_length, IREE_HAL_HEAP_BUFFER_ALIGNMENT);
+    if (iree_status_is_ok(status)) {
+      status = iree_allocator_malloc(iree_allocator_system(),
+                                     cloned_data_length, &data_cloned);
+    }
+    if (iree_status_is_ok(status)) {
+      memcpy(data_cloned, data_ptr, data_length);
+    }
+    wgpuBufferUnmap(buffer_handle);
+
+    // This looks a bit indirect, but |iree_hal_heap_buffer_wrap| isn't
+    // public while |iree_hal_allocator_import_buffer| is.
+    iree_hal_buffer_t* heap_buffer = NULL;
+    iree_hal_external_buffer_t external_buffer = {
+        .type = IREE_HAL_EXTERNAL_BUFFER_TYPE_HOST_ALLOCATION,
+        .flags = IREE_HAL_EXTERNAL_BUFFER_FLAG_NONE,
+        .size = cloned_data_length,
+        .handle = {{data_cloned}},
+    };
+    if (iree_status_is_ok(status)) {
+      fprintf(stdout, "calling iree_hal_allocator_import_buffer\n");
+      status = iree_hal_allocator_import_buffer(
+          userdata->heap_allocator,
+          (iree_hal_buffer_params_t){
+              .type = IREE_HAL_MEMORY_TYPE_HOST_LOCAL,
+              .usage = IREE_HAL_BUFFER_USAGE_MAPPING,
+              .min_alignment = IREE_HAL_HEAP_BUFFER_ALIGNMENT,
+          },
+          &external_buffer, iree_hal_buffer_release_callback_null(),
+          &heap_buffer);
+    }
+    if (iree_status_is_ok(status)) {
+      fprintf(stdout, "Imported buffer into heap allocator successfully\n");
+    }
+
+    // Copy the original buffer_view, backed by the cloned heap buffer instead.
+    iree_hal_buffer_view_t* buffer_view = NULL;
+    iree_hal_dim_t buffer_view_shape[10];
+    if (iree_status_is_ok(status)) {
+      status = iree_hal_buffer_view_shape(
+          userdata->buffer_view,
+          /*rank_capacity=*/10, buffer_view_shape, /*out_shape_rank=*/NULL);
+    }
+    if (iree_status_is_ok(status)) {
+      status = iree_hal_buffer_view_create(
+          heap_buffer, iree_hal_buffer_view_shape_rank(userdata->buffer_view),
+          buffer_view_shape,
+          iree_hal_buffer_view_element_type(userdata->buffer_view),
+          iree_hal_buffer_view_encoding_type(userdata->buffer_view),
+          iree_allocator_system(), &buffer_view);
+    }
+
+    if (iree_status_is_ok(status)) {
+      fprintf(stdout, "Output (formatted):\n");
+      status = iree_hal_buffer_view_fprint(stdout, buffer_view,
+                                           /*max_element_count=*/4096,
+                                           iree_allocator_system());
+      fprintf(stdout, "\n(end output)\n");
+    }
+    iree_hal_buffer_view_release(buffer_view);
+    iree_hal_buffer_release(heap_buffer);
+
+    if (!iree_status_is_ok(status)) {
+      fprintf(stderr, "buffer_map_sync_callback error:\n");
+      iree_status_fprint(stderr, status);
+      iree_status_free(status);
+    }
+
+    iree_allocator_free(iree_allocator_system(), data_cloned);
   }
 
   iree_allocator_free(iree_allocator_system(), userdata);
 }
 
 static iree_status_t print_buffer_view(iree_hal_device_t* device,
-                                       iree_hal_buffer_view_t* buffer_view) {
+                                       iree_hal_buffer_view_t* buffer_view,
+                                       iree_hal_allocator_t* heap_allocator) {
   fprintf(stdout, "print_buffer_view()\n");
 
   // iree_hal_device_transfer_d2h?
@@ -441,6 +548,7 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
                                    (void**)&userdata);
     userdata->buffer_view = buffer_view;
     userdata->target_buffer = target_buffer;
+    userdata->heap_allocator = heap_allocator;
   }
 
   if (iree_status_is_ok(status)) {
@@ -480,7 +588,8 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
 }
 
 static iree_status_t print_outputs_from_call(
-    iree_runtime_call_t* call, iree_string_builder_t* outputs_builder) {
+    iree_runtime_call_t* call, iree_string_builder_t* outputs_builder,
+    iree_hal_allocator_t* heap_allocator) {
   fprintf(stdout, "** print_outputs_from_call **\n");
   iree_vm_list_t* variants_list = iree_runtime_call_outputs(call);
   for (iree_host_size_t i = 0; i < iree_vm_list_size(variants_list); ++i) {
@@ -532,7 +641,8 @@ static iree_status_t print_outputs_from_call(
             iree_hal_buffer_view_deref(variant.ref);
 
         iree_hal_device_t* device = iree_runtime_session_device(call->session);
-        IREE_RETURN_IF_ERROR(print_buffer_view(device, buffer_view));
+        IREE_RETURN_IF_ERROR(
+            print_buffer_view(device, buffer_view, heap_allocator));
 
         // fprintf(stdout, "iree_hal_buffer_view_format (query)\n");
         // // Query total length (excluding NUL terminator).
@@ -676,7 +786,8 @@ const char* call_function(iree_program_state_t* program_state,
         time_elapsed / 1000000);
   }
   if (iree_status_is_ok(status)) {
-    status = print_outputs_from_call(&call, &outputs_builder);
+    status = print_outputs_from_call(
+        &call, &outputs_builder, program_state->sample_state->heap_allocator);
   }
   if (iree_status_is_ok(status)) {
     status = iree_string_builder_append_cstring(&outputs_builder, "\"}");
