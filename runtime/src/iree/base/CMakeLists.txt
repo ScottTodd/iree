@@ -20,6 +20,8 @@ iree_cc_library(
     "bitfield.h"
     "loop.c"
     "loop.h"
+    # "loop_emscripten.c"
+    # "loop_emscripten.h"
     "loop_inline.c"
     "loop_inline.h"
     "status.c"
@@ -142,6 +144,34 @@ iree_cc_library(
   HDRS
     "target_platform.h"
   PUBLIC
+)
+
+iree_cc_library(
+  NAME
+    loop_emscripten
+  HDRS
+    "loop_emscripten.h"
+  SRCS
+    "loop_emscripten.c"
+  DEPS
+    ::base
+    ::tracing
+  PUBLIC
+)
+
+iree_cc_test(
+  NAME
+    loop_emscripten_test
+  SRCS
+    "loop_emscripten_test.cc"
+  DEPS
+    ::base
+    ::cc
+    ::loop_emscripten
+    ::loop_test_hdrs
+    ::tracing
+    iree::testing::gtest
+    iree::testing::gtest_main
 )
 
 iree_cc_library(
