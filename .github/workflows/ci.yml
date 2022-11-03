@@ -292,7 +292,7 @@ jobs:
       run:
         shell: bash
     env:
-      BUILD_DIR: build-runtime
+      BUILD_DIR: build-runtime-windows
     outputs:
       # Pass through the build directory as output so it's available to
       # dependent jobs.
