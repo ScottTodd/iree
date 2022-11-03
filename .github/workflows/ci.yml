@@ -286,13 +286,17 @@ jobs:
 
   build_runtime_windows:
     needs: setup
-    if: needs.setup.outputs.should-run == 'true' && needs.setup.outputs.ci-stage == 'postsubmit'
+    if: needs.setup.outputs.should-run == 'true'
     runs-on: windows-2022
     defaults:
       run:
         shell: bash
     env:
       BUILD_DIR: build-runtime
+    outputs:
+      # Pass through the build directory as output so it's available to
+      # dependent jobs.
+      build-dir: ${{ env.BUILD_DIR }}
     steps:
       - name: "Checking out repository"
         uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # v2
@@ -302,6 +306,16 @@ jobs:
         uses: ilammy/msvc-dev-cmd@7315a94840631165970262a99c72cfb48a65d25d # v1.12.0
       - name: "Building runtime"
         run: ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
+      # Using a tar archive is necessary to preserve file permissions. See
+      # https://github.com/actions/upload-artifact#maintaining-file-permissions-and-case-sensitive-files
+      # The upload action already does its own gzip compression, so no need to
+      # do our own.
+      - name: "Create build dir archive"
+        run: tar -cf ${BUILD_DIR}.tar ${BUILD_DIR}
+      - uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # v3.1.0
+        with:
+          name: "${{ env.BUILD_DIR }}.tar"
+          path: "${{ env.BUILD_DIR }}.tar"
 
   test_runtime:
     needs: [setup, build_runtime]
@@ -327,6 +341,29 @@ jobs:
             gcr.io/iree-oss/base@sha256:5d43683c6b50aebe1fca6c85f2012f3b0fa153bf4dd268e8767b619b1891423a \
             ./build_tools/cmake/ctest_all.sh \
             "${BUILD_DIR}"
+
+  test_runtime_windows:
+    needs: [setup, build_runtime_windows]
+    if: needs.setup.outputs.should-run == 'true'
+    runs-on: windows-2022
+    defaults:
+      run:
+        shell: bash
+    env:
+      BUILD_DIR: ${{ needs.build_runtime_windows.outputs.build-dir }}
+    steps:
+      - name: "Checking out repository"
+        uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # v2
+        with:
+          submodules: true
+      - name: "Downloading runtime build dir archive"
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741 # v3.0.0
+        with:
+          name: "${{ env.BUILD_DIR }}.tar"
+      - name: "Extracting runtime build dir archive"
+        run: tar -xf ${BUILD_DIR}.tar
+      - name: "Testing runtime"
+        run: ./build_tools/cmake/ctest_all.sh "${BUILD_DIR}"
 
   ################################# Tensorflow #################################
   # Jobs that build the IREE-Tensorflow integrations
