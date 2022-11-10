@@ -152,10 +152,16 @@ static iree_status_t iree_hal_webgpu_simple_allocator_allocate_buffer(
     if (iree_all_bits_set(params->usage, IREE_HAL_BUFFER_USAGE_TRANSFER) &&
         !iree_any_bit_set(params->usage,
                           IREE_HAL_BUFFER_USAGE_DISPATCH_STORAGE)) {
-      usage_flags |= WGPUBufferUsage_MapRead;
+      // TODO(scotttodd): make this work with both readback and regular usage
+      // usage_flags |= WGPUBufferUsage_MapRead;
       // usage_flags |= WGPUBufferUsage_MapWrite;
+
+      // Buffer usages (BufferUsage::(MapRead|CopySrc|CopyDst)) is invalid. If a
+      // buffer usage contains BufferUsage::MapRead the only other allowed usage
+      // is BufferUsage::CopyDst.
+
       // Clear CopySrc
-      usage_flags &= ~(WGPUBufferUsage_CopySrc);
+      // usage_flags &= ~(WGPUBufferUsage_CopySrc);
     }
   }
   if (iree_any_bit_set(params->usage, IREE_HAL_BUFFER_USAGE_DISPATCH_STORAGE)) {
@@ -180,6 +186,13 @@ static iree_status_t iree_hal_webgpu_simple_allocator_allocate_buffer(
   };
   WGPUBuffer buffer_handle = wgpuDeviceCreateBuffer(
       iree_hal_webgpu_device_handle(allocator->device), &descriptor);
+  // fprintf(stdout, "CreateBuffer: [%d]\n", (int)buffer_handle);
+  // if (iree_all_bits_set(params->usage, IREE_HAL_BUFFER_USAGE_TRANSFER)) {
+  //   fprintf(stdout, "  USAGE_TRANSFER\n");
+  // }
+  // if (iree_all_bits_set(params->usage, IREE_HAL_BUFFER_USAGE_MAPPING)) {
+  //   fprintf(stdout, "  USAGE_MAPPING\n");
+  // }
   if (!buffer_handle) {
     return iree_make_status(IREE_STATUS_RESOURCE_EXHAUSTED,
                             "unable to allocate buffer of size %" PRIdsz,

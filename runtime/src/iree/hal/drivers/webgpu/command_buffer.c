@@ -724,6 +724,23 @@ static iree_status_t iree_hal_webgpu_command_buffer_copy_buffer(
   IREE_RETURN_IF_ERROR(iree_hal_webgpu_command_buffer_acquire_command_encoder(
       command_buffer, &command_encoder));
 
+  // fprintf(stdout, "CopyBufferToBuffer [%d] -> [%d]\n",
+  //         (int)iree_hal_webgpu_buffer_handle(source_buffer),
+  //         (int)iree_hal_webgpu_buffer_handle(target_buffer));
+
+  // CreateBuffer: [2]
+  //   USAGE_TRANSFER
+  //   USAGE_MAPPING
+  // CreateBuffer: [3]
+  //   USAGE_TRANSFER
+  // CopyBufferToBuffer [2] -> [3]
+
+  // [Buffer] usage (BufferUsage::(MapRead|CopyDst)) doesn't include
+  // BufferUsage::CopySrc.
+  //  - While validating source [Buffer] usage.
+  //  - While encoding [CommandEncoder].CopyBufferToBuffer([Buffer], 0,
+  //  [Buffer], 0, 5033344).
+
   wgpuCommandEncoderCopyBufferToBuffer(
       command_encoder, iree_hal_webgpu_buffer_handle(source_buffer),
       source_offset, iree_hal_webgpu_buffer_handle(target_buffer),

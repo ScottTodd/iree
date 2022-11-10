@@ -186,16 +186,55 @@ iree_status_t iree_hal_webgpu_pipeline_layout_create(
   *out_pipeline_layout = NULL;
   IREE_TRACE_ZONE_BEGIN(z0);
 
-  iree_inline_array(WGPUBindGroupLayout, bind_group_layouts, set_layout_count,
-                    host_allocator);
+  fprintf(stdout, "iree_hal_webgpu_pipeline_layout_create\n");
+  fprintf(stdout, "  set_layout_count: %d\n", (int)set_layout_count);
+  fprintf(stdout, "  push_constant_count: %d\n", (int)push_constant_count);
+
+  // Add an extra set layout for push constant emulation, using
+  // IREE_HAL_WEBGPU_PARAMS_BIND_GROUP_INDEX.
+  // TODO(scotttodd): share once instance of this between pipeline layouts?
+  iree_hal_descriptor_set_layout_t* extra_descriptor_set_layout = NULL;
+  iree_hal_descriptor_set_layout_binding_t
+      extra_descriptor_set_layout_bindings[] = {
+          {
+              /*binding=*/IREE_HAL_WEBGPU_PARAMS_BIND_GROUP_INDEX,
+              /*type=*/IREE_HAL_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+              /*flags=*/IREE_HAL_DESCRIPTOR_FLAG_READ_ONLY,
+          },
+      };
+  iree_host_size_t actual_set_layout_count =
+      set_layout_count + (push_constant_count > 0 ? 1 : 0);
+  if (push_constant_count > 0) {
+    IREE_RETURN_AND_END_ZONE_IF_ERROR(
+        z0, iree_hal_webgpu_descriptor_set_layout_create(
+                device, IREE_HAL_DESCRIPTOR_SET_LAYOUT_FLAG_NONE,
+                IREE_ARRAYSIZE(extra_descriptor_set_layout_bindings),
+                extra_descriptor_set_layout_bindings, host_allocator,
+                &extra_descriptor_set_layout));
+    fprintf(stdout, "  created extra descriptor set layout\n");
+  }
+  fprintf(stdout, "  actual_set_layout_count: %d\n",
+          (int)actual_set_layout_count);
+  // TODO(scotttodd): release/retain extra_descriptor_set_layout as needed
+
+  // Populate a WGPUBindGroupLayout array with the provided set layouts, and
+  // the extra layout if there are push constants.
+  iree_inline_array(WGPUBindGroupLayout, bind_group_layouts,
+                    actual_set_layout_count, host_allocator);
   for (iree_host_size_t i = 0; i < set_layout_count; ++i) {
     *iree_inline_array_at(bind_group_layouts, i) =
         iree_hal_webgpu_descriptor_set_layout_handle(set_layouts[i]);
   }
+  if (push_constant_count > 0) {
+    *iree_inline_array_at(bind_group_layouts, set_layout_count) =
+        iree_hal_webgpu_descriptor_set_layout_handle(
+            extra_descriptor_set_layout);
+  }
+
   const WGPUPipelineLayoutDescriptor descriptor = {
       .nextInChain = NULL,
       .label = NULL,
-      .bindGroupLayoutCount = (uint32_t)set_layout_count,
+      .bindGroupLayoutCount = (uint32_t)actual_set_layout_count,
       .bindGroupLayouts = iree_inline_array_at(bind_group_layouts, 0),
   };
   WGPUPipelineLayout handle =
@@ -211,7 +250,7 @@ iree_status_t iree_hal_webgpu_pipeline_layout_create(
   iree_hal_webgpu_pipeline_layout_t* pipeline_layout = NULL;
   iree_host_size_t total_size =
       sizeof(*pipeline_layout) +
-      set_layout_count * sizeof(*pipeline_layout->set_layouts);
+      actual_set_layout_count * sizeof(*pipeline_layout->set_layouts);
   iree_status_t status = iree_allocator_malloc(host_allocator, total_size,
                                                (void**)&pipeline_layout);
   if (iree_status_is_ok(status)) {
@@ -221,8 +260,9 @@ iree_status_t iree_hal_webgpu_pipeline_layout_create(
     pipeline_layout->handle = handle;
     pipeline_layout->push_constant_count = push_constant_count;
 
-    pipeline_layout->set_layout_count = set_layout_count;
-    pipeline_layout->set_binding_info.set_count = set_layout_count;
+    // TODO(scotttodd): should these be set_layout_count or actual?
+    pipeline_layout->set_layout_count = actual_set_layout_count;
+    pipeline_layout->set_binding_info.set_count = actual_set_layout_count;
     for (iree_host_size_t i = 0; i < set_layout_count; ++i) {
       pipeline_layout->set_layouts[i] = set_layouts[i];
       iree_hal_descriptor_set_layout_retain(set_layouts[i]);
@@ -230,6 +270,16 @@ iree_status_t iree_hal_webgpu_pipeline_layout_create(
           iree_hal_webgpu_descriptor_set_layout_handle(set_layouts[i]);
       pipeline_layout->set_binding_info.set_masks[i] =
           iree_hal_webgpu_descriptor_set_layout_binding_mask(set_layouts[i]);
+    }
+    if (push_constant_count > 0) {
+      pipeline_layout->set_layouts[set_layout_count] =
+          extra_descriptor_set_layout;
+      pipeline_layout->set_binding_info.set_layouts[set_layout_count] =
+          iree_hal_webgpu_descriptor_set_layout_handle(
+              extra_descriptor_set_layout);
+      pipeline_layout->set_binding_info.set_masks[set_layout_count] =
+          iree_hal_webgpu_descriptor_set_layout_binding_mask(
+              extra_descriptor_set_layout);
     }
 
     *out_pipeline_layout = (iree_hal_pipeline_layout_t*)pipeline_layout;
