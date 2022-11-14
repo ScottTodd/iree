@@ -25,11 +25,13 @@ extern "C" {
 // WebGPU API utilities
 //===----------------------------------------------------------------------===//
 
-#ifndef NDEBUG
+// DO NOT SUBMIT
 #define WGPU_DEBUG_LABEL(str) str
-#else
-#define WGPU_DEBUG_LABEL(str) NULL
-#endif  // NDEBUG
+// #ifndef NDEBUG
+// #define WGPU_DEBUG_LABEL(str) str
+// #else
+// #define WGPU_DEBUG_LABEL(str) NULL
+// #endif  // NDEBUG
 
 //===----------------------------------------------------------------------===//
 // Implementation compatibility layer
