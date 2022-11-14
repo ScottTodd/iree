@@ -18,6 +18,7 @@ extern "C" {
 #define IREE_HAL_WEBGPU_MAX_DESCRIPTOR_SET_COUNT 4
 #define IREE_HAL_WEBGPU_MAX_PUSH_CONSTANT_COUNT 64
 #define IREE_HAL_WEBGPU_PARAMS_BIND_GROUP_INDEX 3
+#define IREE_HAL_WEBGPU_PARAMS_BINDING_INDEX 0
 
 //===----------------------------------------------------------------------===//
 // iree_hal_webgpu_descriptor_set_layout_t
