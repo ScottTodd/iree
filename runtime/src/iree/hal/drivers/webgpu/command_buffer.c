@@ -812,6 +812,9 @@ static iree_status_t iree_hal_webgpu_command_buffer_prepare_dispatch(
     iree_hal_webgpu_command_buffer_t* command_buffer,
     iree_hal_executable_t* executable, uint32_t ordinal,
     WGPUComputePassEncoder* out_compute_pass) {
+  fprintf(stdout, "========================================================\n");
+  fprintf(stdout, "iree_hal_webgpu_command_buffer_prepare_dispatch\n");
+
   const iree_hal_webgpu_entry_point_t* entry_point =
       iree_hal_webgpu_executable_lookup_entry_point(executable, ordinal);
 
@@ -825,6 +828,8 @@ static iree_status_t iree_hal_webgpu_command_buffer_prepare_dispatch(
   uint32_t params_offset = 0;
   IREE_RETURN_IF_ERROR(iree_hal_webgpu_command_buffer_append_parameters(
       command_buffer, push_constant_data, &params_offset));
+
+  fprintf(stdout, "  push_constant_count: %d\n", (int)push_constant_count);
 
   // Acquire the compute pass we'll encode the dispatch into - this may be
   // fresh or reused from prior commands.
@@ -850,6 +855,10 @@ static iree_status_t iree_hal_webgpu_command_buffer_prepare_dispatch(
     // set the bind group on the device already - we can skip.
     if (command_buffer->state.bind_groups[i].handle) continue;
 
+    fprintf(stdout,
+            "  bind_group_cache_acquire for binding_info set layout [%d]\n",
+            (int)i);
+
     // Acquire the bind group to use for the current descriptor set.
     WGPUBindGroup handle = iree_hal_webgpu_bind_group_cache_acquire(
         command_buffer->bind_group_cache, binding_info->set_layouts[i],
@@ -867,6 +876,7 @@ static iree_status_t iree_hal_webgpu_command_buffer_prepare_dispatch(
     command_buffer->state.bind_groups[i].handle = handle;
   }
 
+  fprintf(stdout, "========================================================\n");
   *out_compute_pass = compute_pass;
   return iree_ok_status();
 }

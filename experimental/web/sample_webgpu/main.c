@@ -559,6 +559,7 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
 const char* call_function(iree_program_state_t* program_state,
                           const char* function_name, const char* inputs,
                           int iterations) {
+  fprintf(stdout, "\n*** call_function ***\n\n");
   iree_status_t status = iree_ok_status();
 
   // Fully qualify the function name. This sample only supports loading one

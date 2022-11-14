@@ -107,6 +107,9 @@ WGPUBindGroup iree_hal_webgpu_bind_group_cache_acquire(
   entry->binding_mask = binding_mask;
   memcpy(entry->bindings, bindings, sizeof(entry->bindings));
 
+  fprintf(stdout, "  ----------------------------------------------------\n");
+  fprintf(stdout, "  iree_hal_webgpu_bind_group_cache_acquire\n");
+
   // NOTE: we could change this to do bit scans over the binding_mask but I
   // haven't checked to see how expensive those are in WebAssembly. For now we
   // do a few more loop iterations with the assumption that doing a bit scan
@@ -114,7 +117,12 @@ WGPUBindGroup iree_hal_webgpu_bind_group_cache_acquire(
   uint32_t binding_count = 0;
   WGPUBindGroupEntry entries[IREE_HAL_WEBGPU_MAX_DESCRIPTOR_SET_BINDING_COUNT];
   for (iree_host_size_t i = 0; i < IREE_ARRAYSIZE(entries); ++i) {
-    if (!(binding_mask & (1u << i))) continue;
+    if (!(binding_mask & (1u << i))) {
+      // fprintf(stdout, "    group %d is *not* in binding_mask\n", (int)i);
+      continue;
+    }
+    fprintf(stdout, "    group %d is in binding_mask, buffer: %i\n", (int)i,
+            (int)bindings[i].buffer);
     entries[binding_count] = (WGPUBindGroupEntry){
         .nextInChain = NULL,
         .binding = binding_count,
@@ -133,6 +141,8 @@ WGPUBindGroup iree_hal_webgpu_bind_group_cache_acquire(
       .entries = entries,
   };
   entry->handle = wgpuDeviceCreateBindGroup(cache->device, &descriptor);
+
+  fprintf(stdout, "  ----------------------------------------------------\n");
 
   IREE_TRACE_ZONE_END(z0);
   return entry->handle;

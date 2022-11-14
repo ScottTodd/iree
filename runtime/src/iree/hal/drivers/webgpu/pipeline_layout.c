@@ -48,8 +48,8 @@ iree_status_t iree_hal_webgpu_descriptor_set_layout_create(
   *out_descriptor_set_layout = NULL;
   IREE_TRACE_ZONE_BEGIN(z0);
 
-  // iree_host_size_t actual_binding_count = binding_count;
-  iree_host_size_t actual_binding_count = binding_count + 1;
+  iree_host_size_t actual_binding_count = binding_count;
+  // iree_host_size_t actual_binding_count = binding_count + 1;
 
   iree_inline_array(WGPUBindGroupLayoutEntry, entries, actual_binding_count,
                     host_allocator);
@@ -93,19 +93,19 @@ iree_status_t iree_hal_webgpu_descriptor_set_layout_create(
   }
 
   // Extra for push constants
-  *iree_inline_array_at(entries, binding_count) = (WGPUBindGroupLayoutEntry){
-      .nextInChain = NULL,
-      .binding = IREE_HAL_WEBGPU_PARAMS_BIND_GROUP_INDEX,
-      .visibility = WGPUShaderStage_Compute,
-      .buffer =
-          {
-              .nextInChain = NULL,
-              .type = WGPUBufferBindingType_Storage,
-              .hasDynamicOffset = false,
-              .minBindingSize = 0,
-          },
-  };
-  binding_mask |= 1u << IREE_HAL_WEBGPU_PARAMS_BIND_GROUP_INDEX;
+  // *iree_inline_array_at(entries, binding_count) = (WGPUBindGroupLayoutEntry){
+  //     .nextInChain = NULL,
+  //     .binding = IREE_HAL_WEBGPU_PARAMS_BIND_GROUP_INDEX,
+  //     .visibility = WGPUShaderStage_Compute,
+  //     .buffer =
+  //         {
+  //             .nextInChain = NULL,
+  //             .type = WGPUBufferBindingType_Storage,
+  //             .hasDynamicOffset = false,
+  //             .minBindingSize = 0,
+  //         },
+  // };
+  // binding_mask |= 1u << IREE_HAL_WEBGPU_PARAMS_BIND_GROUP_INDEX;
 
   // DO NOT SUBMIT
   char descriptor_label[5];
