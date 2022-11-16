@@ -146,6 +146,14 @@ iree_cc_library(
   PUBLIC
 )
 
+# TODO(scotttodd): get CMake to detect changes in the .js file and re-link
+#     maybe copy into the binary directory and depend on the copy :|
+add_custom_target(
+  loop_emscripten_js
+  DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/loop_emscripten.js"
+)
+
 iree_cc_library(
   NAME
     loop_emscripten
@@ -158,6 +166,7 @@ iree_cc_library(
     ::tracing
   PUBLIC
 )
+add_dependencies(iree_base_loop_emscripten loop_emscripten_js)
 
 iree_cc_test(
   NAME

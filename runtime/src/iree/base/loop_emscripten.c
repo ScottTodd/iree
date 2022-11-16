@@ -13,6 +13,8 @@
 #include "iree/base/assert.h"
 
 extern void loop_emscripten_log_2();
+extern iree_status_t loopCommandCall(iree_loop_callback_fn_t callback,
+                                     void* user_data, iree_loop_t loop);
 
 //===----------------------------------------------------------------------===//
 // iree_loop_emscripten_t
@@ -286,7 +288,18 @@ iree_loop_emscripten_ctl(void* self, iree_loop_command_t command,
   // iree_loop_call_params_t* call_params = (iree_loop_call_params_t*)params;
 
   // TODO(scotttodd): pass the entire command/params/etc. to JS?
-  loop_ctl(command, params, inout_ptr);
+  // loop_ctl(command, params, inout_ptr);
+
+  iree_loop_call_params_t* call_params = (iree_loop_call_params_t*)params;
+  iree_status_t status =
+      loopCommandCall(call_params->callback.fn, call_params->callback.user_data,
+                      iree_loop_null());
+  if (iree_status_is_ok(status)) {
+    fprintf(stdout, "loopCommandCall was successful\n");
+  } else {
+    iree_status_fprint(stderr, status);
+    iree_status_free(status);
+  }
 
   // clang-format off
   // EM_ASM({

@@ -367,6 +367,8 @@ if(EMSCRIPTEN AND IREE_HAL_DRIVER_WEBGPU)
       #   some risk of breaking compatibility with other features)
       "-sASYNCIFY"
       # Can't set this locally, need to include on all libraries?
+      # TODO(scotttodd): move to final linkopts for specific binaries?
+      #    target_link_options isn't enough
       "--js-library=${IREE_ROOT_DIR}/runtime/src/iree/base/loop_emscripten.js"
   )
 endif()
