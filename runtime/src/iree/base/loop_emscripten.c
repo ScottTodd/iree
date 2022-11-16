@@ -193,9 +193,30 @@ IREE_API_EXPORT iree_status_t iree_loop_emscripten_wait_idle(
   return iree_ok_status();
 }
 
-// void test_function_pointer_from_js(int arg) {
-//   fprintf(stdout, "test_function_pointer_from_js, arg: %d\n", arg);
-// }
+// TODO(scotttodd): wait sources:
+//     IREE_LOOP_COMMAND_WAIT_ONE
+//     IREE_LOOP_COMMAND_WAIT_ANY
+//     IREE_LOOP_COMMAND_WAIT_ALL
+//   wait source backed by a Promise
+//   wait source import from futex to Promise
+//   Promise.then()
+//   create semaphore (webgpu nop_semaphore changes, promise_semaphore?)
+
+// TODO(scotttodd): move this JS code out into a library, with
+//    * an object for storing state
+//    * separate functions for each command case
+
+EM_JS(void, test_function, (void* function_to_call), {
+  console.log('iree_loop_emscripten test_function');
+  console.log('function_to_call:', function_to_call);
+
+  // Call the provided function pointer with a single integer argument.
+  Module['dynCall_vi'](function_to_call, 123);
+});
+
+void test_function_pointer_from_js(int arg) {
+  fprintf(stdout, "test_function_pointer_from_js, arg: %d\n", arg);
+}
 
 // static iree_status_t iree_loop_emscripten_enqueue(
 //     iree_loop_emscripten_t* loop_emscripten, void* data) {
@@ -203,6 +224,48 @@ IREE_API_EXPORT iree_status_t iree_loop_emscripten_wait_idle(
 // }
 
 // EM_JS_DEPS(iree_loop_emscripten_ctl, "$dynCall");
+
+// clang-format off
+EM_JS(void, loop_ctl, (int command, const void* params, void* inout_ptr), {
+  console.log('iree_loop_emscripten loop_ctl');
+  console.log('Module: ', Module);
+  // console.log('Module.Runtime.dynCall: ', Module.Runtime.dynCall);
+  // console.log('dynCall: ', dynCall);
+  console.log('command: ', command);
+  console.log('params: ', params);
+  console.log('inout_ptr: ', inout_ptr);
+  // console.log('arg1: ', $1);
+
+  // TODO(scotttodd): extract params struct
+  // if IREE_LOOP_COMMAND_CALL:
+  //   iree_loop_call_params_t
+  //     callback
+  //       fn
+  //       user_data
+  //     priority
+
+  // assume parmas is iree_loop_call_params_t
+  // TODO(scotttodd): unpack in C, just take Number args here with no HEAPU32
+  const call_callback_fn = HEAPU32[(params + 0) >> 2];
+  const call_callback_user_data = HEAPU32[(params + 4) >> 2];
+  const call_priority = HEAPU32[(params + 8) >> 2];
+
+  console.log('call_callback_fn:', call_callback_fn);
+  console.log('call_callback_user_data:', call_callback_user_data);
+  console.log('call_priority:', call_priority);
+
+  const ret = Module['dynCall_iiii'](call_callback_fn, call_callback_user_data,
+                                     /*loop=*/0, /*status=*/0);
+  console.log('ret:', ret);
+
+  setTimeout(() => {
+      console.log('loop_ctl -> setImmediate');
+      // iree_status_t status =
+      //     params.callback.fn(params.callback.user_data, loop,
+      //     iree_ok_status());
+  }, 0);
+});
+// clang-format on
 
 // Control function for the Emscripten loop.
 // DO NOT SUBMIT
@@ -212,36 +275,37 @@ iree_loop_emscripten_ctl(void* self, iree_loop_command_t command,
                          const void* params, void** inout_ptr) {
   IREE_ASSERT_ARGUMENT(self);
 
+  test_function(test_function_pointer_from_js);
+
   // iree_loop_emscripten_t* loop_emscripten = (iree_loop_emscripten_t*)self;
 
-  // TODO(scotttodd): try setImmediate()/setTimeout() here
-
-  // TODO(scotttodd): EM_JS to define a function, then call that function?
-  iree_loop_call_params_t* call_params = (iree_loop_call_params_t*)params;
+  // iree_loop_call_params_t* call_params = (iree_loop_call_params_t*)params;
 
   // TODO(scotttodd): pass the entire command/params/etc. to JS?
+  loop_ctl(command, params, inout_ptr);
 
   // clang-format off
-  EM_ASM({
-    console.log('iree_loop_emscripten_ctl');
-    console.log('Module: ', Module);
-    // console.log('Module.Runtime.dynCall: ', Module.Runtime.dynCall);
-    // console.log('dynCall: ', dynCall);
-    console.log('arg0: ', $0);
-    // console.log('arg1: ', $1);
+  // EM_ASM({
+  //   console.log('iree_loop_emscripten_ctl');
+  //   console.log('Module: ', Module);
+  //   // console.log('Module.Runtime.dynCall: ', Module.Runtime.dynCall);
+  //   // console.log('dynCall: ', dynCall);
+  //   console.log('arg0: ', $0);
+  //   // console.log('arg1: ', $1);
 
-    // Module.dynCall_viii()
-    Module['dynCall_vi']($0, 123);
+  //   // Call the provided function pointer with a single integer argument.
+  //   // Module.dynCall_viii()
+  //   Module['dynCall_vi']($0, 123);
 
-    setTimeout(() => {
-      //
-      console.log('iree_loop_emscripten_ctl -> setImmediate');
+  //   setTimeout(() => {
+  //     //
+  //     console.log('iree_loop_emscripten_ctl -> setImmediate');
 
-      //
-      // iree_status_t status =
-      //     params.callback.fn(params.callback.user_data, loop, iree_ok_status());
-    }, 0);l
-  }, test_function_pointer_from_js);
+  //     //
+  //     // iree_status_t status =
+  //     //     params.callback.fn(params.callback.user_data, loop, iree_ok_status());
+  //   }, 0);
+  // }, test_function_pointer_from_js);
   // }, call_params->callback.fn, call_params->callback.user_data);
   // clang-format on
 
@@ -249,14 +313,14 @@ iree_loop_emscripten_ctl(void* self, iree_loop_command_t command,
   //     allocator alloc, hop to js, call c, allocator free
 
   // TODO(scotttodd): pass loop for reentrant scheduling
-  iree_status_t status = call_params->callback.fn(
-      call_params->callback.user_data, iree_loop_null(), iree_ok_status());
-  if (iree_status_is_ok(status)) {
-    fprintf(stdout, "callback fn was successful\n");
-  } else {
-    iree_status_fprint(stderr, status);
-    iree_status_free(status);
-  }
+  // iree_status_t status = call_params->callback.fn(
+  //     call_params->callback.user_data, iree_loop_null(), iree_ok_status());
+  // if (iree_status_is_ok(status)) {
+  //   fprintf(stdout, "callback fn was successful\n");
+  // } else {
+  //   iree_status_fprint(stderr, status);
+  //   iree_status_free(status);
+  // }
 
   // Original C++:
   //     callback.fn(callback.user_data);
