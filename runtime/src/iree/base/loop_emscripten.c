@@ -12,6 +12,8 @@
 
 #include "iree/base/assert.h"
 
+extern void loop_emscripten_log_2();
+
 //===----------------------------------------------------------------------===//
 // iree_loop_emscripten_t
 //===----------------------------------------------------------------------===//
@@ -32,6 +34,8 @@ typedef struct iree_loop_emscripten_t {
 IREE_API_EXPORT iree_status_t iree_loop_emscripten_allocate(
     iree_allocator_t allocator, iree_loop_emscripten_t** out_loop_emscripten) {
   IREE_ASSERT_ARGUMENT(out_loop_emscripten);
+
+  loop_emscripten_log_2();
 
   const iree_host_size_t loop_emscripten_size =
       iree_host_align(sizeof(iree_loop_emscripten_t), iree_max_align_t);

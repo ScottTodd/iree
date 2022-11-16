@@ -366,6 +366,8 @@ if(EMSCRIPTEN AND IREE_HAL_DRIVER_WEBGPU)
       #   does bloat their binary size (and each Emscripten flag comes with
       #   some risk of breaking compatibility with other features)
       "-sASYNCIFY"
+      # Can't set this locally, need to include on all libraries?
+      "--js-library=${IREE_ROOT_DIR}/runtime/src/iree/base/loop_emscripten.js"
   )
 endif()
 
