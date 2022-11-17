@@ -433,6 +433,12 @@ class HALDispatchABI {
           loc, basePtrValue.getType(), basePtrValue, baseOffsetValue);
     }
 
+    // TODO: This ignores memrefType.getMemorySpace, which is a HAL descriptor
+    // type. Convert IREE hal descriptor types to address spaces properly.
+    memRefType =
+        MemRefType::get(memRefType.getShape(), memRefType.getElementType(),
+                        memRefType.getLayout());
+
     // NOTE: if we wanted to check the range was in bounds here would be the
     // place to do it.
 
@@ -1183,6 +1189,18 @@ void ConvertToLLVMPass::runOnOperation() {
   options.dataLayout = llvm::DataLayout(dataLayoutStr);
   options.overrideIndexBitwidth(options.dataLayout.getPointerSizeInBits());
   LLVMTypeConverter converter(&getContext(), options, &dataLayoutAnalysis);
+  // TODO: This ignores the original MemRef memory space from HAL subspan ops,
+  // which is a HAL descriptor type. Convert IREE hal descriptor types to
+  // address spaces properly.
+  converter.addConversion(
+      [&converter](MemRefType memRefType) -> Optional<Type> {
+        if (memRefType.getMemorySpace()
+                .isa_and_nonnull<IREE::HAL::DescriptorTypeAttr>())
+          return converter.convertType(MemRefType::get(
+              memRefType.getShape(), memRefType.getElementType(),
+              memRefType.getLayout()));
+        return llvm::None;
+      });
 
   RewritePatternSet patterns(&getContext());
 

@@ -232,6 +232,12 @@ class ConvertFunc : public ConvertToLLVMPattern {
         argMapping.size(), LLVM::LLVMPointerType::get(rewriter.getI32Type()));
     funcOp.walk([&](IREE::HAL::InterfaceBindingSubspanOp subspanOp) {
       auto memrefType = subspanOp.getType().cast<MemRefType>();
+      // TODO: This ignores memrefType.getMemorySpace, which is a HAL descriptor
+      // type. Convert IREE hal descriptor types to address spaces properly.
+      memrefType =
+          MemRefType::get(memrefType.getShape(), memrefType.getElementType(),
+                          memrefType.getLayout());
+
       Type elType = memrefType.getElementType();
       auto llvmType =
           LLVM::LLVMPointerType::get(elType, memrefType.getMemorySpaceAsInt());
