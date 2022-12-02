@@ -724,6 +724,9 @@ static iree_status_t iree_hal_webgpu_command_buffer_copy_buffer(
   IREE_RETURN_IF_ERROR(iree_hal_webgpu_command_buffer_acquire_command_encoder(
       command_buffer, &command_encoder));
 
+  fprintf(stdout, "CopyBufferToBuffer %d -> %d\n",
+          (int)iree_hal_webgpu_buffer_handle(source_buffer),
+          (int)iree_hal_webgpu_buffer_handle(target_buffer));
   wgpuCommandEncoderCopyBufferToBuffer(
       command_encoder, iree_hal_webgpu_buffer_handle(source_buffer),
       source_offset, iree_hal_webgpu_buffer_handle(target_buffer),

@@ -138,6 +138,114 @@ static iree_status_t iree_hal_webgpu_simple_allocator_allocate_buffer(
   // it can happen in real world use cases. So we should at least not crash.
   if (allocation_size == 0) allocation_size = 4;
 
+  // clang-format off
+
+  // simple_abs:
+
+  // ------------------------------
+  // allocate_buffer
+  //   buffer usage: TRANSFER|DISPATCH_UNIFORM_READ|DISPATCH_STORAGE_READ
+  //   memory access: ALL
+  //   memory type: DEVICE_LOCAL|OPTIMAL|HOST_VISIBLE
+  // WGPUBuffer handle: 1
+  // ------------------------------
+  // === program properties ===
+  //   module name: 'module'
+  //   module signature:
+  //     19 imported functions
+  //     2 exported functions
+  //     2 internal functions
+  //   exported functions:
+  //     function name: 'abs', calling convention: 0r_r'
+  //     function name: '__init', calling convention: 0v_v'
+  // ------------------------------
+  // allocate_buffer
+  //   buffer usage: TRANSFER|DISPATCH_STORAGE
+  //   memory access: ALL
+  //   memory type: DEVICE_LOCAL
+  // WGPUBuffer handle: 2
+  // ------------------------------
+  // ------------------------------
+  // allocate_buffer
+  //   buffer usage: TRANSFER|DISPATCH_STORAGE|MAPPING
+  //   memory access: ALL
+  //   memory type: DEVICE_LOCAL|HOST_VISIBLE
+  // WGPUBuffer handle: 3
+  // ------------------------------
+  // ------------------------------
+  // allocate_buffer
+  //   buffer usage: TRANSFER|MAPPING
+  //   memory access: ALL
+  //   memory type: HOST_LOCAL|DEVICE_VISIBLE
+  // WGPUBuffer handle: 4
+  // ------------------------------
+  // CopyBufferToBuffer 3 -> 4
+  // Call output:
+  // f32=1.23
+
+  // Buffer usages (BufferUsage::(MapRead|MapWrite|CopySrc|CopyDst)) is invalid.
+  // If a buffer usage contains BufferUsage::MapWrite the only other allowed
+  // usage is BufferUsage::CopySrc.
+
+  // posenet:
+
+  //  ------------------------------
+  //  allocate_buffer
+  //    buffer usage: TRANSFER|DISPATCH_UNIFORM_READ|DISPATCH_STORAGE_READ
+  //    memory access: ALL
+  //    memory type: DEVICE_LOCAL|OPTIMAL|HOST_VISIBLE
+  //  WGPUBuffer handle: 1
+  //  ------------------------------
+  //  ------------------------------
+  //  allocate_buffer
+  //    buffer usage: TRANSFER|MAPPING
+  //    memory access: ALL
+  //    memory type: HOST_VISIBLE|HOST_COHERENT|DEVICE_VISIBLE
+  //  WGPUBuffer handle: 2
+  //  ------------------------------
+  //  ------------------------------
+  //  allocate_buffer
+  //    buffer usage: TRANSFER|DISPATCH_STORAGE|SHARING_IMMUTABLE
+  //    memory access: ALL
+  //    memory type: DEVICE_LOCAL
+  //  WGPUBuffer handle: 3
+  //  ------------------------------
+  //  CopyBufferToBuffer 2 -> 3
+  //  === program properties ===
+  //    module name: 'module'
+  //    module signature:
+  //      26 imported functions
+  //      2 exported functions
+  //      2 internal functions
+  //    exported functions:
+  //      function name: 'main', calling convention: 0r_rrrr'
+  //      function name: '__init', calling convention: 0v_v'
+  // localhost/:1 [Buffer] usage (BufferUsage::(MapRead|CopyDst)) doesn't include BufferUsage::CopySrc.
+  //  - While validating source [Buffer] usage.
+  //  - While encoding [CommandEncoder].CopyBufferToBuffer([Buffer], 0, [Buffer], 0, 5033344).
+
+  // Buffer usages (BufferUsage::(MapRead|MapWrite|CopySrc|CopyDst)) is invalid.
+  // If a buffer usage contains BufferUsage::MapWrite the only other allowed
+  // usage is BufferUsage::CopySrc.
+  //  - While calling [Device "IREE WebGPU device"].CreateBuffer([BufferDescriptor]).
+
+  // clang-format on
+
+  fprintf(stdout, "------------------------------\n");
+  fprintf(stdout, "allocate_buffer\n");
+  iree_bitfield_string_temp_t temp0, temp1, temp2;
+  iree_string_view_t usage_str =
+      iree_hal_buffer_usage_format(params->usage, &temp0);
+  iree_string_view_t access_str =
+      iree_hal_memory_access_format(params->access, &temp1);
+  iree_string_view_t type_str =
+      iree_hal_memory_type_format(params->type, &temp2);
+  fprintf(stdout, "  buffer usage: %.*s\n", (int)usage_str.size,
+          usage_str.data);
+  fprintf(stdout, "  memory access: %.*s\n", (int)access_str.size,
+          access_str.data);
+  fprintf(stdout, "  memory type: %.*s\n", (int)type_str.size, type_str.data);
+
   WGPUBufferUsageFlags usage_flags = WGPUBufferUsage_None;
   if (iree_all_bits_set(params->usage, IREE_HAL_BUFFER_USAGE_TRANSFER)) {
     usage_flags |= WGPUBufferUsage_CopySrc;
@@ -153,9 +261,9 @@ static iree_status_t iree_hal_webgpu_simple_allocator_allocate_buffer(
         !iree_any_bit_set(params->usage,
                           IREE_HAL_BUFFER_USAGE_DISPATCH_STORAGE)) {
       usage_flags |= WGPUBufferUsage_MapRead;
-      // usage_flags |= WGPUBufferUsage_MapWrite;
+      usage_flags |= WGPUBufferUsage_MapWrite;
       // Clear CopySrc
-      usage_flags &= ~(WGPUBufferUsage_CopySrc);
+      // usage_flags &= ~(WGPUBufferUsage_CopySrc);
     }
   }
   if (iree_any_bit_set(params->usage, IREE_HAL_BUFFER_USAGE_DISPATCH_STORAGE)) {
@@ -185,6 +293,9 @@ static iree_status_t iree_hal_webgpu_simple_allocator_allocate_buffer(
                             "unable to allocate buffer of size %" PRIdsz,
                             allocation_size);
   }
+
+  fprintf(stdout, "WGPUBuffer handle: %d\n", (int)buffer_handle);
+  fprintf(stdout, "------------------------------\n");
 
   // Upload the initial data into the mapped buffer. In WebGPU the only
   // _somewhat_ efficient path for buffer initialization is setting

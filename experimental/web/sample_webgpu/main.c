@@ -400,6 +400,8 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
       .usage = IREE_HAL_BUFFER_USAGE_TRANSFER | IREE_HAL_BUFFER_USAGE_MAPPING,
   };
   if (iree_status_is_ok(status)) {
+    fprintf(stdout,
+            "allocating device buffer for printing (transfer into this)\n");
     status = iree_hal_allocator_allocate_buffer(
         iree_hal_device_allocator(device), target_params, data_length,
         iree_const_byte_span_empty(), &mappable_buffer);
