@@ -12,6 +12,7 @@
 #include "iree/hal/api.h"
 #include "iree/hal/drivers/webgpu/buffer.h"
 #include "iree/hal/drivers/webgpu/platform/webgpu.h"
+#include "iree/hal/drivers/webgpu/webgpu_device.h"
 #include "iree/modules/hal/module.h"
 #include "iree/runtime/api.h"
 #include "iree/vm/bytecode_module.h"
@@ -391,21 +392,51 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
       iree_hal_buffer_view_byte_length(buffer_view);
 
   // ----------------------------------------------
-  // Transfer from device memory to mappable host memory.
-  iree_hal_buffer_t* mappable_buffer = NULL;
+  // Allocate mappable host memory.
+  // Note: iree_hal_webgpu_simple_allocator_allocate_buffer only supports
+  // CopySrc today, so we'll create the buffer directly with
+  // wgpuDeviceCreateBuffer and then wrap it using iree_hal_webgpu_buffer_wrap.
+  WGPUBufferDescriptor descriptor = {
+      .nextInChain = NULL,
+      .label = "IREE_readback",
+      .usage = WGPUBufferUsage_MapRead | WGPUBufferUsage_CopyDst,
+      .size = data_length,
+      .mappedAtCreation = false,
+  };
+  WGPUBuffer buffer_handle = NULL;
+  if (iree_status_is_ok(status)) {
+    buffer_handle = wgpuDeviceCreateBuffer(
+        iree_hal_webgpu_device_handle(device), &descriptor);
+    fprintf(stdout, "Readback created WGPUBuffer handle: %d\n",
+            (int)buffer_handle);
+    if (!buffer_handle) {
+      status = iree_make_status(IREE_STATUS_RESOURCE_EXHAUSTED,
+                                "unable to allocate buffer of size %" PRIdsz,
+                                data_length);
+    }
+  }
+  // TODO(scotttodd): destroy buffer_handle when no longer used?
   iree_device_size_t target_offset = 0;
   const iree_hal_buffer_params_t target_params = {
+      .usage = IREE_HAL_BUFFER_USAGE_TRANSFER | IREE_HAL_BUFFER_USAGE_MAPPING,
       .type =
           IREE_HAL_MEMORY_TYPE_HOST_LOCAL | IREE_HAL_MEMORY_TYPE_DEVICE_VISIBLE,
-      .usage = IREE_HAL_BUFFER_USAGE_TRANSFER | IREE_HAL_BUFFER_USAGE_MAPPING,
+      .access = IREE_HAL_MEMORY_ACCESS_ALL,
   };
+  iree_hal_buffer_t* mappable_buffer = NULL;
   if (iree_status_is_ok(status)) {
-    fprintf(stdout,
-            "allocating device buffer for printing (transfer into this)\n");
-    status = iree_hal_allocator_allocate_buffer(
-        iree_hal_device_allocator(device), target_params, data_length,
-        iree_const_byte_span_empty(), &mappable_buffer);
+    status = iree_hal_webgpu_buffer_wrap(
+        device, iree_hal_device_allocator(device), target_params.type,
+        target_params.access, target_params.usage, data_length,
+        /*byte_offset=*/0,
+        /*byte_length=*/data_length, buffer_handle, iree_allocator_system(),
+        &mappable_buffer);
   }
+  // TODO(scotttodd): drop reference to mappable_buffer when no longer used?
+  // ----------------------------------------------
+
+  // ----------------------------------------------
+  // Transfer from device memory to mappable host memory.
   const iree_hal_transfer_command_t transfer_command = {
       .type = IREE_HAL_TRANSFER_COMMAND_TYPE_COPY,
       .copy =
