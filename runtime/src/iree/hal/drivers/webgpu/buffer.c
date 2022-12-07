@@ -75,7 +75,10 @@ static void iree_hal_webgpu_buffer_destroy(iree_hal_buffer_t* base_buffer) {
 
   // NOTE: this immediately destroys the buffer (in theory) and it must not be
   // in use. That's ok because we also have that requirement in the HAL.
-  wgpuBufferDestroy(buffer->handle);
+  // DO NOT SUBMIT - find the destruction order bug
+  //    error with this: "[Buffer] used in submit while destroyed"
+  //    look at iree_hal_resource_set_t and command buffer retention
+  // wgpuBufferDestroy(buffer->handle);
 
   iree_allocator_free(host_allocator, buffer);
 
