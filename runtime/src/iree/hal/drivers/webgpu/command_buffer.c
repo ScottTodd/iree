@@ -812,6 +812,9 @@ static iree_status_t iree_hal_webgpu_command_buffer_prepare_dispatch(
   IREE_RETURN_IF_ERROR(iree_hal_webgpu_command_buffer_append_parameters(
       command_buffer, push_constant_data, &params_offset));
 
+  fprintf(stdout, "prepare_dispatch push_constant_count: %" PRIhsz "\n",
+          push_constant_count);
+
   // Acquire the compute pass we'll encode the dispatch into - this may be
   // fresh or reused from prior commands.
   WGPUComputePassEncoder compute_pass = NULL;

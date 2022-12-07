@@ -577,6 +577,8 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
   iree_vm_async_invoke_state_t* invoke_state =
       (iree_vm_async_invoke_state_t*)user_data;
 
+  fprintf(stdout, "iree_vm_async_invoke invoke_callback (on loop)\n");
+
   if (!iree_status_is_ok(status)) {
     fprintf(stderr, "iree_vm_async_invoke_callback_fn_t error:\n");
     iree_status_fprint(stderr, status);
@@ -650,6 +652,9 @@ const char* call_function(iree_program_state_t* program_state,
   // TODO(scotttodd): record end time in async callback instead of here
   // TODO(scotttodd): print outputs in async callback instead of here
 
+  fprintf(stdout,
+          "iree_vm_async_invoke returned (inline loop -> after callback)\n");
+
   iree_time_t end_time = iree_time_now();
   iree_time_t time_elapsed = end_time - start_time;
 
@@ -667,9 +672,10 @@ const char* call_function(iree_program_state_t* program_state,
         "{ \"total_invoke_time_ms\": %" PRId64 ", \"outputs\": \"",
         time_elapsed / 1000000);
   }
-  if (iree_status_is_ok(status)) {
-    status = print_outputs_from_call(&call, &outputs_builder);
-  }
+  fprintf(stderr, "SKIPPING READBACK CODE TO TEST EXECUTION ON ITS OWN\n");
+  // if (iree_status_is_ok(status)) {
+  //   status = print_outputs_from_call(&call, &outputs_builder);
+  // }
   if (iree_status_is_ok(status)) {
     status = iree_string_builder_append_cstring(&outputs_builder, "\"}");
   }

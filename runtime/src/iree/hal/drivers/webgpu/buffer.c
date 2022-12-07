@@ -73,6 +73,9 @@ static void iree_hal_webgpu_buffer_destroy(iree_hal_buffer_t* base_buffer) {
     wgpuBufferUnmap(buffer->handle);
   }
 
+  fprintf(stdout, "iree_hal_webgpu_buffer_destroy, handle: %d\n",
+          (int)buffer->handle);
+
   // NOTE: this immediately destroys the buffer (in theory) and it must not be
   // in use. That's ok because we also have that requirement in the HAL.
   // DO NOT SUBMIT - find the destruction order bug

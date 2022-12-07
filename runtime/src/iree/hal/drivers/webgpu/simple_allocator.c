@@ -246,8 +246,25 @@ static iree_status_t iree_hal_webgpu_simple_allocator_allocate_buffer(
           access_str.data);
   fprintf(stdout, "  memory type: %.*s\n", (int)type_str.size, type_str.data);
 
+  // Requirements from https://gpuweb.github.io/gpuweb/#buffer-usage:
+  //   * MAP_WRITE can only be combined with COPY_SRC
+  //   * MAP_READ  can only be combined with COPY_DST
+  // Requirements from IREE:
+  //   * IREE_HAL_BUFFER_USAGE_TRANSFER -> either CopySrc or CopyDst
+  //   * IREE_HAL_BUFFER_USAGE_MAPPING  -> either MapRead or MapWrite
+
+  // copy source:
+  //   usage : TRANSFER|MAPPING
+  //   access: ALL
+  //   type  : HOST_VISIBLE|HOST_COHERENT|DEVICE_VISIBLE
+  // copy destination:
+  //   usage : TRANSFER|MAPPING
+  //   access: ALL
+  //   type  : HOST_LOCAL|DEVICE_VISIBLE
+
   WGPUBufferUsageFlags usage_flags = WGPUBufferUsage_None;
   if (iree_all_bits_set(params->usage, IREE_HAL_BUFFER_USAGE_TRANSFER)) {
+    fprintf(stdout, "  WGPUBufferUsage_CopySrc | WGPUBufferUsage_CopyDst\n");
     usage_flags |= WGPUBufferUsage_CopySrc;
     usage_flags |= WGPUBufferUsage_CopyDst;
   }
@@ -260,21 +277,28 @@ static iree_status_t iree_hal_webgpu_simple_allocator_allocate_buffer(
     if (iree_all_bits_set(params->usage, IREE_HAL_BUFFER_USAGE_TRANSFER) &&
         !iree_any_bit_set(params->usage,
                           IREE_HAL_BUFFER_USAGE_DISPATCH_STORAGE)) {
-      usage_flags |= WGPUBufferUsage_MapRead;
+      fprintf(stdout, "  WGPUBufferUsage_MapWrite\n");
+      // usage_flags |= WGPUBufferUsage_MapRead;
       usage_flags |= WGPUBufferUsage_MapWrite;
       // Clear CopySrc
       // usage_flags &= ~(WGPUBufferUsage_CopySrc);
+      // Clear CopyDst
+      fprintf(stdout, "  clear WGPUBufferUsage_CopyDst\n");
+      usage_flags &= ~(WGPUBufferUsage_CopyDst);
     }
   }
   if (iree_any_bit_set(params->usage, IREE_HAL_BUFFER_USAGE_DISPATCH_STORAGE)) {
+    fprintf(stdout, "  WGPUBufferUsage_Storage\n");
     usage_flags |= WGPUBufferUsage_Storage;
   }
   if (iree_any_bit_set(params->usage,
                        IREE_HAL_BUFFER_USAGE_DISPATCH_UNIFORM_READ)) {
+    fprintf(stdout, "  WGPUBufferUsage_Uniform\n");
     usage_flags |= WGPUBufferUsage_Uniform;
   }
   if (iree_any_bit_set(params->usage,
                        IREE_HAL_BUFFER_USAGE_DISPATCH_INDIRECT_PARAMS)) {
+    fprintf(stdout, "  WGPUBufferUsage_Indirect\n");
     usage_flags |= WGPUBufferUsage_Indirect;
   }
 
@@ -320,6 +344,9 @@ static iree_status_t iree_hal_webgpu_simple_allocator_allocate_buffer(
     IREE_STATISTICS(iree_hal_allocator_statistics_record_alloc(
         &allocator->statistics, params->type, allocation_size));
   } else {
+    fprintf(stdout,
+            "allocate status not ok, destroying WGPUBuffer handle: %d\n",
+            (int)buffer_handle);
     wgpuBufferDestroy(buffer_handle);
   }
   return status;
@@ -334,6 +361,9 @@ static void iree_hal_webgpu_simple_allocator_deallocate_buffer(
   IREE_STATISTICS(iree_hal_allocator_statistics_record_free(
       &allocator->statistics, iree_hal_buffer_memory_type(base_buffer),
       iree_hal_buffer_allocation_size(base_buffer)));
+
+  fprintf(stdout, "deallocate -> destroying WGPUBuffer handle: %d\n",
+          (int)iree_hal_webgpu_buffer_handle(base_buffer));
 
   iree_hal_buffer_destroy(base_buffer);
 }
