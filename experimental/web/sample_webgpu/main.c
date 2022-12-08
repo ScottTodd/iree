@@ -283,7 +283,7 @@ static iree_status_t parse_inputs_into_call(
 
 typedef struct iree_buffer_map_userdata_t {
   iree_hal_buffer_view_t* buffer_view;
-  iree_hal_buffer_t* mappable_buffer;
+  iree_hal_buffer_t* readback_buffer;
 } iree_buffer_map_userdata_t;
 
 static void iree_webgpu_mapped_buffer_release(void* user_data,
@@ -326,7 +326,7 @@ static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus map_status,
   iree_device_size_t data_length =
       iree_hal_buffer_view_byte_length(userdata->buffer_view);
   WGPUBuffer buffer_handle =
-      iree_hal_webgpu_buffer_handle(userdata->mappable_buffer);
+      iree_hal_webgpu_buffer_handle(userdata->readback_buffer);
 
   // For this sample we want to print arbitrary buffers, which is easiest
   // using the |iree_hal_buffer_view_format| function. Internally, that
@@ -341,7 +341,7 @@ static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus map_status,
   iree_hal_buffer_t* heap_buffer = NULL;
   if (iree_status_is_ok(status)) {
     status = iree_hal_heap_buffer_wrap(
-        userdata->mappable_buffer->device_allocator,
+        userdata->readback_buffer->device_allocator,
         IREE_HAL_MEMORY_TYPE_HOST_LOCAL, IREE_HAL_MEMORY_ACCESS_READ,
         IREE_HAL_BUFFER_USAGE_MAPPING, data_length,
         iree_make_byte_span((void*)data_ptr, data_length),
@@ -403,19 +403,19 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
       .size = data_length,
       .mappedAtCreation = false,
   };
-  WGPUBuffer buffer_handle = NULL;
+  WGPUBuffer readback_buffer_handle = NULL;
   if (iree_status_is_ok(status)) {
-    buffer_handle = wgpuDeviceCreateBuffer(
+    readback_buffer_handle = wgpuDeviceCreateBuffer(
         iree_hal_webgpu_device_handle(device), &descriptor);
     fprintf(stdout, "Readback created WGPUBuffer handle: %d\n",
-            (int)buffer_handle);
-    if (!buffer_handle) {
+            (int)readback_buffer_handle);
+    if (!readback_buffer_handle) {
       status = iree_make_status(IREE_STATUS_RESOURCE_EXHAUSTED,
                                 "unable to allocate buffer of size %" PRIdsz,
                                 data_length);
     }
   }
-  // TODO(scotttodd): destroy buffer_handle when no longer used?
+  // TODO(scotttodd): destroy readback_buffer_handle when no longer used?
   iree_device_size_t target_offset = 0;
   const iree_hal_buffer_params_t target_params = {
       .usage = IREE_HAL_BUFFER_USAGE_TRANSFER | IREE_HAL_BUFFER_USAGE_MAPPING,
@@ -423,16 +423,16 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
           IREE_HAL_MEMORY_TYPE_HOST_LOCAL | IREE_HAL_MEMORY_TYPE_DEVICE_VISIBLE,
       .access = IREE_HAL_MEMORY_ACCESS_ALL,
   };
-  iree_hal_buffer_t* mappable_buffer = NULL;
+  iree_hal_buffer_t* readback_buffer = NULL;
   if (iree_status_is_ok(status)) {
     status = iree_hal_webgpu_buffer_wrap(
         device, iree_hal_device_allocator(device), target_params.type,
         target_params.access, target_params.usage, data_length,
         /*byte_offset=*/0,
-        /*byte_length=*/data_length, buffer_handle, iree_allocator_system(),
-        &mappable_buffer);
+        /*byte_length=*/data_length, readback_buffer_handle,
+        iree_allocator_system(), &readback_buffer);
   }
-  // TODO(scotttodd): drop reference to mappable_buffer when no longer used?
+  // TODO(scotttodd): drop reference to readback_buffer when no longer used?
   // ----------------------------------------------
 
   // ----------------------------------------------
@@ -443,7 +443,7 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
           {
               .source_buffer = buffer,
               .source_offset = data_offset,
-              .target_buffer = mappable_buffer,
+              .target_buffer = readback_buffer,
               .target_offset = target_offset,
               .length = data_length,
           },
@@ -485,11 +485,11 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
                                    sizeof(iree_buffer_map_userdata_t),
                                    (void**)&userdata);
     userdata->buffer_view = buffer_view;
-    userdata->mappable_buffer = mappable_buffer;
+    userdata->readback_buffer = readback_buffer;
   }
 
   if (iree_status_is_ok(status)) {
-    WGPUBuffer buffer_handle = iree_hal_webgpu_buffer_handle(mappable_buffer);
+    WGPUBuffer buffer_handle = iree_hal_webgpu_buffer_handle(readback_buffer);
     wgpuBufferMapAsync(buffer_handle, WGPUMapMode_Read, /*offset=*/0,
                        /*size=*/data_length, buffer_map_sync_callback,
                        /*userdata=*/userdata);
@@ -672,10 +672,9 @@ const char* call_function(iree_program_state_t* program_state,
         "{ \"total_invoke_time_ms\": %" PRId64 ", \"outputs\": \"",
         time_elapsed / 1000000);
   }
-  fprintf(stderr, "SKIPPING READBACK CODE TO TEST EXECUTION ON ITS OWN\n");
-  // if (iree_status_is_ok(status)) {
-  //   status = print_outputs_from_call(&call, &outputs_builder);
-  // }
+  if (iree_status_is_ok(status)) {
+    status = print_outputs_from_call(&call, &outputs_builder);
+  }
   if (iree_status_is_ok(status)) {
     status = iree_string_builder_append_cstring(&outputs_builder, "\"}");
   }
@@ -688,7 +687,7 @@ const char* call_function(iree_program_state_t* program_state,
   }
 
   // Note: this leaks the buffer. It's up to the caller to free it after use.
-  char* outputs = strdup(iree_string_builder_buffer(&outputs_builder));
+  char* outputs_string = strdup(iree_string_builder_buffer(&outputs_builder));
   iree_string_builder_deinitialize(&outputs_builder);
-  return outputs;
+  return outputs_string;
 }
