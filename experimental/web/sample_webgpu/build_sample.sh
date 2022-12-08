@@ -43,29 +43,29 @@ INSTALL_ROOT="${1:-${ROOT_DIR}/build-host/install}"
 # Compile from .mlir input to portable .vmfb file using host tools            #
 ###############################################################################
 
-echo "=== Compiling sample MLIR files to VM FlatBuffer outputs (.vmfb) ==="
-COMPILE_TOOL="${INSTALL_ROOT?}/bin/iree-compile"
+# echo "=== Compiling sample MLIR files to VM FlatBuffer outputs (.vmfb) ==="
+# COMPILE_TOOL="${INSTALL_ROOT?}/bin/iree-compile"
 
-# TODO(#11321): Enable iree-codegen-gpu-native-math-precision by default?
-compile_sample() {
-  echo "  Compiling '$1' sample for WebGPU..."
-  ${COMPILE_TOOL?} $3 \
-    --iree-input-type=$2 \
-    --iree-hal-target-backends=webgpu \
-    --iree-codegen-gpu-native-math-precision=true \
-    --o ${BINARY_DIR}/$1_webgpu.vmfb
-}
+# # TODO(#11321): Enable iree-codegen-gpu-native-math-precision by default?
+# compile_sample() {
+#   echo "  Compiling '$1' sample for WebGPU..."
+#   ${COMPILE_TOOL?} $3 \
+#     --iree-input-type=$2 \
+#     --iree-hal-target-backends=webgpu \
+#     --iree-codegen-gpu-native-math-precision=true \
+#     --o ${BINARY_DIR}/$1_webgpu.vmfb
+# }
 
-compile_sample "simple_abs"     "mhlo" "${ROOT_DIR?}/samples/models/simple_abs.mlir"
-compile_sample "fullyconnected" "mhlo" "${ROOT_DIR?}/tests/e2e/models/fullyconnected.mlir"
+# compile_sample "simple_abs"     "mhlo" "${ROOT_DIR?}/samples/models/simple_abs.mlir"
+# compile_sample "fullyconnected" "mhlo" "${ROOT_DIR?}/tests/e2e/models/fullyconnected.mlir"
 
-# Does not run yet (uses internal readback, which needs async buffer mapping?)
-# compile_sample "collatz"        "${ROOT_DIR?}/tests/e2e/models/collatz.mlir"
+# # Does not run yet (uses internal readback, which needs async buffer mapping?)
+# # compile_sample "collatz"        "${ROOT_DIR?}/tests/e2e/models/collatz.mlir"
 
-# Slow, so just run on demand
-# compile_sample "mobilebert" "tosa" "D:/dev/projects/iree-data/models/2022_10_28/mobilebertsquad.tflite.mlir"
-# compile_sample "posenet"    "tosa" "D:/dev/projects/iree-data/models/2022_10_28/posenet.tflite.mlir"
-# compile_sample "mobilessd"  "tosa" "D:/dev/projects/iree-data/models/2022_10_28/mobile_ssd_v2_float_coco.tflite.mlir"
+# # Slow, so just run on demand
+# # compile_sample "mobilebert" "tosa" "D:/dev/projects/iree-data/models/2022_10_28/mobilebertsquad.tflite.mlir"
+# # compile_sample "posenet"    "tosa" "D:/dev/projects/iree-data/models/2022_10_28/posenet.tflite.mlir"
+# # compile_sample "mobilessd"  "tosa" "D:/dev/projects/iree-data/models/2022_10_28/mobile_ssd_v2_float_coco.tflite.mlir"
 
 ###############################################################################
 # Build the web artifacts using Emscripten                                    #
@@ -81,6 +81,7 @@ emcmake "${CMAKE_BIN?}" -G Ninja .. \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DIREE_HOST_BINARY_ROOT=${INSTALL_ROOT} \
   -DIREE_BUILD_EXPERIMENTAL_WEB_SAMPLES=ON \
+  -DIREE_ENABLE_ASAN=ON \
   -DIREE_ENABLE_THREADING=OFF \
   -DIREE_HAL_DRIVER_DEFAULTS=OFF \
   -DIREE_HAL_DRIVER_LOCAL_SYNC=OFF \

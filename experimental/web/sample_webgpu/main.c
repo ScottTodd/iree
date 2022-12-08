@@ -384,12 +384,16 @@ static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus map_status,
 
 static iree_status_t print_buffer_view(iree_hal_device_t* device,
                                        iree_hal_buffer_view_t* buffer_view) {
+  fprintf(stdout, "print_buffer_view\n");
   iree_status_t status = iree_ok_status();
 
   iree_hal_buffer_t* buffer = iree_hal_buffer_view_buffer(buffer_view);
+  WGPUBuffer buffer_handle = iree_hal_webgpu_buffer_handle(buffer);
   iree_device_size_t data_offset = iree_hal_buffer_byte_offset(buffer);
   iree_device_size_t data_length =
       iree_hal_buffer_view_byte_length(buffer_view);
+
+  fprintf(stdout, "printing result buffer handle: %d\n", (int)buffer_handle);
 
   // ----------------------------------------------
   // Allocate mappable host memory.
@@ -500,6 +504,7 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
 
 static iree_status_t print_outputs_from_call(
     iree_runtime_call_t* call, iree_string_builder_t* outputs_builder) {
+  fprintf(stdout, "print_outputs_from_call\n");
   iree_vm_list_t* variants_list = iree_runtime_call_outputs(call);
   for (iree_host_size_t i = 0; i < iree_vm_list_size(variants_list); ++i) {
     iree_vm_variant_t variant = iree_vm_variant_empty();
@@ -546,6 +551,8 @@ static iree_status_t print_outputs_from_call(
       }
     } else if (iree_vm_variant_is_ref(variant)) {
       if (iree_hal_buffer_view_isa(variant.ref)) {
+        fprintf(stdout, "  print_outputs_from_call -> print_buffer_view\n");
+
         iree_hal_buffer_view_t* buffer_view =
             iree_hal_buffer_view_deref(variant.ref);
 
@@ -567,7 +574,8 @@ static iree_status_t print_outputs_from_call(
     }
   }
 
-  iree_vm_list_resize(variants_list, 0);
+  // TODO(scotttodd): resize/free _after_ async readback
+  // iree_vm_list_resize(variants_list, 0);
 
   return iree_ok_status();
 }

@@ -40,7 +40,7 @@ target_link_options(${_NAME} PRIVATE
   "-sALLOW_MEMORY_GROWTH"
   #
   # For https://emscripten.org/docs/debugging/Sanitizers.html#address-sanitizer
-  # "-fsanitize=address"
+  "-fsanitize=address"
   # "-sALLOW_MEMORY_GROWTH"
   #
   # https://developer.chrome.com/blog/wasm-debugging-2020/
