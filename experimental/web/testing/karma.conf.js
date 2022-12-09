@@ -27,24 +27,11 @@ module.exports = function(config) {
           {base: 'ChromeCanary', flags: ['--enable-unsafe-webgpu']}
     },
 
-    // TODO(scotttodd): file patterns (relative to directory?)
+    frameworks: ['jasmine'],
+
     files: [
-      {
-        pattern:
-            'D:/dev/projects/iree/build-emscripten/runtime/src/iree/base/bitfield_test.js'
-      },
-      {
-        pattern:
-            'D:/dev/projects/iree/build-emscripten/runtime/src/iree/base/bitfield_test.wasm',
-        included: false
-      },
-      // { pattern: 'test/testdata-file-cache-*.json', included: false },
-      // { pattern: 'test/data/**/*', included: false, nocache: true },
-      // { pattern: 'dist/ort-wasm.wasm', included: false },
-      // { pattern: 'dist/ort-wasm-threaded.wasm', included: false },
-      // { pattern: 'dist/ort-wasm-simd.wasm', included: false },
-      // { pattern: 'dist/ort-wasm-simd-threaded.wasm', included: false },
-      // { pattern: 'dist/ort-wasm-threaded.worker.js', included: false },
+      'loop_test.js',
+      'sample_test.js',
     ],
   })
 }

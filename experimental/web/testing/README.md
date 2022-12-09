@@ -35,7 +35,7 @@ Testing support for IREE's web platform port:
 * The [`index_template.html`](index_template.html) webpage absorbs that list
   of hyperlinks and runs them in an `<iframe>`
 
-## Automated testing with npm, Karma, etc.
+## Web specific testing with npm, Karma, etc.
 
 TODO(scotttodd): elaborate on docs
 
