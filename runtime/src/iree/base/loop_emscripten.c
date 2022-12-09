@@ -25,6 +25,12 @@ extern iree_status_t loop_command_call(iree_loop_emscripten_scope_t scope,
                                        iree_loop_callback_fn_t callback,
                                        void* user_data, iree_loop_t loop);
 
+extern iree_status_t loop_command_dispatch(
+    iree_loop_emscripten_scope_t scope, iree_loop_callback_fn_t callback,
+    void* user_data, iree_loop_workgroup_fn_t workgroup_fn,
+    uint32_t workgroup_count_x, uint32_t workgroup_count_y,
+    uint32_t workgroup_count_z, iree_loop_t loop);
+
 //===----------------------------------------------------------------------===//
 // iree_loop_emscripten_t
 //===----------------------------------------------------------------------===//
@@ -63,6 +69,18 @@ static iree_status_t iree_loop_emscripten_run_call(
                            params->callback.user_data, loop);
 }
 
+static iree_status_t iree_loop_emscripten_run_dispatch(
+    iree_loop_emscripten_t* loop_emscripten,
+    iree_loop_dispatch_params_t* params) {
+  iree_loop_t loop = iree_loop_emscripten(loop_emscripten);
+  // TODO(scotttodd): should this even call up to JS?
+  //   we could just issue sync here and post the callback using run_call
+  return loop_command_dispatch(
+      loop_emscripten->scope, params->callback.fn, params->callback.user_data,
+      params->workgroup_fn, params->workgroup_count_xyz[0],
+      params->workgroup_count_xyz[1], params->workgroup_count_xyz[2], loop);
+}
+
 // Control function for the Emscripten loop.
 IREE_API_EXPORT iree_status_t
 iree_loop_emscripten_ctl(void* self, iree_loop_command_t command,
@@ -77,6 +95,8 @@ iree_loop_emscripten_ctl(void* self, iree_loop_command_t command,
       return iree_loop_emscripten_run_call(loop_emscripten,
                                            (iree_loop_call_params_t*)params);
     case IREE_LOOP_COMMAND_DISPATCH:
+      return iree_loop_emscripten_run_dispatch(
+          loop_emscripten, (iree_loop_dispatch_params_t*)params);
     case IREE_LOOP_COMMAND_WAIT_UNTIL:
     case IREE_LOOP_COMMAND_WAIT_ONE:
     case IREE_LOOP_COMMAND_WAIT_ALL:

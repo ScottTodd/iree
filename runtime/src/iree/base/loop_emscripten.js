@@ -46,6 +46,8 @@ const LibraryLoopEmscripten = {
       }
     }
 
+    // IREE_LOOP_COMMAND_DISPATCH
+
     class LoopEmscriptenScope {
       constructor() {
         this.nextOperationId = 0;
@@ -98,12 +100,24 @@ const LibraryLoopEmscripten = {
         const scope = this.scopes[scope_handle];
         return scope.command_call(callback, user_data, loop);
       }
+
+      loop_command_dispatch(
+          scope_handle, callback, user_data, workgroup_fn, workgroup_count_x,
+          workgroup_count_y, workgroup_count_z, loop) {
+        if (!(scope_handle in this.scopes)) return IREE_STATUS_OUT_OF_RANGE;
+
+        const scope = this.scopes[scope_handle];
+        return scope.command_dispatch(
+            callback, user_data, workgroup_fn, workgroup_count_x,
+            workgroup_count_y, workgroup_count_z, loop);
+      }
     }
 
     const instance = new LoopEmscripten();
     _loop_allocate_scope = instance.loop_allocate_scope.bind(instance);
     _loop_free_scope = instance.loop_free_scope.bind(instance);
     _loop_command_call = instance.loop_command_call.bind(instance);
+    _loop_command_dispatch = instance.loop_command_dispatch.bind(instance);
   },
 
   loop_allocate_scope: function() {},
@@ -112,6 +126,8 @@ const LibraryLoopEmscripten = {
   loop_free_scope__deps: ['$loop_emscripten_support'],
   loop_command_call: function() {},
   loop_command_call__deps: ['$loop_emscripten_support'],
+  loop_command_dispatch: function() {},
+  loop_command_dispatch__deps: ['$loop_emscripten_support'],
 }
 
 mergeInto(LibraryManager.library, LibraryLoopEmscripten);
