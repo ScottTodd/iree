@@ -49,6 +49,9 @@ const IreeLibraryLoopEmscripten = {
       }
     }
 
+    // IREE_LOOP_COMMAND_DISPATCH
+    // TODO(scotttodd): ??
+
     class LoopEmscriptenScope {
       constructor() {
         this.nextOperationId = 0;
@@ -102,6 +105,17 @@ const IreeLibraryLoopEmscripten = {
         const scope = this.scopes[scope_handle];
         return scope.command_call(callback, user_data, loop);
       }
+
+      iree_loop_command_dispatch(
+          scope_handle, callback, user_data, workgroup_fn, workgroup_count_x,
+          workgroup_count_y, workgroup_count_z, loop) {
+        if (!(scope_handle in this.scopes)) return IREE_STATUS_OUT_OF_RANGE;
+
+        const scope = this.scopes[scope_handle];
+        return scope.command_dispatch(
+            callback, user_data, workgroup_fn, workgroup_count_x,
+            workgroup_count_y, workgroup_count_z, loop);
+      }
     }
 
     const instance = new LoopEmscripten();
@@ -109,6 +123,8 @@ const IreeLibraryLoopEmscripten = {
         instance.iree_loop_allocate_scope.bind(instance);
     _iree_loop_free_scope = instance.iree_loop_free_scope.bind(instance);
     _iree_loop_command_call = instance.iree_loop_command_call.bind(instance);
+    _iree_loop_command_dispatch =
+        instance.iree_loop_command_dispatch.bind(instance);
   },
   $iree_loop_emscripten_support__deps: ['$dynCall'],
 
@@ -118,6 +134,8 @@ const IreeLibraryLoopEmscripten = {
   iree_loop_free_scope__deps: ['$iree_loop_emscripten_support'],
   iree_loop_command_call: function() {},
   iree_loop_command_call__deps: ['$iree_loop_emscripten_support'],
+  iree_loop_command_dispatch: function() {},
+  iree_loop_command_dispatch__deps: ['$iree_loop_emscripten_support'],
 }
 
 mergeInto(LibraryManager.library, IreeLibraryLoopEmscripten);
