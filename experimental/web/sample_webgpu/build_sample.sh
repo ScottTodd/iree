@@ -58,6 +58,7 @@ compile_sample() {
 
 compile_sample "simple_abs"     "mhlo" "${ROOT_DIR?}/samples/models/simple_abs.mlir"
 compile_sample "fullyconnected" "mhlo" "${ROOT_DIR?}/tests/e2e/models/fullyconnected.mlir"
+compile_sample "dynamic_slice"  "mhlo" "${SOURCE_DIR?}/dynamic_slice.mlir"
 
 # Does not run yet (uses internal readback, which needs async buffer mapping?)
 # compile_sample "collatz"        "${ROOT_DIR?}/tests/e2e/models/collatz.mlir"
