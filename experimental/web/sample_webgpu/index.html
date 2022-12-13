@@ -139,6 +139,14 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
       </div>
       <div class="row" style="padding:4px">
         <div class="col-sm">
+          extract
+        </div>
+        <div class="col-sm-auto">
+          <button class="btn btn-secondary" onclick="loadSample('extract')">Load sample</button>
+        </div>
+      </div>
+      <div class="row" style="padding:4px">
+        <div class="col-sm">
           dynamic_slice
         </div>
         <div class="col-sm-auto">
@@ -365,6 +373,12 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
         functionArgumentsInput.value = [
           "1x5xf32=1,-2,-3,4,-5",
           "1x5x3x1xf32=15,14,13,12,11,10,9,8,7,6,5,4,3,2,1",
+        ].join("\n");
+      } else if (sampleName === "extract") {
+        functionNameInput.value = "extract";
+        functionArgumentsInput.value = [
+          "4xi32=1,2,3,4",
+          "1",
         ].join("\n");
       } else if (sampleName === "dynamic_slice") {
         functionNameInput.value = "dynamic_1d_slice";
