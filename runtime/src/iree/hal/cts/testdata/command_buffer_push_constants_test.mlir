@@ -16,18 +16,29 @@ hal.executable.source public @executable {
   }
   builtin.module {
     func.func @extract_value() {
+      %c0 = arith.constant 0 : index
+      %c1 = arith.constant 1 : index
+      %c2 = arith.constant 2 : index
+      %c3 = arith.constant 3 : index
+
       // Read the input push constants.
       %input_0 = hal.interface.constant.load[0] : i32
       %input_1 = hal.interface.constant.load[1] : i32
       %input_2 = hal.interface.constant.load[2] : i32
       %input_3 = hal.interface.constant.load[3] : i32
-      %push_constants = tensor.from_elements %input_0, %input_1, %input_2, %input_3 : tensor<4xi32>
+
+      %input_empty = flow.tensor.empty : tensor<4xi32>
+      %input_0_stored = flow.tensor.store %input_0,    %input_empty[%c0] : tensor<4xi32>
+      %input_1_stored = flow.tensor.store %input_1, %input_0_stored[%c1] : tensor<4xi32>
+      %input_2_stored = flow.tensor.store %input_2, %input_1_stored[%c2] : tensor<4xi32>
+      %input_3_stored = flow.tensor.store %input_3, %input_2_stored[%c3] : tensor<4xi32>
+
+      // %push_constants = tensor.from_elements %input_0, %input_1, %input_2, %input_3 : tensor<4xi32>
 
       // Write into the output buffer.
-      %c0 = arith.constant 0 : index
       %out = hal.interface.binding.subspan set(0) binding(1) type(storage_buffer) offset(%c0) alignment(32) : !flow.dispatch.tensor<writeonly:tensor<4xi32>>
 
-      flow.dispatch.tensor.store %push_constants, %out, offsets = [0], sizes = [0], strides = [0] : tensor<4xi32> -> !flow.dispatch.tensor<writeonly:tensor<4xi32>>
+      flow.dispatch.tensor.store %input_3_stored, %out, offsets = [0], sizes = [0], strides = [0] : tensor<4xi32> -> !flow.dispatch.tensor<writeonly:tensor<4xi32>>
 
       // // Load from the input buffer at the index in the push constant data.
       // %push_constant_index = arith.index_castui %push_constant_i32 : i32 to index
