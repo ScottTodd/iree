@@ -18,6 +18,8 @@ namespace iree {
 namespace hal {
 namespace cts {
 
+using ::testing::ContainerEq;
+
 class command_buffer_push_constants_test : public CtsTestBase {
  protected:
   void PrepareExecutable() {
@@ -38,7 +40,7 @@ class command_buffer_push_constants_test : public CtsTestBase {
         IREE_ARRAYSIZE(descriptor_set_layout_bindings),
         descriptor_set_layout_bindings, &descriptor_set_layout_));
     IREE_ASSERT_OK(iree_hal_pipeline_layout_create(
-        device_, /*push_constants=*/4, /*set_layout_count=*/1,
+        device_, /*push_constants=*/1, /*set_layout_count=*/1,
         &descriptor_set_layout_, &pipeline_layout_));
 
     iree_hal_executable_params_t executable_params;
@@ -97,7 +99,7 @@ TEST_P(command_buffer_push_constants_test, DispatchWithPushConstants) {
                         IREE_HAL_BUFFER_USAGE_MAPPING;
   iree_hal_buffer_t* output_buffer = NULL;
   IREE_ASSERT_OK(iree_hal_allocator_allocate_buffer(
-      device_allocator_, output_params, sizeof(float),
+      device_allocator_, output_params, 4 * sizeof(uint32_t),
       iree_const_byte_span_empty(), &output_buffer));
 
   iree_hal_descriptor_set_binding_t descriptor_set_bindings[] = {
@@ -114,10 +116,10 @@ TEST_P(command_buffer_push_constants_test, DispatchWithPushConstants) {
       command_buffer, pipeline_layout_, /*set=*/0,
       IREE_ARRAYSIZE(descriptor_set_bindings), descriptor_set_bindings));
 
-  std::vector<uint32_t> push_constants{11, 22, 33, 44};
+  uint32_t push_constants[] = {123};
   IREE_ASSERT_OK(iree_hal_command_buffer_push_constants(
-      command_buffer, pipeline_layout_, /*offset=*/0, push_constants.data(),
-      push_constants.size()));
+      command_buffer, pipeline_layout_, /*offset=*/0, push_constants,
+      sizeof(push_constants)));
 
   IREE_ASSERT_OK(iree_hal_command_buffer_dispatch(
       command_buffer, executable_, /*entry_point=*/0,
@@ -140,11 +142,12 @@ TEST_P(command_buffer_push_constants_test, DispatchWithPushConstants) {
   std::vector<uint32_t> output_data(4);
   IREE_CHECK_OK(iree_hal_device_transfer_d2h(
       device_, output_buffer, /*source_offset=*/0,
-      /*target_buffer=*/result_buffer.data(),
+      /*target_buffer=*/output_data.data(),
       /*data_length=*/4, IREE_HAL_TRANSFER_BUFFER_FLAG_DEFAULT,
       iree_infinite_timeout()));
 
-  EXPECT_THAT(output_data, ContainerEq(push_constants));
+  std::vector<uint32_t> expected_output{123, 123, 123, 123};
+  EXPECT_THAT(output_data, ContainerEq(expected_output));
 
   iree_hal_command_buffer_release(command_buffer);
   iree_hal_buffer_release(output_buffer);
