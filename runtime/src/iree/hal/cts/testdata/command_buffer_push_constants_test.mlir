@@ -9,9 +9,12 @@
 
 hal.executable.source public @executable {
   hal.executable.export public @splat_push_constant layout(#pipeline_layout) {
-  ^bb0(%arg0: !hal.device, %arg1: index):
-    %x, %y, %z = flow.dispatch.workgroup_count_from_dag_root %arg1
-    hal.return %x, %y, %z : index, index, index
+  // ^bb0(%arg0: !hal.device, %arg1 : index):
+    // %x, %y, %z = flow.dispatch.workgroup_count_from_dag_root %arg1
+    // hal.return %x, %y, %z : index, index, index
+  ^bb0(%arg0: !hal.device):
+    %c1 = arith.constant 1 : index
+    hal.return %c1, %c1, %c1 : index, index, index
   }
   builtin.module {
     func.func @splat_push_constant() {
@@ -23,8 +26,10 @@ hal.executable.source public @executable {
       %out = hal.interface.binding.subspan set(0) binding(1) type(storage_buffer) offset(%c0) alignment(32) : !flow.dispatch.tensor<writeonly:tensor<4xi32>>
 
       // Splat the input value into a tensor.
-      %tensor = tensor.empty() : tensor<4xi32>
-      %splat_tensor = linalg.fill ins(%input : i32) outs(%tensor : tensor<4xi32>) -> tensor<4xi32>
+      // %tensor = tensor.empty() : tensor<4xi32>
+      // %splat_tensor = linalg.fill ins(%input : i32) outs(%tensor : tensor<4xi32>) -> tensor<4xi32>
+
+      %splat_tensor = arith.constant dense<[0, 1, 2, 3]> : tensor<4xi32>
 
       // Store into the output buffer.
       flow.dispatch.tensor.store %splat_tensor, %out, offsets = [0], sizes = [4], strides = [1] : tensor<4xi32> -> !flow.dispatch.tensor<writeonly:tensor<4xi32>>
