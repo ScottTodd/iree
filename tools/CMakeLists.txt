@@ -26,12 +26,12 @@ iree_add_all_subdirs()
 # TODO(scotttodd): Should this be checking IREE_BUILD_COMPILER?
 #   Maybe we should disallow setting both at the same time, since it's
 #   ambigious which should be used
-if(IREE_HOST_BINARY_ROOT AND NOT IREE_BUILD_COMPILER)
-  iree_import_binary(NAME iree-tblgen)
-  iree_import_binary(NAME iree-compile)
-  iree_import_binary(NAME iree-opt)
-  iree_import_binary(NAME iree-run-mlir)
-endif()
+# if(IREE_HOST_BINARY_ROOT AND NOT IREE_BUILD_COMPILER)
+#   iree_import_binary(NAME iree-tblgen)
+#   iree_import_binary(NAME iree-compile)
+#   iree_import_binary(NAME iree-opt)
+#   iree_import_binary(NAME iree-run-mlir)
+# endif()
 
 # TODO(#6353): Tools has thread dependencies in gtest, benchmark, yaml, etc.
 # This should be split between runtime/compiler with optional threading support.

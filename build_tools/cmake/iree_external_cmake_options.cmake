@@ -103,6 +103,46 @@ macro(iree_set_llvm_cmake_options)
   message(VERBOSE "Building LLVM Projects: ${LLVM_ENABLE_PROJECTS}")
 endmacro()
 
+macro(iree_import_compiler_tools)
+  iree_import_binary(NAME iree-tblgen)
+  iree_import_binary(NAME iree-compile)
+  iree_import_binary(NAME iree-opt)
+  iree_import_binary(NAME iree-run-mlir)
+
+  get_target_property(_IREE_COMPILE_LOCATION iree-compile IMPORTED_LOCATION)
+  execute_process(
+      COMMAND ${_IREE_COMPILE_LOCATION} --iree-hal-list-target-backends
+      COMMAND_ECHO STDOUT
+      OUTPUT_VARIABLE _TARGET_BACKENDS_OUTPUT
+  )
+  message(STATUS "command output: \n${_TARGET_BACKENDS_OUTPUT}")
+  execute_process(
+      COMMAND ${_IREE_COMPILE_LOCATION} --iree-llvm-list-targets
+      COMMAND_ECHO STDOUT
+      OUTPUT_VARIABLE _LLVM_TARGETS_OUTPUT
+  )
+  message(STATUS "command output: \n${_LLVM_TARGETS_OUTPUT}")
+
+  # ergonomics for CI
+  # say that we're testing CUDA -> ensure that we're testing CUDA
+
+  message(STATUS "Imported IREE compiler target backends:")
+  if(_TARGET_BACKENDS_OUTPUT MATCHES "cuda")
+    message(STATUS "  - cuda")
+    set(IREE_TARGET_BACKEND_CUDA ON)
+  endif()
+  if(_TARGET_BACKENDS_OUTPUT MATCHES "llvm-cpu")
+    message(STATUS "  - llvm-cpu")
+    set(IREE_TARGET_BACKEND_LLVM_CPU ON)
+  endif()
+  if(_LLVM_TARGETS_OUTPUT MATCHES "wasm")
+    message(STATUS "  - llvm-cpu (wasm)")
+    set(IREE_TARGET_BACKEND_LLVM_CPU_WASM ON)
+  endif()
+  # TODO(scotttodd): continue here
+
+endmacro()
+
 macro(iree_add_llvm_external_project name identifier location)
   message(STATUS "Adding LLVM external project ${name} (${identifier}) -> ${location}")
   if(NOT EXISTS "${location}/CMakeLists.txt")

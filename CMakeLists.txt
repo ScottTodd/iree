@@ -589,6 +589,10 @@ else()
   _hack_llvm_include_paths()
 endif()
 
+if(IREE_HOST_BINARY_ROOT AND NOT IREE_BUILD_COMPILER)
+  iree_import_compiler_tools()
+endif()
+
 #-------------------------------------------------------------------------------
 # Other dependencies
 #-------------------------------------------------------------------------------
