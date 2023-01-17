@@ -102,6 +102,16 @@ jobs:
     steps:
       - name: "Checking out repository"
         uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # v2.5.0
+
+      - name: "Fetch the cache (git submodules)"
+        uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
+        with:
+          path: .git/modules
+          key: |
+            gitmodules_windows_${{ github.sha }}
+          restore-keys: |
+            gitmodules_windows
+
       - name: "Checking out runtime submodules"
         run: ./build_tools/scripts/git/update_runtime_submodules.sh
       - name: "Configuring MSVC"
