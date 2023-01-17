@@ -18,6 +18,8 @@ set -xeuo pipefail
 BUILD_DIR="${1:-${IREE_TARGET_BUILD_DIR:-build-runtime}}"
 BUILD_PRESET="${BUILD_PRESET:-test}"
 
+echo ${CCACHE_DIR}
+
 source build_tools/cmake/setup_build.sh
 source build_tools/cmake/setup_ccache.sh
 
@@ -35,9 +37,10 @@ case "${BUILD_PRESET}" in
   test)
     args+=(
       -DIREE_ENABLE_ASSERTIONS=ON
-      -DIREE_BUILD_SAMPLES=ON
       -DIREE_HAL_DRIVER_VULKAN=OFF
       -DIREE_HAL_DRIVER_CUDA=OFF
+      -DIREE_BUILD_SAMPLES=OFF
+      -DIREE_BUILD_TESTS=OFF
     )
     ;;
   benchmark)
