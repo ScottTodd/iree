@@ -36,7 +36,8 @@ case "${BUILD_PRESET}" in
     args+=(
       -DIREE_ENABLE_ASSERTIONS=ON
       -DIREE_BUILD_SAMPLES=ON
-      -DIREE_HAL_DRIVER_DEFAULTS=OFF
+      -DIREE_HAL_DRIVER_VULKAN=OFF
+      -DIREE_HAL_DRIVER_CUDA=OFF
     )
     ;;
   benchmark)
