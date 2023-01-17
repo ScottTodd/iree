@@ -130,7 +130,7 @@ jobs:
         env:
           BUILD_PRESET: "test"
           IREE_READ_REMOTE_CCACHE: 0
-          CCACHE_DIR: ${{ env.GITHUB_WORKSPACE }}/ccache
+          CCACHE_DIR: ${{ GITHUB_WORKSPACE }}/ccache
           CMAKE_C_COMPILER_LAUNCHER: ccache
           CMAKE_CXX_COMPILER_LAUNCHER: ccache
         run: ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
