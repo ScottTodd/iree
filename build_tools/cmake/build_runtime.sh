@@ -76,6 +76,6 @@ case "${BUILD_PRESET}" in
     ;;
 esac
 
-if (( IREE_READ_REMOTE_CCACHE == 1 )); then
+if (( CMAKE_C_COMPILER_LAUNCHER == 'ccache' )); then
   ccache --show-stats
 fi
