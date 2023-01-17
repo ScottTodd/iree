@@ -36,6 +36,7 @@ case "${BUILD_PRESET}" in
     args+=(
       -DIREE_ENABLE_ASSERTIONS=ON
       -DIREE_BUILD_SAMPLES=ON
+      -DIREE_HAL_DRIVER_DEFAULTS=OFF
     )
     ;;
   benchmark)
@@ -76,6 +77,6 @@ case "${BUILD_PRESET}" in
     ;;
 esac
 
-if (( CMAKE_C_COMPILER_LAUNCHER == 'ccache' )); then
+# if (( CMAKE_C_COMPILER_LAUNCHER == 'ccache' )); then
   ccache --show-stats
-fi
+# fi
