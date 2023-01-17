@@ -103,24 +103,36 @@ jobs:
       - name: "Checking out repository"
         uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # v2.5.0
 
+      # git submodules
       - name: "Fetch the cache (git submodules)"
         uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
         with:
           path: .git/modules
-          key: |
-            gitmodules_windows_${{ github.sha }}
-          restore-keys: |
-            gitmodules_windows
-
+          key: gitmodules_windows_${{ github.sha }}
+          restore-keys: gitmodules_windows
       - name: "Checking out runtime submodules"
         run: ./build_tools/scripts/git/update_runtime_submodules.sh
+
       - name: "Configuring MSVC"
         uses: ilammy/msvc-dev-cmd@7315a94840631165970262a99c72cfb48a65d25d # v1.12.0
       - name: "Installing Python requirements"
         run: pip install -r ./runtime/bindings/python/iree/runtime/build_requirements.txt
+
+      # ccache
+      - name: "Fetch the cache (CMake/ccache)"
+        uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
+        with:
+          path: .ccache
+          key: ccache_windows_${{ github.sha }}
+          restore-keys: ccache_windows
+
       - name: "Building runtime"
         env:
           BUILD_PRESET: "test"
+          IREE_READ_REMOTE_CCACHE: 0
+          CCACHE_DIR: ".ccache"
+          CMAKE_C_COMPILER_LAUNCHER: ccache
+          CMAKE_CXX_COMPILER_LAUNCHER: ccache
         run: ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
       - name: "Testing runtime"
         run: ./build_tools/cmake/ctest_all.sh "${BUILD_DIR}"
