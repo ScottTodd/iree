@@ -80,5 +80,6 @@ case "${BUILD_PRESET}" in
 esac
 
 # if (( CMAKE_C_COMPILER_LAUNCHER == 'ccache' )); then
+  ccache --show-stats
   ccache --show-stats --verbose
 # fi

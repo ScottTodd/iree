@@ -453,6 +453,7 @@ if (WIN32)
   message(STATUS "WIN32, applying ccache checks")
   find_program(ccache_exe ccache)
   if(ccache_exe)
+    message(STATUS "Found ccache_exe")
     file(COPY_FILE ${ccache_exe} ${CMAKE_BINARY_DIR}/cl.exe ONLY_IF_DIFFERENT)
     set(CMAKE_VS_GLOBALS
       "CLToolExe=cl.exe"
