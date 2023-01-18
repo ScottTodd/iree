@@ -139,7 +139,25 @@ jobs:
       #   run: ./build_tools/cmake/ctest_all.sh "${BUILD_DIR}"
 
       - name: "Dumping ccache log"
-        run: cat "${{ github.workspace }}\ccache.log"
+        run: |
+          cat "${{ github.workspace }}\ccache.log"
+          rm "${{ github.workspace }}\ccache.log"
+          ccache --zero-stats
+
+      - name: "Building runtime (again)"
+        env:
+          BUILD_PRESET: "test"
+          IREE_READ_REMOTE_CCACHE: 0
+          CCACHE_DIR: ${{ github.workspace }}\ccache
+          CCACHE_LOGFILE: ${{ github.workspace }}\ccache.log
+          CMAKE_C_COMPILER_LAUNCHER: ccache
+          CMAKE_CXX_COMPILER_LAUNCHER: ccache
+        run: ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
+
+      - name: "Dumping ccache log (again)"
+        run: |
+          cat "${{ github.workspace }}\ccache.log"
+          rm "${{ github.workspace }}\ccache.log"
 
   ##############################################################################
 
