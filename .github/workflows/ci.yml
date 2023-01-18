@@ -126,6 +126,7 @@ jobs:
           rm -rf ${{ github.workspace }}/.ccache
           mkdir -p ${{ github.workspace }}/.ccache
           ccache --set-config "cache_dir=${{ github.workspace }}/.ccache"
+          ccache --set-config "base_dir=${{ github.workspace }}"
           ccache --set-config "compression=true"
           ccache --zero-stats
 
