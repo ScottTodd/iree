@@ -120,6 +120,7 @@ jobs:
 
       - name: Configure ccache
         run: |
+          ccache --version
           rm -rf ${{ github.workspace }}/.ccache
           mkdir -p ${{ github.workspace }}/.ccache
           ccache --set-config "cache_dir=${{ github.workspace }}/.ccache"
