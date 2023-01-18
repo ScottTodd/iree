@@ -122,7 +122,7 @@ jobs:
       - name: "Fetch the cache (CMake/ccache)"
         uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
         with:
-          path: ${{ github.workspace }}/ccache
+          path: ${{ github.workspace }}\ccache
           key: ccache_windows_${{ github.sha }}
           restore-keys: ccache_windows
 
@@ -130,12 +130,16 @@ jobs:
         env:
           BUILD_PRESET: "test"
           IREE_READ_REMOTE_CCACHE: 0
-          CCACHE_DIR: ${{ github.workspace }}/ccache
+          CCACHE_DIR: ${{ github.workspace }}\ccache
+          CCACHE_LOGFILE: ${{ github.workspace }}\ccache.log
           CMAKE_C_COMPILER_LAUNCHER: ccache
           CMAKE_CXX_COMPILER_LAUNCHER: ccache
         run: ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
       # - name: "Testing runtime"
       #   run: ./build_tools/cmake/ctest_all.sh "${BUILD_DIR}"
+
+      - name: "Dumping ccache log"
+        run: cat "${{ github.workspace }}\ccache.log"
 
   ##############################################################################
 
