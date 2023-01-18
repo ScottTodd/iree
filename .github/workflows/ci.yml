@@ -118,11 +118,19 @@ jobs:
       - name: "Installing Python requirements"
         run: pip install -r ./runtime/bindings/python/iree/runtime/build_requirements.txt
 
+      - name: Configure ccache
+        run: |
+          rm -rf ${{ github.workspace }}/.ccache
+          mkdir -p ${{ github.workspace }}/.ccache
+          ccache --set-config "cache_dir=${{ github.workspace }}/.ccache"
+          ccache --set-config "compression=true"
+          ccache --zero-stats
+
       # ccache
       - name: "Fetch the cache (CMake/ccache)"
         uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
         with:
-          path: ${{ github.workspace }}\ccache
+          path: ${{ github.workspace }}/.ccache
           key: ccache_windows_${{ github.sha }}
           restore-keys: ccache_windows
 
@@ -130,8 +138,7 @@ jobs:
         env:
           BUILD_PRESET: "test"
           IREE_READ_REMOTE_CCACHE: 0
-          CCACHE_DIR: ${{ github.workspace }}\ccache
-          CCACHE_LOGFILE: ${{ github.workspace }}\ccache.log
+          CCACHE_LOGFILE: ${{ github.workspace }}/ccache.log
           CMAKE_C_COMPILER_LAUNCHER: ccache
           CMAKE_CXX_COMPILER_LAUNCHER: ccache
         run: ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
@@ -140,16 +147,15 @@ jobs:
 
       - name: "Dumping ccache log"
         run: |
-          cat "${{ github.workspace }}\ccache.log"
-          rm "${{ github.workspace }}\ccache.log"
+          cat "${{ github.workspace }}/ccache.log"
+          rm "${{ github.workspace }}/ccache.log"
           ccache --zero-stats
 
       - name: "Building runtime (again)"
         env:
           BUILD_PRESET: "test"
           IREE_READ_REMOTE_CCACHE: 0
-          CCACHE_DIR: ${{ github.workspace }}\ccache
-          CCACHE_LOGFILE: ${{ github.workspace }}\ccache.log
+          CCACHE_LOGFILE: ${{ github.workspace }}/ccache.log
           CMAKE_C_COMPILER_LAUNCHER: ccache
           CMAKE_CXX_COMPILER_LAUNCHER: ccache
         run: |
@@ -158,8 +164,8 @@ jobs:
 
       - name: "Dumping ccache log (again)"
         run: |
-          cat "${{ github.workspace }}\ccache.log"
-          rm "${{ github.workspace }}\ccache.log"
+          cat "${{ github.workspace }}/ccache.log"
+          rm "${{ github.workspace }}/ccache.log"
 
   ##############################################################################
 

@@ -18,8 +18,6 @@ set -xeuo pipefail
 BUILD_DIR="${1:-${IREE_TARGET_BUILD_DIR:-build-runtime}}"
 BUILD_PRESET="${BUILD_PRESET:-test}"
 
-echo ${CCACHE_DIR}
-
 source build_tools/cmake/setup_build.sh
 source build_tools/cmake/setup_ccache.sh
 
