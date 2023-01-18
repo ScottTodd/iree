@@ -427,23 +427,39 @@ endif()
 # Compiler: MSVC
 #-------------------------------------------------------------------------------
 
-if(MSVC)
-  if("${CMAKE_C_COMPILER_LAUNCHER}" MATCHES "ccache" OR
-     "${CMAKE_CXX_COMPILER_LAUNCHER}" MATCHES "ccache")
-    # Disable separate PDB file generation (for debug info) when using ccache.
-    # ccache silently falls back to the real compiler when an unsupported flag
-    # like /Zi is encountered.
-    message(STATUS "Replacing /Zi with /Z7 since ccache is in use and does not support /Zi")
-    # https://learn.microsoft.com/en-us/cpp/build/reference/z7-zi-zi-debug-information-format
-    string(REPLACE "/Zi" "/Z7" CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
-    string(REPLACE "/Zi" "/Z7" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
-    string(REPLACE "/Zi" "/Z7" CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO}")
-    string(REPLACE "/Zi" "/Z7" CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
+# if(MSVC)
+#   if("${CMAKE_C_COMPILER_LAUNCHER}" MATCHES "ccache" OR
+#      "${CMAKE_CXX_COMPILER_LAUNCHER}" MATCHES "ccache")
+#     # Disable separate PDB file generation (for debug info) when using ccache.
+#     # ccache silently falls back to the real compiler when an unsupported flag
+#     # like /Zi is encountered.
+#     message(STATUS "Replacing /Zi with /Z7 since ccache is in use and does not support /Zi")
+#     # https://learn.microsoft.com/en-us/cpp/build/reference/z7-zi-zi-debug-information-format
+#     string(REPLACE "/Zi" "/Z7" CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
+#     string(REPLACE "/Zi" "/Z7" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
+#     string(REPLACE "/Zi" "/Z7" CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO}")
+#     string(REPLACE "/Zi" "/Z7" CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
 
-    # https://github.com/ccache/ccache/wiki/MS-Visual-Studio
+#     # https://github.com/ccache/ccache/wiki/MS-Visual-Studio
+#     set(CMAKE_VS_GLOBALS
+#       "TrackFileAccess=false"
+#       "UseMultiToolTask=true"
+#     )
+#   endif()
+# endif()
+
+# https://github.com/ccache/ccache/wiki/MS-Visual-Studio
+if (WIN32)
+  message(STATUS "WIN32, applying ccache checks")
+  find_program(ccache_exe ccache)
+  if(ccache_exe)
+    file(COPY_FILE ${ccache_exe} ${CMAKE_BINARY_DIR}/cl.exe ONLY_IF_DIFFERENT)
     set(CMAKE_VS_GLOBALS
+      "CLToolExe=cl.exe"
+      "CLToolPath=${CMAKE_BINARY_DIR}"
       "TrackFileAccess=false"
       "UseMultiToolTask=true"
+      "DebugInformationFormat=OldStyle"
     )
   endif()
 endif()
