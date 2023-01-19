@@ -10,10 +10,16 @@ set -euo pipefail
 
 IREE_READ_REMOTE_CCACHE="${IREE_READ_REMOTE_CCACHE:-1}"
 IREE_WRITE_REMOTE_CCACHE="${IREE_WRITE_REMOTE_CCACHE:-0}"
+IREE_USE_LOCAL_CCACHE="${IREE_USE_LOCAL_CCACHE:-0}"
 if (( ${IREE_WRITE_REMOTE_CCACHE} == 1 && ${IREE_READ_REMOTE_CCACHE} != 1 )); then
   echo "Can't have 'IREE_WRITE_REMOTE_CCACHE' (${IREE_WRITE_REMOTE_CCACHE})" \
        " set without 'IREE_READ_REMOTE_CCACHE' (${IREE_READ_REMOTE_CCACHE})"
 fi
+if (( ${IREE_USE_LOCAL_CCACHE} == 1 && ${IREE_READ_REMOTE_CCACHE} == 1)); then
+  echo "Can't have 'IREE_USE_LOCAL_CCACHE' (${IREE_USE_LOCAL_CCACHE})" \
+       " set with 'IREE_READ_REMOTE_CCACHE' (${IREE_READ_REMOTE_CCACHE})"
+fi
+
 
 if (( IREE_READ_REMOTE_CCACHE == 1 )); then
   export CCACHE_REMOTE_STORAGE="http://storage.googleapis.com/iree-sccache/ccache"
@@ -27,4 +33,12 @@ if (( IREE_READ_REMOTE_CCACHE == 1 )); then
   else
     export CCACHE_REMOTE_STORAGE="${CCACHE_REMOTE_STORAGE}|read-only"
   fi
+fi
+
+if (( IREE_USE_LOCAL_CCACHE == 1 )); then
+  export CMAKE_C_COMPILER_LAUNCHER=ccache
+  export CMAKE_CXX_COMPILER_LAUNCHER=ccache
+
+  which ccache
+  ccache --version
 fi
