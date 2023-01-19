@@ -36,8 +36,8 @@ if (( IREE_READ_REMOTE_CCACHE == 1 )); then
 fi
 
 if (( IREE_USE_LOCAL_CCACHE == 1 )); then
-  export CMAKE_C_COMPILER_LAUNCHER=ccache
-  export CMAKE_CXX_COMPILER_LAUNCHER=ccache
+  export CMAKE_C_COMPILER_LAUNCHER=$(which ccache)
+  export CMAKE_CXX_COMPILER_LAUNCHER=$(which ccache)
 
   which ccache
   ccache --version
