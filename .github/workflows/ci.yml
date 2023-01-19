@@ -132,13 +132,13 @@ jobs:
           ccache --set-config "compression=true"
           cat "${{ github.workspace }}/.ccache/ccache.conf"
 
-      # ccache
-      - name: "Fetch the cache (CMake/ccache)"
-        uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
-        with:
-          path: ${{ github.workspace }}/.ccache
-          key: ccache_windows_${{ github.sha }}
-          restore-keys: ccache_windows
+      # # ccache
+      # - name: "Fetch the cache (CMake/ccache)"
+      #   uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
+      #   with:
+      #     path: ${{ github.workspace }}/.ccache
+      #     key: ccache_windows_${{ github.sha }}
+      #     restore-keys: ccache_windows
 
       - name: "Building runtime"
         env:
