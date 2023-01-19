@@ -123,12 +123,12 @@ jobs:
       - name: Configure ccache
         run: |
           ccache --version
-          rm -rf ${{ github.workspace }}/.ccache
-          mkdir -p ${{ github.workspace }}/.ccache
-          ccache --set-config "cache_dir=${{ github.workspace }}/.ccache"
-          ccache --set-config "base_dir=${{ github.workspace }}"
-          ccache --set-config "compiler_type=msvc"
-          ccache --set-config "compression=true"
+      # rm -rf ${{ github.workspace }}/.ccache
+      # mkdir -p ${{ github.workspace }}/.ccache
+      # ccache --set-config "cache_dir=${{ github.workspace }}/.ccache"
+      # ccache --set-config "base_dir=${{ github.workspace }}"
+      # ccache --set-config "compiler_type=msvc"
+      # ccache --set-config "compression=true"
 
       # ccache
       - name: "Fetch the cache (CMake/ccache)"
@@ -145,6 +145,8 @@ jobs:
           CCACHE_LOGFILE: ${{ github.workspace }}/ccache.log
           CMAKE_C_COMPILER_LAUNCHER: ccache
           CMAKE_CXX_COMPILER_LAUNCHER: ccache
+          CCACHE_COMPILERTYPE: msvc
+          CCACHE_DIR: ${{ github.workspace }}/.ccache
         run: ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
       # - name: "Testing runtime"
       #   run: ./build_tools/cmake/ctest_all.sh "${BUILD_DIR}"
@@ -162,6 +164,8 @@ jobs:
           CCACHE_LOGFILE: ${{ github.workspace }}/ccache.log
           CMAKE_C_COMPILER_LAUNCHER: ccache
           CMAKE_CXX_COMPILER_LAUNCHER: ccache
+          CCACHE_COMPILERTYPE: msvc
+          CCACHE_DIR: ${{ github.workspace }}/.ccache
         run: |
           rm -rf ${BUILD_DIR}
           ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
