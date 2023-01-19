@@ -127,7 +127,6 @@ jobs:
           mkdir -p ${{ github.workspace }}/.ccache
           ccache --set-config "cache_dir=${{ github.workspace }}/.ccache"
           ccache --set-config "base_dir=${{ github.workspace }}"
-          ccache --set-config "log_file=${{ github.workspace }}/ccache.log"
           ccache --set-config "compression=true"
 
       # ccache
@@ -142,7 +141,7 @@ jobs:
         env:
           BUILD_PRESET: "test"
           IREE_READ_REMOTE_CCACHE: 0
-          # CCACHE_LOGFILE: ${{ github.workspace }}/ccache.log
+          CCACHE_LOGFILE: ${{ github.workspace }}/ccache.log
           CMAKE_C_COMPILER_LAUNCHER: ccache
           CMAKE_CXX_COMPILER_LAUNCHER: ccache
         run: ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
@@ -159,7 +158,7 @@ jobs:
         env:
           BUILD_PRESET: "test"
           IREE_READ_REMOTE_CCACHE: 0
-          # CCACHE_LOGFILE: ${{ github.workspace }}/ccache.log
+          CCACHE_LOGFILE: ${{ github.workspace }}/ccache.log
           CMAKE_C_COMPILER_LAUNCHER: ccache
           CMAKE_CXX_COMPILER_LAUNCHER: ccache
         run: |
