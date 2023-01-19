@@ -127,6 +127,7 @@ jobs:
           mkdir -p ${{ github.workspace }}/.ccache
           ccache --set-config "cache_dir=${{ github.workspace }}/.ccache"
           ccache --set-config "base_dir=${{ github.workspace }}"
+          ccache --set-config "compiler_type=msvc"
           ccache --set-config "compression=true"
 
       # ccache
