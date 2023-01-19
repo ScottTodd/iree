@@ -105,7 +105,7 @@ jobs:
 
       # git submodules
       - name: "Fetch the cache (git submodules)"
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v3.0.11
+        uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
         with:
           path: .git/modules
           key: gitmodules_windows_${{ github.sha }}
@@ -130,11 +130,11 @@ jobs:
 
       # ccache
       - name: "Fetch the cache (CMake/ccache)"
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v3.0.11
+        uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
         with:
           path: ${{ github.workspace }}/.ccache
-          key: ccache_windows_2_${{ github.sha }}
-          restore-keys: ccache_windows_2
+          key: ccache_windows_1_${{ github.sha }}
+          restore-keys: ccache_windows_1
 
       - name: "Building runtime"
         env:
