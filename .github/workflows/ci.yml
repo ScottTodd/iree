@@ -126,14 +126,15 @@ jobs:
         run: |
           which ccache
           ccache --version
+          ccache --zero-stats
 
       # ccache
       - name: "Fetch the cache (CMake/ccache)"
         uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3.2.3
         with:
           path: ${{ github.workspace }}/.ccache
-          key: ccache_windows_${{ github.sha }}
-          restore-keys: ccache_windows
+          key: ccache_windows_1_${{ github.sha }}
+          restore-keys: ccache_windows_1
 
       - name: "Building runtime"
         env:
