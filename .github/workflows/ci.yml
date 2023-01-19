@@ -121,14 +121,16 @@ jobs:
         run: choco install ccache --yes
 
       - name: Configure ccache
+        env:
+          CCACHE_DIR: ${{ github.workspace }}/.ccache
         run: |
           ccache --version
-      # rm -rf ${{ github.workspace }}/.ccache
-      # mkdir -p ${{ github.workspace }}/.ccache
-      # ccache --set-config "cache_dir=${{ github.workspace }}/.ccache"
-      # ccache --set-config "base_dir=${{ github.workspace }}"
-      # ccache --set-config "compiler_type=msvc"
-      # ccache --set-config "compression=true"
+          rm -rf ${{ github.workspace }}/.ccache
+          mkdir -p ${{ github.workspace }}/.ccache
+          ccache --set-config "cache_dir=${{ github.workspace }}/.ccache"
+          ccache --set-config "compiler_type=msvc"
+          ccache --set-config "compression=true"
+          cat "${{ github.workspace }}/.ccache/ccache.conf"
 
       # ccache
       - name: "Fetch the cache (CMake/ccache)"
