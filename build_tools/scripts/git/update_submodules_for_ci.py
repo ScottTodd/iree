@@ -38,23 +38,22 @@ from typing import Sequence
 
 
 def run_command(command: Sequence[str],
-                check: bool = True,
-                capture_output: bool = False,
-                text: bool = True,
                 **run_kwargs) -> subprocess.CompletedProcess:
   """Thin wrapper around subprocess.run"""
   print(f"-- Running: `{' '.join(command)}` --")
   completed_process = subprocess.run(command,
-                                     text=text,
-                                     check=check,
-                                     capture_output=capture_output,
+                                     text=True,
+                                     check=True,
+                                     capture_output=False,
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.STDOUT,
                                      **run_kwargs)
   return completed_process
 
 
 def run():
   run_command(['git', 'submodule', 'sync'])
-  run_command(['git', 'submodule', 'init'])
+  # run_command(['git', 'submodule', 'init'])
 
   third_party_dir = os.path.join(os.getcwd(), 'third_party')
   llvm_dir = os.path.join(third_party_dir, 'llvm-project')
