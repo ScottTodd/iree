@@ -40,7 +40,7 @@ from typing import Sequence
 def run_command(command: Sequence[str],
                 **run_kwargs) -> subprocess.CompletedProcess:
   """Thin wrapper around subprocess.run"""
-  print(f"-- Running: `{' '.join(command)}` --")
+  print(f"-- Running: `{' '.join(command)}` --", flush=True)
   completed_process = subprocess.run(command,
                                      text=True,
                                      check=True,
@@ -56,9 +56,9 @@ def run():
 
   third_party_dir = os.path.join(os.getcwd(), 'third_party')
   llvm_dir = os.path.join(third_party_dir, 'llvm-project')
-  print(f"llvm_dir: {llvm_dir}")
+  print(f"llvm_dir: {llvm_dir}", flush=True)
 
-  print('-- Deleting third_party/llvm-project --')
+  print('-- Deleting third_party/llvm-project --', flush=True)
   shutil.rmtree(llvm_dir, ignore_errors=True)
 
   # Clone llvm-project/ (without fetching any refs) and set up sparse-checkout).
@@ -88,7 +88,8 @@ def run():
     run_command(['git', 'checkout', llvm_hash], cwd=llvm_dir)
 
   # Finish initializing all other submodules.
-  run_command(['git', 'submodule', 'update', '--init'])
+  run_command(
+      ['git', 'submodule', 'update', '--init', '--jobs', '8', '--depth', '1'])
 
 
 if __name__ == "__main__":
