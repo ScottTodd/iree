@@ -103,7 +103,9 @@ jobs:
       - name: "Installing imdisk"
         run: choco install imdisk --yes
       - name: "Creating ramdisk"
-        run: "imdisk -a -s 4G -m X: -p '/fs:ntfs /q /y'"
+        run: |
+          which imdisk
+          imdisk -a -s 4G -m X: -p '/fs:ntfs /q /y'
       # TODO: clone to the mounted disk X:/
       - name: "Checking out repository"
         uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # v2.5.0
