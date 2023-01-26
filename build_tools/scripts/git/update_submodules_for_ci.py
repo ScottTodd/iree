@@ -29,6 +29,7 @@
 #   https://github.blog/2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/
 #   https://github.blog/2020-01-17-bring-your-monorepo-down-to-size-with-sparse-checkout/
 #   https://github.com/Reedbeta/git-partial-submodule
+#   https://git-scm.com/docs/git-sparse-checkout
 #   https://llvm.org/docs/Proposals/GitHubMove.html#monorepo-variant
 
 import os
@@ -50,30 +51,39 @@ def run_command(command: Sequence[str],
   return completed_process
 
 
-def run():
-  run_command(['git', 'submodule', 'sync'])
-  # run_command(['git', 'submodule', 'init'])
-
-  third_party_dir = os.path.join(os.getcwd(), 'third_party')
-  llvm_dir = os.path.join(third_party_dir, 'llvm-project')
-  print(f"llvm_dir: {llvm_dir}", flush=True)
-
+def sparse_clone_llvm(llvm_dir):
   print('-- Deleting third_party/llvm-project --', flush=True)
   shutil.rmtree(llvm_dir, ignore_errors=True)
 
-  # Clone llvm-project/ (without fetching any refs) and set up sparse-checkout).
+  # Clone llvm-project/, without fetching any refs.
   run_command([
       'git', 'clone', '--depth=1', '--no-checkout',
       'https://github.com/iree-org/iree-llvm-fork.git',
       'third_party/llvm-project'
   ])
-  run_command([
-      'git', 'sparse-checkout', 'set', 'cmake/', 'llvm/', 'lld/', 'mlir/',
-      'libunwind/'
-  ],
-              cwd=llvm_dir)
 
-  # Look up the LLVM commit hash from submodule status, then check it out.
+  # Set up sparse-checkout for just the directories we need to build IREE.
+  # We're using "cone" mode (the default) here, which only lets us define a list
+  # of directories to _include_. We could instead use the "non-cone" mode and
+  # provide a list of .gitignore-style patterns. Non-cone mode would let us
+  # exclude all test/ directories, for example.
+  llvm_subdirs = [
+      # Base dependencies
+      'cmake/',
+      'llvm/',
+      'mlir/',
+      # Extra dependencies needed for a few specific parts of the build
+      'lld/',
+      'libunwind/'
+  ]
+  run_command([
+      'git',
+      'sparse-checkout',
+      'set',
+  ] + llvm_subdirs, cwd=llvm_dir)
+
+
+def get_llvm_submodule_hash():
   output = os.popen('git submodule status')
   submodules = output.readlines()
   for submodule in submodules:
@@ -82,10 +92,18 @@ def run():
       continue
 
     llvm_hash = submodule.split()[0].strip('-+')
+    return llvm_hash
 
-    run_command(['git', 'fetch', '--depth=1', 'origin', llvm_hash],
-                cwd=llvm_dir)
-    run_command(['git', 'checkout', llvm_hash], cwd=llvm_dir)
+  raise RuntimeError("Could not find third_party/llvm-project submodule")
+
+
+def run():
+  llvm_dir = os.path.join(os.getcwd(), 'third_party/llvm-project')
+  sparse_clone_llvm(llvm_dir)
+
+  llvm_hash = get_llvm_submodule_hash()
+  run_command(['git', 'fetch', '--depth=1', 'origin', llvm_hash], cwd=llvm_dir)
+  run_command(['git', 'checkout', llvm_hash], cwd=llvm_dir)
 
   # Finish initializing all other submodules.
   run_command(
