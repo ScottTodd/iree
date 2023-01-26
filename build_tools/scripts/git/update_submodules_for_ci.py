@@ -45,7 +45,6 @@ def run_command(command: Sequence[str],
                                      text=True,
                                      check=True,
                                      capture_output=False,
-                                     stdout=subprocess.PIPE,
                                      stderr=subprocess.STDOUT,
                                      **run_kwargs)
   return completed_process
