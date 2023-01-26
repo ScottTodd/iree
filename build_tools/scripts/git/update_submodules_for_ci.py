@@ -98,12 +98,12 @@ def get_llvm_submodule_hash():
 
 
 def run():
-  llvm_dir = os.path.join(os.getcwd(), 'third_party/llvm-project')
-  sparse_clone_llvm(llvm_dir)
+  # llvm_dir = os.path.join(os.getcwd(), 'third_party/llvm-project')
+  # sparse_clone_llvm(llvm_dir)
 
-  llvm_hash = get_llvm_submodule_hash()
-  run_command(['git', 'fetch', '--depth=1', 'origin', llvm_hash], cwd=llvm_dir)
-  run_command(['git', 'checkout', llvm_hash], cwd=llvm_dir)
+  # llvm_hash = get_llvm_submodule_hash()
+  # run_command(['git', 'fetch', '--depth=1', 'origin', llvm_hash], cwd=llvm_dir)
+  # run_command(['git', 'checkout', llvm_hash], cwd=llvm_dir)
 
   # Finish initializing all other submodules.
   run_command(
