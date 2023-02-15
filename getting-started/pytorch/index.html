@@ -8,27 +8,27 @@
       
       
       
-        <link rel="canonical" href="https://iree-org.github.io/iree/building-from-source/">
+        <link rel="canonical" href="https://iree-org.github.io/iree/getting-started/pytorch/">
       
       
-        <link rel="prev" href="../deployment-configurations/gpu-cuda-rocm/">
+        <link rel="prev" href="../jax/">
       
       
-        <link rel="next" href="getting-started/">
+        <link rel="next" href="../../deployment-configurations/">
       
-      <link rel="icon" href="../assets/images/ghost.svg">
+      <link rel="icon" href="../../assets/images/ghost.svg">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.11">
     
     
       
-        <title>Building IREE from source - IREE</title>
+        <title>PyTorch - IREE</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.0d440cfe.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0d440cfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
       
       
 
@@ -44,11 +44,11 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../assets/stylesheets/openxla.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/openxla.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#building-iree-from-source" class="md-skip">
+        <a href="#pytorch-integration" class="md-skip">
           Skip to content
         </a>
       
@@ -91,9 +91,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="IREE" class="md-header__button md-logo" aria-label="IREE" data-md-component="logo">
+    <a href="../.." title="IREE" class="md-header__button md-logo" aria-label="IREE" data-md-component="logo">
       
-  <img src="../assets/images/ghost.svg" alt="logo">
+  <img src="../../assets/images/ghost.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Building IREE from source
+              PyTorch
             
           </span>
         </div>
@@ -208,9 +208,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="IREE" class="md-nav__button md-logo" aria-label="IREE" data-md-component="logo">
+    <a href="../.." title="IREE" class="md-nav__button md-logo" aria-label="IREE" data-md-component="logo">
       
-  <img src="../assets/images/ghost.svg" alt="logo">
+  <img src="../../assets/images/ghost.svg" alt="logo">
 
     </a>
     IREE
@@ -238,7 +238,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -251,16 +251,18 @@
 
   
   
+    
+  
   
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
       
       
         
@@ -281,7 +283,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../getting-started/">Getting Started</a>
+          <a href="../">Getting Started</a>
           
             <label for="__nav_2">
               <span class="md-nav__icon md-icon"></span>
@@ -289,7 +291,7 @@
           
         </div>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           Getting Started
@@ -304,7 +306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../getting-started/tensorflow/" class="md-nav__link">
+      <a href="../tensorflow/" class="md-nav__link">
         TensorFlow
       </a>
     </li>
@@ -318,7 +320,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../getting-started/tflite/" class="md-nav__link">
+      <a href="../tflite/" class="md-nav__link">
         TensorFlow Lite
       </a>
     </li>
@@ -332,7 +334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../getting-started/jax/" class="md-nav__link">
+      <a href="../jax/" class="md-nav__link">
         JAX
       </a>
     </li>
@@ -344,11 +346,114 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../getting-started/pytorch/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          PyTorch
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         PyTorch
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-a-model" class="md-nav__link">
+    Running a model
+  </a>
+  
+    <nav class="md-nav" aria-label="Running a model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compile-the-model-to-mlir" class="md-nav__link">
+    Compile the model to MLIR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile-the-mlir-to-an-iree-vm-flatbuffer" class="md-nav__link">
+    Compile the MLIR to an IREE VM flatbuffer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-the-vm-flatbuffer-into-iree" class="md-nav__link">
+    Load the VM flatbuffer into IREE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute-the-model-via-iree" class="md-nav__link">
+    Execute the model via IREE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    Training
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#native-on-device-training" class="md-nav__link">
+    Native / On-device Training
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#samples" class="md-nav__link">
+    Samples
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -396,7 +501,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../deployment-configurations/">Deployment configurations</a>
+          <a href="../../deployment-configurations/">Deployment configurations</a>
           
             <label for="__nav_3">
               <span class="md-nav__icon md-icon"></span>
@@ -419,7 +524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deployment-configurations/cpu/" class="md-nav__link">
+      <a href="../../deployment-configurations/cpu/" class="md-nav__link">
         CPU
       </a>
     </li>
@@ -433,7 +538,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deployment-configurations/bare-metal/" class="md-nav__link">
+      <a href="../../deployment-configurations/bare-metal/" class="md-nav__link">
         CPU - Bare-Metal
       </a>
     </li>
@@ -447,7 +552,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deployment-configurations/gpu-vulkan/" class="md-nav__link">
+      <a href="../../deployment-configurations/gpu-vulkan/" class="md-nav__link">
         GPU - Vulkan
       </a>
     </li>
@@ -461,7 +566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deployment-configurations/gpu-cuda-rocm/" class="md-nav__link">
+      <a href="../../deployment-configurations/gpu-cuda-rocm/" class="md-nav__link">
         GPU - CUDA/ROCm
       </a>
     </li>
@@ -481,18 +586,16 @@
 
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
       
       
         
@@ -514,8 +617,8 @@
       
         
         
-        <div class="md-nav__link md-nav__link--index md-nav__link--active">
-          <a href="./">Building from source</a>
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../building-from-source/">Building from source</a>
           
             <label for="__nav_4">
               <span class="md-nav__icon md-icon"></span>
@@ -523,7 +626,7 @@
           
         </div>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           Building from source
@@ -538,7 +641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="getting-started/" class="md-nav__link">
+      <a href="../../building-from-source/getting-started/" class="md-nav__link">
         Getting started
       </a>
     </li>
@@ -552,7 +655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="python-bindings-and-importers/" class="md-nav__link">
+      <a href="../../building-from-source/python-bindings-and-importers/" class="md-nav__link">
         Python bindings and importers
       </a>
     </li>
@@ -566,7 +669,7 @@
   
   
     <li class="md-nav__item">
-      <a href="android/" class="md-nav__link">
+      <a href="../../building-from-source/android/" class="md-nav__link">
         Android cross-compilation
       </a>
     </li>
@@ -580,7 +683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ios/" class="md-nav__link">
+      <a href="../../building-from-source/ios/" class="md-nav__link">
         iOS cross-compilation
       </a>
     </li>
@@ -594,7 +697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="riscv/" class="md-nav__link">
+      <a href="../../building-from-source/riscv/" class="md-nav__link">
         RISC-V cross-compilation
       </a>
     </li>
@@ -642,7 +745,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../bindings/">Bindings</a>
+          <a href="../../bindings/">Bindings</a>
           
             <label for="__nav_5">
               <span class="md-nav__icon md-icon"></span>
@@ -665,7 +768,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bindings/c-api/" class="md-nav__link">
+      <a href="../../bindings/c-api/" class="md-nav__link">
         C API
       </a>
     </li>
@@ -679,7 +782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bindings/python/" class="md-nav__link">
+      <a href="../../bindings/python/" class="md-nav__link">
         Python
       </a>
     </li>
@@ -693,7 +796,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bindings/tensorflow-lite/" class="md-nav__link">
+      <a href="../../bindings/tensorflow-lite/" class="md-nav__link">
         TensorFlow Lite
       </a>
     </li>
@@ -735,7 +838,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../extensions/">Extensions</a>
+          <a href="../../extensions/">Extensions</a>
           
         </div>
       
@@ -788,7 +891,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../blog/">Blog</a>
+          <a href="../../blog/">Blog</a>
           
             <label for="__nav_7">
               <span class="md-nav__icon md-icon"></span>
@@ -811,7 +914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../blog/2021-10-15-cuda-backend/" class="md-nav__link">
+      <a href="../../blog/2021-10-15-cuda-backend/" class="md-nav__link">
         CUDA backend
       </a>
     </li>
@@ -825,7 +928,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../blog/2021-10-13-mmt4d/" class="md-nav__link">
+      <a href="../../blog/2021-10-13-mmt4d/" class="md-nav__link">
         Work in progress on Matrix Multiplication on CPU
       </a>
     </li>
@@ -839,7 +942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../blog/2021-07-19-tflite-tosa/" class="md-nav__link">
+      <a href="../../blog/2021-07-19-tflite-tosa/" class="md-nav__link">
         TFLite Support via TOSA
       </a>
     </li>
@@ -896,7 +999,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/glossary/" class="md-nav__link">
+      <a href="../../reference/glossary/" class="md-nav__link">
         Glossary
       </a>
     </li>
@@ -910,7 +1013,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/optimization-options/" class="md-nav__link">
+      <a href="../../reference/optimization-options/" class="md-nav__link">
         Optimization Options
       </a>
     </li>
@@ -952,7 +1055,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../community/">Community</a>
+          <a href="../../community/">Community</a>
           
         </div>
       
@@ -998,8 +1101,70 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#reference-pages" class="md-nav__link">
-    Reference pages
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-a-model" class="md-nav__link">
+    Running a model
+  </a>
+  
+    <nav class="md-nav" aria-label="Running a model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compile-the-model-to-mlir" class="md-nav__link">
+    Compile the model to MLIR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile-the-mlir-to-an-iree-vm-flatbuffer" class="md-nav__link">
+    Compile the MLIR to an IREE VM flatbuffer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-the-vm-flatbuffer-into-iree" class="md-nav__link">
+    Load the VM flatbuffer into IREE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute-the-model-via-iree" class="md-nav__link">
+    Execute the model via IREE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    Training
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#native-on-device-training" class="md-nav__link">
+    Native / On-device Training
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#samples" class="md-nav__link">
+    Samples
   </a>
   
 </li>
@@ -1020,20 +1185,121 @@
 
 
 
-<h1 id="building-iree-from-source">Building IREE from source<a class="headerlink" href="#building-iree-from-source" title="Permanent link">link</a></h1>
-<p>While IREE does offer
-<a href="https://github.com/iree-org/iree/releases">binary distributions</a> for its
-compiler tools and <a href="../bindings/python/">Python bindings</a>, building from
-source is still useful when using IREE's runtime or when making changes to the
-compiler or import tools themselves.</p>
-<h2 id="reference-pages">Reference pages<a class="headerlink" href="#reference-pages" title="Permanent link">link</a></h2>
-<ul>
-<li><a href="getting-started/">Getting started</a></li>
-<li><a href="python-bindings-and-importers/">Bindings and importers</a></li>
-<li><a href="android/">Android cross-compilation</a></li>
-<li><a href="ios/">iOS cross-compilation</a></li>
-<li><a href="riscv/">RISC-V cross-compilation</a></li>
-</ul>
+<h1 id="pytorch-integration">PyTorch Integration<a class="headerlink" href="#pytorch-integration" title="Permanent link">link</a></h1>
+<p>IREE supports compiling and running PyTorch programs represented as
+<code>nn.Module</code> <a href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html">classes</a>
+as well as models defined using <a href="https://pytorch.org/functorch/"><code>functorch</code></a>.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">link</a></h2>
+<p>Install IREE pip packages, either from pip or by
+<a href="../../building-from-source/python-bindings-and-importers/">building from source</a>:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>iree-compiler<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>iree-runtime
+</code></pre></div>
+
+<p>Install <a href="https://github.com/llvm/torch-mlir"><code>torch-mlir</code></a>, necessary for
+compiling PyTorch models to a format IREE is able to execute:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-f<span class="w"> </span>https://llvm.github.io/torch-mlir/package-index/<span class="w"> </span>torch-mlir
+</code></pre></div>
+
+<p>A special <code>iree_torch</code> package makes it easy to compile PyTorch programs and
+run them on IREE:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/iree-org/iree-torch.git
+</code></pre></div>
+
+<h2 id="running-a-model">Running a model<a class="headerlink" href="#running-a-model" title="Permanent link">link</a></h2>
+<p>Going from a loaded PyTorch model to one that's executing on IREE happens in
+four steps:</p>
+<ol>
+<li>Compile the model to <a href="https://mlir.llvm.org">MLIR</a></li>
+<li>Compile the MLIR to IREE VM flatbuffer</li>
+<li>Load the VM flatbuffer into IREE</li>
+<li>Execute the model via IREE</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the following steps, we'll be borrowing the model from
+<a href="https://github.com/iree-org/iree-torch/blob/main/examples/bert.ipynb">this BERT colab</a>
+and assuming it is available as <code>model</code>.</p>
+</div>
+<h3 id="compile-the-model-to-mlir">Compile the model to MLIR<a class="headerlink" href="#compile-the-model-to-mlir" title="Permanent link">link</a></h3>
+<p>First, we need to trace and compile our model to MLIR:</p>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="c1"># ... the model we&#39;re compiling</span>
+<span class="n">example_input</span> <span class="o">=</span> <span class="c1"># ... an input to the model with the expected shape and dtype</span>
+<span class="n">mlir</span> <span class="o">=</span> <span class="n">torch_mlir</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">example_input</span><span class="p">,</span>
+    <span class="n">output_type</span><span class="o">=</span><span class="n">torch_mlir</span><span class="o">.</span><span class="n">OutputType</span><span class="o">.</span><span class="n">LINALG_ON_TENSORS</span><span class="p">,</span>
+    <span class="n">use_tracing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The full list of available output types can be found
+<a href="https://github.com/llvm/torch-mlir/blob/6403c0e56f0e93e231df1c8d3dc78df7dd721b80/python/torch_mlir/__init__.py#L19">here</a>
+and includes linalg on tensors, mhlo, and tosa.</p>
+<h3 id="compile-the-mlir-to-an-iree-vm-flatbuffer">Compile the MLIR to an IREE VM flatbuffer<a class="headerlink" href="#compile-the-mlir-to-an-iree-vm-flatbuffer" title="Permanent link">link</a></h3>
+<p>Next, we compile the resulting MLIR to IREE's deployable file format:</p>
+<div class="highlight"><pre><span></span><code><span class="n">iree_backend</span> <span class="o">=</span> <span class="s2">&quot;llvm-cpu&quot;</span>
+<span class="n">iree_vmfb</span> <span class="o">=</span> <span class="n">iree_torch</span><span class="o">.</span><span class="n">compile_to_vmfb</span><span class="p">(</span><span class="n">mlir</span><span class="p">,</span> <span class="n">iree_backend</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Here we have a choice of backend we want to target. See the
+<a href="https://iree-org.github.io/iree/deployment-configurations/">Deployment Configurations</a>
+section of this site for a full list of targets and configurations.</p>
+<p>The generated flatbuffer can now be serialized and stored for another time or
+loaded and executed immediately.</p>
+<h3 id="load-the-vm-flatbuffer-into-iree">Load the VM flatbuffer into IREE<a class="headerlink" href="#load-the-vm-flatbuffer-into-iree" title="Permanent link">link</a></h3>
+<p>Next, we load the flatbuffer into the IREE runtime. <code>iree_torch</code> provides a
+convenience method for loading this flatbuffer from Python:</p>
+<div class="highlight"><pre><span></span><code><span class="n">invoker</span> <span class="o">=</span> <span class="n">iree_torch</span><span class="o">.</span><span class="n">load_vmfb</span><span class="p">(</span><span class="n">iree_vmfb</span><span class="p">,</span> <span class="n">iree_backend</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="execute-the-model-via-iree">Execute the model via IREE<a class="headerlink" href="#execute-the-model-via-iree" title="Permanent link">link</a></h3>
+<p>Finally, we can execute the loaded model:</p>
+<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">invoker</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">example_input</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="training">Training<a class="headerlink" href="#training" title="Permanent link">link</a></h2>
+<p>Training with PyTorch in IREE is supported via <code>functorch</code>. The steps for
+loading the model into IREE, once defined, are nearly identical to the above
+example.</p>
+<p>You can find a full end-to-end example of defining a basic regression model,
+training with it, and running inference on it
+<a href="https://github.com/iree-org/iree-torch/blob/main/examples/regression.py">here</a>.</p>
+<h2 id="native-on-device-training">Native / On-device Training<a class="headerlink" href="#native-on-device-training" title="Permanent link">link</a></h2>
+<p>A small (~100-250KB), self-contained binary can be built for deploying to
+resource-constrained environments. An example illustrating this can be found in
+<a href="https://github.com/iree-org/iree-torch/tree/main/examples/native_training">this example</a>.
+This binary runs a model without a Python interpreter.</p>
+<h2 id="samples">Samples<a class="headerlink" href="#samples" title="Permanent link">link</a></h2>
+<table>
+<thead>
+<tr>
+<th>Colab notebooks</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inference on BERT</td>
+<td><a href="https://colab.research.google.com/github/iree-org/iree-torch/blob/main/examples/bert.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Example scripts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/iree-org/iree-torch/blob/main/examples/regression.py">Basic Inference and Training Example</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/iree-org/iree-torch/tree/main/examples/native_training">Native On-device Training Example</a></td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -1117,10 +1383,10 @@ compiler or import tools themselves.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.6df46069.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6df46069.min.js"></script>
       
     
   </body>
