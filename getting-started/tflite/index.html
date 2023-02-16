@@ -16,8 +16,8 @@
       
         <link rel="next" href="../jax/">
       
-      <link rel="icon" href="../../assets/images/ghost.svg">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.11">
+      <link rel="icon" href="../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
     
     
       
@@ -87,26 +87,76 @@
     </div>
     
     
-      
+      <!--
+  Copyright (c) 2016-2023 Martin Donath <martin.donath@squidfunk.com>
 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Determine base classes -->
+
+
+
+<!-- Header -->
 <header class="md-header" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="IREE" class="md-header__button md-logo" aria-label="IREE" data-md-component="logo">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="Header"
+  >
+
+    <!-- Link to community home -->
+    <a
+      href="https://github.com/openxla/community"
+      title="OpenXLA"
+      class="md-header__button md-logo"
+      aria-label="OpenXLA"
+      data-md-component="logo"
+    >
       
-  <img src="../../assets/images/ghost.svg" alt="logo">
+  <img src="../../assets/images/openxla-logo-lockup-white.svg" alt="logo">
 
     </a>
+
+    <!-- Link to IREE home -->
+    <a
+      href="../.."
+      title="IREE"
+      class="md-header__button md-logo"
+      aria-label="IREE"
+      data-md-component="logo"
+    >
+      <div class="md-header__title">
+          <div class="md-nav__title">
+            IREE
+          </div>
+      </div>
+    </a>
+
+    <!-- Button to open drawer -->
     <label class="md-header__button md-icon" for="__drawer">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
+
+    <!-- Header title -->
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            IREE
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
+        <div class="" data-md-component="header-topic">
           <span class="md-ellipsis">
             
               TensorFlow Lite
@@ -115,32 +165,74 @@
         </div>
       </div>
     </div>
+
+    <!-- Color palette -->
     
       <form class="md-header__option" data-md-component="palette">
         
           
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          <input
+            class="md-option"
+            data-md-color-media="(prefers-color-scheme: light)"
+            data-md-color-scheme="default"
+            data-md-color-primary=""
+            data-md-color-accent=""
+            
+              aria-label="Switch to dark mode"
+            
+            type="radio"
+            name="__palette"
+            id="__palette_1"
+          />
           
-            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+            <label
+              class="md-header__button md-icon"
+              title="Switch to dark mode"
+              for="__palette_2"
+              hidden
+            >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
             </label>
           
         
           
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          <input
+            class="md-option"
+            data-md-color-media="(prefers-color-scheme: dark)"
+            data-md-color-scheme="slate"
+            data-md-color-primary=""
+            data-md-color-accent=""
+            
+              aria-label="Switch to light mode"
+            
+            type="radio"
+            name="__palette"
+            id="__palette_2"
+          />
           
-            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+            <label
+              class="md-header__button md-icon"
+              title="Switch to light mode"
+              for="__palette_1"
+              hidden
+            >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
             </label>
           
         
       </form>
     
+
+    <!-- Site language selector -->
     
+
+    <!-- Button to open search modal -->
     
       <label class="md-header__button md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
       </label>
+
+      <!-- Search interface -->
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
@@ -171,6 +263,8 @@
   </div>
 </div>
     
+
+    <!-- Repository information -->
     
       <div class="md-header__source">
         <a href="https://github.com/iree-org/iree" title="Go to repository" class="md-source" data-md-component="source">
@@ -185,6 +279,8 @@
       </div>
     
   </nav>
+
+  <!-- Navigation tabs (sticky) -->
   
 </header>
     
@@ -203,18 +299,59 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    
+                    <!--
+  Copyright (c) 2016-2023 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Determine class according to configuration -->
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+
+<!-- Main navigation -->
+<nav
+  class="md-nav md-nav--primary"
+  aria-label="Navigation"
+  data-md-level="0"
+>
+
+  <!-- Site title -->
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="IREE" class="md-nav__button md-logo" aria-label="IREE" data-md-component="logo">
+    <a
+      href="https://github.com/openxla/community"
+      title="IREE"
+      class="md-nav__button md-logo"
+      aria-label="IREE"
+      data-md-component="logo"
+    >
       
-  <img src="../../assets/images/ghost.svg" alt="logo">
+  <img src="../../assets/images/openxla-logo-lockup-white.svg" alt="logo">
 
     </a>
-    IREE
+    <div style="padding: 0.4rem">
+      IREE
+    </div>
   </label>
+
+  <!-- Repository information -->
   
     <div class="md-nav__source">
       <a href="https://github.com/iree-org/iree" title="Go to repository" class="md-source" data-md-component="source">
@@ -228,6 +365,8 @@
 </a>
     </div>
   
+
+  <!-- Render item list -->
   <ul class="md-nav__list" data-md-scrollfix>
     
       
@@ -1154,7 +1293,6 @@ imported into an IREE-compatible format then compiled to a series of backends.</
 <span class="w">  </span>iree-runtime<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>iree-tools-tflite
 </code></pre></div>
-
 <h2 id="importing-and-compiling">Importing and Compiling<a class="headerlink" href="#importing-and-compiling" title="Permanent link">link</a></h2>
 <p>IREE's tooling is divided into two components: import and compilation.</p>
 <ol>
@@ -1185,7 +1323,6 @@ iree-compile<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="si">${</span><span class="nv">IMPORT_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-o<span class="w"> </span><span class="si">${</span><span class="nv">MODULE_PATH</span><span class="si">}</span>
 </code></pre></div>
-
 <h3 id="using-the-python-api">Using the Python API<a class="headerlink" href="#using-the-python-api" title="Permanent link">link</a></h3>
 <p>The example below demonstrates downloading, compiling, and executing a TFLite
 model using the Python API. This includes some initial setup to declare global
@@ -1213,7 +1350,6 @@ be reconfigured to select alternative targets.</p>
 <span class="n">backends</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;llvm-cpu&quot;</span><span class="p">]</span>
 <span class="n">config</span> <span class="o">=</span> <span class="s2">&quot;local-task&quot;</span>
 </code></pre></div>
-
 <p>The TFLite sample model and input are downloaded locally.</p>
 <div class="highlight"><pre><span></span><code><span class="n">tfliteUrl</span> <span class="o">=</span> <span class="s2">&quot;https://storage.googleapis.com/iree-model-artifacts/tflite-integration-tests/posenet_i8.tflite&quot;</span>
 <span class="n">jpgUrl</span> <span class="o">=</span> <span class="s2">&quot;https://storage.googleapis.com/iree-model-artifacts/tflite-integration-tests/posenet_i8_input.jpg&quot;</span>
@@ -1221,7 +1357,6 @@ be reconfigured to select alternative targets.</p>
 <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">tfliteUrl</span><span class="p">,</span> <span class="n">tfliteFile</span><span class="p">)</span>
 <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">jpgUrl</span><span class="p">,</span> <span class="n">jpgFile</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Once downloaded we can compile the model for the selected backends. Both the
 TFLite and TOSA representations of the model are saved for debugging purposes.
 This is optional and can be omitted.</p>
@@ -1234,7 +1369,6 @@ This is optional and can be omitted.</p>
   <span class="n">target_backends</span><span class="o">=</span><span class="n">backends</span><span class="p">,</span>
   <span class="n">import_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
-
 <p>After compilation is completed we configure the VmModule using the local-task
 configuration and compiled IREE module.</p>
 <div class="highlight"><pre><span></span><code><span class="n">config</span> <span class="o">=</span> <span class="n">iree_rt</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="s2">&quot;local-task&quot;</span><span class="p">)</span>
@@ -1243,7 +1377,6 @@ configuration and compiled IREE module.</p>
   <span class="n">vm_module</span> <span class="o">=</span> <span class="n">iree_rt</span><span class="o">.</span><span class="n">VmModule</span><span class="o">.</span><span class="n">from_flatbuffer</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">vm_instance</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
   <span class="n">context</span><span class="o">.</span><span class="n">add_vm_module</span><span class="p">(</span><span class="n">vm_module</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Finally, the IREE module is loaded and ready for execution. Here we load the
 sample image, manipulate to the expected input size, and execute the module. By
 default TFLite models include a single function named 'main'. The final results
@@ -1255,7 +1388,6 @@ are printed.</p>
 <span class="n">iree_results</span> <span class="o">=</span> <span class="n">invoke</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">iree_results</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">link</a></h2>
 <p>Failures during the import step usually indicate a failure to lower from
 TensorFlow Lite's operations to TOSA, the intermediate representation used by
@@ -1321,33 +1453,25 @@ once it is complete at
         
       </main>
       
-        
-
-<!-- Footer -->
-<footer class="md-footer">
-
-  <!-- The base theme links to previous and/or next page, we omit that here. -->
-
-  <!-- Further information -->
+        <footer class="md-footer">
+  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-
-      <!-- Copyright and theme information -->
-      <div class="md-footer-copyright">
-        
-        <div class="md-footer-copyright__highlight">
-          Copyright &copy; 2023 The IREE Authors
-        </div>
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-        
-      </div>
-
-      <!-- Social links -->
-      <div class="md-social">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 The IREE Authors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
   
     
     
@@ -1374,6 +1498,7 @@ once it is complete at
     </a>
   
 </div>
+      
     </div>
   </div>
 </footer>
@@ -1386,7 +1511,7 @@ once it is complete at
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.6df46069.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
       
     
   </body>
