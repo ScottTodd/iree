@@ -17,7 +17,7 @@
         <link rel="next" href="../python-bindings-and-importers/">
       
       <link rel="icon" href="../../assets/images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.11">
     
     
       
@@ -133,7 +133,7 @@
 
     </a>
 
-    <!-- Link to IREE home -->
+    <!-- Link to site home -->
     <a
       href="../.."
       title="IREE"
@@ -331,7 +331,7 @@
   data-md-level="0"
 >
 
-  <!-- Site title -->
+  <!-- Community site logo / home page link -->
   <label class="md-nav__title" for="__drawer">
     <a
       href="https://github.com/openxla/community"
@@ -344,6 +344,7 @@
   <img src="../../assets/images/openxla-logo-lockup-white.svg" alt="logo">
 
     </a>
+    <!-- Site title (nav item below links to site home) -->
     IREE
   </label>
 
@@ -1273,9 +1274,7 @@
 <a href="https://ninja-build.org/">Ninja</a> CMake generator, and the clang or MSVC C/C++
 compilers. The tests also requires <a href="https://www.python.org/">Python3</a> and the
 python package <a href="https://requests.readthedocs.io/en/latest/">requests</a> to run.</p>
-<details class="note" open="open">
-<summary>Note</summary>
-<p>You are welcome to try different CMake generators and compilers, but IREE
+<details class="note" open="open"><summary>Note</summary><p>You are welcome to try different CMake generators and compilers, but IREE
 devs and CIs exclusively use these and other configurations are "best
 effort". Additionally, compilation on macOS is "best effort" as well, though
 we generally expect it to work due to its similarity with Linux. Patches to
@@ -1299,6 +1298,7 @@ improve support for these are always welcome.</p>
 <p>On a relatively recent Debian/Ubuntu:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>cmake<span class="w"> </span>ninja-build<span class="w"> </span>clang<span class="w"> </span>lld
 </code></pre></div>
+
 </div>
 <div class="tabbed-block">
 <ol>
@@ -1313,6 +1313,7 @@ improve support for these are always welcome.</p>
 <p>If using Homebrew:</p>
 <div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>cmake<span class="w"> </span>ninja
 </code></pre></div>
+
 </div>
 <div class="tabbed-block">
 <ol>
@@ -1346,6 +1347,7 @@ submodules:</p>
 <span class="nb">cd</span><span class="w"> </span>iree
 git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init
 </code></pre></div>
+
 <p>Configure then build all targets using CMake:</p>
 <p>Configure CMake:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Linux</label><label for="__tabbed_2_2">macOS</label><label for="__tabbed_2_3">Windows</label></div>
@@ -1362,6 +1364,7 @@ cmake<span class="w"> </span>-GNinja<span class="w"> </span>-B<span class="w"> <
 <span class="c1"># Alternately, with system compiler and your choice of CMake generator:</span>
 <span class="c1"># cmake -B ../iree-build/ -S .</span>
 </code></pre></div>
+
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="c1"># Recommended for simple development using clang and lld:</span>
@@ -1375,21 +1378,22 @@ cmake<span class="w"> </span>-GNinja<span class="w"> </span>-B<span class="w"> <
 <span class="c1"># Alternately, with system compiler and your choice of CMake generator:</span>
 <span class="c1"># cmake -B ../iree-build/ -S .</span>
 </code></pre></div>
+
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>-GNinja<span class="w"> </span>-B<span class="w"> </span>../iree-build/<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>RelWithDebInfo<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-DIREE_ENABLE_ASSERTIONS<span class="o">=</span>ON
 </code></pre></div>
+
 </div>
 </div>
 </div>
 <p>Build:</p>
 <div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>--build<span class="w"> </span>../iree-build/
 </code></pre></div>
-<details class="tip" open="open">
-<summary>Tip - Build types</summary>
-<p>We recommend using the <code>RelWithDebInfo</code> build type by default for a good
+
+<details class="tip" open="open"><summary>Tip - Build types</summary><p>We recommend using the <code>RelWithDebInfo</code> build type by default for a good
 balance of debugging information and performance. The <code>Debug</code>, <code>Release</code>,
 and <code>MinSizeRel</code> build types are useful in more specific scenarios.
 In particular, note that several useful LLVM debugging features are only
@@ -1397,13 +1401,12 @@ available in <code>Debug</code> builds. See the
 <a href="https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html">official CMake documentation</a>
 for general details.</p>
 </details>
-<details class="tip" open="open">
-<summary>Tip - Faster recompilation with ccache</summary>
-<p>We recommend using <a href="https://ccache.dev/"><code>ccache</code></a> together with CMake. To
+<details class="tip" open="open"><summary>Tip - Faster recompilation with ccache</summary><p>We recommend using <a href="https://ccache.dev/"><code>ccache</code></a> together with CMake. To
 use it, configure CMake with:</p>
 <div class="highlight"><pre><span></span><code>-DCMAKE_C_COMPILER_LAUNCHER<span class="o">=</span>ccache
 -DCMAKE_CXX_COMPILER_LAUNCHER<span class="o">=</span>ccache
 </code></pre></div>
+
 <p>See also our <a href="https://github.com/iree-org/iree/blob/main/docs/developers/developing_iree/ccache.md">developer documentation for ccache</a>.</p>
 </details>
 <h2 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">link</a></h2>
@@ -1413,6 +1416,7 @@ use it, configure CMake with:</p>
 <p>Build test dependencies and run tests:</p>
 <div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>--build<span class="w"> </span>../iree-build<span class="w"> </span>--target<span class="w"> </span>iree-run-tests
 </code></pre></div>
+
 <p>Internally, this builds dependencies via the <code>iree-test-deps</code> target and
 invokes <a href="https://gitlab.kitware.com/cmake/community/-/wikis/doc/ctest/Testing-With-CTest">CTest</a>.</p>
 <p>The parallel testing level can be set via the environment variable
@@ -1423,6 +1427,7 @@ are printed to test with a custom command line.</p>
 <div class="highlight"><pre><span></span><code>ls<span class="w"> </span>../iree-build/tools/
 ../iree-build/tools/iree-compile<span class="w"> </span>--help
 </code></pre></div>
+
 <!-- TODO(scotttodd): troubleshooting section? link to github issues? -->
 
 
@@ -1503,7 +1508,7 @@ are printed to test with a custom command line.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6df46069.min.js"></script>
       
     
   </body>

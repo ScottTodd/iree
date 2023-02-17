@@ -17,7 +17,7 @@
         <link rel="next" href="../2021-07-19-tflite-tosa/">
       
       <link rel="icon" href="../../assets/images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.11">
     
     
       
@@ -133,7 +133,7 @@
 
     </a>
 
-    <!-- Link to IREE home -->
+    <!-- Link to site home -->
     <a
       href="../.."
       title="IREE"
@@ -331,7 +331,7 @@
   data-md-level="0"
 >
 
-  <!-- Site title -->
+  <!-- Community site logo / home page link -->
   <label class="md-nav__title" for="__drawer">
     <a
       href="https://github.com/openxla/community"
@@ -344,6 +344,7 @@
   <img src="../../assets/images/openxla-logo-lockup-white.svg" alt="logo">
 
     </a>
+    <!-- Site title (nav item below links to site home) -->
     IREE
   </label>
 
@@ -1334,6 +1335,7 @@ further tiled to fit target architecture registers (e.g. 8x8).</p>
              <span class="n">dst_tile</span><span class="p">[</span><span class="n">mv</span><span class="p">:</span><span class="n">mv</span><span class="o">+</span><span class="n">tile_m_v</span><span class="p">,</span> <span class="n">nv</span><span class="p">:</span><span class="n">nv</span><span class="o">+</span><span class="n">tile_n_v</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">lhs_tile_v</span><span class="p">,</span> <span class="n">rhs_tile_v</span><span class="p">)</span>
  <span class="k">return</span> <span class="n">C</span>
 </code></pre></div>
+
 <p>The two main problems with this approach are:</p>
 <ul>
 <li>
@@ -1417,6 +1419,7 @@ more concrete:</p>
  <span class="n">operand_4d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">operand</span><span class="p">,</span> <span class="p">[</span><span class="n">i1</span><span class="p">,</span> <span class="n">i2</span><span class="p">,</span> <span class="n">j1</span><span class="p">,</span> <span class="n">j2</span><span class="p">])</span>
  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">operand_4d</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="c1"># [M1, K1, M0, K0]</span>
 </code></pre></div>
+
 <p>Now the mmt4d operation will follow a structure as the multi level tiling, for
 simplicity we considered the case here where no L1 tiling is required only first
 level of distribution to workgroups:</p>
@@ -1441,6 +1444,7 @@ level of distribution to workgroups:</p>
  <span class="n">C2d</span> <span class="o">=</span> <span class="n">unpack_4d_2d</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
  <span class="k">return</span> <span class="n">C2d</span>
 </code></pre></div>
+
 <p>The resulting 4D tiled matrix still needs be rearranged back to the original
 layout as 2D tensor:</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">unpack_4d_2d</span><span class="p">(</span><span class="n">operand</span><span class="p">):</span>
@@ -1451,6 +1455,7 @@ layout as 2D tensor:</p>
  <span class="n">operand_transposed</span> <span class="o">=</span> <span class="n">operand</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="c1"># [M1, M0, N1, N0]</span>
  <span class="k">return</span> <span class="n">operand_transposed</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="n">i1</span> <span class="o">*</span> <span class="n">i2</span><span class="p">,</span> <span class="n">j1</span> <span class="o">*</span> <span class="n">j2</span><span class="p">])</span> <span class="c1"># [M, N]</span>
 </code></pre></div>
+
 <h2 id="performance-results">Performance Results<a class="headerlink" href="#performance-results" title="Permanent link">link</a></h2>
 <p>We benchmarked various float32 matmul problems of different sizes and the result
 showed that mmt4d is faster than the existing matmul implementation for bigger
@@ -1586,7 +1591,7 @@ the next immediate steps are to prove the rest of the hypothesis by:</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6df46069.min.js"></script>
       
     
   </body>
