@@ -95,15 +95,37 @@ endif()
 # symbols that might be used by both IREE and non-IREE (e.g. LLVM) code.
 
 if(IREE_ENABLE_ASAN)
-  string(APPEND CMAKE_CXX_FLAGS " -fsanitize=address")
-  string(APPEND CMAKE_C_FLAGS " -fsanitize=address")
+  # -fsanitize=address, /fsanitize=address
+  #   clang: https://github.com/google/sanitizers/wiki/AddressSanitizer
+  #   MSVC: https://learn.microsoft.com/en-us/cpp/sanitizers/asan
+  # -ftrivial-auto-var-init=pattern
+  #   clang: Not technically ASAN, but it guards against similar bugs in
+  #   accessing uninitialized memory. See the extensive description in that
+  #   patch that originally introduced it:
+  #   https://reviews.llvm.org/rG14daa20be1ad89639ec209d969232d19cf698845
 
-  # Not technically ASAN, but it guards against similar bugs in accessing
-  # uninitialized memory. See the extensive description in that patch that
-  # originally introduced it:
-  # https://reviews.llvm.org/rG14daa20be1ad89639ec209d969232d19cf698845
-  string(APPEND CMAKE_CXX_FLAGS " -ftrivial-auto-var-init=pattern")
-  string(APPEND CMAKE_C_FLAGS " -ftrivial-auto-var-init=pattern")
+  iree_select_compiler_opts(_ASAN_CXX_FLAGS
+    CLANG_OR_GCC
+      "-fsanitize=address"
+      "-ftrivial-auto-var-init=pattern"
+    MSVC_OR_CLANG_CL
+      "/fsanitize=address"
+  )
+  iree_select_compiler_opts(_ASAN_C_FLAGS
+    CLANG_OR_GCC
+      "-fsanitize=address"
+      "-ftrivial-auto-var-init=pattern"
+    MSVC_OR_CLANG_CL
+      "/fsanitize=address"
+  )
+  iree_select_compiler_opts(_ASAN_EXE_LINKER_FLAGS
+    MSVC_OR_CLANG_CL
+      "/fsanitize=address"
+  )
+
+  list(APPEND CMAKE_CXX_FLAGS ${_ASAN_CXX_FLAGS})
+  list(APPEND CMAKE_C_FLAGS ${_ASAN_C_FLAGS})
+  list(APPEND CMAKE_EXE_LINKER_FLAGS ${_ASAN_EXE_LINKER_FLAGS})
 
   # If doing any kind of shared library builds, then we have to link against
   # the shared libasan, and the user will be responsible for adding the
