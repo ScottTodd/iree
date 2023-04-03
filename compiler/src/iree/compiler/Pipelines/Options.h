@@ -63,7 +63,7 @@ struct HighLevelOptimizationOptions {
 
   // Enables recursive evaluation of immutable globals using the compiler
   // and runtime.
-  bool constEval = true;
+  bool constEval = false;
 
   // Optimizations to reduce numeric precision where it is safe to do so.
   bool numericPrecisionReduction = false;

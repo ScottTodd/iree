@@ -8,9 +8,12 @@
 
 #include "iree/compiler/Dialect/Util/IR/UtilDialect.h"
 #include "llvm/ADT/SmallPtrSet.h"
+#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/Linalg/IR/Linalg.h"
 #include "mlir/Dialect/Tensor/IR/Tensor.h"
 #include "mlir/Interfaces/SideEffectInterfaces.h"
+
+#define DEBUG_TYPE "iree-util-hoist-into-globals"
 
 namespace mlir {
 namespace iree_compiler {
@@ -88,6 +91,8 @@ ConstExprOpInfo ConstExprOpInfo::getForOp(Operation *op) {
 
   // By default any effects make it non const-expr.
   if (!isMemoryEffectFree(op)) {
+    LLVM_DEBUG(llvm::dbgs()
+               << "    !isMemoryEffectFree: " << op->getName() << "\n");
     return {};
   }
 
@@ -100,6 +105,8 @@ ConstExprOpInfo ConstExprOpInfo::getForOp(Operation *op) {
   if (op->getParentOfType<linalg::LinalgOp>()) {
     return {};
   }
+
+  LLVM_DEBUG(llvm::dbgs() << "    constexpr (?): " << *op << "\n");
 
   return getInfoForDefaultConstExprOp(op);
 }

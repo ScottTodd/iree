@@ -2467,6 +2467,16 @@ def Stream_CmdCollectiveOp : Stream_Op<"cmd.collective", [
 def Stream_CmdDispatchOp : Stream_Op<"cmd.dispatch", [
   AttrSizedOperandSegments,
   DeclareOpInterfaceMethods<SymbolUserOpInterface>,
+  // DO NOT SUBMIT
+  // Inherit memory effects from the entry point(s)?
+  // Or add memory effects to other functions and _not_ this
+  //
+  // canonicalize removes ops when this is added, but compile_to_continuation passes :P
+  // RecursiveMemoryEffects,
+  //
+  // This matches "and is able to load/store at will" in the comment below
+  MemoryEffects<[MemRead, MemWrite]>,
+  //
   Stream_CmdPhaseOp,
   Stream_StreamableOp,
   Stream_SubviewEffectOp,
