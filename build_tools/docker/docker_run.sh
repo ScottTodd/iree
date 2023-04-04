@@ -6,6 +6,10 @@
 
 set -euo pipefail
 
+# DOCKER_HOST_WORKDIR, DOCKER_HOST_TMPDIR
+# DOCKER_HOST_WORKDIR: source
+# /tmp/iree
+
 # It's convenient to have the paths inside the container match the paths
 # outside. This creates an issue, however, because we pass around CMake build
 # directories, which use absolute paths, so it's important that the paths match

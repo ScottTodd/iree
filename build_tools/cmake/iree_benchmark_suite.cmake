@@ -93,6 +93,7 @@ function(iree_import_tf_model)
 
   if(NOT TARGET "${_RULE_TARGET_NAME}")
     cmake_path(GET _RULE_SOURCE FILENAME _MODEL_BASENAME)
+    message(STATUS "add_custom_command for '${IREE_IMPORT_TF_PATH}'")
     add_custom_command(
       OUTPUT "${_RULE_OUTPUT_MLIR_FILE}"
       COMMAND
