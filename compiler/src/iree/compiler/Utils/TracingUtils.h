@@ -15,6 +15,19 @@
 namespace mlir {
 namespace iree_compiler {
 
+// TODO(scotttodd): settings for
+//   tracing enabled
+//   allocation tracking
+//   allocation tracking callstacks
+// C++ flags for those settings instead of C defines?
+// no IREE_TRACE_MODE
+
+// how should this work?
+//
+//     #if defined(TRACY_ENABLE)
+//     #include "tracy/TracyC.h"  // IWYU pragma: export
+//     #endif
+
 // Instruments passes using IREE's runtime tracing support.
 //
 // Usage:
