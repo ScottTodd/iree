@@ -15,11 +15,21 @@ bool_flag(
     name = "runtime_enable",
     build_setting_default = False,
 )
+bool_flag(
+    name = "compiler_enable",
+    build_setting_default = False,
+)
 
 config_setting(
     name = "_runtime_enabled",
     flag_values = {
         ":runtime_enable": "True",
+    },
+)
+config_setting(
+    name = "_compiler_enabled",
+    flag_values = {
+        ":compiler_enable": "True",
     },
 )
 
@@ -59,6 +69,15 @@ alias(
     name = "runtime_impl",
     actual = select({
         ":_runtime_enabled": ":enable_impl",
+        "//conditions:default": ":disable_impl",
+    }),
+)
+
+# Conditionally enable for the compiler.
+alias(
+    name = "compiler_impl",
+    actual = select({
+        ":_compiler_enabled": ":enable_impl",
         "//conditions:default": ":disable_impl",
     }),
 )

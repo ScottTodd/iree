@@ -34,3 +34,34 @@ else()
       "${IREE_ROOT_DIR}/third_party/tracy/public"
   )
 endif()
+
+# The compiler tracing library will depend on this target unconditionally.
+# It conditionally either includes the necessary headers/defines or no-ops.
+if(IREE_ENABLE_COMPILER_TRACING)
+  external_cc_library(
+    PACKAGE
+      tracy_client
+    NAME
+      compiler_impl
+    ROOT
+      "${IREE_ROOT_DIR}/third_party/tracy/public"
+    HDRS
+      "tracy/Tracy.hpp"
+      "tracy/TracyC.h"
+    INCLUDES
+      "${IREE_ROOT_DIR}/third_party/tracy/public"
+    DEPS
+      ${CMAKE_DL_LIBS}
+    DEFINES
+      "IREE_COMPILER_TRACING_MODE=2"
+  )
+else()
+  external_cc_library(
+    PACKAGE
+      tracy_client
+    NAME
+      compiler_impl
+    ROOT
+      "${IREE_ROOT_DIR}/third_party/tracy/public"
+  )
+endif()

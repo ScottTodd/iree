@@ -46,16 +46,9 @@ iree_cc_library(
     iree::base::internal::flatcc::building
     iree::base::internal::flatcc::debugging
     iree::base::internal::flatcc::parsing
-    iree::base::tracing
     iree::compiler::Dialect::Util::IR
+    tracy_client::compiler_impl
   PUBLIC
 )
 
 ### BAZEL_TO_CMAKE_PRESERVES_ALL_CONTENT_BELOW_THIS_LINE ###
-
-if(IREE_ENABLE_COMPILER_TRACING)
-  target_compile_definitions(iree_compiler_Utils_Utils
-  PUBLIC
-    "IREE_ENABLE_COMPILER_TRACING=1"
-  )
-endif()
