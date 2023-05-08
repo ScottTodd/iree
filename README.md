@@ -10,6 +10,16 @@ See [our website](https://openxla.github.io/iree/) for project details, user
 guides, and instructions on building from source.
 
 [![CI Status](https://github.com/openxla/iree/actions/workflows/ci.yml/badge.svg?query=branch%3Amain+event%3Apush)](https://github.com/openxla/iree/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush)
+[![PyPI](https://img.shields.io/pypi/v/iree-runtime?label=iree-runtime)](https://pypi.org/project/iree-runtime/)
+[![PyPI](https://img.shields.io/pypi/v/iree-compiler?label=iree-compiler)](https://pypi.org/project/iree-compiler/)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/openxla/iree?include_prereleases&label=nightly%20release)](https://github.com/openxla/iree/releases)
+
+[![CI Status](https://img.shields.io/github/actions/workflow/status/openxla/iree/ci.yml?query=branch%3Amain+event%3Apush)](https://github.com/openxla/iree/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush)
+
+https://shields.io/category/social
+
+
+
 
 #### Project Status
 
