@@ -4,6 +4,24 @@
     IREE's JAX support is under active development. This page is still under
     construction.
 
+## Overview (draft)
+
+<!-- DRAFT -->
+Some understanding of JAX is required
+
+While other machine learning frameworks let you build graphs out of layers of
+operations, JAX operates at a lower level, letting users compose programs out of
+NumPy and other Python functions that are then just-in-time compiled and
+executed.
+
+Two operating modes:
+
+* just-in-time (JIT) compilation for interactive use in Python
+* ahead-of-time (AOT) compilation for deployment in other environments
+<!-- DRAFT -->
+
+## Old docs (remove/merge into new docs)
+
 IREE offers two ways to interface with [JAX](https://github.com/google/jax)
 programs:
 
@@ -17,3 +35,12 @@ programs:
 <!-- TODO: Expand on interface differences -->
 <!-- TODO: Add quickstart instructions -->
 <!-- TODO: Link to samples -->
+
+## References (while writing, add inline where relevant)
+
+| Topic | Reference page |
+| ----- | -------------- |
+JAX | [JAX: Autograd and XLA](https://github.com/google/jax)
+JAX JIT | [Just In Time Compilation with JAX](https://jax.readthedocs.io/en/latest/jax-101/02-jitting.html)
+JAX AOT | [Ahead-of-time lowering and compilation](https://jax.readthedocs.io/en/latest/aot.html)
+PJRT Plugin | [OpenXLA PJRT Plugin](https://github.com/openxla/openxla-pjrt-plugin)
