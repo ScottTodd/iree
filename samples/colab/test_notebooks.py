@@ -11,7 +11,9 @@ import os
 import subprocess
 import unittest
 
-NOTEBOOKS_TO_SKIP = []
+NOTEBOOKS_TO_SKIP = [
+    "tflite_text_classification.ipynb",  # Installs tf-nightly, unstable
+]
 
 NOTEBOOKS_EXPECTED_TO_FAIL = [
     # None!
