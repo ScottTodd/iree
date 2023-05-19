@@ -84,13 +84,6 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
                   style="min-width:400px; width:initial; min-height:100px; resize:both; font-family: monospace;"></textarea>
       </p>
 
-      <p>
-        <label for="benchmark-iterations-input" class="form-label">
-          Benchmark iterations (inner invoke call):</label>
-        <input type="number" id="benchmark-iterations-input" class="form-control"
-               style="width:400px; font-family: monospace;" value="1" min="1"></input>
-      </p>
-
       <button id="call-function" class="btn btn-primary" type="button"
               onclick="callFunctionWithFormInputs()" disabled>Call function</button>
       <button id="update-url" class="btn btn-secondary" type="button"
@@ -195,7 +188,6 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
     const callFunctionButton = document.getElementById("call-function");
     const functionNameInput = document.getElementById("function-name-input");
     const functionArgumentsInput = document.getElementById("function-arguments-input");
-    const benchmarkIterationsInput = document.getElementById("benchmark-iterations-input");
     const functionOutputsElement = document.getElementById("function-outputs");
     const timeJsOutputElement = document.getElementById("benchmark-time-js-output");
     const timeWasmOutputElement = document.getElementById("benchmark-time-wasm-output");
@@ -224,10 +216,6 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
       if (searchParams.has("arguments")) {
         functionArgumentsInput.value = searchParams.get("arguments");
-      }
-
-      if (searchParams.has("iterations")) {
-        benchmarkIterationsInput.value = searchParams.get("iterations");
       }
 
       if (searchParams.has("program")) {
@@ -294,10 +282,9 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
       const functionName = functionNameInput.value;
       const inputs = functionArgumentsInput.value.split("\n");
-      const iterations = benchmarkIterationsInput.value;
       const startJsTime = performance.now();
 
-      ireeCallFunction(loadedProgram, functionName, inputs, iterations)
+      ireeCallFunction(loadedProgram, functionName, inputs)
           .then((resultObject) => {
             functionOutputsElement.value =
                 resultObject['outputs'].replace(";", "\n");
@@ -306,10 +293,10 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
             const totalJsTime = endJsTime - startJsTime;
             timeJsOutputElement.textContent = totalJsTime.toFixed(3) + "ms";
 
-            const totalWasmTimeMs = resultObject['total_invoke_time_ms'];
-            const meanWasmTimeMs = totalWasmTimeMs / iterations;
-            timeWasmOutputElement.textContent = meanWasmTimeMs.toFixed(3) +
-                "ms / iteration over " + iterations + " iteration(s)";
+            const totalWasmTimeMs = resultObject['invoke_time_ms'];
+            const meanWasmTimeMs = totalWasmTimeMs;
+            timeWasmOutputElement.textContent =
+                meanWasmTimeMs.toFixed(3) + "ms";
           })
           .catch((error) => {
             console.error("Function call error: '" + error + "'");
@@ -328,7 +315,6 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
       const searchParams = new URLSearchParams(window.location.search);
       searchParams.set("function", functionNameInput.value);
       searchParams.set("arguments", functionArgumentsInput.value);
-      searchParams.set("iterations", benchmarkIterationsInput.value);
       replaceUrlWithSearchParams(searchParams);
     }
 

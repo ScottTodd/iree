@@ -190,9 +190,10 @@ def FuseDispatchBindings :
   let constructor = [{
     mlir::iree_compiler::IREE::Stream::createFuseDispatchBindingsPass()
   }];
+  // DO NOT SUBMIT - add a flag and flip for just WebGPU?
   let options = [
     Option<"aliasMutableBindings", "alias-mutable-bindings",
-           "bool", /*default=*/"false",
+           "bool", /*default=*/"true",
            "Fuses bindings that are mutable instead of leaving them split.">
   ];
 }

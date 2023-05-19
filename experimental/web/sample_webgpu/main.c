@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "iree/base/api.h"
+#include "iree/base/loop_emscripten.h"
 #include "iree/hal/api.h"
 #include "iree/hal/drivers/webgpu/buffer.h"
 #include "iree/hal/drivers/webgpu/platform/webgpu.h"
@@ -56,24 +57,34 @@ void unload_program(iree_program_state_t* program_state);
 //   described in iree/tooling/vm_util and used in IREE's CLI tools.
 //   For example, the CLI `--function_input=f32=1 --function_input=f32=2`
 //   should be passed here as `f32=1;f32=2`.
-// * |iterations| is the number of times to call the function, for benchmarking
-const char* call_function(iree_program_state_t* program_state,
-                          const char* function_name, const char* inputs,
-                          int iterations);
+const bool call_function(iree_program_state_t* program_state,
+                         const char* function_name, const char* inputs);
 
 //===----------------------------------------------------------------------===//
-// Implementation
+// Implementation - State and entry points
 //===----------------------------------------------------------------------===//
 
 typedef struct iree_sample_state_t {
   iree_runtime_instance_t* instance;
   iree_hal_device_t* device;
+  iree_loop_emscripten_t* loop;
 } iree_sample_state_t;
 
 typedef struct iree_program_state_t {
+  iree_sample_state_t* sample_state;
   iree_runtime_session_t* session;
   iree_vm_module_t* module;
 } iree_program_state_t;
+
+// TODO(scotttodd): circular reference in here?
+//   invoke_state tracks userdata
+//
+//   need to keep invoke_state alive until callback is issued, so need to stash
+//   it in our own userdata...
+typedef struct iree_invoke_state_userdata_t {
+  iree_vm_async_invoke_state_t* invoke_state;
+  iree_time_t invoke_start_time;
+} iree_invoke_state_userdata_t;
 
 extern iree_status_t create_device(iree_allocator_t host_allocator,
                                    iree_hal_device_t** out_device);
@@ -97,6 +108,11 @@ iree_sample_state_t* setup_sample() {
     status = create_device(iree_allocator_system(), &sample_state->device);
   }
 
+  if (iree_status_is_ok(status)) {
+    status = iree_loop_emscripten_allocate(iree_allocator_system(),
+                                           &sample_state->loop);
+  }
+
   if (!iree_status_is_ok(status)) {
     iree_status_fprint(stderr, status);
     iree_status_free(status);
@@ -108,6 +124,7 @@ iree_sample_state_t* setup_sample() {
 }
 
 void cleanup_sample(iree_sample_state_t* sample_state) {
+  iree_loop_emscripten_free(sample_state->loop);
   iree_hal_device_release(sample_state->device);
   iree_runtime_instance_release(sample_state->instance);
   free(sample_state);
@@ -119,6 +136,7 @@ iree_program_state_t* load_program(iree_sample_state_t* sample_state,
   iree_status_t status = iree_allocator_malloc(iree_allocator_system(),
                                                sizeof(iree_program_state_t),
                                                (void**)&program_state);
+  program_state->sample_state = sample_state;
 
   iree_runtime_session_options_t session_options;
   iree_runtime_session_options_initialize(&session_options);
@@ -204,6 +222,10 @@ void unload_program(iree_program_state_t* program_state) {
   free(program_state);
 }
 
+//===----------------------------------------------------------------------===//
+// Input parsing
+//===----------------------------------------------------------------------===//
+
 static iree_status_t parse_input_into_call(
     iree_runtime_call_t* call, iree_hal_allocator_t* device_allocator,
     iree_string_view_t input) {
@@ -280,6 +302,10 @@ static iree_status_t parse_inputs_into_call(
 
   return iree_ok_status();
 }
+
+//===----------------------------------------------------------------------===//
+// Output readback and formatting
+//===----------------------------------------------------------------------===//
 
 typedef struct iree_buffer_map_userdata_t {
   iree_hal_buffer_view_t* source_buffer_view;
@@ -388,6 +414,7 @@ static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus map_status,
 
 static iree_status_t print_buffer_view(iree_hal_device_t* device,
                                        iree_hal_buffer_view_t* buffer_view) {
+  fprintf(stderr, "print_buffer_view\n");
   iree_status_t status = iree_ok_status();
 
   iree_hal_buffer_t* buffer = iree_hal_buffer_view_buffer(buffer_view);
@@ -470,11 +497,13 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
         device, IREE_HAL_QUEUE_AFFINITY_ANY, iree_hal_semaphore_list_empty(),
         signal_semaphores, 1, &command_buffer);
   }
+  fprintf(stderr, "print_buffer_view after queue_execute, calling wait\n");
   // TODO(scotttodd): Make this async - pass a wait source to iree_loop_wait_one
   if (iree_status_is_ok(status)) {
     status = iree_hal_semaphore_wait(fence_semaphore, signal_value,
                                      iree_infinite_timeout());
   }
+  fprintf(stderr, "print_buffer_view after wait\n");
   iree_hal_command_buffer_release(command_buffer);
   iree_hal_semaphore_release(fence_semaphore);
   // ----------------------------------------------
@@ -501,6 +530,8 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
 static iree_status_t print_outputs_from_call(
     iree_runtime_call_t* call, iree_string_builder_t* outputs_builder) {
   iree_vm_list_t* variants_list = iree_runtime_call_outputs(call);
+  fprintf(stderr, "print_outputs_from_call, outputs, outputs size: %d\n",
+          (int)iree_vm_list_size(variants_list));
   for (iree_host_size_t i = 0; i < iree_vm_list_size(variants_list); ++i) {
     iree_vm_variant_t variant = iree_vm_variant_empty();
     IREE_RETURN_IF_ERROR(
@@ -572,10 +603,15 @@ static iree_status_t print_outputs_from_call(
   return iree_ok_status();
 }
 
+//===----------------------------------------------------------------------===//
+// Function calling / invocations
+//===----------------------------------------------------------------------===//
+
 iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
                               iree_status_t status, iree_vm_list_t* outputs) {
-  iree_vm_async_invoke_state_t* invoke_state =
-      (iree_vm_async_invoke_state_t*)user_data;
+  fprintf(stderr, "iree_vm_async_invoke_callback_fn_t\n");
+  iree_invoke_state_userdata_t* userdata_ptr =
+      (iree_invoke_state_userdata_t*)user_data;
 
   if (!iree_status_is_ok(status)) {
     fprintf(stderr, "iree_vm_async_invoke_callback_fn_t error:\n");
@@ -583,15 +619,33 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
     iree_status_free(status);
   }
 
+  //
+  iree_time_t invoke_end_time = iree_time_now();
+  iree_time_t elapsed_time = invoke_end_time - userdata_ptr->invoke_start_time;
+  iree_time_t elapsed_time_millis = elapsed_time / 1000000;
+  fprintf(stderr, "  elapsed time: %dms\n", (int)elapsed_time_millis);
+  // TODO(scotttodd): return this to JS
+
+  //
   iree_vm_list_release(outputs);
 
-  iree_allocator_free(iree_allocator_system(), (void*)invoke_state);
+  iree_allocator_free(iree_allocator_system(),
+                      (void*)userdata_ptr->invoke_state);
+  iree_allocator_free(iree_allocator_system(), (void*)userdata_ptr);
   return iree_ok_status();
 }
 
-const char* call_function(iree_program_state_t* program_state,
-                          const char* function_name, const char* inputs,
-                          int iterations) {
+// TODO(scotttodd): return a Promise that resolves
+//   ... with the output string?
+//   ... with nothing (then query for output data?)
+// create wait handle, return the Promise
+//   set the wait primitive to resolve? can't pass a value via iree_event_set?
+// receive a function to call when complete? Promise API would be cleaner
+// internal implementation so could just call a function with "" or real data
+// or pass sucess/failure functions to call
+
+const bool call_function(iree_program_state_t* program_state,
+                         const char* function_name, const char* inputs) {
   iree_status_t status = iree_ok_status();
 
   // Fully qualify the function name. This sample only supports loading one
@@ -618,40 +672,43 @@ const char* call_function(iree_program_state_t* program_state,
         iree_make_cstring_view(inputs));
   }
 
-  // Note: Timing has ~millisecond precision on the web to mitigate timing /
-  // side-channel security threats.
-  // https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#reduced_time_precision
-  iree_time_t start_time = iree_time_now();
-
-  // TODO(scotttodd): benchmark iterations (somehow with async)
-
-  iree_vm_async_invoke_state_t* invoke_state = NULL;
+  iree_invoke_state_userdata_t* invoke_userdata = NULL;
+  if (iree_status_is_ok(status)) {
+    status = iree_allocator_malloc(iree_allocator_system(),
+                                   sizeof(iree_invoke_state_userdata_t),
+                                   (void**)&invoke_userdata);
+  }
   if (iree_status_is_ok(status)) {
     status = iree_allocator_malloc(iree_allocator_system(),
                                    sizeof(iree_vm_async_invoke_state_t),
-                                   (void**)&invoke_state);
+                                   (void**)&(invoke_userdata->invoke_state));
   }
-  // TODO(scotttodd): emscripten / browser loop here
-  iree_status_t loop_status = iree_ok_status();
-  iree_loop_t loop = iree_loop_inline(&loop_status);
+
   if (iree_status_is_ok(status)) {
+    iree_loop_t loop = iree_loop_emscripten(program_state->sample_state->loop);
     iree_vm_context_t* vm_context = iree_runtime_session_context(call.session);
     iree_vm_function_t vm_function = call.function;
     iree_vm_list_t* inputs = call.inputs;
     iree_vm_list_t* outputs = call.outputs;
 
-    status = iree_vm_async_invoke(loop, invoke_state, vm_context, vm_function,
-                                  IREE_VM_INVOCATION_FLAG_NONE, /*policy=*/NULL,
-                                  inputs, outputs, iree_allocator_system(),
-                                  invoke_callback,
-                                  /*user_data=*/invoke_state);
+    // Note: Timing has ~millisecond precision on the web to mitigate timing /
+    // side-channel security threats.
+    // https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#reduced_time_precision
+    invoke_userdata->invoke_start_time = iree_time_now();
+
+    status = iree_vm_async_invoke(
+        loop, invoke_userdata->invoke_state, vm_context, vm_function,
+        IREE_VM_INVOCATION_FLAG_NONE, /*policy=*/NULL, inputs, outputs,
+        iree_allocator_system(), invoke_callback, invoke_userdata);
   }
+
+  fprintf(stderr, "after iree_vm_async_invoke\n");
 
   // TODO(scotttodd): record end time in async callback instead of here
   // TODO(scotttodd): print outputs in async callback instead of here
 
-  iree_time_t end_time = iree_time_now();
-  iree_time_t time_elapsed = end_time - start_time;
+  // iree_time_t end_time = iree_time_now();
+  // iree_time_t time_elapsed = end_time - start_time;
 
   iree_string_builder_t outputs_builder;
   iree_string_builder_initialize(iree_allocator_system(), &outputs_builder);
@@ -661,28 +718,31 @@ const char* call_function(iree_program_state_t* program_state,
   //   "total_invoke_time_ms": [number],
   //   "outputs": [semicolon delimited list of formatted outputs]
   // }
-  if (iree_status_is_ok(status)) {
-    status = iree_string_builder_append_format(
-        &outputs_builder,
-        "{ \"total_invoke_time_ms\": %" PRId64 ", \"outputs\": \"",
-        time_elapsed / 1000000);
-  }
-  if (iree_status_is_ok(status)) {
-    status = print_outputs_from_call(&call, &outputs_builder);
-  }
-  if (iree_status_is_ok(status)) {
-    status = iree_string_builder_append_cstring(&outputs_builder, "\"}");
-  }
+  // if (iree_status_is_ok(status)) {
+  //   status = iree_string_builder_append_format(
+  //       &outputs_builder,
+  //       "{ \"total_invoke_time_ms\": %" PRId64 ", \"outputs\": \"",
+  //       time_elapsed / 1000000);
+  // }
+  // if (iree_status_is_ok(status)) {
+  //   status = print_outputs_from_call(&call, &outputs_builder);
+  // }
+  // if (iree_status_is_ok(status)) {
+  //   status = iree_string_builder_append_cstring(&outputs_builder, "\"}");
+  // }
 
   if (!iree_status_is_ok(status)) {
     iree_string_builder_deinitialize(&outputs_builder);
     iree_status_fprint(stderr, status);
     iree_status_free(status);
-    return "";
+    return false;
   }
 
-  // Note: this leaks the buffer. It's up to the caller to free it after use.
-  char* outputs_string = strdup(iree_string_builder_buffer(&outputs_builder));
-  iree_string_builder_deinitialize(&outputs_builder);
-  return outputs_string;
+  return true;
+
+  // // Note: this leaks the buffer. It's up to the caller to free it after use.
+  // char* outputs_string =
+  // strdup(iree_string_builder_buffer(&outputs_builder));
+  // iree_string_builder_deinitialize(&outputs_builder);
+  // return outputs_string;
 }

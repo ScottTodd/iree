@@ -45,7 +45,7 @@ async function ireeUnloadProgram(programState) {
 //
 // Resolves with a parsed JSON object on success:
 // {
-//   "total_invoke_time_ms": [number],
+//   "invoke_time_ms": [number],
 //   "outputs": [semicolon delimited list of formatted outputs]
 // }
 async function ireeCallFunction(
@@ -88,7 +88,7 @@ var Module = {
     wasmCallFunctionFn = Module.cwrap(
         'call_function',
         'number',
-        ['number', 'string', 'string', 'number'],
+        ['number', 'string', 'string'],
     );
 
     sampleState = wasmSetupSampleFn();
@@ -191,9 +191,7 @@ function _ireeUnloadProgram(programState) {
   return Promise.resolve();
 }
 
-function _ireeCallFunction(programState, functionName, inputs, iterations) {
-  iterations = iterations !== undefined ? iterations : 1;
-
+function _ireeCallFunction(programState, functionName, inputs) {
   let inputsJoined;
   if (Array.isArray(inputs)) {
     inputsJoined = inputs.join(';');
@@ -204,16 +202,17 @@ function _ireeCallFunction(programState, functionName, inputs, iterations) {
         'Expected \'inputs\' to be a String or an array of Strings');
   }
 
-  // Receive as a pointer, convert, then free. This avoids a memory leak, see
-  // https://github.com/emscripten-core/emscripten/issues/6484
-  const returnValuePtr =
-      wasmCallFunctionFn(programState, functionName, inputsJoined, iterations);
-  const returnValue = Module.UTF8ToString(returnValuePtr);
+  // Synchronous success/fail status. Real output will come async.
+  const result = wasmCallFunctionFn(programState, functionName, inputsJoined);
 
-  if (returnValue === '') {
-    return Promise.reject('Wasm module error calling function');
+  if (result) {
+    console.log('Call succeeded, waiting for result...');
+    // TODO(scotttodd): return a Promise that resolves with the result
+    return Promise.resolve({
+      'invoke_time_ms': 0,
+      'outputs': '',
+    });
   } else {
-    Module._free(returnValuePtr);
-    return Promise.resolve(JSON.parse(returnValue));
+    return Promise.reject('Wasm module error calling function');
   }
 }
