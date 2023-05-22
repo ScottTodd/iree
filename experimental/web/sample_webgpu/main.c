@@ -608,10 +608,37 @@ static iree_status_t print_outputs_from_call(
   return iree_ok_status();
 }
 
+// Processes outputs from a completed function invocation.
+// Some output data types may require asynchronous mapping (readback).
+static iree_status_t process_call_outputs(
+    iree_call_function_state_t* call_state) {
+  iree_vm_list_t* outputs_list = iree_runtime_call_outputs(&call_state->call);
+  fprintf(stderr, "process_call_outputs, outputs size: %d\n",
+          (int)iree_vm_list_size(outputs_list));
+
+  for (iree_host_size_t i = 0; i < iree_vm_list_size(outputs_list); ++i) {
+    iree_vm_variant_t variant = iree_vm_variant_empty();
+    IREE_RETURN_IF_ERROR(
+        iree_vm_list_get_variant_assign(outputs_list, i, &variant),
+        "variant %" PRIhsz " not present", i);
+
+    if (iree_vm_variant_is_ref(variant)) {
+      // TODO(scotttodd): add to list
+      fprintf(stderr, "  [%" PRIhsz "]: ref\n", i);
+    }
+  }
+
+  // TODO(scotttodd): if no refs, construct output and issue callback
+  // TODO(scotttodd): if any refs, batch reads -> construct output -> callback
+
+  return iree_ok_status();
+}
+
 //===----------------------------------------------------------------------===//
 // Function calling / invocations
 //===----------------------------------------------------------------------===//
 
+// Handles the completion callback from `iree_vm_async_invoke()`.
 iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
                               iree_status_t status, iree_vm_list_t* outputs) {
   fprintf(stderr, "iree_vm_async_invoke_callback_fn_t\n");
@@ -636,13 +663,16 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
   // TODO(scotttodd): return this to JS
   // ----------------------- remove after debugging
 
-  // schedule_call_readback(call_state);
+  // TODO(scotttodd): free on error if IREE_RETURN_IF_ERROR is used in this
+  return process_call_outputs(call_state);
 
   // TODO(scotttodd): move cleanup into async finally()
+  /*
   iree_vm_list_release(outputs);
   iree_allocator_free(iree_allocator_system(), (void*)call_state->invoke_state);
   iree_allocator_free(iree_allocator_system(), (void*)call_state);
   return iree_ok_status();
+  */
 }
 
 // TODO(scotttodd): return a Promise that resolves
