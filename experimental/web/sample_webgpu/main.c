@@ -76,15 +76,18 @@ typedef struct iree_program_state_t {
   iree_vm_module_t* module;
 } iree_program_state_t;
 
-// TODO(scotttodd): circular reference in here?
-//   invoke_state tracks userdata
-//
-//   need to keep invoke_state alive until callback is issued, so need to stash
-//   it in our own userdata...
-typedef struct iree_invoke_state_userdata_t {
+typedef struct iree_call_function_state_t {
+  // Opaque state used by iree_vm_async_invoke.
   iree_vm_async_invoke_state_t* invoke_state;
+
+  // Timing/statistics metadata.
   iree_time_t invoke_start_time;
-} iree_invoke_state_userdata_t;
+  iree_time_t invoke_end_time;
+  iree_time_t readback_start_time;
+  iree_time_t readback_end_time;
+
+  // TODO(scotttodd): readback buffers, wait/synchronization primitives
+} iree_call_function_state_t;
 
 extern iree_status_t create_device(iree_allocator_t host_allocator,
                                    iree_hal_device_t** out_device);
@@ -610,18 +613,20 @@ static iree_status_t print_outputs_from_call(
 iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
                               iree_status_t status, iree_vm_list_t* outputs) {
   fprintf(stderr, "iree_vm_async_invoke_callback_fn_t\n");
-  iree_invoke_state_userdata_t* userdata_ptr =
-      (iree_invoke_state_userdata_t*)user_data;
+  iree_call_function_state_t* call_state =
+      (iree_call_function_state_t*)user_data;
 
   if (!iree_status_is_ok(status)) {
     fprintf(stderr, "iree_vm_async_invoke_callback_fn_t error:\n");
     iree_status_fprint(stderr, status);
     iree_status_free(status);
+    // TODO(scotttodd): cleanup, return (error?)
   }
 
   //
-  iree_time_t invoke_end_time = iree_time_now();
-  iree_time_t elapsed_time = invoke_end_time - userdata_ptr->invoke_start_time;
+  call_state->invoke_end_time = iree_time_now();
+  iree_time_t elapsed_time =
+      call_state->invoke_end_time - call_state->invoke_start_time;
   iree_time_t elapsed_time_millis = elapsed_time / 1000000;
   fprintf(stderr, "  elapsed time: %dms\n", (int)elapsed_time_millis);
   // TODO(scotttodd): return this to JS
@@ -629,9 +634,8 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
   //
   iree_vm_list_release(outputs);
 
-  iree_allocator_free(iree_allocator_system(),
-                      (void*)userdata_ptr->invoke_state);
-  iree_allocator_free(iree_allocator_system(), (void*)userdata_ptr);
+  iree_allocator_free(iree_allocator_system(), (void*)call_state->invoke_state);
+  iree_allocator_free(iree_allocator_system(), (void*)call_state);
   return iree_ok_status();
 }
 
@@ -672,16 +676,16 @@ const bool call_function(iree_program_state_t* program_state,
         iree_make_cstring_view(inputs));
   }
 
-  iree_invoke_state_userdata_t* invoke_userdata = NULL;
+  iree_call_function_state_t* call_state = NULL;
   if (iree_status_is_ok(status)) {
     status = iree_allocator_malloc(iree_allocator_system(),
-                                   sizeof(iree_invoke_state_userdata_t),
-                                   (void**)&invoke_userdata);
+                                   sizeof(iree_call_function_state_t),
+                                   (void**)&call_state);
   }
   if (iree_status_is_ok(status)) {
     status = iree_allocator_malloc(iree_allocator_system(),
                                    sizeof(iree_vm_async_invoke_state_t),
-                                   (void**)&(invoke_userdata->invoke_state));
+                                   (void**)&(call_state->invoke_state));
   }
 
   if (iree_status_is_ok(status)) {
@@ -694,12 +698,12 @@ const bool call_function(iree_program_state_t* program_state,
     // Note: Timing has ~millisecond precision on the web to mitigate timing /
     // side-channel security threats.
     // https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#reduced_time_precision
-    invoke_userdata->invoke_start_time = iree_time_now();
+    call_state->invoke_start_time = iree_time_now();
 
     status = iree_vm_async_invoke(
-        loop, invoke_userdata->invoke_state, vm_context, vm_function,
+        loop, call_state->invoke_state, vm_context, vm_function,
         IREE_VM_INVOCATION_FLAG_NONE, /*policy=*/NULL, inputs, outputs,
-        iree_allocator_system(), invoke_callback, invoke_userdata);
+        iree_allocator_system(), invoke_callback, /*user_data=*/call_state);
   }
 
   fprintf(stderr, "after iree_vm_async_invoke\n");
