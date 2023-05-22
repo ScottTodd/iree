@@ -77,6 +77,8 @@ typedef struct iree_program_state_t {
 } iree_program_state_t;
 
 typedef struct iree_call_function_state_t {
+  iree_runtime_call_t call;
+
   // Opaque state used by iree_vm_async_invoke.
   iree_vm_async_invoke_state_t* invoke_state;
 
@@ -625,15 +627,19 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
 
   //
   call_state->invoke_end_time = iree_time_now();
+
+  // ----------------------- remove after debugging
   iree_time_t elapsed_time =
       call_state->invoke_end_time - call_state->invoke_start_time;
   iree_time_t elapsed_time_millis = elapsed_time / 1000000;
   fprintf(stderr, "  elapsed time: %dms\n", (int)elapsed_time_millis);
   // TODO(scotttodd): return this to JS
+  // ----------------------- remove after debugging
 
-  //
+  // schedule_call_readback(call_state);
+
+  // TODO(scotttodd): move cleanup into async finally()
   iree_vm_list_release(outputs);
-
   iree_allocator_free(iree_allocator_system(), (void*)call_state->invoke_state);
   iree_allocator_free(iree_allocator_system(), (void*)call_state);
   return iree_ok_status();
@@ -652,6 +658,13 @@ const bool call_function(iree_program_state_t* program_state,
                          const char* function_name, const char* inputs) {
   iree_status_t status = iree_ok_status();
 
+  iree_call_function_state_t* call_state = NULL;
+  if (iree_status_is_ok(status)) {
+    status = iree_allocator_malloc(iree_allocator_system(),
+                                   sizeof(iree_call_function_state_t),
+                                   (void**)&call_state);
+  }
+
   // Fully qualify the function name. This sample only supports loading one
   // module (i.e. 'program') per session, so we can do this.
   iree_string_builder_t name_builder;
@@ -662,26 +675,20 @@ const bool call_function(iree_program_state_t* program_state,
                                                (int)module_name.size,
                                                module_name.data, function_name);
   }
-
-  iree_runtime_call_t call;
   if (iree_status_is_ok(status)) {
     status = iree_runtime_call_initialize_by_name(
-        program_state->session, iree_string_builder_view(&name_builder), &call);
+        program_state->session, iree_string_builder_view(&name_builder),
+        &call_state->call);
   }
   iree_string_builder_deinitialize(&name_builder);
 
   if (iree_status_is_ok(status)) {
     status = parse_inputs_into_call(
-        &call, iree_runtime_session_device_allocator(program_state->session),
+        &call_state->call,
+        iree_runtime_session_device_allocator(program_state->session),
         iree_make_cstring_view(inputs));
   }
 
-  iree_call_function_state_t* call_state = NULL;
-  if (iree_status_is_ok(status)) {
-    status = iree_allocator_malloc(iree_allocator_system(),
-                                   sizeof(iree_call_function_state_t),
-                                   (void**)&call_state);
-  }
   if (iree_status_is_ok(status)) {
     status = iree_allocator_malloc(iree_allocator_system(),
                                    sizeof(iree_vm_async_invoke_state_t),
@@ -690,10 +697,11 @@ const bool call_function(iree_program_state_t* program_state,
 
   if (iree_status_is_ok(status)) {
     iree_loop_t loop = iree_loop_emscripten(program_state->sample_state->loop);
-    iree_vm_context_t* vm_context = iree_runtime_session_context(call.session);
-    iree_vm_function_t vm_function = call.function;
-    iree_vm_list_t* inputs = call.inputs;
-    iree_vm_list_t* outputs = call.outputs;
+    iree_vm_context_t* vm_context =
+        iree_runtime_session_context(call_state->call.session);
+    iree_vm_function_t vm_function = call_state->call.function;
+    iree_vm_list_t* inputs = call_state->call.inputs;
+    iree_vm_list_t* outputs = call_state->call.outputs;
 
     // Note: Timing has ~millisecond precision on the web to mitigate timing /
     // side-channel security threats.
@@ -714,8 +722,8 @@ const bool call_function(iree_program_state_t* program_state,
   // iree_time_t end_time = iree_time_now();
   // iree_time_t time_elapsed = end_time - start_time;
 
-  iree_string_builder_t outputs_builder;
-  iree_string_builder_initialize(iree_allocator_system(), &outputs_builder);
+  // iree_string_builder_t outputs_builder;
+  // iree_string_builder_initialize(iree_allocator_system(), &outputs_builder);
 
   // Output a JSON object as a string:
   // {
@@ -736,7 +744,13 @@ const bool call_function(iree_program_state_t* program_state,
   // }
 
   if (!iree_status_is_ok(status)) {
-    iree_string_builder_deinitialize(&outputs_builder);
+    // iree_string_builder_deinitialize(&outputs_builder);
+
+    // TODO(scotttodd): move into iree_call_function_state_deinitialize()?
+    iree_runtime_call_deinitialize(&call_state->call);
+    iree_allocator_free(iree_allocator_system(), call_state->invoke_state);
+    iree_allocator_free(iree_allocator_system(), call_state);
+
     iree_status_fprint(stderr, status);
     iree_status_free(status);
     return false;
