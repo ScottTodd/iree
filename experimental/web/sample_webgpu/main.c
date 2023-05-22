@@ -79,6 +79,7 @@ typedef struct iree_program_state_t {
 
 typedef struct iree_call_function_state_t {
   iree_runtime_call_t call;
+  iree_loop_emscripten_t* loop;
 
   // Opaque state used by iree_vm_async_invoke.
   iree_vm_async_invoke_state_t* invoke_state;
@@ -632,6 +633,23 @@ static iree_status_t print_outputs_from_call(
   return iree_ok_status();
 }
 
+static iree_status_t readback_all_callback(void* user_data, iree_loop_t loop,
+                                           iree_status_t status) {
+  fprintf(stderr, "iree_loop_wait_all callback\n");
+
+  iree_call_function_state_t* call_state =
+      (iree_call_function_state_t*)user_data;
+
+  if (!iree_status_is_ok(status)) {
+    fprintf(stderr, "iree_vm_async_invoke_callback_fn_t error:\n");
+    iree_status_fprint(stderr, status);
+    // Note: loop_emscripten.js must free 'status'!
+  }
+
+  iree_call_function_state_deinitialize(call_state);
+  return status;
+}
+
 // Processes outputs from a completed function invocation.
 // Some output data types may require asynchronous mapping (readback).
 static iree_status_t process_call_outputs(
@@ -670,14 +688,28 @@ static iree_status_t process_call_outputs(
     if (iree_vm_variant_is_ref(variant)) {
       // TODO(scotttodd): add to list
       fprintf(stderr, "  [%" PRIhsz "]: ref\n", i);
+
+      iree_event_initialize(/*initial_state=*/false,
+                            &call_state->readback_events[i]);
+    } else {
+      iree_event_initialize(/*initial_state=*/true,
+                            &call_state->readback_events[i]);
     }
+    call_state->readback_wait_sources[i] =
+        iree_event_await(&call_state->readback_events[i]);
   }
+
+  IREE_RETURN_IF_ERROR(iree_loop_wait_all(
+      iree_loop_emscripten(call_state->loop), call_state->outputs_size,
+      call_state->readback_wait_sources, iree_make_timeout_ms(1000),
+      readback_all_callback,
+      /*user_data=*/call_state));
+
+  fprintf(stderr, "  setting readback_events[0]\n");
+  iree_event_set(&call_state->readback_events[0]);  // DO NOT SUBMIT
 
   // TODO(scotttodd): if no refs, construct output and issue callback
   // TODO(scotttodd): if any refs, batch reads -> construct output -> callback
-
-  // TODO(scotttodd): move this into async code
-  iree_call_function_state_deinitialize(call_state);
 
   return iree_ok_status();
 }
@@ -743,6 +775,7 @@ const bool call_function(iree_program_state_t* program_state,
                                    sizeof(iree_call_function_state_t),
                                    (void**)&call_state);
   }
+  call_state->loop = program_state->sample_state->loop;
 
   // Fully qualify the function name. This sample only supports loading one
   // module (i.e. 'program') per session, so we can do this.
