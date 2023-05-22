@@ -92,13 +92,27 @@ typedef struct iree_call_function_state_t {
 
   // Readback state.
   iree_host_size_t outputs_size;
-  iree_event_t* readback_events;              // outputs_size count
-  iree_wait_source_t* readback_wait_sources;  // 1:1 with readback_events
+  iree_event_t* readback_events;                        // one per output
+  iree_wait_source_t* readback_wait_sources;            // one per output
+  iree_hal_buffer_t** readback_heap_buffers;            // one per output
+  iree_hal_buffer_view_t** readback_heap_buffer_views;  // one per output
 } iree_call_function_state_t;
 
-static void iree_call_function_state_deinitialize(
+static void iree_call_function_state_destroy(
     iree_call_function_state_t* call_state) {
-  fprintf(stderr, "iree_call_function_state_deinitialize()\n");
+  fprintf(stderr, "iree_call_function_state_destroy()\n");
+
+  // Readback state.
+  for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
+    iree_hal_buffer_view_release(call_state->readback_heap_buffer_views[i]);
+  }
+  iree_allocator_free(iree_allocator_system(),
+                      call_state->readback_heap_buffer_views);
+  for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
+    iree_hal_buffer_release(call_state->readback_heap_buffers[i]);
+  }
+  iree_allocator_free(iree_allocator_system(),
+                      call_state->readback_heap_buffers);
   iree_allocator_free(iree_allocator_system(),
                       call_state->readback_wait_sources);
   for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
@@ -106,6 +120,7 @@ static void iree_call_function_state_deinitialize(
   }
   iree_allocator_free(iree_allocator_system(), call_state->readback_events);
 
+  // Invoke state.
   iree_allocator_free(iree_allocator_system(), call_state->invoke_state);
   iree_runtime_call_deinitialize(&call_state->call);
 
@@ -640,13 +655,15 @@ static iree_status_t readback_all_callback(void* user_data, iree_loop_t loop,
   iree_call_function_state_t* call_state =
       (iree_call_function_state_t*)user_data;
 
+  call_state->readback_end_time = iree_time_now();
+
   if (!iree_status_is_ok(status)) {
     fprintf(stderr, "iree_vm_async_invoke_callback_fn_t error:\n");
     iree_status_fprint(stderr, status);
     // Note: loop_emscripten.js must free 'status'!
   }
 
-  iree_call_function_state_deinitialize(call_state);
+  iree_call_function_state_destroy(call_state);
   return status;
 }
 
@@ -655,7 +672,7 @@ static iree_status_t readback_all_callback(void* user_data, iree_loop_t loop,
 static iree_status_t process_call_outputs(
     iree_call_function_state_t* call_state) {
   iree_vm_list_t* outputs_list = iree_runtime_call_outputs(&call_state->call);
-  call_state->outputs_size = iree_vm_list_size(outputs_list);
+  iree_host_size_t outputs_size = iree_vm_list_size(outputs_list);
   fprintf(stderr, "process_call_outputs, outputs size: %d\n",
           (int)call_state->outputs_size);
 
@@ -670,46 +687,48 @@ static iree_status_t process_call_outputs(
   //   readback(event_to_set_on_completion)
   //     use loop as needed
 
-  // Allocate readback_events and readback_wait_sources.
+  // Allocate lists.
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
-      iree_allocator_system(), sizeof(iree_event_t) * call_state->outputs_size,
+      iree_allocator_system(), sizeof(iree_event_t) * outputs_size,
       (void**)&call_state->readback_events));
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
-      iree_allocator_system(),
-      sizeof(iree_wait_source_t) * call_state->outputs_size,
+      iree_allocator_system(), sizeof(iree_wait_source_t) * outputs_size,
       (void**)&call_state->readback_wait_sources));
+  IREE_RETURN_IF_ERROR(iree_allocator_malloc(
+      iree_allocator_system(), sizeof(iree_hal_buffer_t*) * outputs_size,
+      (void**)&call_state->readback_heap_buffers));
+  IREE_RETURN_IF_ERROR(iree_allocator_malloc(
+      iree_allocator_system(), sizeof(iree_hal_buffer_view_t*) * outputs_size,
+      (void**)&call_state->readback_heap_buffer_views));
+  // Note: setting the size after mallocs so the destroy() function doesn't try
+  // to release from uninitialized memory.
+  call_state->outputs_size = outputs_size;
 
   for (iree_host_size_t i = 0; i < iree_vm_list_size(outputs_list); ++i) {
     iree_vm_variant_t variant = iree_vm_variant_empty();
     IREE_RETURN_IF_ERROR(
         iree_vm_list_get_variant_assign(outputs_list, i, &variant),
         "variant %" PRIhsz " not present", i);
-
     if (iree_vm_variant_is_ref(variant)) {
-      // TODO(scotttodd): add to list
       fprintf(stderr, "  [%" PRIhsz "]: ref\n", i);
-
-      iree_event_initialize(/*initial_state=*/false,
-                            &call_state->readback_events[i]);
+      iree_event_initialize(false, &call_state->readback_events[i]);
+      // TODO(scotttodd): start readback, passing event to set when complete
     } else {
-      iree_event_initialize(/*initial_state=*/true,
-                            &call_state->readback_events[i]);
+      fprintf(stderr, "  [%" PRIhsz "]: other\n", i);
+      iree_event_initialize(true, &call_state->readback_events[i]);
     }
     call_state->readback_wait_sources[i] =
         iree_event_await(&call_state->readback_events[i]);
   }
 
-  IREE_RETURN_IF_ERROR(iree_loop_wait_all(
-      iree_loop_emscripten(call_state->loop), call_state->outputs_size,
-      call_state->readback_wait_sources, iree_make_timeout_ms(1000),
-      readback_all_callback,
-      /*user_data=*/call_state));
+  IREE_RETURN_IF_ERROR(
+      iree_loop_wait_all(iree_loop_emscripten(call_state->loop), outputs_size,
+                         call_state->readback_wait_sources,
+                         iree_make_timeout_ms(1000), readback_all_callback,
+                         /*user_data=*/call_state));
 
   fprintf(stderr, "  setting readback_events[0]\n");
   iree_event_set(&call_state->readback_events[0]);  // DO NOT SUBMIT
-
-  // TODO(scotttodd): if no refs, construct output and issue callback
-  // TODO(scotttodd): if any refs, batch reads -> construct output -> callback
 
   return iree_ok_status();
 }
@@ -728,7 +747,7 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
   if (!iree_status_is_ok(status)) {
     fprintf(stderr, "iree_vm_async_invoke_callback_fn_t error:\n");
     iree_status_fprint(stderr, status);
-    iree_call_function_state_deinitialize(call_state);
+    iree_call_function_state_destroy(call_state);
     return status;  // Note: loop_emscripten.js must free this!
   }
 
@@ -747,7 +766,7 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
   if (!iree_status_is_ok(status)) {
     fprintf(stderr, "process_call_outputs error:\n");
     iree_status_fprint(stderr, status);
-    iree_call_function_state_deinitialize(call_state);
+    iree_call_function_state_destroy(call_state);
     // Note: loop_emscripten.js must free 'status'!
   } else {
     // Do _not_ deinitialize/free call_state, async callbacks need it.
@@ -859,7 +878,7 @@ const bool call_function(iree_program_state_t* program_state,
     // iree_string_builder_deinitialize(&outputs_builder);
     iree_status_fprint(stderr, status);
     iree_status_free(status);
-    iree_call_function_state_deinitialize(call_state);
+    iree_call_function_state_destroy(call_state);
     return false;
   }
 
