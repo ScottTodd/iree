@@ -97,10 +97,17 @@ typedef struct iree_call_function_state_t {
 
 static void iree_call_function_state_deinitialize(
     iree_call_function_state_t* call_state) {
-  iree_runtime_call_deinitialize(&call_state->call);
+  fprintf(stderr, "iree_call_function_state_deinitialize()\n");
+  iree_allocator_free(iree_allocator_system(),
+                      call_state->readback_wait_sources);
+  for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
+    iree_event_deinitialize(&call_state->readback_events[i]);
+  }
+  iree_allocator_free(iree_allocator_system(), call_state->readback_events);
+
   iree_allocator_free(iree_allocator_system(), call_state->invoke_state);
-  // TODO(scotttodd): readback_events
-  // TODO(scotttodd): readback_wait_sources
+  iree_runtime_call_deinitialize(&call_state->call);
+
   iree_allocator_free(iree_allocator_system(), call_state);
 }
 
@@ -630,8 +637,9 @@ static iree_status_t print_outputs_from_call(
 static iree_status_t process_call_outputs(
     iree_call_function_state_t* call_state) {
   iree_vm_list_t* outputs_list = iree_runtime_call_outputs(&call_state->call);
+  call_state->outputs_size = iree_vm_list_size(outputs_list);
   fprintf(stderr, "process_call_outputs, outputs size: %d\n",
-          (int)iree_vm_list_size(outputs_list));
+          (int)call_state->outputs_size);
 
   call_state->readback_start_time = iree_time_now();
 
@@ -643,6 +651,15 @@ static iree_status_t process_call_outputs(
   // for each ref / buffer_view
   //   readback(event_to_set_on_completion)
   //     use loop as needed
+
+  // Allocate readback_events and readback_wait_sources.
+  IREE_RETURN_IF_ERROR(iree_allocator_malloc(
+      iree_allocator_system(), sizeof(iree_event_t) * call_state->outputs_size,
+      (void**)&call_state->readback_events));
+  IREE_RETURN_IF_ERROR(iree_allocator_malloc(
+      iree_allocator_system(),
+      sizeof(iree_wait_source_t) * call_state->outputs_size,
+      (void**)&call_state->readback_wait_sources));
 
   for (iree_host_size_t i = 0; i < iree_vm_list_size(outputs_list); ++i) {
     iree_vm_variant_t variant = iree_vm_variant_empty();
@@ -658,6 +675,9 @@ static iree_status_t process_call_outputs(
 
   // TODO(scotttodd): if no refs, construct output and issue callback
   // TODO(scotttodd): if any refs, batch reads -> construct output -> callback
+
+  // TODO(scotttodd): move this into async code
+  iree_call_function_state_deinitialize(call_state);
 
   return iree_ok_status();
 }
