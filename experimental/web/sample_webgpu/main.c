@@ -77,6 +77,22 @@ typedef struct iree_program_state_t {
   iree_vm_module_t* module;
 } iree_program_state_t;
 
+// TODO(scotttodd): explain the flow, state tracking, error handling
+//
+// call_function
+//   parse_inputs_into_call
+//   iree_vm_async_invoke
+//     invoke_callback
+//       process_call_outputs
+//         map_call_output[0...n]
+//           <queue execute: transfer device -> mappable host>  // move this up
+//           wgpuBufferMapAsync
+//             buffer_map_async_callback
+//               <set event>
+//         iree_loop_wait_all
+//           map_all_callback
+//             <format output JSON and issue callback>
+
 typedef struct iree_call_function_state_t {
   iree_runtime_call_t call;
   iree_loop_emscripten_t* loop;
@@ -648,8 +664,8 @@ static iree_status_t print_outputs_from_call(
   return iree_ok_status();
 }
 
-static iree_status_t readback_all_callback(void* user_data, iree_loop_t loop,
-                                           iree_status_t status) {
+static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
+                                      iree_status_t status) {
   fprintf(stderr, "iree_loop_wait_all callback\n");
 
   iree_call_function_state_t* call_state =
@@ -721,13 +737,16 @@ static iree_status_t process_call_outputs(
         iree_event_await(&call_state->readback_events[i]);
   }
 
+  // TODO(scotttodd): one transfer command buffer / queue execute for all
+  //                  buffers, then separately issue wgpuBufferMapAsync calls
+
   IREE_RETURN_IF_ERROR(
       iree_loop_wait_all(iree_loop_emscripten(call_state->loop), outputs_size,
                          call_state->readback_wait_sources,
-                         iree_make_timeout_ms(1000), readback_all_callback,
+                         iree_make_timeout_ms(1000), map_all_callback,
                          /*user_data=*/call_state));
 
-  fprintf(stderr, "  setting readback_events[0]\n");
+  fprintf(stderr, "  [hack] setting readback_events[0]\n");
   iree_event_set(&call_state->readback_events[0]);  // DO NOT SUBMIT
 
   return iree_ok_status();
