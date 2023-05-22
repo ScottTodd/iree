@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "iree/base/api.h"
+#include "iree/base/internal/wait_handle.h"
 #include "iree/base/loop_emscripten.h"
 #include "iree/hal/api.h"
 #include "iree/hal/drivers/webgpu/buffer.h"
@@ -88,8 +89,20 @@ typedef struct iree_call_function_state_t {
   iree_time_t readback_start_time;
   iree_time_t readback_end_time;
 
-  // TODO(scotttodd): readback buffers, wait/synchronization primitives
+  // Readback state.
+  iree_host_size_t outputs_size;
+  iree_event_t* readback_events;              // outputs_size count
+  iree_wait_source_t* readback_wait_sources;  // 1:1 with readback_events
 } iree_call_function_state_t;
+
+static void iree_call_function_state_deinitialize(
+    iree_call_function_state_t* call_state) {
+  iree_runtime_call_deinitialize(&call_state->call);
+  iree_allocator_free(iree_allocator_system(), call_state->invoke_state);
+  // TODO(scotttodd): readback_events
+  // TODO(scotttodd): readback_wait_sources
+  iree_allocator_free(iree_allocator_system(), call_state);
+}
 
 extern iree_status_t create_device(iree_allocator_t host_allocator,
                                    iree_hal_device_t** out_device);
@@ -324,22 +337,22 @@ static void iree_webgpu_mapped_buffer_release(void* user_data,
 }
 
 // TODO(scotttodd): move async mapping into webgpu/buffer.h/.c?
-static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus map_status,
-                                     void* userdata_ptr) {
+static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
+                                      void* userdata_ptr) {
   iree_buffer_map_userdata_t* userdata =
       (iree_buffer_map_userdata_t*)userdata_ptr;
   switch (map_status) {
     case WGPUBufferMapAsyncStatus_Success:
       break;
     case WGPUBufferMapAsyncStatus_Error:
-      fprintf(stderr, "  buffer_map_sync_callback status: Error\n");
+      fprintf(stderr, "  buffer_map_async_callback status: Error\n");
       break;
     case WGPUBufferMapAsyncStatus_DeviceLost:
-      fprintf(stderr, "  buffer_map_sync_callback status: DeviceLost\n");
+      fprintf(stderr, "  buffer_map_async_callback status: DeviceLost\n");
       break;
     case WGPUBufferMapAsyncStatus_Unknown:
     default:
-      fprintf(stderr, "  buffer_map_sync_callback status: Unknown\n");
+      fprintf(stderr, "  buffer_map_async_callback status: Unknown\n");
       break;
   }
 
@@ -407,7 +420,7 @@ static void buffer_map_sync_callback(WGPUBufferMapAsyncStatus map_status,
   iree_hal_buffer_release(heap_buffer);
 
   if (!iree_status_is_ok(status)) {
-    fprintf(stderr, "buffer_map_sync_callback error:\n");
+    fprintf(stderr, "buffer_map_async_callback error:\n");
     iree_status_fprint(stderr, status);
     iree_status_free(status);
   }
@@ -504,6 +517,10 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
   }
   fprintf(stderr, "print_buffer_view after queue_execute, calling wait\n");
   // TODO(scotttodd): Make this async - pass a wait source to iree_loop_wait_one
+  // TODO(scotttodd): Ask Ben how to interop between wait sources and HAL
+  //                  semaphores. nop_semaphore.c -> promise_semaphore.c?
+  //                  Is a semaphore wait even needed? buffer map async might be
+  //                  waiting
   if (iree_status_is_ok(status)) {
     status = iree_hal_semaphore_wait(fence_semaphore, signal_value,
                                      iree_infinite_timeout());
@@ -525,7 +542,7 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
 
   if (iree_status_is_ok(status)) {
     wgpuBufferMapAsync(readback_buffer_handle, WGPUMapMode_Read, /*offset=*/0,
-                       /*size=*/data_length, buffer_map_sync_callback,
+                       /*size=*/data_length, buffer_map_async_callback,
                        /*userdata=*/userdata);
   }
 
@@ -616,6 +633,17 @@ static iree_status_t process_call_outputs(
   fprintf(stderr, "process_call_outputs, outputs size: %d\n",
           (int)iree_vm_list_size(outputs_list));
 
+  call_state->readback_start_time = iree_time_now();
+
+  // See loop_test.h WaitOneBlocking / WaitAllBlocking
+  // list of `iree_event_t`s that can be set later
+  //   start set if no readback required
+  // list of `iree_wait_source`s (one per event)
+  // iree_loop_wait_all(wait_sources, format_outputs_callback)
+  // for each ref / buffer_view
+  //   readback(event_to_set_on_completion)
+  //     use loop as needed
+
   for (iree_host_size_t i = 0; i < iree_vm_list_size(outputs_list); ++i) {
     iree_vm_variant_t variant = iree_vm_variant_empty();
     IREE_RETURN_IF_ERROR(
@@ -648,8 +676,8 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
   if (!iree_status_is_ok(status)) {
     fprintf(stderr, "iree_vm_async_invoke_callback_fn_t error:\n");
     iree_status_fprint(stderr, status);
-    iree_status_free(status);
-    // TODO(scotttodd): cleanup, return (error?)
+    iree_call_function_state_deinitialize(call_state);
+    return status;  // Note: loop_emscripten.js must free this!
   }
 
   //
@@ -663,16 +691,17 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
   // TODO(scotttodd): return this to JS
   // ----------------------- remove after debugging
 
-  // TODO(scotttodd): free on error if IREE_RETURN_IF_ERROR is used in this
-  return process_call_outputs(call_state);
+  status = process_call_outputs(call_state);
+  if (!iree_status_is_ok(status)) {
+    fprintf(stderr, "process_call_outputs error:\n");
+    iree_status_fprint(stderr, status);
+    iree_call_function_state_deinitialize(call_state);
+    // Note: loop_emscripten.js must free 'status'!
+  } else {
+    // Do _not_ deinitialize/free call_state, async callbacks need it.
+  }
 
-  // TODO(scotttodd): move cleanup into async finally()
-  /*
-  iree_vm_list_release(outputs);
-  iree_allocator_free(iree_allocator_system(), (void*)call_state->invoke_state);
-  iree_allocator_free(iree_allocator_system(), (void*)call_state);
-  return iree_ok_status();
-  */
+  return status;
 }
 
 // TODO(scotttodd): return a Promise that resolves
@@ -775,14 +804,9 @@ const bool call_function(iree_program_state_t* program_state,
 
   if (!iree_status_is_ok(status)) {
     // iree_string_builder_deinitialize(&outputs_builder);
-
-    // TODO(scotttodd): move into iree_call_function_state_deinitialize()?
-    iree_runtime_call_deinitialize(&call_state->call);
-    iree_allocator_free(iree_allocator_system(), call_state->invoke_state);
-    iree_allocator_free(iree_allocator_system(), call_state);
-
     iree_status_fprint(stderr, status);
     iree_status_free(status);
+    iree_call_function_state_deinitialize(call_state);
     return false;
   }
 
