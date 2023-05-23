@@ -108,9 +108,8 @@ typedef struct iree_call_function_state_t {
 
   // Readback state.
   iree_host_size_t outputs_size;
-  iree_event_t* readback_events;                        // one per output
-  iree_hal_buffer_t** readback_heap_buffers;            // one per output
-  iree_hal_buffer_view_t** readback_heap_buffer_views;  // one per output
+  iree_event_t* readback_events;              // one per output
+  iree_hal_buffer_t** readback_heap_buffers;  // one per output
 } iree_call_function_state_t;
 
 static void iree_call_function_state_destroy(
@@ -118,11 +117,6 @@ static void iree_call_function_state_destroy(
   fprintf(stderr, "iree_call_function_state_destroy()\n");
 
   // Readback state.
-  for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
-    iree_hal_buffer_view_release(call_state->readback_heap_buffer_views[i]);
-  }
-  iree_allocator_free(iree_allocator_system(),
-                      call_state->readback_heap_buffer_views);
   for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
     iree_hal_buffer_release(call_state->readback_heap_buffers[i]);
   }
@@ -709,9 +703,6 @@ static iree_status_t process_call_outputs(
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
       iree_allocator_system(), sizeof(iree_hal_buffer_t*) * outputs_size,
       (void**)&call_state->readback_heap_buffers));
-  IREE_RETURN_IF_ERROR(iree_allocator_malloc(
-      iree_allocator_system(), sizeof(iree_hal_buffer_view_t*) * outputs_size,
-      (void**)&call_state->readback_heap_buffer_views));
   // Note: setting the size after mallocs so the destroy() function doesn't try
   // to release from uninitialized memory.
   call_state->outputs_size = outputs_size;
