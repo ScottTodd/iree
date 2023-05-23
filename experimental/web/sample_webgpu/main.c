@@ -108,8 +108,9 @@ typedef struct iree_call_function_state_t {
 
   // Readback state.
   iree_host_size_t outputs_size;
-  iree_event_t* readback_events;              // one per output
-  iree_hal_buffer_t** readback_heap_buffers;  // one per output
+  iree_event_t* readback_events;                         // one per output
+  iree_hal_buffer_t** readback_mappable_device_buffers;  // sparse
+  iree_hal_buffer_t** readback_mapped_cpu_buffers;       // sparse
 } iree_call_function_state_t;
 
 static void iree_call_function_state_destroy(
@@ -118,10 +119,15 @@ static void iree_call_function_state_destroy(
 
   // Readback state.
   for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
-    iree_hal_buffer_release(call_state->readback_heap_buffers[i]);
+    iree_hal_buffer_release(call_state->readback_mapped_cpu_buffers[i]);
   }
   iree_allocator_free(iree_allocator_system(),
-                      call_state->readback_heap_buffers);
+                      call_state->readback_mapped_cpu_buffers);
+  for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
+    iree_hal_buffer_release(call_state->readback_mappable_device_buffers[i]);
+  }
+  iree_allocator_free(iree_allocator_system(),
+                      call_state->readback_mappable_device_buffers);
   for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
     iree_event_deinitialize(&call_state->readback_events[i]);
   }
@@ -696,15 +702,18 @@ static iree_status_t process_call_outputs(
   //   readback(event_to_set_on_completion)
   //     use loop as needed
 
-  // Allocate lists.
+  // Allocate lists. Note: empty object contents, may be sparse.
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
       iree_allocator_system(), sizeof(iree_event_t) * outputs_size,
       (void**)&call_state->readback_events));
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
       iree_allocator_system(), sizeof(iree_hal_buffer_t*) * outputs_size,
-      (void**)&call_state->readback_heap_buffers));
+      (void**)&call_state->readback_mappable_device_buffers));
+  IREE_RETURN_IF_ERROR(iree_allocator_malloc(
+      iree_allocator_system(), sizeof(iree_hal_buffer_t*) * outputs_size,
+      (void**)&call_state->readback_mapped_cpu_buffers));
   // Note: setting the size after mallocs so the destroy() function doesn't try
-  // to release from uninitialized memory.
+  // to release from uninitialized memory if allocation failed.
   call_state->outputs_size = outputs_size;
 
   iree_wait_source_t* wait_sources = (iree_wait_source_t*)iree_alloca(
@@ -727,6 +736,32 @@ static iree_status_t process_call_outputs(
 
   // TODO(scotttodd): one transfer command buffer / queue execute for all
   //                  buffers, then separately issue wgpuBufferMapAsync calls
+
+  // WORKING HERE
+  //
+  // state:
+  //   events[]
+  //   readback_mappable_device_buffers[]
+  //   readback_mapped_cpu_buffers[]
+  //   status
+  //
+  // for each buffer output
+  //   wgpuDeviceCreateBuffer -> WGPUBuffer
+  //   iree_hal_webgpu_buffer_wrap -> readback_mappable_device_buffers[i]
+  //   iree_hal_create_transfer_command_buffer
+  // wait for transfer
+  // for each buffer output
+  //   wgpuBufferMapAsync
+  //     userdata: iree_call_function_state_t + index
+  //   callback
+  //     failure -> sticky failure on iree_call_function_state_t?
+  //       if existing status is not ok, ignore
+  //       if existing status _is_ ok, transfer over
+  //     wgpuBufferGetConstMappedRange
+  //     iree_hal_heap_buffer_wrap -> readback_mapped_cpu_buffers[i]
+  //     signal event [i]
+  //
+  // WORKING HERE
 
   IREE_RETURN_IF_ERROR(iree_loop_wait_all(
       iree_loop_emscripten(call_state->loop), outputs_size, wait_sources,
