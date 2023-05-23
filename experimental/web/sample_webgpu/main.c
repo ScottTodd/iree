@@ -109,7 +109,6 @@ typedef struct iree_call_function_state_t {
   // Readback state.
   iree_host_size_t outputs_size;
   iree_event_t* readback_events;                        // one per output
-  iree_wait_source_t* readback_wait_sources;            // one per output
   iree_hal_buffer_t** readback_heap_buffers;            // one per output
   iree_hal_buffer_view_t** readback_heap_buffer_views;  // one per output
 } iree_call_function_state_t;
@@ -129,8 +128,6 @@ static void iree_call_function_state_destroy(
   }
   iree_allocator_free(iree_allocator_system(),
                       call_state->readback_heap_buffers);
-  iree_allocator_free(iree_allocator_system(),
-                      call_state->readback_wait_sources);
   for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
     iree_event_deinitialize(&call_state->readback_events[i]);
   }
@@ -493,6 +490,8 @@ static iree_status_t print_buffer_view(iree_hal_device_t* device,
   };
   WGPUBuffer readback_buffer_handle = NULL;
   if (iree_status_is_ok(status)) {
+    // Note: wgpuBufferDestroy is called after iree_hal_webgpu_buffer_wrap ->
+    //       iree_hal_buffer_release -> iree_hal_webgpu_buffer_destroy
     readback_buffer_handle = wgpuDeviceCreateBuffer(
         iree_hal_webgpu_device_handle(device), &descriptor);
     if (!readback_buffer_handle) {
@@ -708,9 +707,6 @@ static iree_status_t process_call_outputs(
       iree_allocator_system(), sizeof(iree_event_t) * outputs_size,
       (void**)&call_state->readback_events));
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
-      iree_allocator_system(), sizeof(iree_wait_source_t) * outputs_size,
-      (void**)&call_state->readback_wait_sources));
-  IREE_RETURN_IF_ERROR(iree_allocator_malloc(
       iree_allocator_system(), sizeof(iree_hal_buffer_t*) * outputs_size,
       (void**)&call_state->readback_heap_buffers));
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
@@ -720,7 +716,9 @@ static iree_status_t process_call_outputs(
   // to release from uninitialized memory.
   call_state->outputs_size = outputs_size;
 
-  for (iree_host_size_t i = 0; i < iree_vm_list_size(outputs_list); ++i) {
+  iree_wait_source_t* wait_sources = (iree_wait_source_t*)iree_alloca(
+      sizeof(iree_wait_source_t) * outputs_size);
+  for (iree_host_size_t i = 0; i < outputs_size; ++i) {
     iree_vm_variant_t variant = iree_vm_variant_empty();
     IREE_RETURN_IF_ERROR(
         iree_vm_list_get_variant_assign(outputs_list, i, &variant),
@@ -733,18 +731,16 @@ static iree_status_t process_call_outputs(
       fprintf(stderr, "  [%" PRIhsz "]: other\n", i);
       iree_event_initialize(true, &call_state->readback_events[i]);
     }
-    call_state->readback_wait_sources[i] =
-        iree_event_await(&call_state->readback_events[i]);
+    wait_sources[i] = iree_event_await(&call_state->readback_events[i]);
   }
 
   // TODO(scotttodd): one transfer command buffer / queue execute for all
   //                  buffers, then separately issue wgpuBufferMapAsync calls
 
-  IREE_RETURN_IF_ERROR(
-      iree_loop_wait_all(iree_loop_emscripten(call_state->loop), outputs_size,
-                         call_state->readback_wait_sources,
-                         iree_make_timeout_ms(1000), map_all_callback,
-                         /*user_data=*/call_state));
+  IREE_RETURN_IF_ERROR(iree_loop_wait_all(
+      iree_loop_emscripten(call_state->loop), outputs_size, wait_sources,
+      iree_make_timeout_ms(1000), map_all_callback,
+      /*user_data=*/call_state));
 
   fprintf(stderr, "  [hack] setting readback_events[0]\n");
   iree_event_set(&call_state->readback_events[0]);  // DO NOT SUBMIT
