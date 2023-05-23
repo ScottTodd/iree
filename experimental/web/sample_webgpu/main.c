@@ -690,7 +690,7 @@ static iree_status_t process_call_outputs(
   iree_vm_list_t* outputs_list = iree_runtime_call_outputs(&call_state->call);
   iree_host_size_t outputs_size = iree_vm_list_size(outputs_list);
   fprintf(stderr, "process_call_outputs, outputs size: %d\n",
-          (int)call_state->outputs_size);
+          (int)outputs_size);
 
   call_state->readback_start_time = iree_time_now();
 

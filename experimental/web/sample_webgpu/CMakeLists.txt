@@ -30,7 +30,7 @@ target_link_libraries(${_NAME}
   iree_hal_drivers_webgpu_webgpu
   iree_hal_drivers_webgpu_platform_emscripten_emscripten
   # JS sources
-  "--js-library ${IREE_ROOT_DIR}/runtime/src/iree/base/internal/wait_handle_promise.js"
+  "--js-library ${IREE_ROOT_DIR}/runtime/src/iree/base/internal/wait_handle_emscripten.js"
   "--js-library ${IREE_ROOT_DIR}/runtime/src/iree/base/loop_emscripten.js"
 )
 
