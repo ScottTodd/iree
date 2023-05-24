@@ -88,7 +88,7 @@ var Module = {
     wasmCallFunctionFn = Module.cwrap(
         'call_function',
         'number',
-        ['number', 'string', 'string'],
+        ['number', 'string', 'string', 'number'],
     );
 
     sampleState = wasmSetupSampleFn();
@@ -202,8 +202,26 @@ function _ireeCallFunction(programState, functionName, inputs) {
         'Expected \'inputs\' to be a String or an array of Strings');
   }
 
+  const completionCallbackFunction = addFunction((resultPtr) => {
+    // Receive as a pointer, convert, then free. This avoids a memory leak, see
+    // https://github.com/emscripten-core/emscripten/issues/6484
+    if (resultPtr === 0) {
+      console.error('result === 0, check for errors');
+      // reject();
+      return;
+    }
+
+    const resultStr = Module.UTF8ToString(resultPtr);
+    Module._free(resultPtr);
+    const resultObject = JSON.parse(resultStr);
+    console.log('Result:');
+    console.log(resultObject);
+    // return Promise.resolve(JSON.parse(returnValue));
+  }, 'vi');
+
   // Synchronous success/fail status. Real output will come async.
-  const result = wasmCallFunctionFn(programState, functionName, inputsJoined);
+  const result = wasmCallFunctionFn(
+      programState, functionName, inputsJoined, completionCallbackFunction);
 
   if (result) {
     console.log('Call succeeded, waiting for result...');

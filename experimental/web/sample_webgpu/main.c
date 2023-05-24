@@ -47,6 +47,8 @@ void inspect_program(iree_program_state_t* program_state);
 // Unloads a program and frees its state.
 void unload_program(iree_program_state_t* program_state);
 
+typedef void(IREE_API_PTR* iree_call_function_callback_fn_t)(char* output);
+
 // Calls a function synchronously.
 //
 // Returns a semicolon-delimited list of formatted outputs on success or the
@@ -58,8 +60,10 @@ void unload_program(iree_program_state_t* program_state);
 //   described in iree/tooling/vm_util and used in IREE's CLI tools.
 //   For example, the CLI `--function_input=f32=1 --function_input=f32=2`
 //   should be passed here as `f32=1;f32=2`.
-const bool call_function(iree_program_state_t* program_state,
-                         const char* function_name, const char* inputs);
+const bool call_function(
+    iree_program_state_t* program_state, const char* function_name,
+    const char* inputs,
+    iree_call_function_callback_fn_t completion_callback_fn);
 
 //===----------------------------------------------------------------------===//
 // Implementation - State and entry points
@@ -96,11 +100,13 @@ typedef struct iree_program_state_t {
 typedef struct iree_call_function_state_t {
   iree_runtime_call_t call;
   iree_loop_emscripten_t* loop;
+  iree_call_function_callback_fn_t callback_fn;
 
   // Opaque state used by iree_vm_async_invoke.
   iree_vm_async_invoke_state_t* invoke_state;
 
-  // Timing/statistics metadata.
+  // Timing/statistics metadata (~millisecond precision on the web).
+  // https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#reduced_time_precision
   iree_time_t invoke_start_time;
   iree_time_t invoke_end_time;
   iree_time_t readback_start_time;
@@ -556,16 +562,7 @@ static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
 
   iree_call_function_state_t* call_state =
       (iree_call_function_state_t*)user_data;
-
   call_state->readback_end_time = iree_time_now();
-
-  if (!iree_status_is_ok(status)) {
-    fprintf(stderr, "iree_vm_async_invoke_callback_fn_t error:\n");
-    iree_status_fprint(stderr, status);
-    // Note: loop_emscripten.js must free 'status'!
-    iree_call_function_state_destroy(call_state);
-    return status;
-  }
 
   iree_string_builder_t output_string_builder;
   iree_string_builder_initialize(iree_allocator_system(),
@@ -600,12 +597,18 @@ static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
   fprintf(stdout, "%.*s\n",
           (int)iree_string_builder_size(&output_string_builder),
           iree_string_builder_buffer(&output_string_builder));
-  // iree_string_builder_buffer
 
-  if (!iree_status_is_ok(status)) {
+  if (iree_status_is_ok(status)) {
+    // Note: this leaks the buffer. It's up to the caller to free it after use.
+    char* outputs_string =
+        strdup(iree_string_builder_buffer(&output_string_builder));
+    iree_string_builder_deinitialize(&output_string_builder);
+    call_state->callback_fn(outputs_string);
+  } else {
     fprintf(stderr, "map_all_callback error:\n");
     iree_status_fprint(stderr, status);
     // Note: loop_emscripten.js must free 'status'!
+    call_state->callback_fn(0);
   }
 
   iree_string_builder_deinitialize(&output_string_builder);
@@ -881,8 +884,10 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
 // internal implementation so could just call a function with "" or real data
 // or pass sucess/failure functions to call
 
-const bool call_function(iree_program_state_t* program_state,
-                         const char* function_name, const char* inputs) {
+const bool call_function(
+    iree_program_state_t* program_state, const char* function_name,
+    const char* inputs,
+    iree_call_function_callback_fn_t completion_callback_fn) {
   iree_status_t status = iree_ok_status();
 
   iree_call_function_state_t* call_state = NULL;
@@ -892,6 +897,7 @@ const bool call_function(iree_program_state_t* program_state,
                                    (void**)&call_state);
   }
   call_state->loop = program_state->sample_state->loop;
+  call_state->callback_fn = completion_callback_fn;
 
   // Fully qualify the function name. This sample only supports loading one
   // module (i.e. 'program') per session, so we can do this.
@@ -931,11 +937,7 @@ const bool call_function(iree_program_state_t* program_state,
     iree_vm_list_t* inputs = call_state->call.inputs;
     iree_vm_list_t* outputs = call_state->call.outputs;
 
-    // Note: Timing has ~millisecond precision on the web to mitigate timing /
-    // side-channel security threats.
-    // https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#reduced_time_precision
     call_state->invoke_start_time = iree_time_now();
-
     status = iree_vm_async_invoke(
         loop, call_state->invoke_state, vm_context, vm_function,
         IREE_VM_INVOCATION_FLAG_NONE, /*policy=*/NULL, inputs, outputs,
@@ -944,35 +946,7 @@ const bool call_function(iree_program_state_t* program_state,
 
   fprintf(stderr, "after iree_vm_async_invoke\n");
 
-  // TODO(scotttodd): record end time in async callback instead of here
-  // TODO(scotttodd): print outputs in async callback instead of here
-
-  // iree_time_t end_time = iree_time_now();
-  // iree_time_t time_elapsed = end_time - start_time;
-
-  // iree_string_builder_t outputs_builder;
-  // iree_string_builder_initialize(iree_allocator_system(), &outputs_builder);
-
-  // Output a JSON object as a string:
-  // {
-  //   "total_invoke_time_ms": [number],
-  //   "outputs": [semicolon delimited list of formatted outputs]
-  // }
-  // if (iree_status_is_ok(status)) {
-  //   status = iree_string_builder_append_format(
-  //       &outputs_builder,
-  //       "{ \"total_invoke_time_ms\": %" PRId64 ", \"outputs\": \"",
-  //       time_elapsed / 1000000);
-  // }
-  // if (iree_status_is_ok(status)) {
-  //   status = print_outputs_from_call(&call, &outputs_builder);
-  // }
-  // if (iree_status_is_ok(status)) {
-  //   status = iree_string_builder_append_cstring(&outputs_builder, "\"}");
-  // }
-
   if (!iree_status_is_ok(status)) {
-    // iree_string_builder_deinitialize(&outputs_builder);
     iree_status_fprint(stderr, status);
     iree_status_free(status);
     iree_call_function_state_destroy(call_state);
@@ -980,10 +954,4 @@ const bool call_function(iree_program_state_t* program_state,
   }
 
   return true;
-
-  // // Note: this leaks the buffer. It's up to the caller to free it after use.
-  // char* outputs_string =
-  // strdup(iree_string_builder_buffer(&outputs_builder));
-  // iree_string_builder_deinitialize(&outputs_builder);
-  // return outputs_string;
 }
