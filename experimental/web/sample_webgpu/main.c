@@ -488,8 +488,8 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
       userdata->call_state->output_buffer_views[buffer_index];
   iree_hal_buffer_t* mappable_device_buffer =
       userdata->call_state->readback_mappable_device_buffers[buffer_index];
-  iree_hal_buffer_t* mapped_cpu_buffer =
-      userdata->call_state->readback_mapped_cpu_buffers[buffer_index];
+  iree_hal_buffer_t** mapped_cpu_buffer_ptr =
+      &userdata->call_state->readback_mapped_cpu_buffers[buffer_index];
 
   switch (map_status) {
     case WGPUBufferMapAsyncStatus_Success:
@@ -513,12 +513,6 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
     return;
   }
 
-  fprintf(stderr, "buffer_map_async_callback[%d] success\n", (int)buffer_index);
-
-  iree_status_t status = iree_ok_status();
-
-  // TODO(scotttodd): bubble result(s) up to the caller (async + callback API)
-
   iree_device_size_t data_offset = iree_hal_buffer_byte_offset(
       iree_hal_buffer_view_buffer(output_buffer_view));
   iree_device_size_t data_length =
@@ -536,6 +530,7 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
   const void* data_ptr =
       wgpuBufferGetConstMappedRange(buffer_handle, data_offset, data_length);
 
+  iree_status_t status = iree_ok_status();
   if (iree_status_is_ok(status)) {
     // The buffer we get from WebGPU may not be aligned to 64.
     iree_hal_memory_access_t memory_access =
@@ -549,7 +544,7 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
             .fn = iree_webgpu_mapped_buffer_release,
             .user_data = buffer_handle,
         },
-        &mapped_cpu_buffer);
+        mapped_cpu_buffer_ptr);
   }
 
   // // Copy the original buffer_view, backed by the mapped heap buffer instead.
@@ -805,7 +800,6 @@ static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
         &heap_buffer_view);
     if (iree_status_is_ok(status)) {
       // TODO(scotttodd): append to output JSON
-      fprintf(stdout, "output buffer [%d]:\n", (int)i);
       status = iree_hal_buffer_view_fprint(stdout, heap_buffer_view,
                                            /*max_element_count=*/4096,
                                            iree_allocator_system());
@@ -814,6 +808,12 @@ static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
 
     iree_hal_buffer_view_release(heap_buffer_view);
     if (!iree_status_is_ok(status)) break;
+  }
+
+  if (!iree_status_is_ok(status)) {
+    fprintf(stderr, "map_all_callback error:\n");
+    iree_status_fprint(stderr, status);
+    // Note: loop_emscripten.js must free 'status'!
   }
 
   iree_call_function_state_destroy(call_state);
