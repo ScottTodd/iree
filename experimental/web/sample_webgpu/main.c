@@ -369,11 +369,6 @@ static iree_status_t parse_inputs_into_call(
 // Output readback and formatting
 //===----------------------------------------------------------------------===//
 
-typedef struct iree_buffer_map_userdata_v0_t {
-  iree_hal_buffer_view_t* source_buffer_view;
-  iree_hal_buffer_t* readback_buffer;
-} iree_buffer_map_userdata_v0_t;
-
 typedef struct iree_buffer_map_userdata_t {
   iree_call_function_state_t* call_state;
   iree_host_size_t buffer_index;
@@ -383,100 +378,6 @@ static void iree_webgpu_mapped_buffer_release(void* user_data,
                                               iree_hal_buffer_t* buffer) {
   WGPUBuffer buffer_handle = (WGPUBuffer)user_data;
   wgpuBufferUnmap(buffer_handle);
-}
-
-// TODO(scotttodd): move async mapping into webgpu/buffer.h/.c?
-static void buffer_map_async_callback_v0(WGPUBufferMapAsyncStatus map_status,
-                                         void* userdata_ptr) {
-  iree_buffer_map_userdata_v0_t* userdata =
-      (iree_buffer_map_userdata_v0_t*)userdata_ptr;
-  switch (map_status) {
-    case WGPUBufferMapAsyncStatus_Success:
-      break;
-    case WGPUBufferMapAsyncStatus_Error:
-      fprintf(stderr, "  buffer_map_async_callback_v0 status: Error\n");
-      break;
-    case WGPUBufferMapAsyncStatus_DeviceLost:
-      fprintf(stderr, "  buffer_map_async_callback_v0 status: DeviceLost\n");
-      break;
-    case WGPUBufferMapAsyncStatus_Unknown:
-    default:
-      fprintf(stderr, "  buffer_map_async_callback_v0 status: Unknown\n");
-      break;
-  }
-
-  if (map_status != WGPUBufferMapAsyncStatus_Success) {
-    iree_hal_buffer_view_release(userdata->source_buffer_view);
-    iree_hal_buffer_release(userdata->readback_buffer);
-    iree_allocator_free(iree_allocator_system(), userdata);
-    return;
-  }
-
-  iree_status_t status = iree_ok_status();
-
-  // TODO(scotttodd): bubble result(s) up to the caller (async + callback API)
-
-  iree_device_size_t data_offset = iree_hal_buffer_byte_offset(
-      iree_hal_buffer_view_buffer(userdata->source_buffer_view));
-  iree_device_size_t data_length =
-      iree_hal_buffer_view_byte_length(userdata->source_buffer_view);
-  WGPUBuffer buffer_handle =
-      iree_hal_webgpu_buffer_handle(userdata->readback_buffer);
-
-  // For this sample we want to print arbitrary buffers, which is easiest
-  // using the |iree_hal_buffer_view_format| function. Internally, that
-  // function requires synchronous buffer mapping, so we'll first wrap the
-  // already (async) mapped GPU memory into a heap buffer. In a less general
-  // application (or one not requiring pretty logging like this), we could
-  // skip a few buffer copies and other data transformations here.
-
-  const void* data_ptr =
-      wgpuBufferGetConstMappedRange(buffer_handle, data_offset, data_length);
-
-  iree_hal_buffer_t* heap_buffer = NULL;
-  if (iree_status_is_ok(status)) {
-    // The buffer we get from WebGPU may not be aligned to 64.
-    iree_hal_memory_access_t memory_access =
-        IREE_HAL_MEMORY_ACCESS_READ | IREE_HAL_MEMORY_ACCESS_UNALIGNED;
-    status = iree_hal_heap_buffer_wrap(
-        userdata->readback_buffer->device_allocator,
-        IREE_HAL_MEMORY_TYPE_HOST_LOCAL, memory_access,
-        IREE_HAL_BUFFER_USAGE_MAPPING, data_length,
-        iree_make_byte_span((void*)data_ptr, data_length),
-        (iree_hal_buffer_release_callback_t){
-            .fn = iree_webgpu_mapped_buffer_release,
-            .user_data = buffer_handle,
-        },
-        &heap_buffer);
-  }
-
-  // Copy the original buffer_view, backed by the mapped heap buffer instead.
-  iree_hal_buffer_view_t* heap_buffer_view = NULL;
-  if (iree_status_is_ok(status)) {
-    status = iree_hal_buffer_view_create_like(
-        heap_buffer, userdata->source_buffer_view, iree_allocator_system(),
-        &heap_buffer_view);
-  }
-
-  if (iree_status_is_ok(status)) {
-    fprintf(stdout, "Call output:\n");
-    status = iree_hal_buffer_view_fprint(stdout, heap_buffer_view,
-                                         /*max_element_count=*/4096,
-                                         iree_allocator_system());
-    fprintf(stdout, "\n");
-  }
-  iree_hal_buffer_view_release(heap_buffer_view);
-  iree_hal_buffer_release(heap_buffer);
-
-  if (!iree_status_is_ok(status)) {
-    fprintf(stderr, "buffer_map_async_callback_v0 error:\n");
-    iree_status_fprint(stderr, status);
-    iree_status_free(status);
-  }
-
-  iree_hal_buffer_view_release(userdata->source_buffer_view);
-  iree_hal_buffer_release(userdata->readback_buffer);
-  iree_allocator_free(iree_allocator_system(), userdata);
 }
 
 static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
@@ -547,231 +448,93 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
         mapped_cpu_buffer_ptr);
   }
 
-  // // Copy the original buffer_view, backed by the mapped heap buffer instead.
-  // iree_hal_buffer_view_t* heap_buffer_view = NULL;
-  // if (iree_status_is_ok(status)) {
-  //   status = iree_hal_buffer_view_create_like(
-  //       mapped_cpu_buffer, output_buffer_view, iree_allocator_system(),
-  //       &heap_buffer_view);
-  // }
-
-  // if (iree_status_is_ok(status)) {
-  //   fprintf(stdout, "Call output:\n");
-  //   status = iree_hal_buffer_view_fprint(stdout, heap_buffer_view,
-  //                                        /*max_element_count=*/4096,
-  //                                        iree_allocator_system());
-  //   fprintf(stdout, "\n");
-  // }
-  // iree_hal_buffer_view_release(heap_buffer_view);
-  // iree_hal_buffer_release(heap_buffer);
-
   if (!iree_status_is_ok(status)) {
     fprintf(stderr, "buffer_map_async_callback error:\n");
     iree_status_fprint(stderr, status);
     iree_status_free(status);
+    // TODO(scotttodd): set userdata->call_state->readback_status if unset
   }
 
   iree_event_set(&userdata->call_state->readback_events[buffer_index]);
-
   iree_allocator_free(iree_allocator_system(), userdata);
 }
 
-static iree_status_t print_buffer_view(iree_hal_device_t* device,
-                                       iree_hal_buffer_view_t* buffer_view) {
-  fprintf(stderr, "print_buffer_view\n");
-  iree_status_t status = iree_ok_status();
+// static iree_status_t print_outputs_from_call(
+//     iree_runtime_call_t* call, iree_string_builder_t* outputs_builder) {
+//   iree_vm_list_t* variants_list = iree_runtime_call_outputs(call);
+//   fprintf(stderr, "print_outputs_from_call, outputs, outputs size: %d\n",
+//           (int)iree_vm_list_size(variants_list));
+//   for (iree_host_size_t i = 0; i < iree_vm_list_size(variants_list); ++i) {
+//     iree_vm_variant_t variant = iree_vm_variant_empty();
+//     IREE_RETURN_IF_ERROR(
+//         iree_vm_list_get_variant_assign(variants_list, i, &variant),
+//         "variant %" PRIhsz " not present", i);
 
-  iree_hal_buffer_t* buffer = iree_hal_buffer_view_buffer(buffer_view);
-  iree_device_size_t data_offset = iree_hal_buffer_byte_offset(buffer);
-  iree_device_size_t data_length =
-      iree_hal_buffer_view_byte_length(buffer_view);
+//     if (iree_vm_variant_is_value(variant)) {
+//       switch (iree_vm_type_def_as_value(variant.type)) {
+//         case IREE_VM_VALUE_TYPE_I8: {
+//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+//               outputs_builder, "i8=%" PRIi8, variant.i8));
+//           break;
+//         }
+//         case IREE_VM_VALUE_TYPE_I16: {
+//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+//               outputs_builder, "i16=%" PRIi16, variant.i16));
+//           break;
+//         }
+//         case IREE_VM_VALUE_TYPE_I32: {
+//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+//               outputs_builder, "i32=%" PRIi32, variant.i32));
+//           break;
+//         }
+//         case IREE_VM_VALUE_TYPE_I64: {
+//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+//               outputs_builder, "i64=%" PRIi64, variant.i64));
+//           break;
+//         }
+//         case IREE_VM_VALUE_TYPE_F32: {
+//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+//               outputs_builder, "f32=%f", variant.f32));
+//           break;
+//         }
+//         case IREE_VM_VALUE_TYPE_F64: {
+//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+//               outputs_builder, "f64=%lf", variant.f64));
+//           break;
+//         }
+//         default: {
+//           IREE_RETURN_IF_ERROR(
+//               iree_string_builder_append_cstring(outputs_builder, "?"));
+//           break;
+//         }
+//       }
+//     } else if (iree_vm_variant_is_ref(variant)) {
+//       if (iree_hal_buffer_view_isa(variant.ref)) {
+//         iree_hal_buffer_view_t* buffer_view =
+//             iree_hal_buffer_view_deref(variant.ref);
+//         // TODO(scotttodd): join async outputs together and return to caller
+//         iree_hal_device_t* device =
+//         iree_runtime_session_device(call->session);
+//         IREE_RETURN_IF_ERROR(print_buffer_view(device, buffer_view));
+//       } else {
+//         IREE_RETURN_IF_ERROR(iree_string_builder_append_cstring(
+//             outputs_builder, "(no printer)"));
+//       }
+//     } else {
+//       IREE_RETURN_IF_ERROR(
+//           iree_string_builder_append_cstring(outputs_builder, "(null)"));
+//     }
 
-  // ----------------------------------------------
-  // Allocate mappable host memory.
-  // Note: iree_hal_webgpu_simple_allocator_allocate_buffer only supports
-  // CopySrc today, so we'll create the buffer directly with
-  // wgpuDeviceCreateBuffer and then wrap it using iree_hal_webgpu_buffer_wrap.
-  WGPUBufferDescriptor descriptor = {
-      .nextInChain = NULL,
-      .label = "IREE_readback",
-      .usage = WGPUBufferUsage_MapRead | WGPUBufferUsage_CopyDst,
-      .size = data_length,
-      .mappedAtCreation = false,
-  };
-  WGPUBuffer readback_buffer_handle = NULL;
-  if (iree_status_is_ok(status)) {
-    // Note: wgpuBufferDestroy is called after iree_hal_webgpu_buffer_wrap ->
-    //       iree_hal_buffer_release -> iree_hal_webgpu_buffer_destroy
-    readback_buffer_handle = wgpuDeviceCreateBuffer(
-        iree_hal_webgpu_device_handle(device), &descriptor);
-    if (!readback_buffer_handle) {
-      status = iree_make_status(IREE_STATUS_RESOURCE_EXHAUSTED,
-                                "unable to allocate buffer of size %" PRIdsz,
-                                data_length);
-    }
-  }
-  iree_device_size_t target_offset = 0;
-  const iree_hal_buffer_params_t target_params = {
-      .usage = IREE_HAL_BUFFER_USAGE_TRANSFER | IREE_HAL_BUFFER_USAGE_MAPPING,
-      .type =
-          IREE_HAL_MEMORY_TYPE_HOST_LOCAL | IREE_HAL_MEMORY_TYPE_DEVICE_VISIBLE,
-      .access = IREE_HAL_MEMORY_ACCESS_ALL,
-  };
-  iree_hal_buffer_t* readback_buffer = NULL;
-  if (iree_status_is_ok(status)) {
-    status = iree_hal_webgpu_buffer_wrap(
-        device, iree_hal_device_allocator(device), target_params.type,
-        target_params.access, target_params.usage, data_length,
-        /*byte_offset=*/0,
-        /*byte_length=*/data_length, readback_buffer_handle,
-        iree_allocator_system(), &readback_buffer);
-  }
-  // ----------------------------------------------
+//     if (i < iree_vm_list_size(variants_list) - 1) {
+//       IREE_RETURN_IF_ERROR(
+//           iree_string_builder_append_cstring(outputs_builder, ";"));
+//     }
+//   }
 
-  // ----------------------------------------------
-  // Transfer from device memory to mappable host memory.
-  const iree_hal_transfer_command_t transfer_command = {
-      .type = IREE_HAL_TRANSFER_COMMAND_TYPE_COPY,
-      .copy =
-          {
-              .source_buffer = buffer,
-              .source_offset = data_offset,
-              .target_buffer = readback_buffer,
-              .target_offset = target_offset,
-              .length = data_length,
-          },
-  };
-  iree_hal_command_buffer_t* command_buffer = NULL;
-  if (iree_status_is_ok(status)) {
-    status = iree_hal_create_transfer_command_buffer(
-        device, IREE_HAL_COMMAND_BUFFER_MODE_ONE_SHOT,
-        IREE_HAL_QUEUE_AFFINITY_ANY, /*transfer_count=*/1, &transfer_command,
-        &command_buffer);
-  }
-  iree_hal_semaphore_t* fence_semaphore = NULL;
-  if (iree_status_is_ok(status)) {
-    status = iree_hal_semaphore_create(device, 0ull, &fence_semaphore);
-  }
-  uint64_t signal_value = 1ull;
-  if (iree_status_is_ok(status)) {
-    iree_hal_semaphore_list_t signal_semaphores = {
-        .count = 1,
-        .semaphores = &fence_semaphore,
-        .payload_values = &signal_value,
-    };
-    status = iree_hal_device_queue_execute(
-        device, IREE_HAL_QUEUE_AFFINITY_ANY, iree_hal_semaphore_list_empty(),
-        signal_semaphores, 1, &command_buffer);
-  }
-  fprintf(stderr, "print_buffer_view after queue_execute, calling wait\n");
-  // TODO(scotttodd): Make this async - pass a wait source to iree_loop_wait_one
-  // TODO(scotttodd): Ask Ben how to interop between wait sources and HAL
-  //                  semaphores. nop_semaphore.c -> promise_semaphore.c?
-  //                  Is a semaphore wait even needed? buffer map async might be
-  //                  waiting
-  if (iree_status_is_ok(status)) {
-    status = iree_hal_semaphore_wait(fence_semaphore, signal_value,
-                                     iree_infinite_timeout());
-  }
-  fprintf(stderr, "print_buffer_view after wait\n");
-  iree_hal_command_buffer_release(command_buffer);
-  iree_hal_semaphore_release(fence_semaphore);
-  // ----------------------------------------------
+//   iree_vm_list_resize(variants_list, 0);
 
-  iree_buffer_map_userdata_v0_t* userdata = NULL;
-  if (iree_status_is_ok(status)) {
-    status = iree_allocator_malloc(iree_allocator_system(),
-                                   sizeof(iree_buffer_map_userdata_v0_t),
-                                   (void**)&userdata);
-    iree_hal_buffer_view_retain(buffer_view);  // Released in the callback.
-    userdata->source_buffer_view = buffer_view;
-    userdata->readback_buffer = readback_buffer;
-  }
-
-  if (iree_status_is_ok(status)) {
-    wgpuBufferMapAsync(readback_buffer_handle, WGPUMapMode_Read, /*offset=*/0,
-                       /*size=*/data_length, buffer_map_async_callback_v0,
-                       /*userdata=*/userdata);
-  }
-
-  return status;
-}
-
-static iree_status_t print_outputs_from_call(
-    iree_runtime_call_t* call, iree_string_builder_t* outputs_builder) {
-  iree_vm_list_t* variants_list = iree_runtime_call_outputs(call);
-  fprintf(stderr, "print_outputs_from_call, outputs, outputs size: %d\n",
-          (int)iree_vm_list_size(variants_list));
-  for (iree_host_size_t i = 0; i < iree_vm_list_size(variants_list); ++i) {
-    iree_vm_variant_t variant = iree_vm_variant_empty();
-    IREE_RETURN_IF_ERROR(
-        iree_vm_list_get_variant_assign(variants_list, i, &variant),
-        "variant %" PRIhsz " not present", i);
-
-    if (iree_vm_variant_is_value(variant)) {
-      switch (iree_vm_type_def_as_value(variant.type)) {
-        case IREE_VM_VALUE_TYPE_I8: {
-          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-              outputs_builder, "i8=%" PRIi8, variant.i8));
-          break;
-        }
-        case IREE_VM_VALUE_TYPE_I16: {
-          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-              outputs_builder, "i16=%" PRIi16, variant.i16));
-          break;
-        }
-        case IREE_VM_VALUE_TYPE_I32: {
-          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-              outputs_builder, "i32=%" PRIi32, variant.i32));
-          break;
-        }
-        case IREE_VM_VALUE_TYPE_I64: {
-          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-              outputs_builder, "i64=%" PRIi64, variant.i64));
-          break;
-        }
-        case IREE_VM_VALUE_TYPE_F32: {
-          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-              outputs_builder, "f32=%f", variant.f32));
-          break;
-        }
-        case IREE_VM_VALUE_TYPE_F64: {
-          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-              outputs_builder, "f64=%lf", variant.f64));
-          break;
-        }
-        default: {
-          IREE_RETURN_IF_ERROR(
-              iree_string_builder_append_cstring(outputs_builder, "?"));
-          break;
-        }
-      }
-    } else if (iree_vm_variant_is_ref(variant)) {
-      if (iree_hal_buffer_view_isa(variant.ref)) {
-        iree_hal_buffer_view_t* buffer_view =
-            iree_hal_buffer_view_deref(variant.ref);
-        // TODO(scotttodd): join async outputs together and return to caller
-        iree_hal_device_t* device = iree_runtime_session_device(call->session);
-        IREE_RETURN_IF_ERROR(print_buffer_view(device, buffer_view));
-      } else {
-        IREE_RETURN_IF_ERROR(iree_string_builder_append_cstring(
-            outputs_builder, "(no printer)"));
-      }
-    } else {
-      IREE_RETURN_IF_ERROR(
-          iree_string_builder_append_cstring(outputs_builder, "(null)"));
-    }
-
-    if (i < iree_vm_list_size(variants_list) - 1) {
-      IREE_RETURN_IF_ERROR(
-          iree_string_builder_append_cstring(outputs_builder, ";"));
-    }
-  }
-
-  iree_vm_list_resize(variants_list, 0);
-
-  return iree_ok_status();
-}
+//   return iree_ok_status();
+// }
 
 static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
                                       iree_status_t status) {
@@ -875,15 +638,6 @@ static iree_status_t process_call_outputs(
           (int)outputs_size);
   iree_hal_device_t* device =
       iree_runtime_session_device(call_state->call.session);
-
-  // See loop_test.h WaitOneBlocking / WaitAllBlocking
-  // list of `iree_event_t`s that can be set later
-  //   start set if no readback required
-  // list of `iree_wait_source`s (one per event)
-  // iree_loop_wait_all(wait_sources, format_outputs_callback)
-  // for each ref / buffer_view
-  //   readback(event_to_set_on_completion)
-  //     use loop as needed
 
   // Allocate lists. Note: empty object contents, may be sparse.
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
@@ -1006,7 +760,7 @@ static iree_status_t process_call_outputs(
   iree_hal_command_buffer_release(transfer_command_buffer);
   iree_hal_semaphore_release(signal_semaphore);
 
-  // wgpuBufferMapAsync the mappable device buffers
+  // Loop through one last time to map the buffers asynchronously.
   for (iree_host_size_t i = 0; i < outputs_size; ++i) {
     if (!iree_status_is_ok(status)) break;
     if (!call_state->readback_mappable_device_buffers[i]) continue;
@@ -1030,32 +784,13 @@ static iree_status_t process_call_outputs(
                        /*userdata=*/map_userdata);
   }
 
-  // WORKING HERE
+  // Finally, wait on all wait sources.
   //
-  // state:
-  //   events[]
-  //   readback_mappable_device_buffers[]
-  //   readback_mapped_cpu_buffers[]
-  //   status
+  // If there are any buffer outputs that need asynchronous mapping, those
+  // wait sources will be signaled when the mapping completes.
   //
-  // for each buffer output
-  //   wgpuDeviceCreateBuffer -> WGPUBuffer
-  //   iree_hal_webgpu_buffer_wrap -> readback_mappable_device_buffers[i]
-  //   iree_hal_create_transfer_command_buffer
-  // wait for transfer
-  // for each buffer output
-  //   wgpuBufferMapAsync
-  //     userdata: iree_call_function_state_t + index
-  //   callback
-  //     failure -> sticky failure on iree_call_function_state_t?
-  //       if existing status is not ok, ignore
-  //       if existing status _is_ ok, transfer over
-  //     wgpuBufferGetConstMappedRange
-  //     iree_hal_heap_buffer_wrap -> readback_mapped_cpu_buffers[i]
-  //     signal event [i]
-  //
-  // WORKING HERE
-
+  // Note: call_state (and everything within it) is kept alive until the
+  // callback resolves.
   IREE_RETURN_IF_ERROR(iree_loop_wait_all(
       iree_loop_emscripten(call_state->loop), outputs_size, wait_sources,
       iree_make_timeout_ms(5000), map_all_callback,
