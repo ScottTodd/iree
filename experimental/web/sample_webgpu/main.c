@@ -685,6 +685,49 @@ static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
   return status;
 }
 
+static iree_status_t allocate_mappable_device_buffer(
+    iree_hal_device_t* device, iree_hal_buffer_view_t* buffer_view,
+    iree_hal_buffer_t** out_buffer) {
+  fprintf(stderr, "    allocate_mappable_device_buffer\n");
+  *out_buffer = NULL;
+
+  iree_device_size_t data_length =
+      iree_hal_buffer_view_byte_length(buffer_view);
+
+  // Note: iree_hal_webgpu_simple_allocator_allocate_buffer only supports
+  // CopySrc today, so we'll create the buffer directly with
+  // wgpuDeviceCreateBuffer and then wrap it using iree_hal_webgpu_buffer_wrap.
+  WGPUBufferDescriptor descriptor = {
+      .nextInChain = NULL,
+      .label = "IREE_readback",
+      .usage = WGPUBufferUsage_MapRead | WGPUBufferUsage_CopyDst,
+      .size = data_length,
+      .mappedAtCreation = false,
+  };
+  WGPUBuffer readback_buffer_handle = NULL;
+  // Note: wgpuBufferDestroy is called after iree_hal_webgpu_buffer_wrap ->
+  //       iree_hal_buffer_release -> iree_hal_webgpu_buffer_destroy
+  readback_buffer_handle = wgpuDeviceCreateBuffer(
+      iree_hal_webgpu_device_handle(device), &descriptor);
+  if (!readback_buffer_handle) {
+    return iree_make_status(IREE_STATUS_RESOURCE_EXHAUSTED,
+                            "unable to allocate buffer of size %" PRIdsz,
+                            data_length);
+  }
+  const iree_hal_buffer_params_t target_params = {
+      .usage = IREE_HAL_BUFFER_USAGE_TRANSFER | IREE_HAL_BUFFER_USAGE_MAPPING,
+      .type =
+          IREE_HAL_MEMORY_TYPE_HOST_LOCAL | IREE_HAL_MEMORY_TYPE_DEVICE_VISIBLE,
+      .access = IREE_HAL_MEMORY_ACCESS_ALL,
+  };
+  return iree_hal_webgpu_buffer_wrap(
+      device, iree_hal_device_allocator(device), target_params.type,
+      target_params.access, target_params.usage, data_length,
+      /*byte_offset=*/0,
+      /*byte_length=*/data_length, readback_buffer_handle,
+      iree_allocator_system(), out_buffer);
+}
+
 // Processes outputs from a completed function invocation.
 // Some output data types may require asynchronous mapping (readback).
 static iree_status_t process_call_outputs(
@@ -695,8 +738,8 @@ static iree_status_t process_call_outputs(
   iree_host_size_t outputs_size = iree_vm_list_size(outputs_list);
   fprintf(stderr, "process_call_outputs, outputs size: %d\n",
           (int)outputs_size);
-  // iree_hal_device_t* device =
-  //     iree_runtime_session_device(call_state->call.session);
+  iree_hal_device_t* device =
+      iree_runtime_session_device(call_state->call.session);
 
   // See loop_test.h WaitOneBlocking / WaitAllBlocking
   // list of `iree_event_t`s that can be set later
@@ -724,6 +767,7 @@ static iree_status_t process_call_outputs(
   iree_wait_source_t* wait_sources = (iree_wait_source_t*)iree_alloca(
       sizeof(iree_wait_source_t) * outputs_size);
 
+  iree_host_size_t buffer_count = 0;
   for (iree_host_size_t i = 0; i < outputs_size; ++i) {
     iree_vm_variant_t variant = iree_vm_variant_empty();
     IREE_RETURN_IF_ERROR(
@@ -739,9 +783,13 @@ static iree_status_t process_call_outputs(
 
       // Output is a buffer_view ref, add to readback batch (async).
       iree_event_initialize(false, &call_state->readback_events[i]);
+      buffer_count++;
 
-      // iree_hal_buffer_view_t* buffer_view =
-      //     iree_hal_buffer_view_deref(variant.ref);
+      iree_hal_buffer_view_t* buffer_view =
+          iree_hal_buffer_view_deref(variant.ref);
+      IREE_RETURN_IF_ERROR(allocate_mappable_device_buffer(
+          device, buffer_view,
+          &call_state->readback_mappable_device_buffers[i]));
       // IREE_RETURN_IF_ERROR(print_buffer_view(device, buffer_view));
 
       // TODO(scotttodd): start readback, passing event to set when complete
@@ -752,6 +800,8 @@ static iree_status_t process_call_outputs(
     }
     wait_sources[i] = iree_event_await(&call_state->readback_events[i]);
   }
+
+  fprintf(stderr, "  buffer_count: %d\n", (int)buffer_count);
 
   // TODO(scotttodd): one transfer command buffer / queue execute for all
   //                  buffers, then separately issue wgpuBufferMapAsync calls
