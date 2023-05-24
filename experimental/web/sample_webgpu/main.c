@@ -107,6 +107,7 @@ typedef struct iree_call_function_state_t {
   iree_time_t readback_end_time;
 
   // Readback state.
+  iree_status_t readback_status;  // sticky status for the first error
   iree_host_size_t outputs_size;
   iree_event_t* readback_events;                         // one per output
   iree_hal_buffer_t** readback_mappable_device_buffers;  // sparse
@@ -132,6 +133,8 @@ static void iree_call_function_state_destroy(
     iree_event_deinitialize(&call_state->readback_events[i]);
   }
   iree_allocator_free(iree_allocator_system(), call_state->readback_events);
+
+  iree_status_free(call_state->readback_status);
 
   // Invoke state.
   iree_allocator_free(iree_allocator_system(), call_state->invoke_state);
@@ -686,12 +689,14 @@ static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
 // Some output data types may require asynchronous mapping (readback).
 static iree_status_t process_call_outputs(
     iree_call_function_state_t* call_state) {
+  call_state->readback_start_time = iree_time_now();
+
   iree_vm_list_t* outputs_list = iree_runtime_call_outputs(&call_state->call);
   iree_host_size_t outputs_size = iree_vm_list_size(outputs_list);
   fprintf(stderr, "process_call_outputs, outputs size: %d\n",
           (int)outputs_size);
-
-  call_state->readback_start_time = iree_time_now();
+  // iree_hal_device_t* device =
+  //     iree_runtime_session_device(call_state->call.session);
 
   // See loop_test.h WaitOneBlocking / WaitAllBlocking
   // list of `iree_event_t`s that can be set later
@@ -718,16 +723,30 @@ static iree_status_t process_call_outputs(
 
   iree_wait_source_t* wait_sources = (iree_wait_source_t*)iree_alloca(
       sizeof(iree_wait_source_t) * outputs_size);
+
   for (iree_host_size_t i = 0; i < outputs_size; ++i) {
     iree_vm_variant_t variant = iree_vm_variant_empty();
     IREE_RETURN_IF_ERROR(
         iree_vm_list_get_variant_assign(outputs_list, i, &variant),
         "variant %" PRIhsz " not present", i);
+
     if (iree_vm_variant_is_ref(variant)) {
       fprintf(stderr, "  [%" PRIhsz "]: ref\n", i);
+      if (!iree_hal_buffer_view_isa(variant.ref)) {
+        return iree_make_status(IREE_STATUS_UNIMPLEMENTED,
+                                "only buffer_view variants are supported");
+      }
+
+      // Output is a buffer_view ref, add to readback batch (async).
       iree_event_initialize(false, &call_state->readback_events[i]);
+
+      // iree_hal_buffer_view_t* buffer_view =
+      //     iree_hal_buffer_view_deref(variant.ref);
+      // IREE_RETURN_IF_ERROR(print_buffer_view(device, buffer_view));
+
       // TODO(scotttodd): start readback, passing event to set when complete
     } else {
+      // Not a buffer_view ref, data is available immediately - start signaled.
       fprintf(stderr, "  [%" PRIhsz "]: other\n", i);
       iree_event_initialize(true, &call_state->readback_events[i]);
     }
