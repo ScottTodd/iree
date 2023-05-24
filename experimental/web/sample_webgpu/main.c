@@ -110,6 +110,7 @@ typedef struct iree_call_function_state_t {
   iree_status_t readback_status;  // sticky status for the first async error
   iree_host_size_t outputs_size;
   iree_event_t* readback_events;                         // one per output
+  iree_hal_buffer_view_t** output_buffer_views;          // sparse
   iree_hal_buffer_t** readback_mappable_device_buffers;  // sparse
   iree_hal_buffer_t** readback_mapped_cpu_buffers;       // sparse
 } iree_call_function_state_t;
@@ -129,6 +130,9 @@ static void iree_call_function_state_destroy(
   }
   iree_allocator_free(iree_allocator_system(),
                       call_state->readback_mappable_device_buffers);
+  // Note: no _release for output_buffer_views, retain/release around
+  // wgpuBufferMapAsync.
+  iree_allocator_free(iree_allocator_system(), call_state->output_buffer_views);
   for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
     iree_event_deinitialize(&call_state->readback_events[i]);
   }
@@ -478,6 +482,11 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
                                       void* userdata_ptr) {
   iree_buffer_map_userdata_t* userdata =
       (iree_buffer_map_userdata_t*)userdata_ptr;
+  iree_host_size_t buffer_index = userdata->buffer_index;
+  iree_hal_buffer_view_t* output_buffer_view =
+      userdata->call_state->output_buffer_views[buffer_index];
+  // iree_hal_buffer_t*
+
   switch (map_status) {
     case WGPUBufferMapAsyncStatus_Success:
       break;
@@ -495,17 +504,15 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
 
   if (map_status != WGPUBufferMapAsyncStatus_Success) {
     // TODO(scotttodd): userdata->call_state->readback_status if unset
-    // iree_hal_buffer_view_release(userdata->source_buffer_view);
+    iree_hal_buffer_view_release(output_buffer_view);
     // iree_hal_buffer_release(userdata->readback_buffer);
     iree_allocator_free(iree_allocator_system(), userdata);
     return;
   }
 
-  fprintf(stderr, "buffer_map_async_callback[%d] success\n",
-          (int)userdata->buffer_index);
+  fprintf(stderr, "buffer_map_async_callback[%d] success\n", (int)buffer_index);
 
-  iree_event_set(
-      &userdata->call_state->readback_events[userdata->buffer_index]);
+  iree_event_set(&userdata->call_state->readback_events[buffer_index]);
 
   // iree_status_t status = iree_ok_status();
 
@@ -861,6 +868,9 @@ static iree_status_t process_call_outputs(
       iree_allocator_system(), sizeof(iree_event_t) * outputs_size,
       (void**)&call_state->readback_events));
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
+      iree_allocator_system(), sizeof(iree_hal_buffer_view_t*) * outputs_size,
+      (void**)&call_state->output_buffer_views));
+  IREE_RETURN_IF_ERROR(iree_allocator_malloc(
       iree_allocator_system(), sizeof(iree_hal_buffer_t*) * outputs_size,
       (void**)&call_state->readback_mappable_device_buffers));
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
@@ -891,10 +901,10 @@ static iree_status_t process_call_outputs(
       // Output is a buffer_view ref, add to readback batch (async).
       iree_event_initialize(false, &call_state->readback_events[i]);
       buffer_count++;
-      iree_hal_buffer_view_t* buffer_view =
+      call_state->output_buffer_views[i] =
           iree_hal_buffer_view_deref(variant.ref);
       IREE_RETURN_IF_ERROR(allocate_mappable_device_buffer(
-          device, buffer_view,
+          device, call_state->output_buffer_views[i],
           &call_state->readback_mappable_device_buffers[i]));
     } else {
       // Not a buffer_view ref, data is available immediately - start signaled.
@@ -911,24 +921,16 @@ static iree_status_t process_call_outputs(
       (iree_hal_transfer_command_t*)iree_alloca(
           sizeof(iree_hal_transfer_command_t) * buffer_count);
   for (iree_host_size_t i = 0, buffer_index = 0; i < outputs_size; ++i) {
-    // TODO(scotttodd): Track buffers some other way... lots of duplicate code
-    iree_vm_variant_t variant = iree_vm_variant_empty();
-    IREE_RETURN_IF_ERROR(
-        iree_vm_list_get_variant_assign(outputs_list, i, &variant),
-        "variant %" PRIhsz " not present", i);
-    if (!iree_vm_variant_is_ref(variant)) continue;
-    if (!iree_hal_buffer_view_isa(variant.ref)) continue;
+    if (!call_state->output_buffer_views[i]) continue;
 
-    iree_hal_buffer_view_t* buffer_view =
-        iree_hal_buffer_view_deref(variant.ref);
-
-    iree_hal_buffer_t* source_buffer = iree_hal_buffer_view_buffer(buffer_view);
+    iree_hal_buffer_t* source_buffer =
+        iree_hal_buffer_view_buffer(call_state->output_buffer_views[i]);
     iree_device_size_t data_offset = iree_hal_buffer_byte_offset(source_buffer);
     iree_hal_buffer_t* readback_buffer =
         call_state->readback_mappable_device_buffers[i];
     iree_device_size_t target_offset = 0;
     iree_device_size_t data_length =
-        iree_hal_buffer_view_byte_length(buffer_view);
+        iree_hal_buffer_view_byte_length(call_state->output_buffer_views[i]);
     transfer_commands[buffer_index] = (iree_hal_transfer_command_t){
         .type = IREE_HAL_TRANSFER_COMMAND_TYPE_COPY,
         .copy =
@@ -992,19 +994,12 @@ static iree_status_t process_call_outputs(
         iree_allocator_system(), sizeof(iree_buffer_map_userdata_t),
         (void**)&map_userdata));
 
-    // TODO(scotttodd): Track buffers some other way... lots of duplicate code
-    iree_vm_variant_t variant = iree_vm_variant_empty();
-    IREE_RETURN_IF_ERROR(
-        iree_vm_list_get_variant_assign(outputs_list, i, &variant),
-        "variant %" PRIhsz " not present", i);
-    iree_hal_buffer_view_t* buffer_view =
-        iree_hal_buffer_view_deref(variant.ref);
-    iree_hal_buffer_view_retain(buffer_view);  // Released in the callback.
-
+    iree_hal_buffer_view_retain(
+        call_state->output_buffer_views[i]);  // Released in the callback.
     map_userdata->call_state = call_state;
     map_userdata->buffer_index = i;
     iree_device_size_t data_length =
-        iree_hal_buffer_view_byte_length(buffer_view);
+        iree_hal_buffer_view_byte_length(call_state->output_buffer_views[i]);
 
     WGPUBuffer device_buffer = iree_hal_webgpu_buffer_handle(
         call_state->readback_mappable_device_buffers[i]);
@@ -1013,26 +1008,6 @@ static iree_status_t process_call_outputs(
                        /*size=*/data_length, buffer_map_async_callback,
                        /*userdata=*/map_userdata);
   }
-
-  // iree_buffer_map_userdata_v0_t* userdata = NULL;
-  // if (iree_status_is_ok(status)) {
-  //   status = iree_allocator_malloc(iree_allocator_system(),
-  //                                  sizeof(iree_buffer_map_userdata_v0_t),
-  //                                  (void**)&userdata);
-  //   iree_hal_buffer_view_retain(buffer_view);  // Released in the callback.
-  //   userdata->source_buffer_view = buffer_view;
-  //   userdata->readback_buffer = readback_buffer;
-  // }
-
-  // if (iree_status_is_ok(status)) {
-  //   wgpuBufferMapAsync(readback_buffer_handle, WGPUMapMode_Read,
-  //   /*offset=*/0,
-  //                      /*size=*/data_length, buffer_map_async_callback_v0,
-  //                      /*userdata=*/userdata);
-  // }
-
-  // TODO(scotttodd): one transfer command buffer / queue execute for all
-  //                  buffers, then separately issue wgpuBufferMapAsync calls
 
   // WORKING HERE
   //
