@@ -459,82 +459,96 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
   iree_allocator_free(iree_allocator_system(), userdata);
 }
 
-// static iree_status_t print_outputs_from_call(
-//     iree_runtime_call_t* call, iree_string_builder_t* outputs_builder) {
-//   iree_vm_list_t* variants_list = iree_runtime_call_outputs(call);
-//   fprintf(stderr, "print_outputs_from_call, outputs, outputs size: %d\n",
-//           (int)iree_vm_list_size(variants_list));
-//   for (iree_host_size_t i = 0; i < iree_vm_list_size(variants_list); ++i) {
-//     iree_vm_variant_t variant = iree_vm_variant_empty();
-//     IREE_RETURN_IF_ERROR(
-//         iree_vm_list_get_variant_assign(variants_list, i, &variant),
-//         "variant %" PRIhsz " not present", i);
+static iree_status_t print_outputs_from_call(
+    iree_call_function_state_t* call_state,
+    iree_string_builder_t* outputs_builder) {
+  iree_vm_list_t* variants_list = iree_runtime_call_outputs(&call_state->call);
+  fprintf(stderr, "print_outputs_from_call, outputs size: %d\n",
+          (int)iree_vm_list_size(variants_list));
+  for (iree_host_size_t i = 0; i < iree_vm_list_size(variants_list); ++i) {
+    iree_vm_variant_t variant = iree_vm_variant_empty();
+    IREE_RETURN_IF_ERROR(
+        iree_vm_list_get_variant_assign(variants_list, i, &variant),
+        "variant %" PRIhsz " not present", i);
 
-//     if (iree_vm_variant_is_value(variant)) {
-//       switch (iree_vm_type_def_as_value(variant.type)) {
-//         case IREE_VM_VALUE_TYPE_I8: {
-//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-//               outputs_builder, "i8=%" PRIi8, variant.i8));
-//           break;
-//         }
-//         case IREE_VM_VALUE_TYPE_I16: {
-//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-//               outputs_builder, "i16=%" PRIi16, variant.i16));
-//           break;
-//         }
-//         case IREE_VM_VALUE_TYPE_I32: {
-//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-//               outputs_builder, "i32=%" PRIi32, variant.i32));
-//           break;
-//         }
-//         case IREE_VM_VALUE_TYPE_I64: {
-//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-//               outputs_builder, "i64=%" PRIi64, variant.i64));
-//           break;
-//         }
-//         case IREE_VM_VALUE_TYPE_F32: {
-//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-//               outputs_builder, "f32=%f", variant.f32));
-//           break;
-//         }
-//         case IREE_VM_VALUE_TYPE_F64: {
-//           IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
-//               outputs_builder, "f64=%lf", variant.f64));
-//           break;
-//         }
-//         default: {
-//           IREE_RETURN_IF_ERROR(
-//               iree_string_builder_append_cstring(outputs_builder, "?"));
-//           break;
-//         }
-//       }
-//     } else if (iree_vm_variant_is_ref(variant)) {
-//       if (iree_hal_buffer_view_isa(variant.ref)) {
-//         iree_hal_buffer_view_t* buffer_view =
-//             iree_hal_buffer_view_deref(variant.ref);
-//         // TODO(scotttodd): join async outputs together and return to caller
-//         iree_hal_device_t* device =
-//         iree_runtime_session_device(call->session);
-//         IREE_RETURN_IF_ERROR(print_buffer_view(device, buffer_view));
-//       } else {
-//         IREE_RETURN_IF_ERROR(iree_string_builder_append_cstring(
-//             outputs_builder, "(no printer)"));
-//       }
-//     } else {
-//       IREE_RETURN_IF_ERROR(
-//           iree_string_builder_append_cstring(outputs_builder, "(null)"));
-//     }
+    if (iree_vm_variant_is_value(variant)) {
+      switch (iree_vm_type_def_as_value(variant.type)) {
+        case IREE_VM_VALUE_TYPE_I8: {
+          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+              outputs_builder, "i8=%" PRIi8, variant.i8));
+          break;
+        }
+        case IREE_VM_VALUE_TYPE_I16: {
+          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+              outputs_builder, "i16=%" PRIi16, variant.i16));
+          break;
+        }
+        case IREE_VM_VALUE_TYPE_I32: {
+          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+              outputs_builder, "i32=%" PRIi32, variant.i32));
+          break;
+        }
+        case IREE_VM_VALUE_TYPE_I64: {
+          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+              outputs_builder, "i64=%" PRIi64, variant.i64));
+          break;
+        }
+        case IREE_VM_VALUE_TYPE_F32: {
+          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+              outputs_builder, "f32=%f", variant.f32));
+          break;
+        }
+        case IREE_VM_VALUE_TYPE_F64: {
+          IREE_RETURN_IF_ERROR(iree_string_builder_append_format(
+              outputs_builder, "f64=%lf", variant.f64));
+          break;
+        }
+        default: {
+          IREE_RETURN_IF_ERROR(
+              iree_string_builder_append_cstring(outputs_builder, "?"));
+          break;
+        }
+      }
+    } else if (iree_vm_variant_is_ref(variant)) {
+      // Interpret the mapped buffer in the same format as the output view.
+      iree_hal_buffer_view_t* heap_buffer_view = NULL;
+      IREE_RETURN_IF_ERROR(iree_hal_buffer_view_create_like(
+          call_state->readback_mapped_cpu_buffers[i],
+          call_state->output_buffer_views[i], iree_allocator_system(),
+          &heap_buffer_view));
+      // Query total length (excluding NUL terminator).
+      iree_host_size_t result_length = 0;
+      iree_status_t status = iree_hal_buffer_view_format(
+          heap_buffer_view, SIZE_MAX, 0, NULL, &result_length);
+      if (!iree_status_is_out_of_range(status)) return status;
+      status = iree_ok_status();
+      ++result_length;  // include NUL
+      // Format into a scratch buffer and append.
+      char* scratch = (char*)iree_alloca(result_length);
+      if (iree_status_is_ok(status)) {
+        status = iree_hal_buffer_view_format(
+            heap_buffer_view, SIZE_MAX, result_length, scratch, &result_length);
+      }
+      if (iree_status_is_ok(status)) {
+        status = iree_string_builder_append_format(outputs_builder, "%.*s",
+                                                   (int)result_length, scratch);
+      }
+      iree_hal_buffer_view_release(heap_buffer_view);
+    } else {
+      IREE_RETURN_IF_ERROR(
+          iree_string_builder_append_cstring(outputs_builder, "(null)"));
+    }
 
-//     if (i < iree_vm_list_size(variants_list) - 1) {
-//       IREE_RETURN_IF_ERROR(
-//           iree_string_builder_append_cstring(outputs_builder, ";"));
-//     }
-//   }
+    if (i < iree_vm_list_size(variants_list) - 1) {
+      IREE_RETURN_IF_ERROR(
+          iree_string_builder_append_cstring(outputs_builder, ";"));
+    }
+  }
 
-//   iree_vm_list_resize(variants_list, 0);
+  iree_vm_list_resize(variants_list, 0);
 
-//   return iree_ok_status();
-// }
+  return iree_ok_status();
+}
 
 static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
                                       iree_status_t status) {
@@ -553,25 +567,40 @@ static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
     return status;
   }
 
-  for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
-    if (!call_state->readback_mappable_device_buffers[i]) continue;
+  iree_string_builder_t output_string_builder;
+  iree_string_builder_initialize(iree_allocator_system(),
+                                 &output_string_builder);
 
-    iree_hal_buffer_view_t* heap_buffer_view = NULL;
-    status = iree_hal_buffer_view_create_like(
-        call_state->readback_mapped_cpu_buffers[i],
-        call_state->output_buffer_views[i], iree_allocator_system(),
-        &heap_buffer_view);
-    if (iree_status_is_ok(status)) {
-      // TODO(scotttodd): append to output JSON
-      status = iree_hal_buffer_view_fprint(stdout, heap_buffer_view,
-                                           /*max_element_count=*/4096,
-                                           iree_allocator_system());
-      fprintf(stdout, "\n");
-    }
-
-    iree_hal_buffer_view_release(heap_buffer_view);
-    if (!iree_status_is_ok(status)) break;
+  // Output a JSON object as a string:
+  // {
+  //   "invoke_time_ms": [number],
+  //   "readback_time_ms": [number],
+  //   "outputs": [semicolon delimited list of formatted outputs]
+  // }
+  if (iree_status_is_ok(status)) {
+    iree_time_t invoke_time_ms =
+        (call_state->invoke_end_time - call_state->invoke_start_time) / 1000000;
+    iree_time_t readback_time_ms =
+        (call_state->readback_end_time - call_state->readback_start_time) /
+        1000000;
+    status = iree_string_builder_append_format(
+        &output_string_builder,
+        "{ \"invoke_time_ms\": %" PRId64 ", \"readback_time_ms\": %" PRId64
+        ", \"outputs\": \"",
+        invoke_time_ms, readback_time_ms);
   }
+  if (iree_status_is_ok(status)) {
+    status = print_outputs_from_call(call_state, &output_string_builder);
+  }
+  if (iree_status_is_ok(status)) {
+    status = iree_string_builder_append_cstring(&output_string_builder, "\"}");
+  }
+
+  // TODO(scotttodd): call up to JS with this formatted output string
+  fprintf(stdout, "%.*s\n",
+          (int)iree_string_builder_size(&output_string_builder),
+          iree_string_builder_buffer(&output_string_builder));
+  // iree_string_builder_buffer
 
   if (!iree_status_is_ok(status)) {
     fprintf(stderr, "map_all_callback error:\n");
@@ -579,6 +608,7 @@ static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
     // Note: loop_emscripten.js must free 'status'!
   }
 
+  iree_string_builder_deinitialize(&output_string_builder);
   iree_call_function_state_destroy(call_state);
   return status;
 }
@@ -684,7 +714,8 @@ static iree_status_t process_call_outputs(
           device, call_state->output_buffer_views[i],
           &call_state->readback_mappable_device_buffers[i]));
     } else {
-      // Not a buffer_view ref, data is available immediately - start signaled.
+      // Not a buffer_view ref, data is available immediately - start
+      // signaled.
       fprintf(stderr, "  [%" PRIhsz "]: other\n", i);
       iree_event_initialize(true, &call_state->readback_events[i]);
     }
