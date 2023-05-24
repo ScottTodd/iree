@@ -100,8 +100,10 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
     <p>Total time (including overheads):
       <code id="benchmark-time-js-output" style="font-family: monospace;"></code></p>
-    <p>Mean inference time (Wasm only):
-      <code id="benchmark-time-wasm-output" style="font-family: monospace;"></code></p>
+    <p>Invoke time:
+      <code id="benchmark-time-invoke-output" style="font-family: monospace;"></code></p>
+    <p>Readback time:
+      <code id="benchmark-time-readback-output" style="font-family: monospace;"></code></p>
 
     <hr>
     <h2>Samples</h2>
@@ -190,7 +192,8 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
     const functionArgumentsInput = document.getElementById("function-arguments-input");
     const functionOutputsElement = document.getElementById("function-outputs");
     const timeJsOutputElement = document.getElementById("benchmark-time-js-output");
-    const timeWasmOutputElement = document.getElementById("benchmark-time-wasm-output");
+    const timeInvokeOutputElement = document.getElementById("benchmark-time-invoke-output");
+    const timeReadbackOutputElement = document.getElementById("benchmark-time-readback-output");
 
     async function finishLoadingProgram(newProgram, newProgramName) {
       if (loadedProgram !== null) {
@@ -293,10 +296,11 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
             const totalJsTime = endJsTime - startJsTime;
             timeJsOutputElement.textContent = totalJsTime.toFixed(3) + "ms";
 
-            const totalWasmTimeMs = resultObject['invoke_time_ms'];
-            const meanWasmTimeMs = totalWasmTimeMs;
-            timeWasmOutputElement.textContent =
-                meanWasmTimeMs.toFixed(3) + "ms";
+            const invokeTimeMs = resultObject['invoke_time_ms'];
+            timeInvokeOutputElement.textContent = invokeTimeMs + "ms";
+
+            const readbackTimeMs = resultObject['readback_time_ms'];
+            timeReadbackOutputElement.textContent = readbackTimeMs + "ms";
           })
           .catch((error) => {
             console.error("Function call error: '" + error + "'");

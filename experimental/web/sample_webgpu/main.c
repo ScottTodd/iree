@@ -88,14 +88,15 @@ typedef struct iree_program_state_t {
 //   iree_vm_async_invoke
 //     invoke_callback
 //       process_call_outputs
+//         <batch transfer from output buffers to mappable device buffers>
 //         map_call_output[0...n]
-//           <queue execute: transfer device -> mappable host>  // move this up
 //           wgpuBufferMapAsync
 //             buffer_map_async_callback
 //               <set event>
 //         iree_loop_wait_all
 //           map_all_callback
-//             <format output JSON and issue callback>
+//             print_outputs_from_call
+//             issue top level callback
 
 typedef struct iree_call_function_state_t {
   iree_runtime_call_t call;
@@ -593,11 +594,6 @@ static iree_status_t map_all_callback(void* user_data, iree_loop_t loop,
     status = iree_string_builder_append_cstring(&output_string_builder, "\"}");
   }
 
-  // TODO(scotttodd): call up to JS with this formatted output string
-  fprintf(stdout, "%.*s\n",
-          (int)iree_string_builder_size(&output_string_builder),
-          iree_string_builder_buffer(&output_string_builder));
-
   if (iree_status_is_ok(status)) {
     // Note: this leaks the buffer. It's up to the caller to free it after use.
     char* outputs_string =
@@ -843,6 +839,7 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
   fprintf(stderr, "iree_vm_async_invoke_callback_fn_t\n");
   iree_call_function_state_t* call_state =
       (iree_call_function_state_t*)user_data;
+  call_state->invoke_end_time = iree_time_now();
 
   if (!iree_status_is_ok(status)) {
     fprintf(stderr, "iree_vm_async_invoke_callback_fn_t error:\n");
@@ -850,17 +847,6 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
     iree_call_function_state_destroy(call_state);
     return status;  // Note: loop_emscripten.js must free this!
   }
-
-  //
-  call_state->invoke_end_time = iree_time_now();
-
-  // ----------------------- remove after debugging
-  iree_time_t elapsed_time =
-      call_state->invoke_end_time - call_state->invoke_start_time;
-  iree_time_t elapsed_time_millis = elapsed_time / 1000000;
-  fprintf(stderr, "  elapsed time: %dms\n", (int)elapsed_time_millis);
-  // TODO(scotttodd): return this to JS
-  // ----------------------- remove after debugging
 
   status = process_call_outputs(call_state);
   if (!iree_status_is_ok(status)) {
@@ -874,15 +860,6 @@ iree_status_t invoke_callback(void* user_data, iree_loop_t loop,
 
   return status;
 }
-
-// TODO(scotttodd): return a Promise that resolves
-//   ... with the output string?
-//   ... with nothing (then query for output data?)
-// create wait handle, return the Promise
-//   set the wait primitive to resolve? can't pass a value via iree_event_set?
-// receive a function to call when complete? Promise API would be cleaner
-// internal implementation so could just call a function with "" or real data
-// or pass sucess/failure functions to call
 
 const bool call_function(
     iree_program_state_t* program_state, const char* function_name,

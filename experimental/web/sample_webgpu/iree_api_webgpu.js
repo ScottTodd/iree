@@ -46,6 +46,7 @@ async function ireeUnloadProgram(programState) {
 // Resolves with a parsed JSON object on success:
 // {
 //   "invoke_time_ms": [number],
+//   "readback_time_ms": [number],
 //   "outputs": [semicolon delimited list of formatted outputs]
 // }
 async function ireeCallFunction(
@@ -202,35 +203,21 @@ function _ireeCallFunction(programState, functionName, inputs) {
         'Expected \'inputs\' to be a String or an array of Strings');
   }
 
-  const completionCallbackFunction = addFunction((resultPtr) => {
-    // Receive as a pointer, convert, then free. This avoids a memory leak, see
-    // https://github.com/emscripten-core/emscripten/issues/6484
-    if (resultPtr === 0) {
-      console.error('result === 0, check for errors');
-      // reject();
-      return;
+  return new Promise((resolve, reject) => {
+    const completionCallbackFunction = addFunction((resultPtr) => {
+      if (resultPtr === 0) {
+        reject('Error from callback when calling function');
+      }
+
+      const resultStr = Module.UTF8ToString(resultPtr);
+      Module._free(resultPtr);
+      resolve(JSON.parse(resultStr));
+    }, 'vi');
+
+    const immediateResult = wasmCallFunctionFn(
+        programState, functionName, inputsJoined, completionCallbackFunction);
+    if (!immediateResult) {
+      reject('Immediate error calling function');
     }
-
-    const resultStr = Module.UTF8ToString(resultPtr);
-    Module._free(resultPtr);
-    const resultObject = JSON.parse(resultStr);
-    console.log('Result:');
-    console.log(resultObject);
-    // return Promise.resolve(JSON.parse(returnValue));
-  }, 'vi');
-
-  // Synchronous success/fail status. Real output will come async.
-  const result = wasmCallFunctionFn(
-      programState, functionName, inputsJoined, completionCallbackFunction);
-
-  if (result) {
-    console.log('Call succeeded, waiting for result...');
-    // TODO(scotttodd): return a Promise that resolves with the result
-    return Promise.resolve({
-      'invoke_time_ms': 0,
-      'outputs': '',
-    });
-  } else {
-    return Promise.reject('Wasm module error calling function');
-  }
+  });
 }
