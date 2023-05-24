@@ -721,6 +721,7 @@ static iree_status_t process_call_outputs(
     wait_sources[i] = iree_event_await(&call_state->readback_events[i]);
   }
 
+  // TODO(scotttodd): debugging assert... check that pointers handle index > 0
   fprintf(stderr, "  buffer_count: %d\n", (int)buffer_count);
 
   // Loop through the outputs again to build a batched transfer command buffer.
@@ -738,7 +739,7 @@ static iree_status_t process_call_outputs(
     iree_device_size_t target_offset = 0;
     iree_device_size_t data_length =
         iree_hal_buffer_view_byte_length(call_state->output_buffer_views[i]);
-    transfer_commands[buffer_index] = (iree_hal_transfer_command_t){
+    transfer_commands[buffer_index++] = (iree_hal_transfer_command_t){
         .type = IREE_HAL_TRANSFER_COMMAND_TYPE_COPY,
         .copy =
             {
@@ -749,7 +750,6 @@ static iree_status_t process_call_outputs(
                 .length = data_length,
             },
     };
-    buffer_index++;
   }
 
   // Construct and issue the transfer command buffer, then wait on it.
