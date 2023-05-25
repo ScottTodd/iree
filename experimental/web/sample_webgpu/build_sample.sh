@@ -64,9 +64,9 @@ compile_sample() {
 # compile_sample "collatz"        "${ROOT_DIR?}/tests/e2e/models/collatz.mlir"
 
 # Slow, so just run on demand
-# compile_sample "mobilebert" "tosa" "D:/dev/projects/iree-data/models/2022_10_28/mobilebertsquad.tflite.mlir"
-# compile_sample "posenet"    "tosa" "D:/dev/projects/iree-data/models/2022_10_28/posenet.tflite.mlir"
-# compile_sample "mobilessd"  "tosa" "D:/dev/projects/iree-data/models/2022_10_28/mobile_ssd_v2_float_coco.tflite.mlir"
+# compile_sample "mobilebert" "tosa" "D:/dev/projects/iree-data/models/2023_05_25/MobileBertSquad_fp32.mlir"
+# compile_sample "posenet"    "tosa" "D:/dev/projects/iree-data/models/2023_05_25/Posenet_fp32.mlir"
+# compile_sample "mobilessd"  "tosa" "D:/dev/projects/iree-data/models/2023_05_25/MobileSSD_fp32.mlir"
 
 ###############################################################################
 # Build the web artifacts using Emscripten                                    #
