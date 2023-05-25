@@ -139,8 +139,12 @@ typedef struct iree_call_function_state_t {
   iree_time_t readback_start_time;
   iree_time_t readback_end_time;
 
+  // Sticky status for the first async error.
+  // If this is not ok, treat all output buffer mappings as having errored and
+  // issue the callback with a failure message.
+  iree_status_t async_status;
+
   // Output processing state.
-  iree_status_t async_status;  // sticky status for the first async error
   iree_host_size_t outputs_size;
   iree_output_state_t* output_states;
 } iree_call_function_state_t;
