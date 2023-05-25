@@ -56,9 +56,9 @@ compile_sample() {
     --o ${BINARY_DIR}/$1_webgpu.vmfb
 }
 
-compile_sample "simple_abs"       "none" "${ROOT_DIR?}/samples/models/simple_abs.mlir"
-compile_sample "multiple_results" "none" "${SOURCE_DIR?}/multiple_results.mlir"
-compile_sample "fullyconnected"   "mhlo" "${ROOT_DIR?}/tests/e2e/models/fullyconnected.mlir"
+# compile_sample "simple_abs"       "none" "${ROOT_DIR?}/samples/models/simple_abs.mlir"
+# compile_sample "multiple_results" "none" "${SOURCE_DIR?}/multiple_results.mlir"
+# compile_sample "fullyconnected"   "mhlo" "${ROOT_DIR?}/tests/e2e/models/fullyconnected.mlir"
 
 # Does not run yet (uses internal readback, which needs async buffer mapping?)
 # compile_sample "collatz"        "${ROOT_DIR?}/tests/e2e/models/collatz.mlir"

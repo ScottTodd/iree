@@ -133,6 +133,7 @@ typedef struct iree_call_function_state_t {
   // Readback state.
   iree_status_t readback_status;  // sticky status for the first async error
   iree_host_size_t outputs_size;
+  // TODO(scotttodd): move ready_event into iree_output_state_t
   iree_event_t* readback_events;                         // one per output
   iree_output_buffer_state_t* output_buffer_states;      // sparse
 } iree_call_function_state_t;
@@ -656,6 +657,8 @@ static iree_status_t allocate_mappable_device_buffer(
                             "unable to allocate buffer of size %" PRIdsz,
                             data_length);
   }
+  fprintf(stderr, "      device_buffer_handle: %d\n",
+          (int)device_buffer_handle);
   const iree_hal_buffer_params_t target_params = {
       .usage = IREE_HAL_BUFFER_USAGE_TRANSFER | IREE_HAL_BUFFER_USAGE_MAPPING,
       .type =
@@ -707,19 +710,29 @@ static iree_status_t process_call_outputs(
         "variant %" PRIhsz " not present", i);
 
     if (iree_vm_variant_is_ref(variant)) {
-      fprintf(stderr, "  [%" PRIhsz "]: ref\n", i);
       if (!iree_hal_buffer_view_isa(variant.ref)) {
         return iree_make_status(IREE_STATUS_UNIMPLEMENTED,
                                 "only buffer_view variants are supported");
       }
+      fprintf(stderr, "  output[%" PRIhsz "]: buffer, prepare mapping\n", i);
 
       // Output is a buffer_view ref, add to readback batch (async).
       iree_event_initialize(false, &call_state->readback_events[i]);
       buffer_count++;
       iree_hal_buffer_view_t* buffer_view =
           iree_hal_buffer_view_deref(variant.ref);
+
+      iree_hal_buffer_t* output_buffer =
+          iree_hal_buffer_view_buffer(buffer_view);
+      WGPUBuffer output_buffer_handle =
+          iree_hal_webgpu_buffer_handle(output_buffer);
+      fprintf(stderr, "    iree_hal_buffer_t: %d\n", (int)output_buffer);
+      fprintf(stderr, "    WGPUBuffer: %d\n", (int)output_buffer_handle);
+      fprintf(stderr, "    iree_hal_buffer_view_t: %d\n", (int)buffer_view);
+
       call_state->output_buffer_states[i].buffer_view = buffer_view;
       iree_hal_buffer_view_retain(buffer_view);
+
       // TODO(scotttodd): signal event if failed
       IREE_RETURN_IF_ERROR(allocate_mappable_device_buffer(
           device, buffer_view,
@@ -743,6 +756,7 @@ static iree_status_t process_call_outputs(
     iree_hal_buffer_view_t* buffer_view =
         call_state->output_buffer_states[i].buffer_view;
     if (!buffer_view) continue;
+    fprintf(stderr, "  output[%" PRIhsz "]: buffer, add transfer command\n", i);
 
     iree_hal_buffer_t* source_buffer = iree_hal_buffer_view_buffer(buffer_view);
     iree_device_size_t data_offset = iree_hal_buffer_byte_offset(source_buffer);
@@ -751,6 +765,29 @@ static iree_status_t process_call_outputs(
     iree_device_size_t target_offset = 0;
     iree_device_size_t data_length =
         iree_hal_buffer_view_byte_length(buffer_view);
+
+    WGPUBuffer source_buffer_handle =
+        iree_hal_webgpu_buffer_handle(source_buffer);
+    WGPUBuffer target_buffer_handle =
+        iree_hal_webgpu_buffer_handle(target_buffer);
+    fprintf(stderr, "    iree_hal_buffer_view_t: %d\n", (int)buffer_view);
+    fprintf(stderr, "    source WGPUBuffer: %d\n", (int)source_buffer_handle);
+    fprintf(stderr, "    target WGPUBuffer: %d\n", (int)target_buffer_handle);
+
+    // simple_abs:
+    // iree_api_webgpu.js:77 (C)   source_buffer_handle: 3
+    // iree_api_webgpu.js:77 (C)   target_buffer_handle: 4
+    //
+    // fully_connected:
+    // iree_api_webgpu.js:77 (C)   source_buffer_handle: 4
+    // iree_api_webgpu.js:77 (C)   target_buffer_handle: 6
+    //
+    // multiple_results:
+    // iree_api_webgpu.js:77 (C)   source_buffer_handle: 43
+    // iree_api_webgpu.js:77 (C)   target_buffer_handle: 5
+    // iree_api_webgpu.js:77 (C)   source_buffer_handle: 3897
+    // iree_api_webgpu.js:77 (C)   target_buffer_handle: 6
+
     transfer_commands[buffer_index++] = (iree_hal_transfer_command_t){
         .type = IREE_HAL_TRANSFER_COMMAND_TYPE_COPY,
         .copy =

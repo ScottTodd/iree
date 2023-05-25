@@ -60,6 +60,9 @@ iree_status_t iree_hal_webgpu_buffer_wrap(
     *out_buffer = &buffer->base;
   }
 
+  fprintf(stdout, "iree_hal_webgpu_buffer_wrap, handle: %d, buffer: %d\n",
+          (int)handle, (int)*out_buffer);
+
   IREE_TRACE_ZONE_END(z0);
   return status;
 }
