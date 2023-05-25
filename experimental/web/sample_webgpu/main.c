@@ -81,8 +81,17 @@ typedef struct iree_program_state_t {
   iree_vm_module_t* module;
 } iree_program_state_t;
 
-// An output buffer in the process of being mapped from device to host memory.
-typedef struct iree_output_buffer_state_t {
+// State for an output from a function call.
+//
+// If the output is a buffer, optional fields are used to track asynchronous
+// mapping from device memory to host memory.
+typedef struct iree_output_state_t {
+  // Event that will be signaled when the output is ready to access on the host.
+  // * For non-buffer outputs, this will start signaled.
+  // * For buffer outputs, this will be signaled when _either_
+  //   |mapped_host_buffer| points to the output data _or_ mapping failed.
+  iree_event_t ready_event;
+
   // The original buffer_view from the call output, if the output is a buffer.
   // Not guaranteed to reference mappable memory.
   iree_hal_buffer_view_t* buffer_view;
@@ -96,7 +105,7 @@ typedef struct iree_output_buffer_state_t {
   // will be wrapped into this buffer.
   // Note: to recover the original shape, use iree_hal_buffer_view_create_like.
   iree_hal_buffer_t* mapped_host_buffer;
-} iree_output_buffer_state_t;
+} iree_output_state_t;
 
 // TODO(scotttodd): explain the flow, state tracking, error handling
 //
@@ -130,37 +139,28 @@ typedef struct iree_call_function_state_t {
   iree_time_t readback_start_time;
   iree_time_t readback_end_time;
 
-  // Readback state.
-  iree_status_t readback_status;  // sticky status for the first async error
+  // Output processing state.
+  iree_status_t async_status;  // sticky status for the first async error
   iree_host_size_t outputs_size;
-  // TODO(scotttodd): move ready_event into iree_output_state_t
-  iree_event_t* readback_events;                         // one per output
-  iree_output_buffer_state_t* output_buffer_states;      // sparse
+  iree_output_state_t* output_states;
 } iree_call_function_state_t;
 
 static void iree_call_function_state_destroy(
     iree_call_function_state_t* call_state) {
   fprintf(stderr, "iree_call_function_state_destroy()\n");
 
-  // Readback state.
+  // Output processing state.
   for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
-    if (call_state->output_buffer_states[i].buffer_view) {
+    if (call_state->output_states[i].buffer_view) {
+      iree_hal_buffer_release(call_state->output_states[i].mapped_host_buffer);
       iree_hal_buffer_release(
-          call_state->output_buffer_states[i].mapped_host_buffer);
-      iree_hal_buffer_release(
-          call_state->output_buffer_states[i].mappable_device_buffer);
-      iree_hal_buffer_view_release(
-          call_state->output_buffer_states[i].buffer_view);
+          call_state->output_states[i].mappable_device_buffer);
+      iree_hal_buffer_view_release(call_state->output_states[i].buffer_view);
     }
+    iree_event_deinitialize(&call_state->output_states[i].ready_event);
   }
-  iree_allocator_free(iree_allocator_system(),
-                      call_state->output_buffer_states);
-  for (iree_host_size_t i = 0; i < call_state->outputs_size; ++i) {
-    iree_event_deinitialize(&call_state->readback_events[i]);
-  }
-  iree_allocator_free(iree_allocator_system(), call_state->readback_events);
-
-  iree_status_free(call_state->readback_status);
+  iree_allocator_free(iree_allocator_system(), call_state->output_states);
+  iree_status_free(call_state->async_status);
 
   // Invoke state.
   iree_allocator_free(iree_allocator_system(), call_state->invoke_state);
@@ -407,13 +407,11 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
       (iree_buffer_map_userdata_t*)userdata_ptr;
   iree_host_size_t buffer_index = userdata->buffer_index;
   iree_hal_buffer_view_t* output_buffer_view =
-      userdata->call_state->output_buffer_states[buffer_index].buffer_view;
+      userdata->call_state->output_states[buffer_index].buffer_view;
   iree_hal_buffer_t* mappable_device_buffer =
-      userdata->call_state->output_buffer_states[buffer_index]
-          .mappable_device_buffer;
+      userdata->call_state->output_states[buffer_index].mappable_device_buffer;
   iree_hal_buffer_t** mapped_host_buffer_ptr =
-      &userdata->call_state->output_buffer_states[buffer_index]
-           .mapped_host_buffer;
+      &userdata->call_state->output_states[buffer_index].mapped_host_buffer;
 
   switch (map_status) {
     case WGPUBufferMapAsyncStatus_Success:
@@ -431,8 +429,9 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
   }
 
   if (map_status != WGPUBufferMapAsyncStatus_Success) {
-    // TODO(scotttodd): set userdata->call_state->readback_status if unset
-    iree_event_set(&userdata->call_state->readback_events[buffer_index]);
+    // TODO(scotttodd): set userdata->call_state->async_status if unset
+    iree_event_set(
+        &userdata->call_state->output_states[buffer_index].ready_event);
     iree_allocator_free(iree_allocator_system(), userdata);
     return;
   }
@@ -475,10 +474,11 @@ static void buffer_map_async_callback(WGPUBufferMapAsyncStatus map_status,
     fprintf(stderr, "buffer_map_async_callback error:\n");
     iree_status_fprint(stderr, status);
     iree_status_free(status);
-    // TODO(scotttodd): set userdata->call_state->readback_status if unset
+    // TODO(scotttodd): set userdata->call_state->async_status if unset
   }
 
-  iree_event_set(&userdata->call_state->readback_events[buffer_index]);
+  iree_event_set(
+      &userdata->call_state->output_states[buffer_index].ready_event);
   iree_allocator_free(iree_allocator_system(), userdata);
 }
 
@@ -536,9 +536,9 @@ static iree_status_t print_outputs_from_call(
       // Interpret the mapped buffer in the same format as the output view.
       iree_hal_buffer_view_t* heap_buffer_view = NULL;
       IREE_RETURN_IF_ERROR(iree_hal_buffer_view_create_like(
-          call_state->output_buffer_states[i].mapped_host_buffer,
-          call_state->output_buffer_states[i].buffer_view,
-          iree_allocator_system(), &heap_buffer_view));
+          call_state->output_states[i].mapped_host_buffer,
+          call_state->output_states[i].buffer_view, iree_allocator_system(),
+          &heap_buffer_view));
       // Query total length (excluding NUL terminator).
       iree_host_size_t result_length = 0;
       iree_status_t status = iree_hal_buffer_view_format(
@@ -686,16 +686,9 @@ static iree_status_t process_call_outputs(
   iree_hal_device_t* device =
       iree_runtime_session_device(call_state->call.session);
 
-  // Allocate lists. Note: empty object contents, may be sparse.
   IREE_RETURN_IF_ERROR(iree_allocator_malloc(
-      iree_allocator_system(), sizeof(iree_event_t) * outputs_size,
-      (void**)&call_state->readback_events));
-  IREE_RETURN_IF_ERROR(
-      iree_allocator_malloc(iree_allocator_system(),
-                            sizeof(iree_output_buffer_state_t) * outputs_size,
-                            (void**)&call_state->output_buffer_states));
-  // Note: setting the size after mallocs so the destroy() function doesn't try
-  // to release from uninitialized memory if allocation failed.
+      iree_allocator_system(), sizeof(iree_output_state_t) * outputs_size,
+      (void**)&call_state->output_states));
   call_state->outputs_size = outputs_size;
 
   iree_wait_source_t* wait_sources = (iree_wait_source_t*)iree_alloca(
@@ -716,8 +709,8 @@ static iree_status_t process_call_outputs(
       }
       fprintf(stderr, "  output[%" PRIhsz "]: buffer, prepare mapping\n", i);
 
-      // Output is a buffer_view ref, add to readback batch (async).
-      iree_event_initialize(false, &call_state->readback_events[i]);
+      // Output is a buffer_view ref, add to mapping batch (async).
+      iree_event_initialize(false, &call_state->output_states[i].ready_event);
       buffer_count++;
       iree_hal_buffer_view_t* buffer_view =
           iree_hal_buffer_view_deref(variant.ref);
@@ -730,19 +723,20 @@ static iree_status_t process_call_outputs(
       fprintf(stderr, "    WGPUBuffer: %d\n", (int)output_buffer_handle);
       fprintf(stderr, "    iree_hal_buffer_view_t: %d\n", (int)buffer_view);
 
-      call_state->output_buffer_states[i].buffer_view = buffer_view;
+      call_state->output_states[i].buffer_view = buffer_view;
       iree_hal_buffer_view_retain(buffer_view);
 
       // TODO(scotttodd): signal event if failed
       IREE_RETURN_IF_ERROR(allocate_mappable_device_buffer(
           device, buffer_view,
-          &call_state->output_buffer_states[i].mappable_device_buffer));
+          &call_state->output_states[i].mappable_device_buffer));
     } else {
       // Not a buffer, data is available immediately - start signaled.
       fprintf(stderr, "  [%" PRIhsz "]: other\n", i);
-      iree_event_initialize(true, &call_state->readback_events[i]);
+      iree_event_initialize(true, &call_state->output_states[i].ready_event);
     }
-    wait_sources[i] = iree_event_await(&call_state->readback_events[i]);
+    wait_sources[i] =
+        iree_event_await(&call_state->output_states[i].ready_event);
   }
 
   // TODO(scotttodd): debugging assert... check that pointers handle index > 0
@@ -754,14 +748,14 @@ static iree_status_t process_call_outputs(
           sizeof(iree_hal_transfer_command_t) * buffer_count);
   for (iree_host_size_t i = 0, buffer_index = 0; i < outputs_size; ++i) {
     iree_hal_buffer_view_t* buffer_view =
-        call_state->output_buffer_states[i].buffer_view;
+        call_state->output_states[i].buffer_view;
     if (!buffer_view) continue;
     fprintf(stderr, "  output[%" PRIhsz "]: buffer, add transfer command\n", i);
 
     iree_hal_buffer_t* source_buffer = iree_hal_buffer_view_buffer(buffer_view);
     iree_device_size_t data_offset = iree_hal_buffer_byte_offset(source_buffer);
     iree_hal_buffer_t* target_buffer =
-        call_state->output_buffer_states[i].mappable_device_buffer;
+        call_state->output_states[i].mappable_device_buffer;
     iree_device_size_t target_offset = 0;
     iree_device_size_t data_length =
         iree_hal_buffer_view_byte_length(buffer_view);
@@ -842,7 +836,7 @@ static iree_status_t process_call_outputs(
   // Loop through one last time to map the buffers asynchronously.
   for (iree_host_size_t i = 0; i < outputs_size; ++i) {
     if (!iree_status_is_ok(status)) break;
-    if (!call_state->output_buffer_states[i].mappable_device_buffer) continue;
+    if (!call_state->output_states[i].mappable_device_buffer) continue;
 
     fprintf(stderr, "    [%d]\n", (int)i);
     iree_buffer_map_userdata_t* map_userdata = NULL;
@@ -853,10 +847,10 @@ static iree_status_t process_call_outputs(
     map_userdata->call_state = call_state;
     map_userdata->buffer_index = i;
     iree_device_size_t data_length = iree_hal_buffer_view_byte_length(
-        call_state->output_buffer_states[i].buffer_view);
+        call_state->output_states[i].buffer_view);
 
     WGPUBuffer device_buffer = iree_hal_webgpu_buffer_handle(
-        call_state->output_buffer_states[i].mappable_device_buffer);
+        call_state->output_states[i].mappable_device_buffer);
     wgpuBufferMapAsync(device_buffer, WGPUMapMode_Read,
                        /*offset=*/0,
                        /*size=*/data_length, buffer_map_async_callback,
