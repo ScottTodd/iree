@@ -97,6 +97,7 @@ class MnistTrainTest(unittest.TestCase):
 
   def test_mnist_training(self):
     with tempfile.TemporaryDirectory() as tmp_dir:
+      # TODO: flag to run on local files instead of downloading
       archive_path = os.path.join(tmp_dir, "mnist_train.tar")
       download_test_data(archive_path)
       extract_test_data(archive_path, tmp_dir)

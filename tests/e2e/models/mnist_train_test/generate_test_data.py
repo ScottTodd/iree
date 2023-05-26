@@ -185,6 +185,7 @@ def generate_test_data(output_mlir_filepath: str, batch_filepath: str,
 
 def parse_args():
   parser = argparse.ArgumentParser()
+  # TODO: output root directory, default to somewhere in /tmp/?
   parser.add_argument("--output_mlir_filepath",
                       help="Output to the compiled IREE Jax MLIR model.",
                       type=str,
