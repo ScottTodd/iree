@@ -164,6 +164,11 @@ enum iree_arch_enum_e {
 // every load/store.
 #define IREE_MEMORY_ACCESS_ALIGNMENT_REQUIRED 1
 
+#elif defined(__EMSCRIPTEN__)
+
+#define IREE_MEMORY_ACCESS_ALIGNMENT_REQUIRED 0
+// #define IREE_MEMORY_ACCESS_ALIGNMENT_REQUIRED 1
+
 #else
 #define IREE_MEMORY_ACCESS_ALIGNMENT_REQUIRED 0
 #endif  // IREE_ARCH_*

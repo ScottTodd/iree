@@ -56,8 +56,8 @@ compile_sample() {
     --o ${BINARY_DIR}/$1_webgpu.vmfb
 }
 
-compile_sample "simple_abs"     "mhlo" "${ROOT_DIR?}/samples/models/simple_abs.mlir"
-compile_sample "fullyconnected" "mhlo" "${ROOT_DIR?}/tests/e2e/models/fullyconnected.mlir"
+# compile_sample "simple_abs"     "mhlo" "${ROOT_DIR?}/samples/models/simple_abs.mlir"
+# compile_sample "fullyconnected" "mhlo" "${ROOT_DIR?}/tests/e2e/models/fullyconnected.mlir"
 
 # Does not run yet (uses internal readback, which needs async buffer mapping?)
 # compile_sample "collatz"        "${ROOT_DIR?}/tests/e2e/models/collatz.mlir"
@@ -66,6 +66,7 @@ compile_sample "fullyconnected" "mhlo" "${ROOT_DIR?}/tests/e2e/models/fullyconne
 # compile_sample "mobilebert" "tosa" "D:/dev/projects/iree-data/models/2022_10_28/mobilebertsquad.tflite.mlir"
 # compile_sample "posenet"    "tosa" "D:/dev/projects/iree-data/models/2022_10_28/posenet.tflite.mlir"
 # compile_sample "mobilessd"  "tosa" "D:/dev/projects/iree-data/models/2022_10_28/mobile_ssd_v2_float_coco.tflite.mlir"
+compile_sample "mobilessd"  "tosa" "D:/dev/projects/iree-data/models/2023_05_25/DeepLabV3_fp32.mlir"
 
 ###############################################################################
 # Build the web artifacts using Emscripten                                    #
@@ -87,6 +88,7 @@ emcmake "${CMAKE_BIN?}" -G Ninja .. \
   -DIREE_HAL_DRIVER_LOCAL_TASK=OFF \
   -DIREE_HAL_DRIVER_WEBGPU=ON \
   -DIREE_ENABLE_ASAN=OFF \
+  -DIREE_ENABLE_UBSAN=OFF \
   -DIREE_BUILD_COMPILER=OFF \
   -DIREE_BUILD_TESTS=OFF
 

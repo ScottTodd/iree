@@ -37,11 +37,14 @@ target_link_options(${_NAME} PRIVATE
   "-sASSERTIONS=1"
   #
   # Programs loaded dynamically can require additional memory, so allow growth.
+  # Also needed for sanitizers.
   "-sALLOW_MEMORY_GROWTH"
   #
-  # For https://emscripten.org/docs/debugging/Sanitizers.html#address-sanitizer
+  # For https://emscripten.org/docs/debugging/Sanitizers.html
   # "-fsanitize=address"
-  # "-sALLOW_MEMORY_GROWTH"
+  # "-fsanitize=undefined"
+  #
+  # "-sSAFE_HEAP"
   #
   # https://developer.chrome.com/blog/wasm-debugging-2020/
   "-g"

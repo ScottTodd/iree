@@ -55,6 +55,7 @@ target_link_options(${_NAME} PRIVATE
   "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
   #
   "-sASSERTIONS=1"
+  "-sSAFE_HEAP"
   #
   # https://developer.chrome.com/blog/wasm-debugging-2020/
   "-g"
@@ -100,6 +101,7 @@ target_link_options(${_NAME} PRIVATE
   "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
   #
   "-sASSERTIONS=1"
+  "-sSAFE_HEAP"
   #
   # https://developer.chrome.com/blog/wasm-debugging-2020/
   "-g"

@@ -45,6 +45,9 @@ target_link_options(${_NAME} PRIVATE
   # Programs loaded dynamically can require additional memory, so allow growth.
   "-sALLOW_MEMORY_GROWTH"
   #
+  # "-fsanitize=undefined"
+  "-sSAFE_HEAP"
+  #
   # https://developer.chrome.com/blog/wasm-debugging-2020/
   "-g"
   "-gseparate-dwarf"
