@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://openxla.github.io/iree/getting-started/jax/">
+        <link rel="canonical" href="https://openxla.github.io/iree/blog/2023-06-06-tour/">
       
       
-        <link rel="prev" href="../tflite/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../pytorch/">
+        <link rel="next" href="../2021-10-15-cuda-backend/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
-        <title>JAX - IREE</title>
+        <title>A tour through IREE - IREE</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#jax-integration" class="md-skip">
+        <a href="#a-tour-through-iree" class="md-skip">
           Skip to content
         </a>
       
@@ -157,7 +157,7 @@
         <div data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              JAX
+              A tour through IREE
             
           </span>
         </div>
@@ -387,18 +387,16 @@
 
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
       
       
         
@@ -419,7 +417,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../">Getting Started</a>
+          <a href="../../getting-started/">Getting Started</a>
           
             <label for="__nav_2">
               <span class="md-nav__icon md-icon"></span>
@@ -427,7 +425,7 @@
           
         </div>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           Getting Started
@@ -442,7 +440,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tensorflow/" class="md-nav__link">
+      <a href="../../getting-started/tensorflow/" class="md-nav__link">
         TensorFlow
       </a>
     </li>
@@ -456,7 +454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tflite/" class="md-nav__link">
+      <a href="../../getting-started/tflite/" class="md-nav__link">
         TensorFlow Lite
       </a>
     </li>
@@ -468,21 +466,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../getting-started/jax/" class="md-nav__link">
         JAX
       </a>
-      
     </li>
   
 
@@ -494,7 +482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pytorch/" class="md-nav__link">
+      <a href="../../getting-started/pytorch/" class="md-nav__link">
         PyTorch
       </a>
     </li>
@@ -890,16 +878,18 @@
 
   
   
+    
+  
   
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
       
       
         
@@ -920,7 +910,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../blog/">Blog</a>
+          <a href="../">Blog</a>
           
             <label for="__nav_7">
               <span class="md-nav__icon md-icon"></span>
@@ -928,7 +918,7 @@
           
         </div>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           Blog
@@ -941,11 +931,79 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../blog/2023-06-06-tour/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          A tour through IREE
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         A tour through IREE
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-programs-with-iree-compile" class="md-nav__link">
+    Compiling programs with iree-compile
+  </a>
+  
+    <nav class="md-nav" aria-label="Compiling programs with iree-compile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#picking-a-compiler-target" class="md-nav__link">
+    Picking a compiler target
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-compiler-outputs" class="md-nav__link">
+    Inspecting compiler outputs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-compiled-modules-with-iree-run-module" class="md-nav__link">
+    Running compiled modules with iree-run-module
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -957,7 +1015,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/2021-10-15-cuda-backend/" class="md-nav__link">
+      <a href="../2021-10-15-cuda-backend/" class="md-nav__link">
         CUDA backend
       </a>
     </li>
@@ -971,7 +1029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/2021-10-13-mmt4d/" class="md-nav__link">
+      <a href="../2021-10-13-mmt4d/" class="md-nav__link">
         Work in progress on Matrix Multiplication on CPU
       </a>
     </li>
@@ -985,7 +1043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/2021-07-19-tflite-tosa/" class="md-nav__link">
+      <a href="../2021-07-19-tflite-tosa/" class="md-nav__link">
         TFLite Support via TOSA
       </a>
     </li>
@@ -1137,6 +1195,48 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-programs-with-iree-compile" class="md-nav__link">
+    Compiling programs with iree-compile
+  </a>
+  
+    <nav class="md-nav" aria-label="Compiling programs with iree-compile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#picking-a-compiler-target" class="md-nav__link">
+    Picking a compiler target
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-compiler-outputs" class="md-nav__link">
+    Inspecting compiler outputs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-compiled-modules-with-iree-run-module" class="md-nav__link">
+    Running compiled modules with iree-run-module
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1153,25 +1253,306 @@
   
 
 
-<h1 id="jax-integration">JAX Integration<a class="headerlink" href="#jax-integration" title="Permanent link">link</a></h1>
+<p>Tuesday, June 6, 2023<br>
+By Scott Todd</p>
+<h1 id="a-tour-through-iree">A tour through IREE<a class="headerlink" href="#a-tour-through-iree" title="Permanent link">link</a></h1>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>IREE's JAX support is under active development. This page is still under
-construction.</p>
+<div class="highlight"><pre><span></span><code>Planning notes
+
+Key: [ ] not started; [-] started; [x] finished
+
+[ ] matmul.mlir (or some other program) from Python
+[x] List backend targets
+[x] Compile for each
+[-] Dump sources (content tabs for each target)
+[ ] Inspect .vmfb
+[x] Execute with runtime
+[x] List devices
+[ ] Profile / benchmark
+</code></pre></div>
 </div>
-<p>IREE offers two ways to interface with <a href="https://github.com/google/jax">JAX</a>
-programs:</p>
-<ul>
-<li>An API for extracting and compiling full models ahead of time (AOT) for
-  execution apart from JAX. This API is being developed in the
-  <a href="https://github.com/iree-org/iree-jax">iree-org/iree-jax repository</a>.</li>
-<li>A PJRT plugin that adapts IREE as a native JAX backend for online / just in
-  time (JIT) use. This plugin is being developed in the
-  <a href="https://github.com/openxla/openxla-pjrt-plugin">openxla/openxla-pjrt-plugin repository</a>.</li>
-</ul>
-<!-- TODO: Expand on interface differences -->
-<!-- TODO: Add quickstart instructions -->
-<!-- TODO: Link to samples -->
+<h2 id="compiling-programs-with-iree-compile">Compiling programs with <code>iree-compile</code><a class="headerlink" href="#compiling-programs-with-iree-compile" title="Permanent link">link</a></h2>
+<h3 id="picking-a-compiler-target">Picking a compiler target<a class="headerlink" href="#picking-a-compiler-target" title="Permanent link">link</a></h3>
+<p>See which compiler target backends are available:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-compile<span class="w"> </span>--iree-hal-list-target-backends
+
+<span class="go">  Registered target backends:</span>
+<span class="go">    llvm-cpu</span>
+<span class="go">    metal</span>
+<span class="go">    metal-spirv</span>
+<span class="go">    vmvx</span>
+<span class="go">    vmvx-inline</span>
+<span class="go">    vulkan</span>
+<span class="go">    vulkan-spirv</span>
+</code></pre></div>
+<details class="tip" open="open">
+<summary>Tip - Target options</summary>
+<p>Each target backend can provide it's own set of options. For example, the
+<code>llvm-cpu</code> backend can generate code for multiple CPU architectures with
+different CPU features.</p>
+<p>The compiler can usually pick appropriate defaults for the machine where it
+is running, but you'll often want to compile on one machine and then deploy
+on another device or set of devices.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">CPU</label><label for="__tabbed_1_2">GPU - Vulkan</label><label for="__tabbed_1_3">GPU - CUDA</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>For the full list of options:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-compile<span class="w"> </span>--help<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>llvmcpu
+</code></pre></div>
+<p>See which targets the <code>llvm-cpu</code> compiler target backend can generate
+code for:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-compile<span class="w"> </span>--iree-llvmcpu-list-targets
+
+<span class="go">  Registered Targets:</span>
+<span class="go">    aarch64    - AArch64 (little endian)</span>
+<span class="go">    aarch64_32 - AArch64 (little endian ILP32)</span>
+<span class="go">    aarch64_be - AArch64 (big endian)</span>
+<span class="go">    arm        - ARM</span>
+<span class="go">    arm64      - ARM64 (little endian)</span>
+<span class="go">    arm64_32   - ARM64 (little endian ILP32)</span>
+<span class="go">    armeb      - ARM (big endian)</span>
+<span class="go">    riscv32    - 32-bit RISC-V</span>
+<span class="go">    riscv64    - 64-bit RISC-V</span>
+<span class="go">    thumb      - Thumb</span>
+<span class="go">    thumbeb    - Thumb (big endian)</span>
+<span class="go">    wasm32     - WebAssembly 32-bit</span>
+<span class="go">    wasm64     - WebAssembly 64-bit</span>
+<span class="go">    x86        - 32-bit X86: Pentium-Pro and above</span>
+<span class="go">    x86-64     - 64-bit X86: EM64T and AMD64</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>For the full list of options:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-compile<span class="w"> </span>--help<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>vulkan
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>For the full list of options:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-compile<span class="w"> </span>--help<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>cuda
+</code></pre></div>
+</div>
+</div>
+</div>
+</details>
+<div class="admonition info inline end">
+<p class="admonition-title">Python bindings</p>
+<p>If you are using the Python bindings, these options can be passed via the
+<code>extra_args=["--flag"]</code> argument.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">CPU</label><label for="__tabbed_2_2">GPU - Vulkan</label><label for="__tabbed_2_3">GPU - CUDA</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-compile<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-hal-target-backends<span class="o">=</span>llvm-cpu<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-llvmcpu-target-cpu<span class="o">=</span>host<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-llvmcpu-target-cpu-features<span class="o">=</span>host<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>linear.mlir<span class="w"> </span>-o<span class="w"> </span>linear_cpu.vmfb
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-compile<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-hal-target-backends<span class="o">=</span>vulkan-spirv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-vulkan-target-triple<span class="o">=</span>pascal-unknown-linux<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>linear.mlir<span class="w"> </span>-o<span class="w"> </span>linear_vulkan.vmfb
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-compile<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-hal-target-backends<span class="o">=</span>cuda<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-hal-cuda-llvm-target-arch<span class="o">=</span>sm_80<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>linear.mlir<span class="w"> </span>-o<span class="w"> </span>linear_cuda.vmfb
+</code></pre></div>
+</div>
+</div>
+</div>
+<h3 id="inspecting-compiler-outputs">Inspecting compiler outputs<a class="headerlink" href="#inspecting-compiler-outputs" title="Permanent link">link</a></h3>
+<details class="example">
+<summary>Executable source MLIR</summary>
+<div class="highlight"><pre><span></span><code>hal.executable public @linear_dispatch_0 {
+  hal.executable.variant public @vulkan_spirv_fb, target = &lt;&quot;vulkan&quot;, &quot;vulkan-spirv-fb&quot;, {spirv.target_env = #spirv.target_env&lt;#spirv.vce&lt;v1.3, [Shader, GroupNonUniform], [SPV_KHR_storage_buffer_storage_class, SPV_KHR_variable_pointers]&gt;, api=Vulkan, #spirv.resource_limits&lt;max_compute_workgroup_size = [128, 128, 64], subgroup_size = 64, cooperative_matrix_properties_nv = []&gt;&gt;}&gt; {
+    hal.executable.export public @linear_dispatch_0_generic_128_f32 ordinal(0) layout(#hal.pipeline.layout&lt;push_constants = 0, sets = [&lt;0, bindings = [&lt;0, storage_buffer, ReadOnly&gt;, &lt;1, storage_buffer&gt;]&gt;]&gt;) {
+    ^bb0(%arg0: !hal.device):
+      %x, %y, %z = flow.dispatch.workgroup_count_from_slice
+      hal.return %x, %y, %z : index, index, index
+    }
+    builtin.module {
+      func.func @linear_dispatch_0_generic_128_f32() {
+        %c0 = arith.constant 0 : index
+        %cst = arith.constant 2.000000e+00 : f32
+        %cst_0 = arith.constant 3.000000e+00 : f32
+        %0 = hal.interface.binding.subspan set(0) binding(0) type(storage_buffer) alignment(64) offset(%c0) flags(ReadOnly) : !flow.dispatch.tensor&lt;readonly:tensor&lt;128xf32&gt;&gt;
+        %1 = hal.interface.binding.subspan set(0) binding(1) type(storage_buffer) alignment(64) offset(%c0) : !flow.dispatch.tensor&lt;writeonly:tensor&lt;128xf32&gt;&gt;
+        %2 = flow.dispatch.tensor.load %0, offsets = [0], sizes = [128], strides = [1] : !flow.dispatch.tensor&lt;readonly:tensor&lt;128xf32&gt;&gt; -&gt; tensor&lt;128xf32&gt;
+        %3 = tensor.empty() : tensor&lt;128xf32&gt;
+        %4 = linalg.generic {indexing_maps = [affine_map&lt;(d0) -&gt; (d0)&gt;, affine_map&lt;(d0) -&gt; (d0)&gt;], iterator_types = [&quot;parallel&quot;]} ins(%2 : tensor&lt;128xf32&gt;) outs(%3 : tensor&lt;128xf32&gt;) {
+        ^bb0(%in: f32, %out: f32):
+          %5 = arith.mulf %in, %cst : f32
+          %6 = arith.addf %5, %cst_0 : f32
+          linalg.yield %6 : f32
+        } -&gt; tensor&lt;128xf32&gt;
+        flow.dispatch.tensor.store %4, %1, offsets = [0], sizes = [128], strides = [1] : tensor&lt;128xf32&gt; -&gt; !flow.dispatch.tensor&lt;writeonly:tensor&lt;128xf32&gt;&gt;
+        return
+      }
+    }
+  }
+}
+</code></pre></div>
+</details>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">CPU</label><label for="__tabbed_3_2">GPU - Vulkan</label><label for="__tabbed_3_3">GPU - CUDA</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-compile<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-hal-target-backends<span class="o">=</span>vulkan-spirv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-vulkan-target-triple<span class="o">=</span>pascal-unknown-linux<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-hal-dump-executable-sources-to<span class="o">=</span>linear_vulkan/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-hal-dump-executable-intermediates-to<span class="o">=</span>linear_vulkan/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iree-hal-dump-executable-binaries-to<span class="o">=</span>linear_vulkan/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>linear.mlir<span class="w"> </span>-o<span class="w"> </span>linear_vulkan.vmfb
+</code></pre></div>
+<p>Use <code>spirv-dis</code> from
+<a href="https://github.com/KhronosGroup/SPIRV-Tools">SPIRV-Tools</a> to disassemble
+the binary SPIR-V into assembly language text:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spirv-dis<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>linear_vulkan/module_linear_dispatch_0_vulkan_spirv_fb.spv<span class="w"> </span>&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>linear_vulkan/module_linear_dispatch_0_vulkan_spirv_fb.spvasm
+</code></pre></div>
+<details class="example">
+<summary>SPIR-V assembly text</summary>
+<div class="highlight"><pre><span></span><code>; SPIR-V
+; Version: 1.0
+; Generator: Khronos; 22
+; Bound: 32
+; Schema: 0
+              OpCapability Shader
+              OpExtension &quot;SPV_KHR_storage_buffer_storage_class&quot;
+              OpMemoryModel Logical GLSL450
+              OpEntryPoint GLCompute %linear_dispatch_0_generic_128_f32 &quot;linear_dispatch_0_generic_128_f32&quot; %__builtin_var_WorkgroupId__ %__builtin_var_LocalInvocationId__
+              OpExecutionMode %linear_dispatch_0_generic_128_f32 LocalSize 64 1 1
+              OpName %__builtin_var_LocalInvocationId__ &quot;__builtin_var_LocalInvocationId__&quot;
+              OpName %__builtin_var_WorkgroupId__ &quot;__builtin_var_WorkgroupId__&quot;
+              OpName %__resource_var_0_0_ &quot;__resource_var_0_0_&quot;
+              OpName %__resource_var_0_1_ &quot;__resource_var_0_1_&quot;
+              OpName %linear_dispatch_0_generic_128_f32 &quot;linear_dispatch_0_generic_128_f32&quot;
+              OpDecorate %__builtin_var_LocalInvocationId__ BuiltIn LocalInvocationId
+              OpDecorate %__builtin_var_WorkgroupId__ BuiltIn WorkgroupId
+              OpDecorate %_runtimearr_float ArrayStride 4
+              OpMemberDecorate %_struct_7 0 Offset 0
+              OpDecorate %_struct_7 Block
+              OpDecorate %__resource_var_0_0_ Binding 0
+              OpDecorate %__resource_var_0_0_ DescriptorSet 0
+              OpDecorate %__resource_var_0_1_ Binding 1
+              OpDecorate %__resource_var_0_1_ DescriptorSet 0
+      %uint = OpTypeInt 32 0
+    %v3uint = OpTypeVector %uint 3
+%_ptr_Input_v3uint = OpTypePointer Input %v3uint
+%__builtin_var_LocalInvocationId__ = OpVariable %_ptr_Input_v3uint Input
+%__builtin_var_WorkgroupId__ = OpVariable %_ptr_Input_v3uint Input
+      %float = OpTypeFloat 32
+%_runtimearr_float = OpTypeRuntimeArray %float
+  %_struct_7 = OpTypeStruct %_runtimearr_float
+%_ptr_StorageBuffer__struct_7 = OpTypePointer StorageBuffer %_struct_7
+%__resource_var_0_0_ = OpVariable %_ptr_StorageBuffer__struct_7 StorageBuffer
+%__resource_var_0_1_ = OpVariable %_ptr_StorageBuffer__struct_7 StorageBuffer
+      %void = OpTypeVoid
+        %12 = OpTypeFunction %void
+    %uint_64 = OpConstant %uint 64
+    %uint_0 = OpConstant %uint 0
+    %float_2 = OpConstant %float 2
+    %float_3 = OpConstant %float 3
+%_ptr_StorageBuffer_float = OpTypePointer StorageBuffer %float
+%linear_dispatch_0_generic_128_f32 = OpFunction %void None %12
+        %15 = OpLabel
+        %20 = OpLoad %v3uint %__builtin_var_WorkgroupId__
+        %21 = OpCompositeExtract %uint %20 0
+        %22 = OpLoad %v3uint %__builtin_var_LocalInvocationId__
+        %23 = OpCompositeExtract %uint %22 0
+        %24 = OpIMul %uint %21 %uint_64
+        %25 = OpIAdd %uint %23 %24
+        %27 = OpAccessChain %_ptr_StorageBuffer_float %__resource_var_0_0_ %uint_0 %25
+        %28 = OpLoad %float %27
+        %29 = OpFMul %float %28 %float_2
+        %30 = OpFAdd %float %29 %float_3
+        %31 = OpAccessChain %_ptr_StorageBuffer_float %__resource_var_0_1_ %uint_0 %25
+              OpStore %31 %30
+              OpReturn
+              OpFunctionEnd
+</code></pre></div>
+</details>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
+</div>
+</div>
+<h2 id="running-compiled-modules-with-iree-run-module">Running compiled modules with <code>iree-run-module</code><a class="headerlink" href="#running-compiled-modules-with-iree-run-module" title="Permanent link">link</a></h2>
+<p>See which drivers are compiled into the runtime binary:
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-run-module<span class="w"> </span>--list_drivers
+
+<span class="go">        cuda: CUDA (dynamic)</span>
+<span class="go">  local-sync: Local execution using a lightweight inline synchronous queue</span>
+<span class="go">  local-task: Local execution using the IREE multithreading task system</span>
+<span class="go">      vulkan: Vulkan 1.x (dynamic)</span>
+</code></pre></div></p>
+<p>Check which devices are available on this machine:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-run-module<span class="w"> </span>--list_devices
+
+<span class="go">  cuda://GPU-00000000-1111-2222-3333-444444444444</span>
+<span class="go">  local-sync://</span>
+<span class="go">  local-task://</span>
+<span class="go">  vulkan://00000000-1111-2222-3333-444444444444</span>
+</code></pre></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">CPU</label><label for="__tabbed_4_2">GPU - Vulkan</label><label for="__tabbed_4_3">GPU - CUDA</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-run-module<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--device<span class="o">=</span>local-task<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--module<span class="o">=</span>linear_cpu.vmfb<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="o">=</span>4x32xf32
+
+<span class="go">  EXEC @linear</span>
+<span class="go">  result[0]: hal.buffer_view</span>
+<span class="go">  4x32xf32=</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-run-module<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--device<span class="o">=</span>vulkan<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--module<span class="o">=</span>linear_vulkan.vmfb<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="o">=</span>4x32xf32
+
+<span class="go">  EXEC @linear</span>
+<span class="go">  result[0]: hal.buffer_view</span>
+<span class="go">  4x32xf32=</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-run-module<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--device<span class="o">=</span>cuda<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--module<span class="o">=</span>linear_cuda.vmfb<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="o">=</span>4x32xf32
+
+<span class="go">  EXEC @linear</span>
+<span class="go">  result[0]: hal.buffer_view</span>
+<span class="go">  4x32xf32=</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+<span class="go">    [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 
 
 
