@@ -8,23 +8,25 @@
       
       
       
-        <link rel="canonical" href="https://openxla.github.io/iree/blog/2021-09-21-evaluating-iree/">
+        <link rel="canonical" href="https://openxla.github.io/iree/community/blog/2021-07-19-tflite-tosa/">
       
       
+        <link rel="prev" href="../2021-10-13-mmt4d/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
-        <title>Evaluating IREE - IREE</title>
+        <title>TFLite Support via TOSA - IREE</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -40,11 +42,11 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../../assets/stylesheets/openxla.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/openxla.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -73,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#evaluating-iree" class="md-skip">
+        <a href="#tflite-support-via-tosa" class="md-skip">
           Skip to content
         </a>
       
@@ -125,13 +127,13 @@
       data-md-component="logo"
     >
       
-  <img src="../../assets/images/openxla-logo-lockup-white.svg" alt="logo">
+  <img src="../../../assets/images/openxla-logo-lockup-white.svg" alt="logo">
 
     </a>
 
     <!-- Link to site home -->
     <a
-      href="../.."
+      href="../../.."
       title="IREE"
       class="md-header__button md-logo"
       aria-label="IREE"
@@ -153,7 +155,7 @@
         <div data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Evaluating IREE
+              TFLite Support via TOSA
             
           </span>
         </div>
@@ -222,41 +224,6 @@
 
     <!-- Button to open search modal -->
     
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-      </label>
-
-      <!-- Search interface -->
-      <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-    
 
     <!-- Repository information -->
     
@@ -282,6 +249,93 @@
       
       
         
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../building-from-source/" class="md-tabs__link">
+        Building from source
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guides/" class="md-tabs__link">
+        Guides
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../reference/" class="md-tabs__link">
+        Reference
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link md-tabs__link--active">
+        Community
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
           
         
       
@@ -318,11 +372,13 @@
 <!-- Determine class according to configuration -->
 
 
+  
+
 
 
 <!-- Main navigation -->
 <nav
-  class="md-nav md-nav--primary"
+  class="md-nav md-nav--primary md-nav--lifted"
   aria-label="Navigation"
   data-md-level="0"
 >
@@ -337,7 +393,7 @@
       data-md-component="logo"
     >
       
-  <img src="../../assets/images/openxla-logo-lockup-white.svg" alt="logo">
+  <img src="../../../assets/images/openxla-logo-lockup-white.svg" alt="logo">
 
     </a>
     <!-- Site title (nav item below links to site home) -->
@@ -370,7 +426,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -385,9 +441,7 @@
   
   
     
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
@@ -413,7 +467,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../getting-started/">Getting Started</a>
+          <a href="../../../building-from-source/">Building from source</a>
           
             <label for="__nav_2">
               <span class="md-nav__icon md-icon"></span>
@@ -423,236 +477,6 @@
       
       <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
-          <span class="md-nav__icon md-icon"></span>
-          Getting Started
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../getting-started/tensorflow/" class="md-nav__link">
-        TensorFlow
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../getting-started/tflite/" class="md-nav__link">
-        TensorFlow Lite
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../getting-started/jax/" class="md-nav__link">
-        JAX
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../getting-started/pytorch/" class="md-nav__link">
-        PyTorch
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
-      
-      
-        
-          
-            
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      
-      
-        
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../deployment-configurations/">Deployment configurations</a>
-          
-            <label for="__nav_3">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_3">
-          <span class="md-nav__icon md-icon"></span>
-          Deployment configurations
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../deployment-configurations/cpu/" class="md-nav__link">
-        CPU
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../deployment-configurations/bare-metal/" class="md-nav__link">
-        CPU - Bare-Metal
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../deployment-configurations/gpu-vulkan/" class="md-nav__link">
-        GPU - Vulkan
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../deployment-configurations/gpu-cuda-rocm/" class="md-nav__link">
-        GPU - CUDA/ROCm
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-      
-      
-        
-          
-            
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      
-      
-        
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../building-from-source/">Building from source</a>
-          
-            <label for="__nav_4">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           Building from source
         </label>
@@ -666,7 +490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../building-from-source/getting-started/" class="md-nav__link">
+      <a href="../../../building-from-source/getting-started/" class="md-nav__link">
         Getting started
       </a>
     </li>
@@ -680,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../building-from-source/android/" class="md-nav__link">
+      <a href="../../../building-from-source/android/" class="md-nav__link">
         Android cross-compilation
       </a>
     </li>
@@ -694,7 +518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../building-from-source/ios/" class="md-nav__link">
+      <a href="../../../building-from-source/ios/" class="md-nav__link">
         iOS cross-compilation
       </a>
     </li>
@@ -708,7 +532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../building-from-source/riscv/" class="md-nav__link">
+      <a href="../../../building-from-source/riscv/" class="md-nav__link">
         RISC-V cross-compilation
       </a>
     </li>
@@ -730,6 +554,51 @@
   
   
     
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/">Guides</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
       
     
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
@@ -737,7 +606,288 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/ml-frameworks/">ML frameworks</a>
+          
+            <label for="__nav_3_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          ML frameworks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/ml-frameworks/tensorflow/" class="md-nav__link">
+        TensorFlow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/ml-frameworks/tflite/" class="md-nav__link">
+        TensorFlow Lite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/ml-frameworks/jax/" class="md-nav__link">
+        JAX
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/ml-frameworks/pytorch/" class="md-nav__link">
+        PyTorch
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/deployment-configurations/">Deployment configurations</a>
+          
+            <label for="__nav_3_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Deployment configurations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/deployment-configurations/cpu/" class="md-nav__link">
+        CPU
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/deployment-configurations/bare-metal/" class="md-nav__link">
+        CPU - Bare-Metal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/deployment-configurations/gpu-vulkan/" class="md-nav__link">
+        GPU - Vulkan
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/deployment-configurations/gpu-cuda-rocm/" class="md-nav__link">
+        GPU - CUDA/ROCm
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../reference/">Reference</a>
+          
+            <label for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
       
       
         
@@ -756,18 +906,18 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../bindings/">Bindings</a>
+          <a href="../../../reference/bindings/">API bindings</a>
           
-            <label for="__nav_5">
+            <label for="__nav_4_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_5">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_2">
           <span class="md-nav__icon md-icon"></span>
-          Bindings
+          API bindings
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -779,8 +929,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bindings/c-api/" class="md-nav__link">
-        C API
+      <a href="../../../reference/bindings/c-api/" class="md-nav__link">
+        Runtime C API
       </a>
     </li>
   
@@ -793,7 +943,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bindings/python/" class="md-nav__link">
+      <a href="../../../reference/bindings/python/" class="md-nav__link">
         Python
       </a>
     </li>
@@ -807,7 +957,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bindings/tensorflow-lite/" class="md-nav__link">
+      <a href="../../../reference/bindings/tensorflow-lite/" class="md-nav__link">
         TensorFlow Lite
       </a>
     </li>
@@ -820,11 +970,10 @@
     </li>
   
 
-    
-      
-      
-      
-
+            
+          
+            
+              
   
   
   
@@ -836,30 +985,77 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
       
       
         
           
-            
+        
+          
+        
           
         
       
       
-        
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../extensions/">Extensions</a>
-          
-        </div>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_6">
+        <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+          Other topics
           <span class="md-nav__icon md-icon"></span>
-          Extensions
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Other topics
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/optimization-options/" class="md-nav__link">
+        Optimization options
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/extensions/" class="md-nav__link">
+        Extensions
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
             
           
         </ul>
@@ -874,16 +1070,16 @@
 
   
   
+    
+  
   
     
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
       
       
         
@@ -891,6 +1087,51 @@
             
           
         
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../">Community</a>
+          
+            <label for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Community
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" checked>
+      
+      
+        
+          
+            
           
         
           
@@ -906,33 +1147,19 @@
         <div class="md-nav__link md-nav__link--index ">
           <a href="../">Blog</a>
           
-            <label for="__nav_7">
+            <label for="__nav_5_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_7">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_5_2">
           <span class="md-nav__icon md-icon"></span>
           Blog
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../2023-06-06-tour/" class="md-nav__link">
-        A tour through IREE
-      </a>
-    </li>
-  
-
             
           
             
@@ -967,11 +1194,52 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../2021-07-19-tflite-tosa/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          TFLite Support via TOSA
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         TFLite Support via TOSA
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -982,117 +1250,6 @@
     </li>
   
 
-    
-      
-      
-      
-
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
-      
-      
-        
-          
-        
-          
-        
-      
-      
-        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
-          Reference
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_8">
-          <span class="md-nav__icon md-icon"></span>
-          Reference
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/glossary/" class="md-nav__link">
-        Glossary
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/optimization-options/" class="md-nav__link">
-        Optimization Options
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
-      
-      
-        
-          
-            
-          
-        
-      
-      
-        
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../community/">Community</a>
-          
-        </div>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_9">
-          <span class="md-nav__icon md-icon"></span>
-          Community
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
             
           
         </ul>
@@ -1128,56 +1285,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#importing-a-program-from-tensorflow-lite" class="md-nav__link">
-    Importing a program from TensorFlow Lite
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compiling-using-iree-translate" class="md-nav__link">
-    Compiling using iree-translate
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-the-compiled-program" class="md-nav__link">
-    Running the compiled program
-  </a>
-  
-    <nav class="md-nav" aria-label="Running the compiled program">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#running-iree-run-trace" class="md-nav__link">
-    Running iree-run-trace
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-iree-run-module" class="md-nav__link">
-    Running iree-run-module
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#profiling-runtime-performance-with-tracy" class="md-nav__link">
-    Profiling runtime performance with Tracy
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#appendix" class="md-nav__link">
-    Appendix
+  <a href="#examples" class="md-nav__link">
+    Examples
   </a>
   
 </li>
@@ -1200,199 +1309,43 @@
   
 
 
-<p>Tuesday, September 21, 2021<br>
- By Scott Todd</p>
-<div class="highlight"><pre><span></span><code>Planning notes:
-
-* Title brainstorm
-  * Evaluating IREE
-  * Exploring IREE
-  * Exploring compilation
-  * Exploring performance
-  * Compiler settings and performance
-  * Tuning, exploring, evaluating
-* Upload all files used in the blog post to a .zip on Drive or GCS
-* If posting a Colab notebook, pin the pip install version
-* If using native tools, pin the git commit
-* Mention that specific tools and how to use them may change, so read for the
-  general workflow
-* use collapsible regions for details
-
-possible improvements / weird things spotted
-
-* `--iree-llvm-list-targets` doesn&#39;t work like `--help` (requires running translation)
-  it also exits anyways... so requires setting a throw-away arg
-* would like a `--iree-llvm-print-target` to echo the selection / default
-* `--iree-llvm-keep-linker-artifacts` -&gt; Dependencies on .dll -&gt; shows floorf and fmaf (https://github.com/google/iree/issues/4717)
-* python tracing
-  * docs are needed (https://github.com/google/iree/issues/6688)
-  * ran into errors enabling in Colab: `%env IREE_SAVE_CALLS=$ARTIFACTS_DIR` -&gt; `TypeError: dump_all() got an unexpected keyword argument &#39;sort_keys&#39;` -&gt; had to update `!pip3 install --upgrade pyyaml`
-  * wanted to record trace in python and re-target against a different vmfb (hack in Colab -&gt; profile in native environment)
-  * `iree-run-module` and `iree-run-trace` seem redundant - could they be unified? (want `--print_statistics` from the trace program)
-  * put absolute path to compiled .vmfb module file, ran and got no output on console
-* `iree-translate` on its own doesn&#39;t work in Colab while `iree-import-tflite` does:
-
-  !python -m pip install iree-compiler-snapshot iree-runtime-snapshot iree-tools-tflite-snapshot -f https://github.com/google/iree/releases/latest
-
-  !iree-translate --help
-  Traceback (most recent call last):
-  File &quot;/usr/local/bin/iree-translate&quot;, line 5, in &lt;module&gt;
-    from iree.tools.core.scripts.iree_translate.__main__ import main
-  ModuleNotFoundError: No module named &#39;iree.tools.core.scripts&#39;
-
-  (verified) fix in https://github.com/google/iree/pull/7153
-</code></pre></div>
-<h1 id="evaluating-iree">Evaluating IREE<a class="headerlink" href="#evaluating-iree" title="Permanent link">link</a></h1>
-<p>TODO: write this</p>
-<ul>
-<li>introduction</li>
-<li>evaluating IREE for [program, compilation target, deployment scenario, device]</li>
-<li>compare performance and execution characteristics with other frameworks</li>
-<li>binary size for compiled programs</li>
-<li>execution latency</li>
-<li>runtime memory usage</li>
-</ul>
-<h2 id="importing-a-program-from-tensorflow-lite">Importing a program from TensorFlow Lite<a class="headerlink" href="#importing-a-program-from-tensorflow-lite" title="Permanent link">link</a></h2>
-<p>TODO: write this</p>
-<ul>
-<li>text_classification from Colab notebook? (ready to go integration into an Android app)</li>
-<li>model from our benchmarks?</li>
-<li>model with existing benchmarks from another framework to compare against</li>
-</ul>
-<h2 id="compiling-using-iree-translate">Compiling using <code>iree-translate</code><a class="headerlink" href="#compiling-using-iree-translate" title="Permanent link">link</a></h2>
-<p>TODO: write this</p>
-<ul>
-<li>dylib for Android ARM -&gt; my Samsung Galaxy S10?</li>
-<li>dylib for Windows AMD?</li>
-<li>flags</li>
-<li><code>--iree-llvm-list-targets</code></li>
-<li><code>--iree-llvm-keep-linker-artifacts</code></li>
-<li><code>--iree-llvm-debug-symbols</code></li>
-<li><code>--iree-vm-bytecode-module-strip-source-map</code></li>
-<li><code>--iree-vm-bytecode-source-listing</code></li>
-<li>list binary size for the compiled artifact</li>
-<li>open the compiled .vmfb with 7zip</li>
-<li>poke at the compiled .vmfb with <code>iree-dump-module</code></li>
-<li><code>IR Dump Before mlir::iree_compiler::IREE::HAL::SerializeTargetExecutablesPass</code></li>
-</ul>
-<div class="highlight"><pre><span></span><code>λ iree\tools\iree-translate.exe D:\dev\projects\iree-data\models\text_classification\text_classification.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb
-
-λ zipinfo D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb
-Archive:  D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb
-Zip file size: 790062 bytes, number of entries: 1
-?---------  3.0 unx   142442 bx stor 80-000-00 00:00 _text_classification_linked_llvm_system_dll_x86_64_binary.fb
-1 file, 142442 bytes uncompressed, 142442 bytes compressed:  0.0%
-
-λ iree\tools\iree-dump-module.exe D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb &gt; D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_dump.json
-</code></pre></div>
-<p>With no debug symbols or source maps</p>
-<div class="highlight"><pre><span></span><code>λ iree\tools\iree-translate.exe D:\dev\projects\iree-data\models\text_classification\text_classification.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_nodebug.vmfb --iree-llvm-debug-symbols=false --iree-vm-bytecode-module-strip-source-map
-
-λ zipinfo D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_nodebug.vmfb
-Archive:  D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_nodebug.vmfb
-Zip file size: 661284 bytes, number of entries: 1
-?---------  3.0 unx    15398 bx stor 80-000-00 00:00 _text_classification_linked_llvm_system_dll_x86_64_binary.fb
-1 file, 15398 bytes uncompressed, 15398 bytes compressed:  0.0%
-</code></pre></div>
-<p>With embedded ELF</p>
-<div class="highlight"><pre><span></span><code>λ iree\tools\iree-translate.exe D:\dev\projects\iree-data\models\text_classification\text_classification.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_embeddednodebugsymbols.vmfb --iree-llvm-debug-symbols=false --iree-llvm-link-embedded=true
-
-λ zipinfo D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_embeddednodebugsymbols.vmfb
-Archive:  D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_embeddednodebugsymbols.vmfb
-Zip file size: 662352 bytes, number of entries: 1
-?---------  3.0 unx    14720 bx stor 80-000-00 00:00 _text_classification_linked_llvm_embedded_elf_x86_64_binary.so
-1 file, 14720 bytes uncompressed, 14720 bytes compressed:  0.0%
-</code></pre></div>
-<p>With source listing</p>
-<div class="highlight"><pre><span></span><code>λ iree\tools\iree-translate.exe D:\dev\projects\iree-data\models\text_classification\text_classification.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_embeddednodebugsymbols.vmfb --iree-llvm-link-embedded=true --iree-vm-bytecode-source-listing=D:\dev\projects\iree-tmp\blog\text_classification_llvmaot_sourcelisting.mlir
-</code></pre></div>
-<p>MobileSSD default options:</p>
-<div class="highlight"><pre><span></span><code>iree\tools\iree-translate.exe D:\dev\projects\iree-tmp\blog\mobile_ssd_v2_float_coco_imported.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\mobile_ssd_v2_float_coco_llvmaot.vmfb
-</code></pre></div>
-<h2 id="running-the-compiled-program">Running the compiled program<a class="headerlink" href="#running-the-compiled-program" title="Permanent link">link</a></h2>
-<h3 id="running-iree-run-trace">Running <code>iree-run-trace</code><a class="headerlink" href="#running-iree-run-trace" title="Permanent link">link</a></h3>
-<p>pull calls.yml from Colab then edit module.vmfb path to absolute path to local <code>text_classification_llvmaot.vmfb</code></p>
-<div class="highlight"><pre><span></span><code>λ .\iree\tools\iree-run-trace.exe D:\dev\projects\iree-tmp\blog\calls_modified.yml
---- CALL[module.main] ---
-</code></pre></div>
-<h3 id="running-iree-run-module">Running <code>iree-run-module</code><a class="headerlink" href="#running-iree-run-module" title="Permanent link">link</a></h3>
-<p>TODO: write this</p>
-<div class="highlight"><pre><span></span><code>λ .\iree\tools\iree-run-module.exe --driver=dylib --entry_function=main --function_input=256xi32 --module_file=D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb
-I D:\dev\projects\iree\iree\tools\utils\vm_util.cc:185] Creating driver and device for &#39;dylib&#39;...
-EXEC @main
-result[0]: hal.buffer_view
-1x2xf32=[0.348199 0.651801]
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>λ .\iree\tools\iree-run-module.exe --driver=dylib --entry_function=main --function_input=256xi32 --m
-odule_file=D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb --print_statistics
-I D:\dev\projects\iree\iree\tools\utils\vm_util.cc:185] Creating driver and device for &#39;dylib&#39;...
-EXEC @main
-result[0]: hal.buffer_view
-1x2xf32=[0.348199 0.651801]
-[[ iree_hal_allocator_t memory statistics ]]
-  HOST_LOCAL:         1024B peak /         1024B allocated /         1024B freed /            0B live
-DEVICE_LOCAL:       657672B peak /       657672B allocated /       657672B freed /            0B live
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>.\iree\tools\iree-run-module.exe --driver=dylib --entry_function=main --function_input=256xi32=&quot;[[1 13 8 3 117 19 206 109 10 1134 152 2301 385 11 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]]&quot; --module_file=D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb
-I D:\dev\projects\iree\iree\tools\utils\vm_util.cc:185] Creating driver and device for &#39;dylib&#39;...
-EXEC @main
-result[0]: hal.buffer_view
-1x2xf32=[0.100271 0.899729]
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>.\iree\tools\iree-run-module.exe --driver=dylib --entry_function=main --function_input=1x320x320x3xf32 --module_file=D:\dev\projects\iree-tmp\blog\mobile_ssd_v2_float_coco_llvmaot.vmfb --print_statistics
-
-...
-
-[[ iree_hal_allocator_t memory statistics ]]
-  HOST_LOCAL:      1228800B peak /      1228800B allocated /      1228800B freed /            0B live
-DEVICE_LOCAL:     70124392B peak /     70124392B allocated /     70124392B freed /            0B live
-</code></pre></div>
-<h2 id="profiling-runtime-performance-with-tracy">Profiling runtime performance with Tracy<a class="headerlink" href="#profiling-runtime-performance-with-tracy" title="Permanent link">link</a></h2>
-<p>TODO: write this</p>
-<ul>
-<li>Tracy screenshots</li>
-<li>label regions</li>
-<li>go into statistics and look up which dispatches are taking the most time</li>
-<li>map dispatches back to linalg or tosa ops?</li>
-</ul>
-<div class="highlight"><pre><span></span><code>set TRACY_NO_EXIT=1
-</code></pre></div>
-<p>then run <code>iree-run-module</code> as above</p>
-<!--  -->
-<!--  -->
-<hr />
-<!--  -->
-<!--  -->
-
-<h2 id="appendix">Appendix<a class="headerlink" href="#appendix" title="Permanent link">link</a></h2>
-<div class="highlight"><pre><span></span><code>λ iree\tools\iree-translate.exe D:\dev\projects\iree-data\models\text_classification\text_classification.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-type=tosa --o D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb --iree-llvm-list-targets
-  Registered Targets:
-    aarch64    - AArch64 (little endian)
-    aarch64_32 - AArch64 (little endian ILP32)
-    aarch64_be - AArch64 (big endian)
-    arm        - ARM
-    arm64      - ARM64 (little endian)
-    arm64_32   - ARM64 (little endian ILP32)
-    armeb      - ARM (big endian)
-    riscv32    - 32-bit RISC-V
-    riscv64    - 64-bit RISC-V
-    thumb      - Thumb
-    thumbeb    - Thumb (big endian)
-    wasm32     - WebAssembly 32-bit
-    wasm64     - WebAssembly 64-bit
-    x86        - 32-bit X86: Pentium-Pro and above
-    x86-64     - 64-bit X86: EM64T and AMD64
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>λ iree\tools\iree-translate.exe D:\dev\projects\iree-data\models\text_classification\text_classifica
-tion.mlir --iree-mlir-to-vm-bytecode-module --iree-hal-target-backends=dylib-llvm-aot --iree-input-t
-ype=tosa --o D:\dev\projects\iree-tmp\blog\text_classification_llvmaot.vmfb --iree-llvm-keep-linker-
-artifacts
-D:\dev\projects\iree-data\models\text_classification\text_classification.mlir:1:1: remark: linker ar
-tifacts for system_dll_x86_64 preserved:
-    C:\Users\Scott\AppData\Local\Temp\text_classification_linked_llvm-da70d5.dll
-module  {
-^
-</code></pre></div>
+<p>Monday, July 19, 2021<br>
+By Rob Suderman and Jenni Kilduff</p>
+<h1 id="tflite-support-via-tosa">TFLite Support via TOSA<a class="headerlink" href="#tflite-support-via-tosa" title="Permanent link">link</a></h1>
+<p>IREE can now execute <a href="https://www.tensorflow.org/lite">TensorFlow Lite</a>
+(TFLite) models through the use of
+<a href="https://developer.mlplatform.org/w/tosa/">TOSA</a>, an open standard of common
+tensor operations, and a part of <a href="https://mlir.llvm.org/">MLIR</a> core. TOSA’s
+high-level representation of tensor operations provides a common front-end for
+ingesting models from different frameworks. In this case we ingest a TFLite
+FlatBuffer and compile it to TOSA IR, which IREE takes as an input format to
+compile to its various backends.</p>
+<p><img align="left" alt="Compilation diagram" src="../2021-07-19-tflite-tosa-compilation-diagram.png" /></p>
+<p>Using TFLite as a frontend for IREE provides an alternative ingestion method for
+already existing models that could benefit from IREE’s design. This enables
+models already designed for on-device inference to have an alternative path for
+execution without requiring any additional porting, while benefiting from
+IREE’s improvements in buffer management, work dispatch system, and compact
+binary format. With continued improvements to IREE/MLIR’s compilation
+performance, more optimized versions can be compiled and distributed to target
+devices without an update to the clientside environment.</p>
+<p>Today, we have validated floating point support for a variety of models,
+including
+<a href="https://tfhub.dev/s?deployment-format=lite&amp;network-architecture=mobilenet,mobilenet-v2,mobilenet-v3,mobilenet-v1&amp;q=mobilenet">mobilenet</a>
+(v1, v2, and v3) and
+<a href="https://tfhub.dev/tensorflow/lite-model/mobilebert/1/default/1">mobilebert</a>.
+More work is in progress to support fully quantized models, and TFLite’s hybrid
+quantization, along with dynamic shape support.</p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">link</a></h2>
+<p>TFLite with IREE is available in Python and Java.  We have a
+<a href="https://colab.research.google.com/github/openxla/iree/blob/main/samples/colab/tflite_text_classification.ipynb">colab notebook</a>
+that shows how to use IREE’s python bindings and TFLite compiler tools to
+compile a pre-trained TFLite model from a FlatBuffer and run using IREE.  We
+also have an
+<a href="https://github.com/not-jenni/iree-android-tflite-demo">Android Java app</a> that
+was forked from an existing TFLite demo app, swapping out the TFLite library
+for our own AAR.  More information on IREE’s TFLite frontend is available
+<a href="../../../guides/ml-frameworks/tflite/">here</a>.</p>
 
 
 
@@ -1469,10 +1422,10 @@ module  {
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.b4d07000.min.js"></script>
       
     
   </body>
