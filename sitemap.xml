@@ -150,4 +150,54 @@
          <lastmod>2023-06-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
+    <url>
+         <loc>https://openxla.github.io/iree/reference/mlir-dialects/CheckDialect/</loc>
+         <lastmod>2023-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://openxla.github.io/iree/reference/mlir-dialects/FlowDialect/</loc>
+         <lastmod>2023-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://openxla.github.io/iree/reference/mlir-dialects/HALDialect/</loc>
+         <lastmod>2023-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://openxla.github.io/iree/reference/mlir-dialects/HALInlineDialect/</loc>
+         <lastmod>2023-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://openxla.github.io/iree/reference/mlir-dialects/HALLoaderDialect/</loc>
+         <lastmod>2023-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://openxla.github.io/iree/reference/mlir-dialects/SimpleIODialect/</loc>
+         <lastmod>2023-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://openxla.github.io/iree/reference/mlir-dialects/StreamDialect/</loc>
+         <lastmod>2023-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://openxla.github.io/iree/reference/mlir-dialects/UtilDialect/</loc>
+         <lastmod>2023-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://openxla.github.io/iree/reference/mlir-dialects/VMDialect/</loc>
+         <lastmod>2023-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://openxla.github.io/iree/reference/mlir-dialects/VMVXDialect/</loc>
+         <lastmod>2023-06-07</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
 </urlset>
