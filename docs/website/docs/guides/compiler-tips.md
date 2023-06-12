@@ -7,10 +7,15 @@
 
     Key: [ ] not started; [-] started; [x] finished
 
-    [x] List backend targets
-    [x] Compile for each
+    [ ] MLIR overview?
     [-] Dump sources (content tabs for each target)
-    [ ] Inspect .vmfb
+    [ ] Inspect .vmfb as zip
+    [ ] `--compile-to`
+    [ ] dot file export
+     ↳ [ ] `--iree-flow-dump-dispatch-graph`
+     ↳ [ ] `--view-op-graph`
+    [ ] `--iree-flow-trace-dispatch-tensors`
+
     ```
 
 !!! tip "Tip - Options and the Python bindings"
@@ -21,94 +26,6 @@
     ```python
     compiled_module = iree.compiler.tools.compile_str(
         input_mlir, target_backends=["llvm-cpu"], extra_args=["--mlir-timing"])
-    ```
-
-## Target backends
-
-### Choosing a target backend
-
-See which compiler target backends are available:
-
-```console
-$ iree-compile --iree-hal-list-target-backends
-
-  Registered target backends:
-    llvm-cpu
-    metal
-    metal-spirv
-    vmvx
-    vmvx-inline
-    vulkan
-    vulkan-spirv
-```
-
-The [deployment configuration](./deployment-configurations/index.md) guides have
-more information about each target backend. Once you have chosen which
-backend(s) to use, run the compiler:
-
-!!! info inline end "Multi-targeting"
-
-    Repeat the `--iree-hal-target-backends` flag to build a module containing
-    code for multiple targets.
-
-=== "CPU"
-
-    ```console
-    $ iree-compile \
-      --iree-hal-target-backends=llvm-cpu \
-      program.mlir -o program_cpu.vmfb
-    ```
-
-=== "GPU - Vulkan"
-
-    ```console
-    $ iree-compile \
-      --iree-hal-target-backends=vulkan-spirv \
-      program.mlir -o program_vulkan.vmfb
-    ```
-
-=== "GPU - CUDA"
-
-    ```console
-    $ iree-compile \
-      --iree-hal-target-backends=cuda \
-      program.mlir -o program_cuda.vmfb
-    ```
-
-### Setting target backend options
-
-Each target backend can provide it's own set of options. For example, the
-`llvm-cpu` backend can generate code for multiple CPU architectures with
-different CPU features.
-
-!!! note
-
-    The compiler can usually pick appropriate defaults for the machine where it
-    is running, but you may want to compile on one machine and then deploy on
-    another device or set of devices.
-
-=== "CPU"
-
-    For the full list of options:
-
-    ```console
-    $ iree-compile --help | grep llvmcpu
-    ```
-
-=== "GPU - Vulkan"
-
-    For the full list of options:
-
-    ```console
-    $ iree-compile --help | grep vulkan
-    ```
-
-=== "GPU - CUDA"
-
-    For the full list of options:
-
-    ```console
-    $ iree-compile --help | grep cuda
     ```
 
 ## Inspecting compiler outputs
