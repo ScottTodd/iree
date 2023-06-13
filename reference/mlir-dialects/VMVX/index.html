@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://openxla.github.io/iree/reference/mlir-dialects/HALInlineDialect/">
+        <link rel="canonical" href="https://openxla.github.io/iree/reference/mlir-dialects/VMVX/">
       
       
-        <link rel="prev" href="../HALDialect/">
+        <link rel="prev" href="../VM/">
       
       
-        <link rel="next" href="../HALLoaderDialect/">
+        <link rel="next" href="../../glossary/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
-        <title>HALInline - IREE</title>
+        <title>VMVX - IREE</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#hal_inline-dialect" class="md-skip">
+        <a href="#vmvx-dialect" class="md-skip">
           Skip to content
         </a>
       
@@ -157,7 +157,7 @@
         <div data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              HALInline
+              VMVX
             
           </span>
         </div>
@@ -1082,7 +1082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../CheckDialect/" class="md-nav__link">
+      <a href="../Check/" class="md-nav__link">
         Check
       </a>
     </li>
@@ -1096,7 +1096,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../FlowDialect/" class="md-nav__link">
+      <a href="../Flow/" class="md-nav__link">
         Flow
       </a>
     </li>
@@ -1110,8 +1110,78 @@
   
   
     <li class="md-nav__item">
-      <a href="../HALDialect/" class="md-nav__link">
+      <a href="../HAL/" class="md-nav__link">
         HAL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HALInline/" class="md-nav__link">
+        HALInline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HALLoader/" class="md-nav__link">
+        HALLoader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Stream/" class="md-nav__link">
+        Stream
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Util/" class="md-nav__link">
+        Util
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VM/" class="md-nav__link">
+        VM
       </a>
     </li>
   
@@ -1134,12 +1204,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          HALInline
+          VMVX
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        HALInline
+        VMVX
       </a>
       
         
@@ -1166,106 +1236,50 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebufferallocateinitialized-halinlinebufferallocateinitializedop" class="md-nav__link">
-    hal_inline.buffer.allocate.initialized (HAL::Inline::BufferAllocateInitializedOp)
+  <a href="#vmvxbinary-vmvxbinaryop" class="md-nav__link">
+    vmvx.binary (VMVX::BinaryOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebufferallocate-halinlinebufferallocateop" class="md-nav__link">
-    hal_inline.buffer.allocate (HAL::Inline::BufferAllocateOp)
+  <a href="#vmvxcopy-vmvxcopyop" class="md-nav__link">
+    vmvx.copy (VMVX::CopyOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebufferlength-halinlinebufferlengthop" class="md-nav__link">
-    hal_inline.buffer.length (HAL::Inline::BufferLengthOp)
+  <a href="#vmvxfill2d-vmvxfill2dop" class="md-nav__link">
+    vmvx.fill2d (VMVX::Fill2DOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebufferstorage-halinlinebufferstorageop" class="md-nav__link">
-    hal_inline.buffer.storage (HAL::Inline::BufferStorageOp)
+  <a href="#vmvxget_buffer_descriptor-vmvxgetbufferdescriptorop" class="md-nav__link">
+    vmvx.get_buffer_descriptor (VMVX::GetBufferDescriptorOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebuffersubspan-halinlinebuffersubspanop" class="md-nav__link">
-    hal_inline.buffer.subspan (HAL::Inline::BufferSubspanOp)
+  <a href="#vmvxget_raw_interface_binding_buffer-vmvxgetrawinterfacebindingbufferop" class="md-nav__link">
+    vmvx.get_raw_interface_binding_buffer (VMVX::GetRawInterfaceBindingBufferOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewassert-halinlinebufferviewassertop" class="md-nav__link">
-    hal_inline.buffer_view.assert (HAL::Inline::BufferViewAssertOp)
+  <a href="#vmvxquery_tile_sizes-vmvxquerytilesizesop" class="md-nav__link">
+    vmvx.query_tile_sizes (VMVX::QueryTileSizesOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewbuffer-halinlinebufferviewbufferop" class="md-nav__link">
-    hal_inline.buffer_view.buffer (HAL::Inline::BufferViewBufferOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewcreate-halinlinebufferviewcreateop" class="md-nav__link">
-    hal_inline.buffer_view.create (HAL::Inline::BufferViewCreateOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewdim-halinlinebufferviewdimop" class="md-nav__link">
-    hal_inline.buffer_view.dim (HAL::Inline::BufferViewDimOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewelement_type-halinlinebufferviewelementtypeop" class="md-nav__link">
-    hal_inline.buffer_view.element_type (HAL::Inline::BufferViewElementTypeOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewencoding_type-halinlinebufferviewencodingtypeop" class="md-nav__link">
-    hal_inline.buffer_view.encoding_type (HAL::Inline::BufferViewEncodingTypeOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewrank-halinlinebufferviewrankop" class="md-nav__link">
-    hal_inline.buffer_view.rank (HAL::Inline::BufferViewRankOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewtrace-halinlinebufferviewtraceop" class="md-nav__link">
-    hal_inline.buffer_view.trace (HAL::Inline::BufferViewTraceOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebufferwrap-halinlinebufferwrapop" class="md-nav__link">
-    hal_inline.buffer.wrap (HAL::Inline::BufferWrapOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinedevicequery-halinlinedevicequeryop" class="md-nav__link">
-    hal_inline.device.query (HAL::Inline::DeviceQueryOp)
+  <a href="#vmvxunary-vmvxunaryop" class="md-nav__link">
+    vmvx.unary (VMVX::UnaryOp)
   </a>
   
 </li>
@@ -1279,76 +1293,6 @@
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../HALLoaderDialect/" class="md-nav__link">
-        HALLoader
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../StreamDialect/" class="md-nav__link">
-        Stream
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../UtilDialect/" class="md-nav__link">
-        Util
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../VMDialect/" class="md-nav__link">
-        VM
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../VMVXDialect/" class="md-nav__link">
-        VMVX
-      </a>
     </li>
   
 
@@ -1637,106 +1581,50 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebufferallocateinitialized-halinlinebufferallocateinitializedop" class="md-nav__link">
-    hal_inline.buffer.allocate.initialized (HAL::Inline::BufferAllocateInitializedOp)
+  <a href="#vmvxbinary-vmvxbinaryop" class="md-nav__link">
+    vmvx.binary (VMVX::BinaryOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebufferallocate-halinlinebufferallocateop" class="md-nav__link">
-    hal_inline.buffer.allocate (HAL::Inline::BufferAllocateOp)
+  <a href="#vmvxcopy-vmvxcopyop" class="md-nav__link">
+    vmvx.copy (VMVX::CopyOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebufferlength-halinlinebufferlengthop" class="md-nav__link">
-    hal_inline.buffer.length (HAL::Inline::BufferLengthOp)
+  <a href="#vmvxfill2d-vmvxfill2dop" class="md-nav__link">
+    vmvx.fill2d (VMVX::Fill2DOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebufferstorage-halinlinebufferstorageop" class="md-nav__link">
-    hal_inline.buffer.storage (HAL::Inline::BufferStorageOp)
+  <a href="#vmvxget_buffer_descriptor-vmvxgetbufferdescriptorop" class="md-nav__link">
+    vmvx.get_buffer_descriptor (VMVX::GetBufferDescriptorOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebuffersubspan-halinlinebuffersubspanop" class="md-nav__link">
-    hal_inline.buffer.subspan (HAL::Inline::BufferSubspanOp)
+  <a href="#vmvxget_raw_interface_binding_buffer-vmvxgetrawinterfacebindingbufferop" class="md-nav__link">
+    vmvx.get_raw_interface_binding_buffer (VMVX::GetRawInterfaceBindingBufferOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewassert-halinlinebufferviewassertop" class="md-nav__link">
-    hal_inline.buffer_view.assert (HAL::Inline::BufferViewAssertOp)
+  <a href="#vmvxquery_tile_sizes-vmvxquerytilesizesop" class="md-nav__link">
+    vmvx.query_tile_sizes (VMVX::QueryTileSizesOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewbuffer-halinlinebufferviewbufferop" class="md-nav__link">
-    hal_inline.buffer_view.buffer (HAL::Inline::BufferViewBufferOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewcreate-halinlinebufferviewcreateop" class="md-nav__link">
-    hal_inline.buffer_view.create (HAL::Inline::BufferViewCreateOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewdim-halinlinebufferviewdimop" class="md-nav__link">
-    hal_inline.buffer_view.dim (HAL::Inline::BufferViewDimOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewelement_type-halinlinebufferviewelementtypeop" class="md-nav__link">
-    hal_inline.buffer_view.element_type (HAL::Inline::BufferViewElementTypeOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewencoding_type-halinlinebufferviewencodingtypeop" class="md-nav__link">
-    hal_inline.buffer_view.encoding_type (HAL::Inline::BufferViewEncodingTypeOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewrank-halinlinebufferviewrankop" class="md-nav__link">
-    hal_inline.buffer_view.rank (HAL::Inline::BufferViewRankOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebuffer_viewtrace-halinlinebufferviewtraceop" class="md-nav__link">
-    hal_inline.buffer_view.trace (HAL::Inline::BufferViewTraceOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinebufferwrap-halinlinebufferwrapop" class="md-nav__link">
-    hal_inline.buffer.wrap (HAL::Inline::BufferWrapOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hal_inlinedevicequery-halinlinedevicequeryop" class="md-nav__link">
-    hal_inline.device.query (HAL::Inline::DeviceQueryOp)
+  <a href="#vmvxunary-vmvxunaryop" class="md-nav__link">
+    vmvx.unary (VMVX::UnaryOp)
   </a>
   
 </li>
@@ -1768,34 +1656,23 @@
 
 
 <!-- Autogenerated by mlir-tblgen; don't manually edit -->
-<h1 id="hal_inline-dialect">'hal_inline' Dialect<a class="headerlink" href="#hal_inline-dialect" title="Permanent link">link</a></h1>
-<p>IREE inline HAL interop runtime module dialect.</p>
-<p>Low-level dialect for limited in-process ABI interop with the full HAL.
-Only operates synchronously, single-threaded, and on host-local buffers. Use
-the full HAL for all other cases.</p>
-<p>This dialect can be used alongside the full HAL but is intended for use in
-standalone configurations or paired with the <code>hal_loader</code> dialect which also
-carries the same usage restrictions.</p>
-<p>See <code>hal_inline.imports.mlir</code> for the full list of exported functions.</p>
+<h1 id="vmvx-dialect">'vmvx' Dialect<a class="headerlink" href="#vmvx-dialect" title="Permanent link">link</a></h1>
+<p>Vector extensions to the IREE VM.</p>
+<p>This is a reference dialect representing a simple IREE VM-based linear
+algebra module that is used as a library at runtime. The ops in this dialect
+map (roughly) 1:1 with the exported functions in the runtime module.</p>
+<p>See <code>vmvx.imports.mlir</code> for the full list of exported functions.</p>
 <div class="toc">
 <ul>
-<li><a href="#hal_inline-dialect">'hal_inline' Dialect</a><ul>
+<li><a href="#vmvx-dialect">'vmvx' Dialect</a><ul>
 <li><a href="#operation-definition">Operation definition</a><ul>
-<li><a href="#hal_inlinebufferallocateinitialized-halinlinebufferallocateinitializedop">hal_inline.buffer.allocate.initialized (HAL::Inline::BufferAllocateInitializedOp)</a></li>
-<li><a href="#hal_inlinebufferallocate-halinlinebufferallocateop">hal_inline.buffer.allocate (HAL::Inline::BufferAllocateOp)</a></li>
-<li><a href="#hal_inlinebufferlength-halinlinebufferlengthop">hal_inline.buffer.length (HAL::Inline::BufferLengthOp)</a></li>
-<li><a href="#hal_inlinebufferstorage-halinlinebufferstorageop">hal_inline.buffer.storage (HAL::Inline::BufferStorageOp)</a></li>
-<li><a href="#hal_inlinebuffersubspan-halinlinebuffersubspanop">hal_inline.buffer.subspan (HAL::Inline::BufferSubspanOp)</a></li>
-<li><a href="#hal_inlinebuffer_viewassert-halinlinebufferviewassertop">hal_inline.buffer_view.assert (HAL::Inline::BufferViewAssertOp)</a></li>
-<li><a href="#hal_inlinebuffer_viewbuffer-halinlinebufferviewbufferop">hal_inline.buffer_view.buffer (HAL::Inline::BufferViewBufferOp)</a></li>
-<li><a href="#hal_inlinebuffer_viewcreate-halinlinebufferviewcreateop">hal_inline.buffer_view.create (HAL::Inline::BufferViewCreateOp)</a></li>
-<li><a href="#hal_inlinebuffer_viewdim-halinlinebufferviewdimop">hal_inline.buffer_view.dim (HAL::Inline::BufferViewDimOp)</a></li>
-<li><a href="#hal_inlinebuffer_viewelement_type-halinlinebufferviewelementtypeop">hal_inline.buffer_view.element_type (HAL::Inline::BufferViewElementTypeOp)</a></li>
-<li><a href="#hal_inlinebuffer_viewencoding_type-halinlinebufferviewencodingtypeop">hal_inline.buffer_view.encoding_type (HAL::Inline::BufferViewEncodingTypeOp)</a></li>
-<li><a href="#hal_inlinebuffer_viewrank-halinlinebufferviewrankop">hal_inline.buffer_view.rank (HAL::Inline::BufferViewRankOp)</a></li>
-<li><a href="#hal_inlinebuffer_viewtrace-halinlinebufferviewtraceop">hal_inline.buffer_view.trace (HAL::Inline::BufferViewTraceOp)</a></li>
-<li><a href="#hal_inlinebufferwrap-halinlinebufferwrapop">hal_inline.buffer.wrap (HAL::Inline::BufferWrapOp)</a></li>
-<li><a href="#hal_inlinedevicequery-halinlinedevicequeryop">hal_inline.device.query (HAL::Inline::DeviceQueryOp)</a></li>
+<li><a href="#vmvxbinary-vmvxbinaryop">vmvx.binary (VMVX::BinaryOp)</a></li>
+<li><a href="#vmvxcopy-vmvxcopyop">vmvx.copy (VMVX::CopyOp)</a></li>
+<li><a href="#vmvxfill2d-vmvxfill2dop">vmvx.fill2d (VMVX::Fill2DOp)</a></li>
+<li><a href="#vmvxget_buffer_descriptor-vmvxgetbufferdescriptorop">vmvx.get_buffer_descriptor (VMVX::GetBufferDescriptorOp)</a></li>
+<li><a href="#vmvxget_raw_interface_binding_buffer-vmvxgetrawinterfacebindingbufferop">vmvx.get_raw_interface_binding_buffer (VMVX::GetRawInterfaceBindingBufferOp)</a></li>
+<li><a href="#vmvxquery_tile_sizes-vmvxquerytilesizesop">vmvx.query_tile_sizes (VMVX::QueryTileSizesOp)</a></li>
+<li><a href="#vmvxunary-vmvxunaryop">vmvx.unary (VMVX::UnaryOp)</a></li>
 </ul>
 </li>
 </ul>
@@ -1803,16 +1680,43 @@ carries the same usage restrictions.</p>
 </ul>
 </div>
 <h2 id="operation-definition">Operation definition<a class="headerlink" href="#operation-definition" title="Permanent link">link</a></h2>
-<h3 id="hal_inlinebufferallocateinitialized-halinlinebufferallocateinitializedop"><code>hal_inline.buffer.allocate.initialized</code> (HAL::Inline::BufferAllocateInitializedOp)<a class="headerlink" href="#hal_inlinebufferallocateinitialized-halinlinebufferallocateinitializedop" title="Permanent link">link</a></h3>
-<p><em>Buffer allocation with cloning</em></p>
+<h3 id="vmvxbinary-vmvxbinaryop"><code>vmvx.binary</code> (VMVX::BinaryOp)<a class="headerlink" href="#vmvxbinary-vmvxbinaryop" title="Permanent link">link</a></h3>
+<p><em>Performs a strided elementwise operation on two same-rank buffers</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer.allocate.initialized` `source` `(` $source `:` type($source) `)` `` `[` $offset `,` $length `]`
-              `alignment` `(` $minimum_alignment `)`
-              `:` custom&lt;SizeAwareType&gt;(type($result), ref($length)) `in` type($storage)
-              attr-dict-with-keyword
+<div class="highlight"><pre><span></span><code>operation ::= `vmvx.binary` `op` `` `(` $opcode `:` $element_type `)`
+              `lhs` `` `(` $lhs_buffer `offset` $lhs_offset `strides` `[` $lhs_strides `]` `:` type($lhs_buffer) `)`
+              `rhs` `` `(` $rhs_buffer `offset` $rhs_offset `strides` `[` $rhs_strides `]` `:` type($rhs_buffer) `)`
+              `out` `` `(` $out_buffer `offset` $out_offset `strides` `[` $out_strides `]` `:` type($out_buffer) `)`
+              `sizes` `` `(` $sizes `)`
+              attr-dict
 </code></pre></div>
-<p>Allocates a buffer with a copy of the provided contents.</p>
-<p>Interfaces: OpAsmOpInterface, SizeAwareOpInterface</p>
+<p>Performs the operation in-place as if:
+<div class="highlight"><pre><span></span><code>  OUT = OP(LHS, RHS)
+</code></pre></div></p>
+<p>Where <code>OP</code> is a concrete operation name as defined in ukernel/elementwise.h</p>
+<p>Traits: SameVariadicOperandSize</p>
+<h4 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Attribute</th>
+<th align="center">MLIR Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>opcode</code></td>
+<td align="center">::mlir::StringAttr</td>
+<td>string attribute</td>
+</tr>
+<tr>
+<td align="center"><code>element_type</code></td>
+<td align="center">::mlir::TypeAttr</td>
+<td>type attribute of 8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td>
+</tr>
+</tbody>
+</table>
 <h4 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h4>
 <table>
 <thead>
@@ -1823,20 +1727,184 @@ carries the same usage restrictions.</p>
 </thead>
 <tbody>
 <tr>
-<td align="center"><code>minimum_alignment</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td align="center"><code>source</code></td>
+<td align="center"><code>lhs_buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td align="center"><code>offset</code></td>
+<td align="center"><code>lhs_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td align="center"><code>length</code></td>
+<td align="center"><code>lhs_strides</code></td>
 <td>index</td>
+</tr>
+<tr>
+<td align="center"><code>rhs_buffer</code></td>
+<td>a reference counted byte buffer</td>
+</tr>
+<tr>
+<td align="center"><code>rhs_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>rhs_strides</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>out_buffer</code></td>
+<td>a reference counted byte buffer</td>
+</tr>
+<tr>
+<td align="center"><code>out_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>out_strides</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>sizes</code></td>
+<td>index</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vmvxcopy-vmvxcopyop"><code>vmvx.copy</code> (VMVX::CopyOp)<a class="headerlink" href="#vmvxcopy-vmvxcopyop" title="Permanent link">link</a></h3>
+<p><em>Copy from one buffer to another</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `vmvx.copy` `in` `` `(` $in_buffer `offset` $in_offset `strides` `[` $in_strides `]` `:` type($in_buffer) `)`
+              `out` `` `(` $out_buffer `offset` $out_offset `strides` `[` $out_strides `]` `:` type($out_buffer) `)`
+              `sizes` `` `(` $sizes `)`
+              `:` $element_type
+              attr-dict
+</code></pre></div>
+<p>Traits: SameVariadicOperandSize</p>
+<h4 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Attribute</th>
+<th align="center">MLIR Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>element_type</code></td>
+<td align="center">::mlir::TypeAttr</td>
+<td>type attribute of 8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td>
+</tr>
+</tbody>
+</table>
+<h4 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>in_buffer</code></td>
+<td>a reference counted byte buffer</td>
+</tr>
+<tr>
+<td align="center"><code>in_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>in_strides</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>out_buffer</code></td>
+<td>a reference counted byte buffer</td>
+</tr>
+<tr>
+<td align="center"><code>out_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>out_strides</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>sizes</code></td>
+<td>index</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vmvxfill2d-vmvxfill2dop"><code>vmvx.fill2d</code> (VMVX::Fill2DOp)<a class="headerlink" href="#vmvxfill2d-vmvxfill2dop" title="Permanent link">link</a></h3>
+<p><em>Fill a tile with a scalar</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `vmvx.fill2d` `scalar` `` `(` $scalar `:` type($scalar) `)`
+              `out` `` `(` $out_buffer `offset` $out_offset `row_stride` $out_row_stride `:` type($out_buffer) `)`
+              `sizes` `` `(` $m `,` $n `)`
+              attr-dict
+</code></pre></div>
+<p>Fills a tile with dimensions [m, n] with a scalar.</p>
+<h4 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>scalar</code></td>
+<td>8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td>
+</tr>
+<tr>
+<td align="center"><code>out_buffer</code></td>
+<td>a reference counted byte buffer</td>
+</tr>
+<tr>
+<td align="center"><code>out_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>out_row_stride</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>m</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>n</code></td>
+<td>index</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vmvxget_buffer_descriptor-vmvxgetbufferdescriptorop"><code>vmvx.get_buffer_descriptor</code> (VMVX::GetBufferDescriptorOp)<a class="headerlink" href="#vmvxget_buffer_descriptor-vmvxgetbufferdescriptorop" title="Permanent link">link</a></h3>
+<p><em>Late binds a base buffer/offset/strides</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `vmvx.get_buffer_descriptor` $source `:` type($source) `-&gt;` type(results) attr-dict
+</code></pre></div>
+<p>Queries a base buffer, offset and strides. This op is late bound to its
+source (alloca, binding, etc), allowing additional layers of
+transformations to be added as lowering progresses (or for buffers to be
+combined).</p>
+<p>This op has canonicalization rules which will bubble it up through the
+view stack. A final reconciliation pass is used explicitly to bind it to
+concrete sources.</p>
+<p>Traits: AlwaysSpeculatableImplTrait, SameVariadicResultSize</p>
+<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
+<p>Effects: MemoryEffects::Effect{}</p>
+<h4 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>source</code></td>
+<td>memref of any type values</td>
 </tr>
 </tbody>
 </table>
@@ -1850,42 +1918,57 @@ carries the same usage restrictions.</p>
 </thead>
 <tbody>
 <tr>
-<td align="center"><code>result</code></td>
-<td>buffer</td>
+<td align="center"><code>base_buffer</code></td>
+<td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td align="center"><code>storage</code></td>
-<td>a reference counted byte buffer</td>
+<td align="center"><code>offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>sizes</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>strides</code></td>
+<td>index</td>
 </tr>
 </tbody>
 </table>
-<h3 id="hal_inlinebufferallocate-halinlinebufferallocateop"><code>hal_inline.buffer.allocate</code> (HAL::Inline::BufferAllocateOp)<a class="headerlink" href="#hal_inlinebufferallocate-halinlinebufferallocateop" title="Permanent link">link</a></h3>
-<p><em>Empty buffer allocation operation</em></p>
+<h3 id="vmvxget_raw_interface_binding_buffer-vmvxgetrawinterfacebindingbufferop"><code>vmvx.get_raw_interface_binding_buffer</code> (VMVX::GetRawInterfaceBindingBufferOp)<a class="headerlink" href="#vmvxget_raw_interface_binding_buffer-vmvxgetrawinterfacebindingbufferop" title="Permanent link">link</a></h3>
+<p><em>Gets the raw buffer associated with a binding</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer.allocate` `alignment` `(` $minimum_alignment `)`
-              `:` custom&lt;SizeAwareType&gt;(type($result), $allocation_size) `in` type($storage)
-              attr-dict-with-keyword
+<div class="highlight"><pre><span></span><code>operation ::= `vmvx.get_raw_interface_binding_buffer` `set` `(` $set `)` `binding` `(` $binding `)` attr-dict
 </code></pre></div>
-<p>Allocates a buffer of the given size.
-The size of the buffer returned may be larger than the requested size if the
-allocator has specific alignment requirements or minimum allocation sizes.</p>
-<p>Interfaces: OpAsmOpInterface, SizeAwareOpInterface</p>
-<h4 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h4>
+<p>Normally, a slice of a binding buffer is returned via
+hal.interface.binding.subspan. However, the normal VMVX lowering flow for
+this presumes that the result is a memref, and upon final conversion, it
+will offset the memref automatically to make it consistent.</p>
+<p>This op is used in situations where earlier in a lowering, we have fully
+resolved the binding to a buffer and would just like the raw backing
+buffer as passed to the interface.</p>
+<p>Traits: AlwaysSpeculatableImplTrait</p>
+<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
+<p>Effects: MemoryEffects::Effect{}</p>
+<h4 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h4>
 <table>
 <thead>
 <tr>
-<th align="center">Operand</th>
+<th align="center">Attribute</th>
+<th align="center">MLIR Type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center"><code>minimum_alignment</code></td>
-<td>index</td>
+<td align="center"><code>set</code></td>
+<td align="center">::mlir::IntegerAttr</td>
+<td>index attribute</td>
 </tr>
 <tr>
-<td align="center"><code>allocation_size</code></td>
-<td>index</td>
+<td align="center"><code>binding</code></td>
+<td align="center">::mlir::IntegerAttr</td>
+<td>index attribute</td>
 </tr>
 </tbody>
 </table>
@@ -1899,615 +1982,19 @@ allocator has specific alignment requirements or minimum allocation sizes.</p>
 </thead>
 <tbody>
 <tr>
-<td align="center"><code>result</code></td>
-<td>buffer</td>
-</tr>
-<tr>
-<td align="center"><code>storage</code></td>
-<td>a reference counted byte buffer</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebufferlength-halinlinebufferlengthop"><code>hal_inline.buffer.length</code> (HAL::Inline::BufferLengthOp)<a class="headerlink" href="#hal_inlinebufferlength-halinlinebufferlengthop" title="Permanent link">link</a></h3>
-<p><em>Buffer byte length accessor</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer.length` `&lt;` $buffer `:` type($buffer) `&gt;`
-              `:` type($result)
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Returns the allocated size of a buffer in bytes.
-May be less than the underlying buffer allocation if this is a subspan or
-view into another buffer.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
-<h4 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
 <td align="center"><code>buffer</code></td>
-<td>buffer</td>
-</tr>
-</tbody>
-</table>
-<h4 id="results_2">Results:<a class="headerlink" href="#results_2" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>result</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebufferstorage-halinlinebufferstorageop"><code>hal_inline.buffer.storage</code> (HAL::Inline::BufferStorageOp)<a class="headerlink" href="#hal_inlinebufferstorage-halinlinebufferstorageop" title="Permanent link">link</a></h3>
-<p><em>Buffer backing storage accessor</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer.storage` `&lt;` $buffer `:` type($buffer) `&gt;`
-              `:` type($storage)
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Returns the host backing storage of the HAL buffer as a subspan limited to
-to the buffer's logical range (meaning that byte 0 of the returned buffer is
-byte 0 of the HAL buffer).</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
-<h4 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>buffer</code></td>
-<td>buffer</td>
-</tr>
-</tbody>
-</table>
-<h4 id="results_3">Results:<a class="headerlink" href="#results_3" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>storage</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 </tbody>
 </table>
-<h3 id="hal_inlinebuffersubspan-halinlinebuffersubspanop"><code>hal_inline.buffer.subspan</code> (HAL::Inline::BufferSubspanOp)<a class="headerlink" href="#hal_inlinebuffersubspan-halinlinebuffersubspanop" title="Permanent link">link</a></h3>
-<p><em>Buffer subspan operation</em></p>
+<h3 id="vmvxquery_tile_sizes-vmvxquerytilesizesop"><code>vmvx.query_tile_sizes</code> (VMVX::QueryTileSizesOp)<a class="headerlink" href="#vmvxquery_tile_sizes-vmvxquerytilesizesop" title="Permanent link">link</a></h3>
+<p><em>Returns tile sizes to use to materialize the given encoding, based on runtime CPU capabilities.</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer.subspan` `&lt;` $source_buffer `:` type($source_buffer) `&gt;`
-              `` `[` $source_offset `,` $length `]`
-              `:` type($result)
-              attr-dict-with-keyword
+<div class="highlight"><pre><span></span><code>operation ::= `vmvx.query_tile_sizes` `sizes` `` `(` $sizes `)`
+              `flags` `` `(` $flags `)`
+              `-&gt;` type(results) attr-dict
 </code></pre></div>
-<p>Returns a reference to a subspan of the buffer.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface, SizeAwareOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
-<h4 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>source_buffer</code></td>
-<td>buffer</td>
-</tr>
-<tr>
-<td align="center"><code>source_offset</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td align="center"><code>length</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h4 id="results_4">Results:<a class="headerlink" href="#results_4" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>result</code></td>
-<td>buffer</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebuffer_viewassert-halinlinebufferviewassertop"><code>hal_inline.buffer_view.assert</code> (HAL::Inline::BufferViewAssertOp)<a class="headerlink" href="#hal_inlinebuffer_viewassert-halinlinebufferviewassertop" title="Permanent link">link</a></h3>
-<p><em>Buffer view contents assertion</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer_view.assert` `&lt;` $buffer_view `:` type($buffer_view) `&gt;`
-              `message` `(` $message `)`
-              `shape` `(` `[` $shape `]` `)`
-              `type` `(` $element_type `)`
-              `encoding` `(` $encoding_type `)`
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Asserts that the buffer view contains a data compatible tensor with the
-given encoding. Program execution will abort as if <code>std.assert</code> had been
-used.</p>
-<h4 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Attribute</th>
-<th align="center">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>message</code></td>
-<td align="center">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
-</table>
-<h4 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>buffer_view</code></td>
-<td>buffer_view</td>
-</tr>
-<tr>
-<td align="center"><code>element_type</code></td>
-<td>32-bit signless integer</td>
-</tr>
-<tr>
-<td align="center"><code>encoding_type</code></td>
-<td>32-bit signless integer</td>
-</tr>
-<tr>
-<td align="center"><code>shape</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebuffer_viewbuffer-halinlinebufferviewbufferop"><code>hal_inline.buffer_view.buffer</code> (HAL::Inline::BufferViewBufferOp)<a class="headerlink" href="#hal_inlinebuffer_viewbuffer-halinlinebufferviewbufferop" title="Permanent link">link</a></h3>
-<p><em>Buffer view buffer accessor</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer_view.buffer` `&lt;` $buffer_view `:` type($buffer_view) `&gt;`
-              `:` type($result)
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Returns the buffer backing this view's contents.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
-<h4 id="operands_6">Operands:<a class="headerlink" href="#operands_6" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>buffer_view</code></td>
-<td>buffer_view</td>
-</tr>
-</tbody>
-</table>
-<h4 id="results_5">Results:<a class="headerlink" href="#results_5" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>result</code></td>
-<td>buffer</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebuffer_viewcreate-halinlinebufferviewcreateop"><code>hal_inline.buffer_view.create</code> (HAL::Inline::BufferViewCreateOp)<a class="headerlink" href="#hal_inlinebuffer_viewcreate-halinlinebufferviewcreateop" title="Permanent link">link</a></h3>
-<p><em>Buffer view reference initializer</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer_view.create` `buffer` `(` $source_buffer `:` type($source_buffer) `)`
-              `` `[` $source_offset `,` $source_length `]`
-              `shape` `(` `[` $shape `]` `)`
-              `type` `(` $element_type `)`
-              `encoding` `(` $encoding_type `)`
-              `:` type($result)
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Creates a reference to a buffer with a particular shape and element type.
-The buffer is not copied and both the original and view references must be
-synchronized. This makes it easier to associate commonly-carried metadata
-along with the contents.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
-<h4 id="operands_7">Operands:<a class="headerlink" href="#operands_7" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>source_buffer</code></td>
-<td>buffer</td>
-</tr>
-<tr>
-<td align="center"><code>source_offset</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td align="center"><code>source_length</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td align="center"><code>element_type</code></td>
-<td>32-bit signless integer</td>
-</tr>
-<tr>
-<td align="center"><code>encoding_type</code></td>
-<td>32-bit signless integer</td>
-</tr>
-<tr>
-<td align="center"><code>shape</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h4 id="results_6">Results:<a class="headerlink" href="#results_6" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>result</code></td>
-<td>buffer_view</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebuffer_viewdim-halinlinebufferviewdimop"><code>hal_inline.buffer_view.dim</code> (HAL::Inline::BufferViewDimOp)<a class="headerlink" href="#hal_inlinebuffer_viewdim-halinlinebufferviewdimop" title="Permanent link">link</a></h3>
-<p><em>Buffer view dimension value query</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer_view.dim` `&lt;` $buffer_view `:` type($buffer_view) `&gt;`
-              `` `[` $index `]`
-              `:` type($result)
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Returns the value of the given dimension.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
-<h4 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Attribute</th>
-<th align="center">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>index</code></td>
-<td align="center">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
-</table>
-<h4 id="operands_8">Operands:<a class="headerlink" href="#operands_8" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>buffer_view</code></td>
-<td>buffer_view</td>
-</tr>
-</tbody>
-</table>
-<h4 id="results_7">Results:<a class="headerlink" href="#results_7" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>result</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebuffer_viewelement_type-halinlinebufferviewelementtypeop"><code>hal_inline.buffer_view.element_type</code> (HAL::Inline::BufferViewElementTypeOp)<a class="headerlink" href="#hal_inlinebuffer_viewelement_type-halinlinebufferviewelementtypeop" title="Permanent link">link</a></h3>
-<p><em>Buffer view element type query</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer_view.element_type` `&lt;` $buffer_view `:` type($buffer_view) `&gt;`
-              `:` type($result)
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Returns the element type of the buffer view.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
-<h4 id="operands_9">Operands:<a class="headerlink" href="#operands_9" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>buffer_view</code></td>
-<td>buffer_view</td>
-</tr>
-</tbody>
-</table>
-<h4 id="results_8">Results:<a class="headerlink" href="#results_8" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>result</code></td>
-<td>32-bit signless integer</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebuffer_viewencoding_type-halinlinebufferviewencodingtypeop"><code>hal_inline.buffer_view.encoding_type</code> (HAL::Inline::BufferViewEncodingTypeOp)<a class="headerlink" href="#hal_inlinebuffer_viewencoding_type-halinlinebufferviewencodingtypeop" title="Permanent link">link</a></h3>
-<p><em>Buffer view encoding type query</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer_view.encoding_type` `&lt;` $buffer_view `:` type($buffer_view) `&gt;`
-              `:` type($result)
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Returns the encoding type of the buffer view.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
-<h4 id="operands_10">Operands:<a class="headerlink" href="#operands_10" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>buffer_view</code></td>
-<td>buffer_view</td>
-</tr>
-</tbody>
-</table>
-<h4 id="results_9">Results:<a class="headerlink" href="#results_9" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>result</code></td>
-<td>32-bit signless integer</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebuffer_viewrank-halinlinebufferviewrankop"><code>hal_inline.buffer_view.rank</code> (HAL::Inline::BufferViewRankOp)<a class="headerlink" href="#hal_inlinebuffer_viewrank-halinlinebufferviewrankop" title="Permanent link">link</a></h3>
-<p><em>Buffer view rank query</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer_view.rank` `&lt;` $buffer_view `:` type($buffer_view) `&gt;`
-              `:` type($result)
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Returns the rank of the buffer view.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
-<h4 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>buffer_view</code></td>
-<td>buffer_view</td>
-</tr>
-</tbody>
-</table>
-<h4 id="results_10">Results:<a class="headerlink" href="#results_10" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>result</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebuffer_viewtrace-halinlinebufferviewtraceop"><code>hal_inline.buffer_view.trace</code> (HAL::Inline::BufferViewTraceOp)<a class="headerlink" href="#hal_inlinebuffer_viewtrace-halinlinebufferviewtraceop" title="Permanent link">link</a></h3>
-<p><em>Trace value(s) operation</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer_view.trace` $operands `:` type($operands)
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Traces out to a runtime trace sink (console, log file, etc) the given buffer
-views and titles them with the given key. The key is informational only and
-useful for titling/marking specific sets of buffers for easier searching.</p>
-<h4 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Attribute</th>
-<th align="center">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>key</code></td>
-<td align="center">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
-</table>
-<h4 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>operands</code></td>
-<td>buffer_view</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinebufferwrap-halinlinebufferwrapop"><code>hal_inline.buffer.wrap</code> (HAL::Inline::BufferWrapOp)<a class="headerlink" href="#hal_inlinebufferwrap-halinlinebufferwrapop" title="Permanent link">link</a></h3>
-<p><em>Host buffer wrapping operation</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.buffer.wrap` `source` `(` $source `:` type($source) `)` `` `[` $offset `,` $length `]`
-              `:` type($result)
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Tries wrapping a !hal.buffer around host memory backed by the given byte
-buffer.</p>
-<p>Interfaces: OpAsmOpInterface, SizeAwareOpInterface</p>
-<h4 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>source</code></td>
-<td>a reference counted byte buffer</td>
-</tr>
-<tr>
-<td align="center"><code>offset</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td align="center"><code>length</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h4 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h4>
-<table>
-<thead>
-<tr>
-<th align="center">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><code>result</code></td>
-<td>buffer</td>
-</tr>
-</tbody>
-</table>
-<h3 id="hal_inlinedevicequery-halinlinedevicequeryop"><code>hal_inline.device.query</code> (HAL::Inline::DeviceQueryOp)<a class="headerlink" href="#hal_inlinedevicequery-halinlinedevicequeryop" title="Permanent link">link</a></h3>
-<p><em>Returns a runtime configuration parameter from the device</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_inline.device.query` `key` `(` $category `:` `` `:` $key `)`
-              `:` type($ok) `,` type($value)
-              (`=` $default_value^)?
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Queries a device configuration parameter with the given key.
-Returns a status indicating whether the pair was recognized/available and if
-it was the value converted to the specified type. Queries must return the
-same value for the lifetime of the module though may vary from run to run.</p>
-<p>This is roughly equivalent to the <code>sysconf</code> linux syscall
-(https://man7.org/linux/man-pages/man3/sysconf.3.html) in that the exact
-set of keys available and their interpretation is target-dependent. If there
-is a HAL match attribute (<code>#hal.device.match.*</code>) or op
-(<code>hal.device.match.*</code>) prefer to use that in order to get compile-time
-propagation when the target is specified and elide the runtime query and
-get compile-time verification when a runtime query is required.</p>
-<p>Users of the op must check the <code>ok</code> result before using the value as what
-set of keys is available may change over time. If in doubt: don't use this.
-Each key used adds additional versioning and testing complexity as runtime
-code path changes will explode combinatorially and should be treated with as
-much care as a binary file format change. Keys should be prefixed with <code>ex.</code>
-when experimental indicating that they are not expected to be present
-forever; all non-experimental keys should be vetted.</p>
-<p>Well-known keys: (none yet)</p>
+<p>TODO write me</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
@@ -2522,23 +2009,28 @@ forever; all non-experimental keys should be vetted.</p>
 </thead>
 <tbody>
 <tr>
-<td align="center"><code>category</code></td>
-<td align="center">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td align="center"><code>key</code></td>
-<td align="center">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td align="center"><code>default_value</code></td>
-<td align="center">::mlir::Attribute</td>
-<td>any attribute</td>
+<td align="center"><code>flags</code></td>
+<td align="center">::mlir::IntegerAttr</td>
+<td>32-bit signless integer attribute</td>
 </tr>
 </tbody>
 </table>
-<h4 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h4>
+<h4 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>sizes</code></td>
+<td>index</td>
+</tr>
+</tbody>
+</table>
+<h4 id="results_2">Results:<a class="headerlink" href="#results_2" title="Permanent link">link</a></h4>
 <table>
 <thead>
 <tr>
@@ -2548,12 +2040,83 @@ forever; all non-experimental keys should be vetted.</p>
 </thead>
 <tbody>
 <tr>
-<td align="center"><code>ok</code></td>
-<td>1-bit signless integer</td>
+<td align="center"><code>tileSizes</code></td>
+<td>index</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vmvxunary-vmvxunaryop"><code>vmvx.unary</code> (VMVX::UnaryOp)<a class="headerlink" href="#vmvxunary-vmvxunaryop" title="Permanent link">link</a></h3>
+<p><em>Performs a strided elementwise unary operation</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `vmvx.unary` `op` `` `(` $opcode `:` $element_type `)`
+              `in` `` `(` $in_buffer `offset` $in_offset `strides` `[` $in_strides `]` `:` type($in_buffer) `)`
+              `out` `` `(` $out_buffer `offset` $out_offset `strides` `[` $out_strides `]` `:` type($out_buffer) `)`
+              `sizes` `` `(` $sizes `)`
+              attr-dict
+</code></pre></div>
+<p>Performs the operation in-place as if:
+<div class="highlight"><pre><span></span><code>  OUT = OP(IN)
+</code></pre></div></p>
+<p>Where <code>OP</code> is a concrete operation name as defined in ukernel/elementwise.h</p>
+<p>Traits: SameVariadicOperandSize</p>
+<h4 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Attribute</th>
+<th align="center">MLIR Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>opcode</code></td>
+<td align="center">::mlir::StringAttr</td>
+<td>string attribute</td>
 </tr>
 <tr>
-<td align="center"><code>value</code></td>
-<td>any type</td>
+<td align="center"><code>element_type</code></td>
+<td align="center">::mlir::TypeAttr</td>
+<td>type attribute of 8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td>
+</tr>
+</tbody>
+</table>
+<h4 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>in_buffer</code></td>
+<td>a reference counted byte buffer</td>
+</tr>
+<tr>
+<td align="center"><code>in_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>in_strides</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>out_buffer</code></td>
+<td>a reference counted byte buffer</td>
+</tr>
+<tr>
+<td align="center"><code>out_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>out_strides</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>sizes</code></td>
+<td>index</td>
 </tr>
 </tbody>
 </table>
