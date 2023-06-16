@@ -23,12 +23,28 @@
     If you are using the Python bindings, options can be passed via the
     `extra_args=["--flag"]` argument:
 
-    ```python
-    compiled_module = iree.compiler.tools.compile_str(
-        input_mlir, target_backends=["llvm-cpu"], extra_args=["--mlir-timing"])
+    ``` python hl_lines="12"
+    import iree.compiler as ireec
+
+    input_mlir = """
+    func.func @abs(%input : tensor<f32>) -> (tensor<f32>) {
+      %result = math.absf %input : tensor<f32>
+      return %result : tensor<f32>
+    }"""
+
+    compiled_module = ireec.tools.compile_str(
+        input_mlir,
+        target_backends=["llvm-cpu"],
+        extra_args=["--mlir-timing"])
     ```
 
-## Inspecting compiler outputs
+## Inspecting .vmfb files
+
+`iree-dump-module`
+
+7zip (`--iree-vm-emit-polyglot-zip=true`)
+
+## Compiler target intermediate files
 
 ??? example "Executable source MLIR"
 
