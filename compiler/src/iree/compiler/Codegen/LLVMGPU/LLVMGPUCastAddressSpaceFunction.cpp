@@ -10,7 +10,6 @@
 #include "iree/compiler/Codegen/Passes.h"
 #include "iree/compiler/Codegen/Transforms/Transforms.h"
 #include "iree/compiler/Codegen/Utils/GPUUtils.h"
-#include "llvm/Support/raw_ostream.h"
 #include "mlir/Conversion/FuncToLLVM/ConvertFuncToLLVM.h"
 #include "mlir/Dialect/Affine/IR/AffineOps.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
@@ -22,6 +21,7 @@
 #include "mlir/Support/MathExtras.h"
 #include "mlir/Transforms/GreedyPatternRewriteDriver.h"
 #include "mlir/Transforms/Passes.h"
+#include "llvm/Support/raw_ostream.h"
 
 #define DEBUG_TYPE "iree-llvmgpu-cast-address-space-function"
 
@@ -82,12 +82,12 @@ struct LLVMGPUCastAddressSpaceFunctionPass
     });
   }
 };
-}  // namespace
+} // namespace
 
 std::unique_ptr<OperationPass<ModuleOp>>
 createLLVMGPUCastAddressSpaceFunction() {
   return std::make_unique<LLVMGPUCastAddressSpaceFunctionPass>();
 }
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir

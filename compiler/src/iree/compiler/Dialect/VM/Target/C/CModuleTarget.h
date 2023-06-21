@@ -8,9 +8,9 @@
 #define IREE_COMPILER_DIALECT_VM_TARGET_C_CMODULETARGET_H_
 
 #include "iree/compiler/Dialect/VM/IR/VMOps.h"
-#include "llvm/Support/raw_ostream.h"
 #include "mlir/IR/BuiltinOps.h"
 #include "mlir/Support/LogicalResult.h"
+#include "llvm/Support/raw_ostream.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -47,9 +47,9 @@ LogicalResult translateModuleToC(mlir::ModuleOp outerModuleOp,
                                  CTargetOptions targetOptions,
                                  llvm::raw_ostream &output);
 
-}  // namespace VM
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace VM
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_DIALECT_VM_TARGET_C_CMODULETARGET_H_
+#endif // IREE_COMPILER_DIALECT_VM_TARGET_C_CMODULETARGET_H_

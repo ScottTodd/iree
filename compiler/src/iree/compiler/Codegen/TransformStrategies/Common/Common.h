@@ -111,10 +111,11 @@ struct TileToScfForAndFuseResult {
 
 /// Build transform IR to perform multi-level tile and fuse into an scf.for op.
 /// Note: fusion is currently unsupported.
-TileToScfForAndFuseResult buildTileFuseToScfFor(
-    ImplicitLocOpBuilder &b, Value isolatedParentOpH, Value rootH,
-    ValueRange opsHToFuse, ArrayRef<OpFoldResult> tileSizes,
-    bool canonicalize = true);
+TileToScfForAndFuseResult
+buildTileFuseToScfFor(ImplicitLocOpBuilder &b, Value isolatedParentOpH,
+                      Value rootH, ValueRange opsHToFuse,
+                      ArrayRef<OpFoldResult> tileSizes,
+                      bool canonicalize = true);
 
 /// Result of the combined transform performing tiling, fusion and
 /// distribution to parallel constructs.
@@ -247,7 +248,7 @@ buildReductionStrategyBlockDistribution(ImplicitLocOpBuilder &b, Value variantH,
 /// Build transform IR that applies memory optimizations.
 Value buildMemoryOptimizations(ImplicitLocOpBuilder &b, Value funcH);
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_CODEGEN_TRANSFORM_DIALECT_STRATEGIES_COMMON_COMMON_H_
+#endif // IREE_COMPILER_CODEGEN_TRANSFORM_DIALECT_STRATEGIES_COMMON_COMMON_H_

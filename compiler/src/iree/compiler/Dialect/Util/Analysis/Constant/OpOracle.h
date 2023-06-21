@@ -8,8 +8,8 @@
 #define IREE_COMPILER_DIALECT_IREE_UTIL_ANALYSIS_CONSTANT_OP_ORACLE_H_
 
 #include "iree/compiler/Dialect/Util/Analysis/Constant/ConstExpr.h"
-#include "llvm/ADT/SmallPtrSet.h"
 #include "mlir/IR/Operation.h"
+#include "llvm/ADT/SmallPtrSet.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -54,9 +54,9 @@ bool isHoistableConstExprLeaf(const ConstExprAnalysis::ConstValueInfo *info);
 // This is used to exclude certain operands that we never want in globals.
 bool isHoistableConstExprConsumingOperand(OpOperand *operand);
 
-}  // namespace Util
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Util
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_DIALECT_IREE_UTIL_ANALYSIS_CONSTANT_OP_ORACLE_H_
+#endif // IREE_COMPILER_DIALECT_IREE_UTIL_ANALYSIS_CONSTANT_OP_ORACLE_H_

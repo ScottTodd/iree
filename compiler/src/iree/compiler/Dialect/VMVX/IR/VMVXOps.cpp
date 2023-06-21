@@ -8,21 +8,21 @@
 
 #include "iree/compiler/Dialect/Util/IR/UtilTypes.h"
 #include "iree/compiler/Dialect/VMVX/IR/VMVXTypes.h"
-#include "llvm/ADT/STLExtras.h"
-#include "llvm/Support/SMLoc.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/IR/OpImplementation.h"
 #include "mlir/IR/SymbolTable.h"
 #include "mlir/IR/TypeUtilities.h"
+#include "llvm/ADT/STLExtras.h"
+#include "llvm/Support/SMLoc.h"
 
 namespace mlir {
 namespace iree_compiler {
 namespace IREE {
-namespace VMVX {}  // namespace VMVX
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+namespace VMVX {} // namespace VMVX
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
 //===----------------------------------------------------------------------===//
 // TableGen definitions (intentionally last)

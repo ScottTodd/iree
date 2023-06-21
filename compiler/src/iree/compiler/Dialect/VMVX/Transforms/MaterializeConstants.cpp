@@ -11,13 +11,13 @@
 #include "iree/compiler/Dialect/VMVX/IR/VMVXTypes.h"
 #include "iree/compiler/Dialect/VMVX/Transforms/PassDetail.h"
 #include "iree/compiler/Dialect/VMVX/Transforms/Passes.h"
-#include "llvm/ADT/STLExtras.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/IR/BuiltinOps.h"
 #include "mlir/IR/PatternMatch.h"
 #include "mlir/Pass/Pass.h"
 #include "mlir/Pass/PassRegistry.h"
+#include "llvm/ADT/STLExtras.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -29,7 +29,7 @@ static const char *kConstantBlockSetterName = "__set_constants";
 
 class MaterializeConstantsPass
     : public MaterializeConstantsBase<MaterializeConstantsPass> {
- public:
+public:
   void getDependentDialects(DialectRegistry &registry) const override {
     registry.insert<IREE::Util::UtilDialect, IREE::HAL::HALDialect,
                     arith::ArithDialect, func::FuncDialect>();
@@ -51,7 +51,8 @@ class MaterializeConstantsPass
     });
 
     // No constants found; omit the constant block entirely.
-    if (allLoadOps.empty()) return;
+    if (allLoadOps.empty())
+      return;
 
     // Create global ops for each constant and replace the HAL ops so they load
     // from them. Each global will track what constant key it represents for
@@ -135,7 +136,7 @@ createMaterializeConstantsPass() {
   return std::make_unique<MaterializeConstantsPass>();
 }
 
-}  // namespace VMVX
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace VMVX
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

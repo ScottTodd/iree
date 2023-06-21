@@ -8,11 +8,11 @@
 #include "iree/compiler/Codegen/Common/Transforms.h"
 #include "iree/compiler/Codegen/PassDetail.h"
 #include "iree/compiler/Codegen/Transforms/Transforms.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/Linalg/Utils/Utils.h"
 #include "mlir/Dialect/MemRef/IR/MemRef.h"
 #include "mlir/IR/PatternMatch.h"
 #include "mlir/Pass/Pass.h"
+#include "llvm/Support/Debug.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -24,7 +24,7 @@ struct HoistStaticallyBoundAllocationsPass
   void runOnOperation() override;
 };
 
-}  // namespace
+} // namespace
 
 void HoistStaticallyBoundAllocationsPass::runOnOperation() {
   func::FuncOp funcOp = getOperation();
@@ -37,5 +37,5 @@ createHoistStaticallyBoundAllocationsPass() {
   return std::make_unique<HoistStaticallyBoundAllocationsPass>();
 }
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir

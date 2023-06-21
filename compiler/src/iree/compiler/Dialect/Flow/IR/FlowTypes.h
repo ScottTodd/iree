@@ -9,9 +9,6 @@
 
 #include "iree/compiler/Dialect/Flow/IR/FlowDialect.h"
 #include "iree/compiler/Dialect/Util/IR/UtilTypes.h"
-#include "llvm/ADT/DenseMapInfo.h"
-#include "llvm/ADT/SmallVector.h"
-#include "llvm/ADT/StringSwitch.h"
 #include "mlir/IR/BuiltinTypes.h"
 #include "mlir/IR/DialectImplementation.h"
 #include "mlir/IR/OpImplementation.h"
@@ -19,6 +16,9 @@
 #include "mlir/IR/TypeSupport.h"
 #include "mlir/IR/Types.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/DenseMapInfo.h"
+#include "llvm/ADT/SmallVector.h"
+#include "llvm/ADT/StringSwitch.h"
 
 // clang-format off: must be included after all LLVM/MLIR headers.
 #include "iree/compiler/Dialect/Flow/IR/FlowEnums.h.inc"  // IWYU pragma: export
@@ -29,8 +29,8 @@ namespace iree_compiler {
 namespace IREE {
 namespace Flow {
 
-#include "iree/compiler/Dialect/Flow/IR/FlowOpInterfaces.h.inc"  // IWYU pragma: export
-#include "iree/compiler/Dialect/Flow/IR/FlowTypeInterfaces.h.inc"  // IWYU pragma: export
+#include "iree/compiler/Dialect/Flow/IR/FlowOpInterfaces.h.inc" // IWYU pragma: export
+#include "iree/compiler/Dialect/Flow/IR/FlowTypeInterfaces.h.inc" // IWYU pragma: export
 
 //===----------------------------------------------------------------------===//
 // Object types
@@ -38,7 +38,7 @@ namespace Flow {
 
 namespace detail {
 struct DispatchTensorTypeStorage;
-}  // namespace detail
+} // namespace detail
 
 enum class TensorAccess : uint32_t {
   ReadOnly,
@@ -51,7 +51,7 @@ enum class TensorAccess : uint32_t {
 class DispatchTensorType
     : public Type::TypeBase<DispatchTensorType, Type,
                             detail::DispatchTensorTypeStorage> {
- public:
+public:
   using ImplType = detail::DispatchTensorTypeStorage;
 
   using Base::Base;
@@ -161,12 +161,12 @@ struct DispatchTensorTypeStorage : public TypeStorage {
   Type boundType;
 };
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace Flow
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Flow
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
 // clang-format off: must be included after all LLVM/MLIR headers.
 #define GET_ATTRDEF_CLASSES
@@ -175,4 +175,4 @@ struct DispatchTensorTypeStorage : public TypeStorage {
 #include "iree/compiler/Dialect/Flow/IR/FlowTypes.h.inc"  // IWYU pragma: keep
 // clang-format on
 
-#endif  // IREE_COMPILER_DIALECT_FLOW_IR_FLOWTYPES_H_
+#endif // IREE_COMPILER_DIALECT_FLOW_IR_FLOWTYPES_H_

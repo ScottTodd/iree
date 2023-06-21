@@ -9,9 +9,6 @@
 
 #include <optional>
 
-#include "llvm/ADT/ArrayRef.h"
-#include "llvm/ADT/StringRef.h"
-#include "llvm/ADT/StringSwitch.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/Complex/IR/Complex.h"
 #include "mlir/Dialect/Math/IR/Math.h"
@@ -21,6 +18,9 @@
 #include "mlir/IR/ImplicitLocOpBuilder.h"
 #include "mlir/IR/TypeUtilities.h"
 #include "stablehlo/dialect/StablehloOps.h"
+#include "llvm/ADT/ArrayRef.h"
+#include "llvm/ADT/StringRef.h"
+#include "llvm/ADT/StringSwitch.h"
 
 namespace mlir {
 namespace stablehlo {
@@ -28,118 +28,96 @@ namespace impl {
 
 // A struct to map StableHloBinaryOpTy type to the corresponding floating-point
 // and integer scalar operation types.
-template <typename StableHloBinaryOpTy>
-struct StableHloToScalarOp {
+template <typename StableHloBinaryOpTy> struct StableHloToScalarOp {
   using FOp = void;
   using IOp = void;
   using UOp = void;
   using COp = void;
 };
 
-template <>
-struct StableHloToScalarOp<stablehlo::AddOp> {
+template <> struct StableHloToScalarOp<stablehlo::AddOp> {
   using FOp = ::mlir::arith::AddFOp;
   using IOp = ::mlir::arith::AddIOp;
   using UOp = ::mlir::arith::AddIOp;
   using COp = ::mlir::complex::AddOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::AndOp> {
+template <> struct StableHloToScalarOp<stablehlo::AndOp> {
   using IOp = ::mlir::arith::AndIOp;
   using UOp = ::mlir::arith::AndIOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::CbrtOp> {
+template <> struct StableHloToScalarOp<stablehlo::CbrtOp> {
   using FOp = ::mlir::math::CbrtOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::CompareOp> {
+template <> struct StableHloToScalarOp<stablehlo::CompareOp> {
   using FOp = ::mlir::arith::CmpFOp;
   using IOp = ::mlir::arith::CmpIOp;
   using UOp = ::mlir::arith::CmpIOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::CeilOp> {
+template <> struct StableHloToScalarOp<stablehlo::CeilOp> {
   using FOp = ::mlir::math::CeilOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::ClzOp> {
+template <> struct StableHloToScalarOp<stablehlo::ClzOp> {
   using IOp = ::mlir::math::CountLeadingZerosOp;
   using UOp = ::mlir::math::CountLeadingZerosOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::CosineOp> {
+template <> struct StableHloToScalarOp<stablehlo::CosineOp> {
   using FOp = ::mlir::math::CosOp;
   using COp = ::mlir::complex::CosOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::ExpOp> {
+template <> struct StableHloToScalarOp<stablehlo::ExpOp> {
   using FOp = ::mlir::math::ExpOp;
   using COp = ::mlir::complex::ExpOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::Expm1Op> {
+template <> struct StableHloToScalarOp<stablehlo::Expm1Op> {
   using FOp = ::mlir::math::ExpM1Op;
   using COp = ::mlir::complex::Expm1Op;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::FloorOp> {
+template <> struct StableHloToScalarOp<stablehlo::FloorOp> {
   using FOp = ::mlir::math::FloorOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::LogOp> {
+template <> struct StableHloToScalarOp<stablehlo::LogOp> {
   using FOp = ::mlir::math::LogOp;
   using COp = ::mlir::complex::LogOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::Log1pOp> {
+template <> struct StableHloToScalarOp<stablehlo::Log1pOp> {
   using FOp = ::mlir::math::Log1pOp;
   using COp = ::mlir::complex::Log1pOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::MulOp> {
+template <> struct StableHloToScalarOp<stablehlo::MulOp> {
   using FOp = ::mlir::arith::MulFOp;
   using IOp = ::mlir::arith::MulIOp;
   using UOp = ::mlir::arith::MulIOp;
   using COp = ::mlir::complex::MulOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::OrOp> {
+template <> struct StableHloToScalarOp<stablehlo::OrOp> {
   using IOp = ::mlir::arith::OrIOp;
   using UOp = ::mlir::arith::OrIOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::PopulationCountOp> {
+template <> struct StableHloToScalarOp<stablehlo::PopulationCountOp> {
   using IOp = ::mlir::math::CtPopOp;
   using UOp = ::mlir::math::CtPopOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::RsqrtOp> {
+template <> struct StableHloToScalarOp<stablehlo::RsqrtOp> {
   using FOp = ::mlir::math::RsqrtOp;
   using COp = ::mlir::complex::RsqrtOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::RoundNearestEvenOp> {
+template <> struct StableHloToScalarOp<stablehlo::RoundNearestEvenOp> {
   using FOp = ::mlir::math::RoundEvenOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::RoundOp> {
+template <> struct StableHloToScalarOp<stablehlo::RoundOp> {
   using FOp = ::mlir::math::RoundOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::SubtractOp> {
+template <> struct StableHloToScalarOp<stablehlo::SubtractOp> {
   using FOp = ::mlir::arith::SubFOp;
   using IOp = ::mlir::arith::SubIOp;
   using UOp = ::mlir::arith::SubIOp;
   using COp = ::mlir::complex::SubOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::SqrtOp> {
+template <> struct StableHloToScalarOp<stablehlo::SqrtOp> {
   using FOp = ::mlir::math::SqrtOp;
   using COp = ::mlir::complex::SqrtOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::SineOp> {
+template <> struct StableHloToScalarOp<stablehlo::SineOp> {
   using FOp = ::mlir::math::SinOp;
   using COp = ::mlir::complex::SinOp;
 };
@@ -151,18 +129,15 @@ struct StableHloToScalarOp<stablehlo::TanOp> {
   using COp = ::mlir::complex::TanOp;
 };
 */
-template <>
-struct StableHloToScalarOp<stablehlo::Atan2Op> {
+template <> struct StableHloToScalarOp<stablehlo::Atan2Op> {
   using FOp = ::mlir::math::Atan2Op;
   using COp = ::mlir::complex::Atan2Op;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::TanhOp> {
+template <> struct StableHloToScalarOp<stablehlo::TanhOp> {
   using FOp = ::mlir::math::TanhOp;
   using COp = ::mlir::complex::TanhOp;
 };
-template <>
-struct StableHloToScalarOp<stablehlo::XorOp> {
+template <> struct StableHloToScalarOp<stablehlo::XorOp> {
   using IOp = ::mlir::arith::XOrIOp;
   using UOp = ::mlir::arith::XOrIOp;
 };
@@ -183,11 +158,10 @@ using ScalarUOp = typename StableHloToScalarOp<StableHloOp>::UOp;
 template <typename StableHloOp>
 using ScalarCOp = typename StableHloToScalarOp<StableHloOp>::COp;
 
-template <typename... Args>
-struct MapStableHloOpToScalarOpImpl {
+template <typename... Args> struct MapStableHloOpToScalarOpImpl {
   Value operator()(Location /*loc*/, ArrayRef<Type> /*ResultTypes*/,
                    ArrayRef<Type> /*argTypes*/, ValueRange /*args*/,
-                   OpBuilder* /*b*/) {
+                   OpBuilder * /*b*/) {
     return nullptr;
   }
 };
@@ -195,7 +169,7 @@ struct MapStableHloOpToScalarOpImpl {
 template <typename StdScalarOp>
 struct MapStableHloOpToScalarOpImpl<StdScalarOp> {
   Value operator()(Location loc, ArrayRef<Type> resultTypes,
-                   ArrayRef<Type> /*argTypes*/, ValueRange args, OpBuilder* b) {
+                   ArrayRef<Type> /*argTypes*/, ValueRange args, OpBuilder *b) {
     return b->template create<StdScalarOp>(loc, resultTypes, args,
                                            std::nullopt);
   }
@@ -204,7 +178,7 @@ struct MapStableHloOpToScalarOpImpl<StdScalarOp> {
 template <typename SupportedType, typename StdScalarOp, typename... Args>
 struct MapStableHloOpToScalarOpImpl<SupportedType, StdScalarOp, Args...> {
   Value operator()(Location loc, ArrayRef<Type> resultTypes,
-                   ArrayRef<Type> argTypes, ValueRange args, OpBuilder* b) {
+                   ArrayRef<Type> argTypes, ValueRange args, OpBuilder *b) {
     Type elementType = getElementTypeOrSelf(argTypes.front());
     if (SupportedType{}(elementType)) {
       return b->template create<StdScalarOp>(loc, resultTypes, args,
@@ -218,7 +192,7 @@ struct MapStableHloOpToScalarOpImpl<SupportedType, StdScalarOp, Args...> {
 template <typename SupportedType, typename... Args>
 struct MapStableHloOpToScalarOpImpl<SupportedType, void, Args...> {
   Value operator()(Location loc, ArrayRef<Type> resultTypes,
-                   ArrayRef<Type> argTypes, ValueRange args, OpBuilder* b) {
+                   ArrayRef<Type> argTypes, ValueRange args, OpBuilder *b) {
     return MapStableHloOpToScalarOpImpl<Args...>{}(loc, resultTypes, argTypes,
                                                    args, b);
   }
@@ -265,7 +239,7 @@ struct MapableIf<MapTy, OpTy, std::true_type> {
 template <typename StableHloOpTy>
 inline Value mapStableHloOpToStdScalarOp(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    typename StableHloOpTy::Adaptor adaptor, OpBuilder* b) {
+    typename StableHloOpTy::Adaptor adaptor, OpBuilder *b) {
   using ScalarIOpOrVoid = typename MapableIf<ScalarIOp, StableHloOpTy>::type;
   using ScalarUOpOrVoid = typename MapableIf<ScalarUOp, StableHloOpTy>::type;
   using ScalarFOpOrVoid = typename MapableIf<ScalarFOp, StableHloOpTy>::type;
@@ -280,7 +254,7 @@ inline Value mapStableHloOpToStdScalarOp(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::AbsOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::AbsOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::AbsOp::Adaptor adaptor, OpBuilder *b) {
   Type elementType = getElementTypeOrSelf(argTypes.front());
   if (elementType.isa<FloatType>()) {
     return MapStableHloOpToScalarOpImpl<IsFloatType, ::mlir::math::AbsFOp>{}(
@@ -306,7 +280,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::AbsOp>(
 }
 
 // Return a constant for v of type t, splat if t is a vector type.
-inline Value getConstantOrSplat(OpBuilder* b, Location loc, Type t,
+inline Value getConstantOrSplat(OpBuilder *b, Location loc, Type t,
                                 Attribute v) {
   if (VectorType vecType = t.dyn_cast<VectorType>()) {
     v = SplatElementsAttr::get(vecType, v);
@@ -315,8 +289,8 @@ inline Value getConstantOrSplat(OpBuilder* b, Location loc, Type t,
 }
 
 template <typename PredicateType>
-inline std::optional<PredicateType> getCmpPredicate(
-    stablehlo::ComparisonDirection, bool) {
+inline std::optional<PredicateType>
+getCmpPredicate(stablehlo::ComparisonDirection, bool) {
   return std::nullopt;
 }
 
@@ -357,7 +331,7 @@ getCmpPredicate<arith::CmpIPredicate>(
 
 inline Value cmpComplex(Location loc, Value lhs, Value rhs,
                         stablehlo::ComparisonDirection comparisonDirection,
-                        OpBuilder* b) {
+                        OpBuilder *b) {
   auto complexType = lhs.getType().cast<ComplexType>();
   if (complexType.getElementType().isa<FloatType>()) {
     if (comparisonDirection == stablehlo::ComparisonDirection::EQ) {
@@ -398,11 +372,11 @@ inline Value cmpComplex(Location loc, Value lhs, Value rhs,
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::CompareOp>(
     Location loc, ArrayRef<Type> /*resultTypes*/, ArrayRef<Type> argTypes,
-    stablehlo::CompareOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::CompareOp::Adaptor adaptor, OpBuilder *b) {
   stablehlo::ComparisonDirection comparisonDirection =
       adaptor.getComparisonDirection();
-  const auto& lhs = adaptor.getLhs();
-  const auto& rhs = adaptor.getRhs();
+  const auto &lhs = adaptor.getLhs();
+  const auto &rhs = adaptor.getRhs();
   Type elementType = getElementTypeOrSelf(argTypes.front());
   if (elementType.isa<IntegerType>()) {
     bool isUnsigned = IsUnsignedIntegerType{}(elementType);
@@ -464,7 +438,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::CompareOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::ReducePrecisionOp>(
     Location loc, ArrayRef<Type> /*resultTypes*/, ArrayRef<Type> argTypes,
-    stablehlo::ReducePrecisionOp::Adaptor adaptor, OpBuilder* builder) {
+    stablehlo::ReducePrecisionOp::Adaptor adaptor, OpBuilder *builder) {
   using llvm::APInt;
   mlir::ImplicitLocOpBuilder b(loc, *builder);
 
@@ -488,7 +462,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::ReducePrecisionOp>(
   APInt expBitsMask(nbits, 1);
   expBitsMask = ((expBitsMask << srcExponentBits) - 1) << srcMantissaBits;
 
-  auto createConstant = [&](const APInt& v) {
+  auto createConstant = [&](const APInt &v) {
     return b.create<arith::ConstantIntOp>(v.getZExtValue(), intType)
         .getResult();
   };
@@ -588,7 +562,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::ReducePrecisionOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::ComplexOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::ComplexOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::ComplexOp::Adaptor adaptor, OpBuilder *b) {
   return MapStableHloOpToScalarOpImpl<complex::CreateOp>{}(
       loc, resultTypes, argTypes, adaptor.getOperands(), b);
 }
@@ -596,7 +570,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::ComplexOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::MaxOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::MaxOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::MaxOp::Adaptor adaptor, OpBuilder *b) {
   ValueRange operands = adaptor.getOperands();
   Value lhs = operands.front();
   Type complexTy = lhs.getType();
@@ -620,7 +594,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::MaxOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::MinOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::MinOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::MinOp::Adaptor adaptor, OpBuilder *b) {
   ValueRange operands = adaptor.getOperands();
   Value lhs = operands.front();
   Type complexTy = lhs.getType();
@@ -644,7 +618,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::MinOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::RealOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::RealOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::RealOp::Adaptor adaptor, OpBuilder *b) {
   if (!adaptor.getOperand().getType().isa<ComplexType>())
     return adaptor.getOperand();
   return MapStableHloOpToScalarOpImpl<complex::ReOp>{}(
@@ -654,7 +628,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::RealOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::ImagOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::ImagOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::ImagOp::Adaptor adaptor, OpBuilder *b) {
   if (!adaptor.getOperand().getType().isa<ComplexType>())
     return b->create<arith::ConstantOp>(
         loc, b->getZeroAttr(adaptor.getOperand().getType()));
@@ -667,7 +641,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::ImagOp>(
 inline Value mapConvertOpToStdScalarOp(Location loc, ArrayRef<Type> targetTypes,
                                        ArrayRef<Type> resultTypes,
                                        ArrayRef<Type> argTypes, ValueRange args,
-                                       OpBuilder* b) {
+                                       OpBuilder *b) {
   assert(targetTypes.size() == 1 && "ConvertOp should return a single result");
   assert(resultTypes.size() == 1 && "ConvertOp should return a single result");
   assert(argTypes.size() == 1 && "ConvertOp should take a single argument");
@@ -807,7 +781,7 @@ inline Value mapConvertOpToStdScalarOp(Location loc, ArrayRef<Type> targetTypes,
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::BitcastConvertOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::BitcastConvertOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::BitcastConvertOp::Adaptor adaptor, OpBuilder *b) {
   Type argType = getElementTypeOrSelf(argTypes.front());
   Type resultType = getElementTypeOrSelf(resultTypes.front());
 
@@ -821,11 +795,11 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::BitcastConvertOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::DotOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::DotOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::DotOp::Adaptor adaptor, OpBuilder *b) {
   // Dot Op converter from lhlo to affine only accepts float and integer types.
-  const auto& lhs = adaptor.getOperands()[0];
-  const auto& rhs = adaptor.getOperands()[1];
-  const auto& result = adaptor.getOperands()[2];
+  const auto &lhs = adaptor.getOperands()[0];
+  const auto &rhs = adaptor.getOperands()[1];
+  const auto &result = adaptor.getOperands()[2];
   Type elementType = lhs.getType();
   if (elementType.isa<FloatType>()) {
     Value floatMul =
@@ -848,7 +822,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::DotOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::IsFiniteOp>(
     Location loc, ArrayRef<Type> /*ResultTypes*/, ArrayRef<Type> /*argTypes*/,
-    stablehlo::IsFiniteOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::IsFiniteOp::Adaptor adaptor, OpBuilder *b) {
   if (adaptor.getX().getType().isa<FloatType>()) {
     auto posInf = APFloat::getInf(
         adaptor.getX().getType().cast<FloatType>().getFloatSemantics());
@@ -863,12 +837,11 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::IsFiniteOp>(
 
 /// Implements the conversion of HLO op to scalar op (to use within region of a
 /// linalg.generic op) for compare-select style operations like min/max.
-template <typename... Args>
-struct CompareSelectOpToStdScalarOp {
+template <typename... Args> struct CompareSelectOpToStdScalarOp {
   static Value map(Location /*loc*/,
                    stablehlo::ComparisonDirection /*comparison_direction*/,
                    ArrayRef<Type> /*ResultTypes*/, ArrayRef<Type> /*argTypes*/,
-                   ValueRange /*args*/, OpBuilder* /*b*/) {
+                   ValueRange /*args*/, OpBuilder * /*b*/) {
     return nullptr;
   }
 };
@@ -882,7 +855,7 @@ struct CompareSelectOpToStdScalarOp<SupportedType, StdCompareOp, Predicate,
   static Value map(Location loc,
                    stablehlo::ComparisonDirection comparisonDirection,
                    ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-                   ValueRange args, OpBuilder* b) {
+                   ValueRange args, OpBuilder *b) {
     Type elementType = getElementTypeOrSelf(argTypes.front());
     if (elementType.isa<SupportedType>()) {
       auto predicate = getCmpPredicate<Predicate>(
@@ -900,7 +873,7 @@ struct CompareSelectOpToStdScalarOp<SupportedType, StdCompareOp, Predicate,
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::ClampOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::ClampOp::Adaptor op, OpBuilder* b) {
+    stablehlo::ClampOp::Adaptor op, OpBuilder *b) {
   // clamp(lb, x, ub) = min(max(lb, x), ub)
   Value maxLbX = mapStableHloOpToStdScalarOp<stablehlo::MaxOp>(
       loc, resultTypes, argTypes, ValueRange{op.getMin(), op.getOperand()}, b);
@@ -909,13 +882,13 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::ClampOp>(
 }
 
 template <typename U, typename S>
-inline Value makeSafeIntDiv(ImplicitLocOpBuilder& lb, Type originalType,
+inline Value makeSafeIntDiv(ImplicitLocOpBuilder &lb, Type originalType,
                             Value lhs, Value rhs, Value returnedOnZero,
                             Value returnedOnSignedOverflow) {
   Type type = lhs.getType();
   auto elementType = getElementTypeOrSelf(type).cast<IntegerType>();
   Value zero = lb.create<arith::ConstantOp>(lb.getZeroAttr(type));
-  auto makeConstant = [&](const APInt& i) {
+  auto makeConstant = [&](const APInt &i) {
     return getConstantOrSplat(&lb, lb.getLoc(), type,
                               lb.getIntegerAttr(elementType, i));
   };
@@ -949,7 +922,7 @@ inline Value makeSafeIntDiv(ImplicitLocOpBuilder& lb, Type originalType,
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::DivOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::DivOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::DivOp::Adaptor adaptor, OpBuilder *b) {
   Type originalType = getElementTypeOrSelf(argTypes.front());
   if (originalType.isa<ComplexType, FloatType>()) {
     return MapStableHloOpToScalarOpImpl<IsFloatType, arith::DivFOp,
@@ -964,7 +937,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::DivOp>(
   ImplicitLocOpBuilder lb(loc, *b);
   Type type = adaptor.getLhs().getType();
   auto elementType = getElementTypeOrSelf(type).cast<IntegerType>();
-  auto makeConstant = [&](const APInt& i) {
+  auto makeConstant = [&](const APInt &i) {
     return getConstantOrSplat(&lb, lb.getLoc(), type,
                               lb.getIntegerAttr(elementType, i));
   };
@@ -979,7 +952,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::DivOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::RemOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::RemOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::RemOp::Adaptor adaptor, OpBuilder *b) {
   Type originalType = getElementTypeOrSelf(argTypes.front());
   if (originalType.isa<ComplexType, FloatType>()) {
     return MapStableHloOpToScalarOpImpl<IsFloatType, arith::RemFOp>{}(
@@ -1002,7 +975,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::RemOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::NegOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::NegOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::NegOp::Adaptor adaptor, OpBuilder *b) {
   Type elementType = getElementTypeOrSelf(adaptor.getOperand().getType());
   if (elementType.isa<ComplexType, FloatType>()) {
     return MapStableHloOpToScalarOpImpl<IsFloatType, ::mlir::arith::NegFOp,
@@ -1023,7 +996,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::NegOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::NotOp>(
     Location loc, ArrayRef<Type> /*ResultTypes*/, ArrayRef<Type> /*argTypes*/,
-    stablehlo::NotOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::NotOp::Adaptor adaptor, OpBuilder *b) {
   Type elementType = getElementTypeOrSelf(adaptor.getOperand().getType());
   if (auto integerType = elementType.dyn_cast<IntegerType>()) {
     // lmhlo.not(x) -> x ^ -1
@@ -1039,7 +1012,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::NotOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::LogisticOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> /*argTypes*/,
-    stablehlo::LogisticOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::LogisticOp::Adaptor adaptor, OpBuilder *b) {
   // 1.0 / (1.0 - exp(-x))
   Value negX = mapStableHloOpToStdScalarOp<stablehlo::NegOp>(
       loc, resultTypes, resultTypes, {adaptor.getOperand()}, b);
@@ -1058,7 +1031,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::LogisticOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::PowOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::PowOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::PowOp::Adaptor adaptor, OpBuilder *b) {
   auto lb = ImplicitLocOpBuilder(loc, *b);
   // Floating point can use std::powf
   auto resultType = resultTypes.front();
@@ -1088,7 +1061,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::PowOp>(
       lb.create<scf::ForOp>(
             lowerBound, upperBound, step,
             SmallVector<Value>({one, originalBase, originalExponent}),
-            [&](OpBuilder& b, Location, Value /*v*/, ValueRange iters) {
+            [&](OpBuilder &b, Location, Value /*v*/, ValueRange iters) {
               Value accum = iters[0];
               Value base = iters[1];
               Value exponent = iters[2];
@@ -1137,7 +1110,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::PowOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::SelectOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
-    stablehlo::SelectOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::SelectOp::Adaptor adaptor, OpBuilder *b) {
   return MapStableHloOpToScalarOpImpl<::mlir::arith::SelectOp>{}(
       loc, resultTypes, argTypes, adaptor.getOperands(), b);
 }
@@ -1145,7 +1118,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::SelectOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::SignOp>(
     Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> /*argTypes*/,
-    stablehlo::SignOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::SignOp::Adaptor adaptor, OpBuilder *b) {
   Value operand = adaptor.getOperand();
   Type elementType = getElementTypeOrSelf(operand.getType());
   if (auto floatType = elementType.dyn_cast<FloatType>()) {
@@ -1185,7 +1158,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::SignOp>(
 
 /// Construct operations to select the saturated value if the shift amount is
 /// greater than the bitwidth of the type.
-inline Value selectShiftedOrSaturated(ImplicitLocOpBuilder& lb, Value rhs,
+inline Value selectShiftedOrSaturated(ImplicitLocOpBuilder &lb, Value rhs,
                                       Value shifted, Value saturated,
                                       Type type) {
   Type etype =
@@ -1201,7 +1174,7 @@ inline Value selectShiftedOrSaturated(ImplicitLocOpBuilder& lb, Value rhs,
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::ShiftLeftOp>(
     Location loc, ArrayRef<Type> /*ResultTypes*/, ArrayRef<Type> /*argTypes*/,
-    stablehlo::ShiftLeftOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::ShiftLeftOp::Adaptor adaptor, OpBuilder *b) {
   ImplicitLocOpBuilder lb(loc, *b);
   Value lhs = adaptor.getLhs();
   Value rhs = adaptor.getRhs();
@@ -1217,7 +1190,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::ShiftLeftOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::ShiftRightLogicalOp>(
     Location loc, ArrayRef<Type> /*ResultTypes*/, ArrayRef<Type> /*argTypes*/,
-    stablehlo::ShiftRightLogicalOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::ShiftRightLogicalOp::Adaptor adaptor, OpBuilder *b) {
   ImplicitLocOpBuilder lb(loc, *b);
   Value lhs = adaptor.getLhs();
   Value rhs = adaptor.getRhs();
@@ -1233,7 +1206,7 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::ShiftRightLogicalOp>(
 template <>
 inline Value mapStableHloOpToStdScalarOp<stablehlo::ShiftRightArithmeticOp>(
     Location loc, ArrayRef<Type> /*ResultTypes*/, ArrayRef<Type> /*argTypes*/,
-    stablehlo::ShiftRightArithmeticOp::Adaptor adaptor, OpBuilder* b) {
+    stablehlo::ShiftRightArithmeticOp::Adaptor adaptor, OpBuilder *b) {
   ImplicitLocOpBuilder lb(loc, *b);
   Value lhs = adaptor.getLhs();
   Value rhs = adaptor.getRhs();
@@ -1250,13 +1223,13 @@ inline Value mapStableHloOpToStdScalarOp<stablehlo::ShiftRightArithmeticOp>(
 
   return selectShiftedOrSaturated(lb, rhs, shifted, saturatedShifted, type);
 }
-}  // namespace impl
+} // namespace impl
 
 struct StableHloOpToStdScalarOp {
   // Converts stablehlo 'op' to linalg and arith ops.
   template <typename StableHloOpTy>
   static Value mapOp(StableHloOpTy op, ArrayRef<Type> resultTypes,
-                     ValueRange args, OpBuilder* b) {
+                     ValueRange args, OpBuilder *b) {
     auto argTypes = llvm::to_vector(op->getOperandTypes());
     return mapOpWithArgTypes(op, resultTypes, argTypes, args, b);
   }
@@ -1266,7 +1239,7 @@ struct StableHloOpToStdScalarOp {
   template <typename StableHloOpTy>
   static Value mapOpWithArgTypes(StableHloOpTy op, ArrayRef<Type> resultTypes,
                                  ArrayRef<Type> argTypes, ValueRange args,
-                                 OpBuilder* b) {
+                                 OpBuilder *b) {
     static_assert(!std::is_same<StableHloOpTy, stablehlo::ConvertOp>::value);
     return mapOpOfType<StableHloOpTy>(
         op.getLoc(), resultTypes, argTypes,
@@ -1276,17 +1249,16 @@ struct StableHloOpToStdScalarOp {
   static Value mapOpWithArgTypes(stablehlo::ConvertOp op,
                                  ArrayRef<Type> resultTypes,
                                  ArrayRef<Type> argTypes, ValueRange args,
-                                 OpBuilder* b) {
+                                 OpBuilder *b) {
     return impl::mapConvertOpToStdScalarOp(op.getLoc(), op.getType(),
                                            resultTypes, argTypes, args, b);
   }
 
   // Converts stablehlo 'op' to linalg and arith ops.
   template <typename StableHloOpTy>
-  static Value mapOpOfType(Location loc, ArrayRef<Type> resultTypes,
-                           ArrayRef<Type> argTypes,
-                           typename StableHloOpTy::Adaptor adaptor,
-                           OpBuilder* b) {
+  static Value
+  mapOpOfType(Location loc, ArrayRef<Type> resultTypes, ArrayRef<Type> argTypes,
+              typename StableHloOpTy::Adaptor adaptor, OpBuilder *b) {
     if (std::is_same<StableHloOpTy, stablehlo::ConvertOp>::value) {
       // Note: this assumes that the caller is passing result/arg types with
       // appropriate signedness.
@@ -1298,7 +1270,7 @@ struct StableHloOpToStdScalarOp {
   }
 };
 
-}  // namespace stablehlo
-}  // namespace mlir
+} // namespace stablehlo
+} // namespace mlir
 
-#endif  // IREE_COMPILER_INPUTCONVERSION_STABLEHLO_MAP_STABLEHLO_TO_SCALAR_OP_H
+#endif // IREE_COMPILER_INPUTCONVERSION_STABLEHLO_MAP_STABLEHLO_TO_SCALAR_OP_H

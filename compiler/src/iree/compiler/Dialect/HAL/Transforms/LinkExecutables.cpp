@@ -11,13 +11,13 @@
 #include "iree/compiler/Dialect/HAL/IR/HALOps.h"
 #include "iree/compiler/Dialect/HAL/Target/TargetBackend.h"
 #include "iree/compiler/Dialect/HAL/Target/TargetRegistry.h"
-#include "llvm/ADT/StringSet.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/IR/Diagnostics.h"
 #include "mlir/Pass/Pass.h"
 #include "mlir/Pass/PassManager.h"
 #include "mlir/Transforms/Passes.h"
+#include "llvm/ADT/StringSet.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -27,7 +27,7 @@ namespace HAL {
 class LinkTargetExecutablesPass
     : public PassWrapper<LinkTargetExecutablesPass,
                          OperationPass<mlir::ModuleOp>> {
- public:
+public:
   LinkTargetExecutablesPass()
       : targetRegistry(TargetBackendRegistry::getGlobal()) {}
   LinkTargetExecutablesPass(const LinkTargetExecutablesPass &pass)
@@ -72,7 +72,7 @@ class LinkTargetExecutablesPass
     }
   }
 
- private:
+private:
   Option<std::string> target{
       *this, "target",
       llvm::cl::desc("Target backend name whose executables will be linked by "
@@ -81,8 +81,9 @@ class LinkTargetExecutablesPass
   const TargetBackendRegistry &targetRegistry;
 };
 
-std::unique_ptr<OperationPass<mlir::ModuleOp>> createLinkTargetExecutablesPass(
-    const TargetBackendRegistry &targetRegistry, StringRef target) {
+std::unique_ptr<OperationPass<mlir::ModuleOp>>
+createLinkTargetExecutablesPass(const TargetBackendRegistry &targetRegistry,
+                                StringRef target) {
   return std::make_unique<LinkTargetExecutablesPass>(targetRegistry, target);
 }
 
@@ -92,7 +93,7 @@ static PassRegistration<LinkTargetExecutablesPass> linkTargetPass([] {
 
 class LinkExecutablesPass
     : public PassWrapper<LinkExecutablesPass, OperationPass<mlir::ModuleOp>> {
- public:
+public:
   LinkExecutablesPass(const TargetBackendRegistry &targetRegistry)
       : targetRegistry(targetRegistry) {}
 
@@ -127,8 +128,8 @@ class LinkExecutablesPass
   const TargetBackendRegistry &targetRegistry;
 };
 
-std::unique_ptr<OperationPass<mlir::ModuleOp>> createLinkExecutablesPass(
-    const TargetBackendRegistry &targetRegistry) {
+std::unique_ptr<OperationPass<mlir::ModuleOp>>
+createLinkExecutablesPass(const TargetBackendRegistry &targetRegistry) {
   return std::make_unique<LinkExecutablesPass>(targetRegistry);
 }
 
@@ -137,7 +138,7 @@ static PassRegistration<LinkExecutablesPass> linkPass([] {
       TargetBackendRegistry::getGlobal());
 });
 
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

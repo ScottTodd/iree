@@ -340,7 +340,7 @@ static void iree_trace_replay_write_element(
     IREE_TRACE_REPLAY_WRITE_ELEMENT_CASE(UINT_16, uint16_t)
     IREE_TRACE_REPLAY_WRITE_ELEMENT_CASE(UINT_32, uint32_t)
     IREE_TRACE_REPLAY_WRITE_ELEMENT_CASE(UINT_64, uint64_t)
-    // clang-format off
+      // clang-format off
     case IREE_HAL_ELEMENT_TYPE_FLOAT_16:
       *(uint16_t*)dst = iree_math_f32_to_f16((float)value);
       break;

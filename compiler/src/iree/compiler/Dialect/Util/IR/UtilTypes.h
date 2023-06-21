@@ -7,9 +7,6 @@
 #ifndef IREE_COMPILER_DIALECT_UTIL_IR_UTILTYPES_H_
 #define IREE_COMPILER_DIALECT_UTIL_IR_UTILTYPES_H_
 
-#include "llvm/ADT/StringSwitch.h"
-#include "llvm/ADT/TypeSwitch.h"
-#include "llvm/Support/Endian.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/BuiltinTypes.h"
 #include "mlir/IR/Diagnostics.h"
@@ -19,6 +16,9 @@
 #include "mlir/IR/TypeSupport.h"
 #include "mlir/IR/TypeUtilities.h"
 #include "mlir/IR/Types.h"
+#include "llvm/ADT/StringSwitch.h"
+#include "llvm/ADT/TypeSwitch.h"
+#include "llvm/Support/Endian.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -116,11 +116,11 @@ LogicalResult verifyGlobalLoadOp(GlobalLoadOpInterface loadOp,
 LogicalResult verifyGlobalStoreOp(GlobalStoreOpInterface storeOp,
                                   SymbolTableCollection &symbolTable);
 
-}  // namespace detail
+} // namespace detail
 
-IREE::Util::GlobalOpInterface lookupGlobalOp(
-    Operation *accessorOp, SymbolRefAttr globalRefAttr,
-    SymbolTableCollection &symbolTable);
+IREE::Util::GlobalOpInterface
+lookupGlobalOp(Operation *accessorOp, SymbolRefAttr globalRefAttr,
+               SymbolTableCollection &symbolTable);
 
 //===----------------------------------------------------------------------===//
 // Tied operand interface utilities
@@ -137,7 +137,7 @@ bool isOperandTied(Operation *tiedOp, unsigned operandIndex);
 SmallVector<Value> getOperandTiedResults(Operation *op, unsigned operandIndex);
 LogicalResult verifyTiedOp(TiedOpInterface tiedOp);
 
-}  // namespace detail
+} // namespace detail
 
 // Resets or removes the indices in |tiedOperandIndices| based on the given
 // exclusion lists.
@@ -226,14 +226,14 @@ static int64_t getTypeBitWidth(Type type) {
   return type.getIntOrFloatBitWidth();
 }
 
-}  // namespace Util
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Util
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
-#include "iree/compiler/Dialect/Util/IR/UtilAttrInterfaces.h.inc"  // IWYU pragma: export
-#include "iree/compiler/Dialect/Util/IR/UtilOpInterfaces.h.inc"  // IWYU pragma: export
-#include "iree/compiler/Dialect/Util/IR/UtilTypeInterfaces.h.inc"  // IWYU pragma: export
+#include "iree/compiler/Dialect/Util/IR/UtilAttrInterfaces.h.inc" // IWYU pragma: export
+#include "iree/compiler/Dialect/Util/IR/UtilOpInterfaces.h.inc" // IWYU pragma: export
+#include "iree/compiler/Dialect/Util/IR/UtilTypeInterfaces.h.inc" // IWYU pragma: export
 
 // clang-format off: must be included after all LLVM/MLIR headers.
 #define GET_ATTRDEF_CLASSES
@@ -245,4 +245,4 @@ static int64_t getTypeBitWidth(Type type) {
 #include "iree/compiler/Dialect/Util/IR/UtilTypes.h.inc"  // IWYU pragma: keep
 // clang-format on
 
-#endif  // IREE_COMPILER_DIALECT_UTIL_IR_UTILTYPES_H_
+#endif // IREE_COMPILER_DIALECT_UTIL_IR_UTILTYPES_H_

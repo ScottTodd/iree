@@ -14,7 +14,6 @@
 #include "iree/compiler/Codegen/TransformStrategies/Common/AbstractReductionStrategy.h"
 #include "iree/compiler/Codegen/TransformStrategies/Common/Common.h"
 #include "iree/compiler/Dialect/Flow/IR/FlowOps.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Dialect/Linalg/IR/Linalg.h"
 #include "mlir/Dialect/Transform/IR/TransformOps.h"
@@ -22,6 +21,7 @@
 #include "mlir/Dialect/Vector/Transforms/VectorRewritePatterns.h"
 #include "mlir/IR/BuiltinAttributes.h"
 #include "mlir/IR/ImplicitLocOpBuilder.h"
+#include "llvm/Support/Debug.h"
 
 using namespace mlir;
 
@@ -69,7 +69,8 @@ void mlir::iree_compiler::cpu::buildReductionStrategy(
            {maybeLeadingHBlock, strategy.captures.maybeLeadingRank},
            {gridReductionH, strategy.captures.reductionRank},
            {maybeTiledTrailingHBlock, strategy.captures.maybeTrailingRank}}) {
-    if (rank == 0) continue;
+    if (rank == 0)
+      continue;
     SmallVector<int64_t> tileSizes(rank - 1, 0);
     tileSizes.push_back(strategy.getVectorSize());
     buildTileFuseToScfFor(b, variantH, val, {},

@@ -7,10 +7,10 @@
 #include "iree/compiler/Dialect/Util/Analysis/Constant/OpOracle.h"
 
 #include "iree/compiler/Dialect/Util/IR/UtilDialect.h"
-#include "llvm/ADT/SmallPtrSet.h"
 #include "mlir/Dialect/Linalg/IR/Linalg.h"
 #include "mlir/Dialect/Tensor/IR/Tensor.h"
 #include "mlir/Interfaces/SideEffectInterfaces.h"
+#include "llvm/ADT/SmallPtrSet.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -48,7 +48,7 @@ ConstExprOpInfo getInfoForDefaultConstExprOp(Operation *op) {
   return info;
 }
 
-}  // namespace
+} // namespace
 
 void registerConstExprDependentDialects(DialectRegistry &registry) {
   registry.insert<IREE::Util::UtilDialect>();
@@ -158,7 +158,7 @@ bool isHoistableConstExprConsumingOperand(OpOperand *operand) {
   return true;
 }
 
-}  // namespace Util
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Util
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

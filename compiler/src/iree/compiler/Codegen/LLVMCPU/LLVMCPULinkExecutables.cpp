@@ -8,8 +8,8 @@
 #include "iree/compiler/Codegen/PassDetail.h"
 #include "iree/compiler/Codegen/Utils/LinkingUtils.h"
 #include "iree/compiler/Utils/ModuleUtils.h"
-#include "llvm/Support/FormatVariadic.h"
 #include "mlir/Pass/Pass.h"
+#include "llvm/Support/FormatVariadic.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -25,7 +25,8 @@ struct LLVMCPULinkExecutablesPass
 
     auto sourceExecutableOps =
         llvm::to_vector<8>(moduleOp.getOps<IREE::HAL::ExecutableOp>());
-    if (sourceExecutableOps.size() <= 1) return;
+    if (sourceExecutableOps.size() <= 1)
+      return;
 
     // Guess a module name, if needed, to make the output files readable.
     auto moduleName = guessModuleName(moduleOp, "llvm_module");
@@ -62,12 +63,12 @@ struct LLVMCPULinkExecutablesPass
   }
 };
 
-}  // namespace
+} // namespace
 
 std::unique_ptr<OperationPass<mlir::ModuleOp>>
 createLLVMCPULinkExecutablesPass() {
   return std::make_unique<LLVMCPULinkExecutablesPass>();
 }
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir

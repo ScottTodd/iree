@@ -8,10 +8,10 @@
 
 #include "iree/compiler/Dialect/Util/IR/UtilTypes.h"
 #include "iree/compiler/Dialect/VM/IR/VMOps.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/IR/BuiltinTypes.h"
+#include "llvm/Support/Debug.h"
 
 #define DEBUG_TYPE "iree-vm"
 
@@ -121,7 +121,7 @@ TypeConverter::TypeConverter(TargetOptions targetOptions)
          Location loc) -> Value { return inputs.front(); });
 }
 
-}  // namespace VM
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace VM
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

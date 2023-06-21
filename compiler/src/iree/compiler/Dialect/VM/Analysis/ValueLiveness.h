@@ -8,12 +8,12 @@
 #define IREE_COMPILER_DIALECT_VM_ANALYSIS_VALUELIVENESS_H_
 
 #include "iree/compiler/Dialect/VM/IR/VMOps.h"
-#include "llvm/ADT/BitVector.h"
-#include "llvm/ADT/DenseMap.h"
-#include "llvm/ADT/SetVector.h"
 #include "mlir/IR/Block.h"
 #include "mlir/IR/Operation.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/BitVector.h"
+#include "llvm/ADT/DenseMap.h"
+#include "llvm/ADT/SetVector.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -23,7 +23,7 @@ namespace iree_compiler {
 // These live ranges can be queried for information such as whether two values
 // interfere or when a value is no longer live.
 class ValueLiveness {
- public:
+public:
   // Annotates the IR with the liveness information. This is only required if
   // the liveness information (block in/out, intervals, etc) are interesting to
   // persist beyond just encoding, such as in tests where we want to compare
@@ -51,7 +51,7 @@ class ValueLiveness {
   // value.
   bool isLastValueUse(Value value, Operation *useOp, int operandIndex);
 
- private:
+private:
   // Produces an op ordering for the entire function.
   // The ordering is only useful for computing bitmap ordinals as the CFG is not
   // sorted in any defined order (don't rely on op A < op B meaning that A is
@@ -97,7 +97,7 @@ class ValueLiveness {
   DenseMap<Value, llvm::BitVector> liveRanges_;
 };
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_DIALECT_VM_ANALYSIS_VALUELIVENESS_H_
+#endif // IREE_COMPILER_DIALECT_VM_ANALYSIS_VALUELIVENESS_H_

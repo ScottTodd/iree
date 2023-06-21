@@ -6,9 +6,9 @@
 
 #include "iree/compiler/Dialect/Flow/IR/FlowTypes.h"
 
+#include "mlir/IR/DialectImplementation.h"
 #include "llvm/ADT/StringExtras.h"
 #include "llvm/ADT/TypeSwitch.h"
-#include "mlir/IR/DialectImplementation.h"
 
 // clang-format off: must be included after all LLVM/MLIR headers.
 #define GET_ATTRDEF_CLASSES
@@ -67,7 +67,8 @@ int64_t DispatchTensorType::getNumElements() const {
   assert(hasStaticShape() && "cannot get element count of dynamic shaped type");
   auto shape = getShape();
   int64_t num = 1;
-  for (auto dim : shape) num *= dim;
+  for (auto dim : shape)
+    num *= dim;
   return num;
 }
 
@@ -117,9 +118,9 @@ bool DispatchTensorType::hasStaticShape(ArrayRef<int64_t> shape) const {
   return hasStaticShape() && getShape() == shape;
 }
 
-LogicalResult DispatchTensorType::verify(
-    function_ref<InFlightDiagnostic()> emitError, uint32_t access,
-    Type boundType) {
+LogicalResult
+DispatchTensorType::verify(function_ref<InFlightDiagnostic()> emitError,
+                           uint32_t access, Type boundType) {
   if (!boundType.isIntOrFloat() && !llvm::isa<RankedTensorType>(boundType)) {
     return emitError() << "unhandled bounded type in dispatch. Must by int, "
                           "float or ranked tensor type";
@@ -127,8 +128,7 @@ LogicalResult DispatchTensorType::verify(
   return success();
 }
 
-template <typename T>
-static T parseShapedType(AsmParser &parser) {
+template <typename T> static T parseShapedType(AsmParser &parser) {
   StringRef accessStr;
   Type boundType;
   if (failed(parser.parseLess()) || failed(parser.parseKeyword(&accessStr)) ||
@@ -146,17 +146,17 @@ static T parseShapedType(AsmParser &parser) {
 
 static void printShapedType(DispatchTensorType &type, AsmPrinter &p) {
   switch (type.getAccess()) {
-    case TensorAccess::ReadOnly:
-      p << "readonly";
-      break;
-    case TensorAccess::ReadWrite:
-      p << "readwrite";
-      break;
-    case TensorAccess::WriteOnly:
-      p << "writeonly";
-      break;
-    default:
-      assert(false && "unhandled access");
+  case TensorAccess::ReadOnly:
+    p << "readonly";
+    break;
+  case TensorAccess::ReadWrite:
+    p << "readwrite";
+    break;
+  case TensorAccess::WriteOnly:
+    p << "writeonly";
+    break;
+  default:
+    assert(false && "unhandled access");
   }
   p << ":" << type.getBoundType();
 }
@@ -176,13 +176,13 @@ void printType(DispatchTensorType &type, DialectAsmPrinter &p) {
 // Dialect registration
 //===----------------------------------------------------------------------===//
 
-#include "iree/compiler/Dialect/Flow/IR/FlowOpInterfaces.cpp.inc"  // IWYU pragma: keep
-#include "iree/compiler/Dialect/Flow/IR/FlowTypeInterfaces.cpp.inc"  // IWYU pragma: keep
+#include "iree/compiler/Dialect/Flow/IR/FlowOpInterfaces.cpp.inc" // IWYU pragma: keep
+#include "iree/compiler/Dialect/Flow/IR/FlowTypeInterfaces.cpp.inc" // IWYU pragma: keep
 
 void FlowDialect::registerAttributes() {
   addAttributes<
 #define GET_ATTRDEF_LIST
-#include "iree/compiler/Dialect/Flow/IR/FlowAttrs.cpp.inc"  // IWYU pragma: keep
+#include "iree/compiler/Dialect/Flow/IR/FlowAttrs.cpp.inc" // IWYU pragma: keep
       >();
 }
 
@@ -190,7 +190,7 @@ void FlowDialect::registerTypes() {
   addTypes<DispatchTensorType>();
   addTypes<
 #define GET_TYPEDEF_LIST
-#include "iree/compiler/Dialect/Flow/IR/FlowTypes.cpp.inc"  // IWYU pragma: keep
+#include "iree/compiler/Dialect/Flow/IR/FlowTypes.cpp.inc" // IWYU pragma: keep
       >();
 }
 
@@ -203,7 +203,8 @@ Type FlowDialect::parseType(DialectAsmParser &parser) const {
   Type type;
   OptionalParseResult parseResult =
       generatedTypeParser(parser, &mnemonic, type);
-  if (parseResult.has_value()) return type;
+  if (parseResult.has_value())
+    return type;
   if (mnemonic == "dispatch.tensor") {
     return DispatchTensorType::parse(parser);
   }
@@ -220,7 +221,7 @@ void FlowDialect::printType(Type type, DialectAsmPrinter &p) const {
   }
 }
 
-}  // namespace Flow
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Flow
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

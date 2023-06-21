@@ -12,13 +12,13 @@
 #include "iree/compiler/Dialect/Stream/IR/StreamOps.h"
 #include "iree/compiler/Dialect/Util/IR/UtilDialect.h"
 #include "iree/compiler/Dialect/Util/IR/UtilOps.h"
-#include "llvm/ADT/TypeSwitch.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/IR/BuiltinTypes.h"
 #include "mlir/IR/Diagnostics.h"
+#include "llvm/ADT/TypeSwitch.h"
+#include "llvm/Support/Debug.h"
 
 #define DEBUG_TYPE "iree-util-dfx"
 
@@ -46,12 +46,13 @@ static bool isWriteOnly(ResourceAccessBitfield access) {
   return access == ResourceAccessBitfield::Write;
 }
 static bool isReadWrite(ResourceAccessBitfield access) {
-  return bitEnumContainsAny(
-      access, ResourceAccessBitfield::Read | ResourceAccessBitfield::Write);
+  return bitEnumContainsAny(access, ResourceAccessBitfield::Read |
+                                        ResourceAccessBitfield::Write);
 }
 
 static bool doesRangeOverlap(AsyncAccessRange &lhs, AsyncAccessRange &rhs) {
-  if (lhs.resource != rhs.resource) return false;
+  if (lhs.resource != rhs.resource)
+    return false;
 
   if (lhs.end == rhs.start || lhs.start == rhs.end) {
     // Adjacent but not overlapping.
@@ -156,7 +157,7 @@ bool ResourceHazardAnalysis::hasHazard(Operation *producerOp,
   return false;
 }
 
-}  // namespace Stream
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Stream
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

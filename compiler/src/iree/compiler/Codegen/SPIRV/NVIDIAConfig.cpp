@@ -13,12 +13,12 @@
 #include "iree/compiler/Codegen/Dialect/LoweringConfig.h"
 #include "iree/compiler/Codegen/SPIRV/KernelConfig.h"
 #include "iree/compiler/Codegen/Utils/Utils.h"
-#include "llvm/ADT/APInt.h"
-#include "llvm/Support/Debug.h"
-#include "llvm/Support/MathExtras.h"
 #include "mlir/Dialect/Linalg/IR/Linalg.h"
 #include "mlir/Dialect/SPIRV/IR/SPIRVAttributes.h"
 #include "mlir/IR/BuiltinOps.h"
+#include "llvm/ADT/APInt.h"
+#include "llvm/Support/Debug.h"
+#include "llvm/Support/MathExtras.h"
 
 #define DEBUG_TYPE "iree-spirv-nvidia-config"
 
@@ -95,6 +95,6 @@ LogicalResult setNVIDIACodeGenConfig(const spirv::TargetEnv &targetEnv,
   return failure();
 }
 
-}  // namespace detail
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace detail
+} // namespace iree_compiler
+} // namespace mlir

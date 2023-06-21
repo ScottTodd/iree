@@ -11,9 +11,6 @@
 
 #include "iree/compiler/Dialect/Stream/IR/StreamDialect.h"
 #include "iree/compiler/Dialect/Util/IR/UtilTypes.h"
-#include "llvm/ADT/DenseMapInfo.h"
-#include "llvm/ADT/SmallVector.h"
-#include "llvm/ADT/StringSwitch.h"
 #include "mlir/IR/BuiltinTypes.h"
 #include "mlir/IR/DialectImplementation.h"
 #include "mlir/IR/OpImplementation.h"
@@ -21,6 +18,9 @@
 #include "mlir/IR/TypeSupport.h"
 #include "mlir/IR/Types.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/DenseMapInfo.h"
+#include "llvm/ADT/SmallVector.h"
+#include "llvm/ADT/StringSwitch.h"
 
 // clang-format off: must be included after all LLVM/MLIR headers.
 #include "iree/compiler/Dialect/Stream/IR/StreamEnums.h.inc"  // IWYU pragma: export
@@ -35,10 +35,12 @@ struct FieldParser<
   static FailureOr<mlir::iree_compiler::IREE::Stream::CollectiveReductionOp>
   parse(AsmParser &parser) {
     std::string value;
-    if (parser.parseKeywordOrString(&value)) return failure();
+    if (parser.parseKeywordOrString(&value))
+      return failure();
     auto result = mlir::iree_compiler::IREE::Stream::symbolizeEnum<
         mlir::iree_compiler::IREE::Stream::CollectiveReductionOp>(value);
-    if (!result.has_value()) return failure();
+    if (!result.has_value())
+      return failure();
     return result.value();
   }
 };
@@ -53,26 +55,26 @@ static inline AsmPrinter &operator<<(
   return printer;
 }
 
-}  // namespace mlir
+} // namespace mlir
 
 // clang-format off: must be included after all LLVM/MLIR headers.
 #define GET_ATTRDEF_CLASSES
 #include "iree/compiler/Dialect/Stream/IR/StreamAttrs.h.inc"  // IWYU pragma: keep
 // clang-format on
 
-#include "iree/compiler/Dialect/Stream/IR/StreamAttrInterfaces.h.inc"  // IWYU pragma: export
+#include "iree/compiler/Dialect/Stream/IR/StreamAttrInterfaces.h.inc" // IWYU pragma: export
 
 namespace mlir {
 namespace iree_compiler {
 namespace IREE {
 namespace Stream {
 
-#include "iree/compiler/Dialect/Stream/IR/StreamTypeInterfaces.h.inc"  // IWYU pragma: export
+#include "iree/compiler/Dialect/Stream/IR/StreamTypeInterfaces.h.inc" // IWYU pragma: export
 
-}  // namespace Stream
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Stream
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
 // clang-format off: must be included after all LLVM/MLIR headers.
 #define GET_TYPEDEF_CLASSES
@@ -87,16 +89,16 @@ namespace Stream {
 struct AsyncAccessRange {
   ResourceAccessBitfield access;
   Value resource;
-  Value start;  // may be nullptr to indicate 0
+  Value start; // may be nullptr to indicate 0
   Value end;
   Value length;
 };
 
-#include "iree/compiler/Dialect/Stream/IR/StreamOpInterfaces.h.inc"  // IWYU pragma: export
+#include "iree/compiler/Dialect/Stream/IR/StreamOpInterfaces.h.inc" // IWYU pragma: export
 
-}  // namespace Stream
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Stream
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_DIALECT_STREAM_IR_STREAMTYPES_H_
+#endif // IREE_COMPILER_DIALECT_STREAM_IR_STREAMTYPES_H_

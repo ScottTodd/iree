@@ -9,7 +9,6 @@
 #include "iree/compiler/Dialect/Flow/IR/FlowOps.h"
 #include "iree/compiler/Dialect/Flow/IR/FlowTypes.h"
 #include "iree/compiler/Dialect/Util/IR/UtilDialect.h"
-#include "llvm/Support/SourceMgr.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Dialect/Tensor/IR/Tensor.h"
@@ -19,6 +18,7 @@
 #include "mlir/Parser/Parser.h"
 #include "mlir/Transforms/FoldUtils.h"
 #include "mlir/Transforms/InliningUtils.h"
+#include "llvm/Support/SourceMgr.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -58,7 +58,7 @@ struct FlowFolderInterface : public DialectFoldInterface {
   }
 };
 
-}  // namespace
+} // namespace
 
 FlowDialect::FlowDialect(MLIRContext *context)
     : Dialect(getDialectNamespace(), context, TypeID::get<FlowDialect>()) {
@@ -83,7 +83,7 @@ Operation *FlowDialect::materializeConstant(OpBuilder &builder, Attribute value,
   return nullptr;
 }
 
-}  // namespace Flow
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Flow
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

@@ -6,7 +6,6 @@
 
 #include "iree/compiler/Codegen/Common/CommonPasses.h"
 #include "iree/compiler/Codegen/PassDetail.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/Affine/IR/AffineOps.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/Arith/Utils/Utils.h"
@@ -21,6 +20,7 @@
 #include "mlir/IR/Matchers.h"
 #include "mlir/IR/PatternMatch.h"
 #include "mlir/Transforms/GreedyPatternRewriteDriver.h"
+#include "llvm/Support/Debug.h"
 
 #define DEBUG_TYPE "iree-codegen-decompose-pack-unpack-ops"
 
@@ -78,10 +78,12 @@ struct FoldTrailingUnitTranspose
     int numDropDims = 0;
     ArrayRef<int64_t> perm = op.getPermutation();
     for (int idx = inputTy.getRank() - 1; idx >= 0; idx--) {
-      if (idx != perm[idx] || inputTy.getDimSize(idx) != 1) break;
+      if (idx != perm[idx] || inputTy.getDimSize(idx) != 1)
+        break;
       numDropDims++;
     }
-    if (numDropDims == 0) return failure();
+    if (numDropDims == 0)
+      return failure();
 
     Location loc = op.getLoc();
     SmallVector<OpFoldResult> srcMixedSizes =
@@ -127,7 +129,7 @@ struct DecomposePackUnPackOpsPass
 
   void runOnOperation() override;
 };
-}  // namespace
+} // namespace
 
 void DecomposePackUnPackOpsPass::runOnOperation() {
   MLIRContext *ctx = &getContext();
@@ -188,7 +190,8 @@ void DecomposePackUnPackOpsPass::runOnOperation() {
       FailureOr<scf::SCFTileAndFuseResult> tileAndFuseResult =
           scf::tileConsumerAndFuseProducerGreedilyUsingSCFForOp(
               rewriter, cast<TilingInterface>(op.getOperation()), packOptions);
-      if (failed(tileAndFuseResult)) return signalPassFailure();
+      if (failed(tileAndFuseResult))
+        return signalPassFailure();
       rewriter.replaceOp(op, tileAndFuseResult->replacements[op.getResult()]);
     });
 
@@ -215,7 +218,8 @@ void DecomposePackUnPackOpsPass::runOnOperation() {
       FailureOr<scf::SCFTilingResult> tilingResult = scf::tileUsingSCFForOp(
           rewriter, cast<TilingInterface>(op.getOperation()),
           unpackTilingOptions);
-      if (failed(tilingResult)) return signalPassFailure();
+      if (failed(tilingResult))
+        return signalPassFailure();
       rewriter.replaceOp(op, tilingResult->replacements);
     });
 
@@ -264,10 +268,10 @@ void DecomposePackUnPackOpsPass::runOnOperation() {
   }
 }
 
-std::unique_ptr<OperationPass<func::FuncOp>> createDecomposePackUnPackOpsPass(
-    bool tileOuterToOne) {
+std::unique_ptr<OperationPass<func::FuncOp>>
+createDecomposePackUnPackOpsPass(bool tileOuterToOne) {
   return std::make_unique<DecomposePackUnPackOpsPass>(tileOuterToOne);
 }
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir

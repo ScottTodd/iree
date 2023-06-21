@@ -24,15 +24,13 @@ namespace iree_compiler {
 ///   FunctionLikeNest(passManager)
 ///     .addPass(createMyPass)
 ///     .addPredicatedPass(enable, createMyOtherPass);
-template <typename... OpTys>
-struct MultiOpNest {
- public:
+template <typename... OpTys> struct MultiOpNest {
+public:
   MultiOpNest(OpPassManager &parentPm) : parentPm(parentPm) {
     addNest<0, OpTys...>();
   }
 
-  template <typename F>
-  MultiOpNest &addPass(F constructor) {
+  template <typename F> MultiOpNest &addPass(F constructor) {
     addPassInternal(constructor);
     return *this;
   }
@@ -52,19 +50,16 @@ struct MultiOpNest {
     return *this;
   }
 
- private:
+private:
   // Initialize a nest.
-  template <int index, typename T, typename... Rest>
-  void addNest() {
+  template <int index, typename T, typename... Rest> void addNest() {
     std::get<index>(nestedPassManagers) = &parentPm.nest<T>();
     addNest<index + 1, Rest...>();
   }
-  template <int index>
-  void addNest() {}
+  template <int index> void addNest() {}
 
   // Add a pass to all nests by constructor.
-  template <typename F>
-  void addPassInternal(F constructor) {
+  template <typename F> void addPassInternal(F constructor) {
     addPassRecurse<F, 0, OpTys...>(constructor);
   }
   template <typename F, int index, typename T, typename... Rest>
@@ -72,8 +67,7 @@ struct MultiOpNest {
     std::get<index>(nestedPassManagers)->addPass(constructor());
     addPassRecurse<F, index + 1, Rest...>(constructor);
   }
-  template <typename F, int index>
-  void addPassRecurse(F constructor) {}
+  template <typename F, int index> void addPassRecurse(F constructor) {}
 
   OpPassManager &parentPm;
   std::array<OpPassManager *, sizeof...(OpTys)> nestedPassManagers;
@@ -83,7 +77,7 @@ struct MultiOpNest {
 // has been made which requires another iteration. No-op otherwise.
 void signalFixedPointModified(Operation *rootOp);
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_UTILS_FUNCTIONUTILS_H_
+#endif // IREE_COMPILER_UTILS_FUNCTIONUTILS_H_

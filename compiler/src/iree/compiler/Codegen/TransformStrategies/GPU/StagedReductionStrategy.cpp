@@ -12,11 +12,11 @@
 #include "iree/compiler/Codegen/TransformStrategies/Common/Common.h"
 #include "iree/compiler/Codegen/TransformStrategies/GPU/Common.h"
 #include "iree/compiler/Codegen/TransformStrategies/GPU/Strategies.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/SCF/IR/SCF.h"
 #include "mlir/Dialect/Transform/IR/TransformDialect.h"
 #include "mlir/Dialect/Transform/IR/TransformOps.h"
 #include "mlir/IR/ImplicitLocOpBuilder.h"
+#include "llvm/Support/Debug.h"
 
 using namespace mlir;
 
@@ -102,7 +102,8 @@ void mlir::iree_compiler::gpu::StagedReductionStrategy::configure(
     // TODO: splitting here also requires the post-bufferization privatization
     // analysis (see #11715).
     for (vectorSize = maxVectorSize; vectorSize > 1; vectorSize >>= 1)
-      if (reductionDimensionSize % vectorSize == 0) break;
+      if (reductionDimensionSize % vectorSize == 0)
+        break;
     // Pad to the next multiple of the warp size above
     // `reductionDimensionSize / vectorSize` but below `maxNumThreadsToUse`.
     numThreadsXInBlock = std::min(

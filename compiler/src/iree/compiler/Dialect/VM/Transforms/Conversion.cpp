@@ -17,7 +17,6 @@
 #include "iree/compiler/Dialect/VM/Conversion/StandardToVM/ConvertStandardToVM.h"
 #include "iree/compiler/Dialect/VM/Conversion/TypeConverter.h"
 #include "iree/compiler/Dialect/VM/Conversion/UtilToVM/ConvertUtilToVM.h"
-#include "llvm/ADT/STLExtras.h"
 #include "mlir/Conversion/AffineToStandard/AffineToStandard.h"
 #include "mlir/Dialect/Affine/IR/AffineOps.h"
 #include "mlir/Dialect/Arith/Transforms/Passes.h"
@@ -28,6 +27,7 @@
 #include "mlir/Pass/Pass.h"
 #include "mlir/Pass/PassRegistry.h"
 #include "mlir/Transforms/DialectConversion.h"
+#include "llvm/ADT/STLExtras.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -40,7 +40,7 @@ namespace {
 // We should add native VM ops for supporting them.
 template <typename OpTy, arith::CmpIPredicate pred>
 struct MaxMinIOpConverter : public OpRewritePattern<OpTy> {
- public:
+public:
   using OpRewritePattern<OpTy>::OpRewritePattern;
   LogicalResult matchAndRewrite(OpTy op,
                                 PatternRewriter &rewriter) const final {
@@ -72,9 +72,11 @@ SmallVector<const T *> gatherUsedDialectInterfaces(mlir::ModuleOp moduleOp) {
       // Generic dialect lookup.
       dialect = op->getDialect();
     }
-    if (!dialect) return;
+    if (!dialect)
+      return;
     auto *dialectInterface = dialect->getRegisteredInterface<T>();
-    if (!dialectInterface) return;
+    if (!dialectInterface)
+      return;
     resultSet.insert(dialectInterface);
   });
 
@@ -89,12 +91,12 @@ SmallVector<const T *> gatherUsedDialectInterfaces(mlir::ModuleOp moduleOp) {
   return results;
 }
 
-}  // namespace
+} // namespace
 
 // Runs conversion with registered input dialects.
 class ConversionPass
     : public PassWrapper<ConversionPass, OperationPass<mlir::ModuleOp>> {
- public:
+public:
   explicit ConversionPass(TargetOptions targetOptions)
       : targetOptions_(targetOptions) {}
 
@@ -111,7 +113,8 @@ class ConversionPass
   }
 
   void runOnOperation() override {
-    if (getOperation().getBody()->empty()) return;
+    if (getOperation().getBody()->empty())
+      return;
 
     auto *context = &getContext();
     VMConversionTarget conversionTarget(context);
@@ -175,12 +178,12 @@ class ConversionPass
     }
   }
 
- private:
+private:
   TargetOptions targetOptions_;
 };
 
-std::unique_ptr<OperationPass<mlir::ModuleOp>> createConversionPass(
-    TargetOptions targetOptions) {
+std::unique_ptr<OperationPass<mlir::ModuleOp>>
+createConversionPass(TargetOptions targetOptions) {
   return std::make_unique<ConversionPass>(targetOptions);
 }
 
@@ -191,7 +194,7 @@ static PassRegistration<ConversionPass> pass(
       return std::make_unique<ConversionPass>(options);
     });
 
-}  // namespace VM
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace VM
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

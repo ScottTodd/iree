@@ -6,9 +6,9 @@
 
 #include "iree/compiler/API/Internal/Diagnostics.h"
 
+#include "mlir/IR/BuiltinAttributes.h"
 #include "llvm/ADT/TypeSwitch.h"
 #include "llvm/Support/raw_ostream.h"
-#include "mlir/IR/BuiltinAttributes.h"
 
 // Much of the formatting logic below was adapted from the
 // SourceMgrDiagnosticHandler but without the logic for printing actual source
@@ -22,7 +22,8 @@ namespace mlir::iree_compiler::embed {
 namespace {
 /// Return a processable CallSiteLoc from the given location.
 std::optional<CallSiteLoc> getCallSiteLoc(Location loc) {
-  if (auto callLoc = dyn_cast<CallSiteLoc>(loc)) return callLoc;
+  if (auto callLoc = dyn_cast<CallSiteLoc>(loc))
+    return callLoc;
   if (auto nameLoc = dyn_cast<NameLoc>(loc))
     return getCallSiteLoc(cast<NameLoc>(loc).getChildLoc());
   if (auto fusedLoc = dyn_cast<FusedLoc>(loc)) {
@@ -66,7 +67,7 @@ std::optional<Location> findLocToShow(Location loc) {
       });
 }
 
-}  // namespace
+} // namespace
 
 FormattingDiagnosticHandler::FormattingDiagnosticHandler(MLIRContext *ctx,
                                                          Callback callback)
@@ -148,4 +149,4 @@ LogicalResult FormattingDiagnosticHandler::emit(Diagnostic &diag) {
   return success();
 }
 
-}  // namespace mlir::iree_compiler::embed
+} // namespace mlir::iree_compiler::embed

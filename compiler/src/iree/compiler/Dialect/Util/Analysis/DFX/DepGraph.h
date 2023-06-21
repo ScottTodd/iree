@@ -7,12 +7,12 @@
 #ifndef IREE_COMPILER_DIALECT_UTIL_ANALYSIS_DFX_DEPGRAPH_H_
 #define IREE_COMPILER_DIALECT_UTIL_ANALYSIS_DFX_DEPGRAPH_H_
 
+#include "mlir/IR/AsmState.h"
+#include "mlir/Support/LLVM.h"
 #include "llvm/ADT/GraphTraits.h"
 #include "llvm/ADT/PointerIntPair.h"
 #include "llvm/ADT/TinyPtrVector.h"
 #include "llvm/Support/raw_ostream.h"
-#include "mlir/IR/AsmState.h"
-#include "mlir/Support/LLVM.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -33,12 +33,12 @@ enum class Resolution {
 
 // The data structure for the nodes of a dependency graph
 class DepGraphNode {
- public:
+public:
   using DepTy = llvm::PointerIntPair<DepGraphNode *, 1>;
 
   virtual ~DepGraphNode() = default;
 
- protected:
+protected:
   // Set of dependency graph nodes which should be updated if this one
   // is updated. The bit encodes if it is optional.
   TinyPtrVector<DepTy> deps;
@@ -50,7 +50,7 @@ class DepGraphNode {
 
   operator AbstractElement *() { return cast<AbstractElement>(this); }
 
- public:
+public:
   using iterator = llvm::mapped_iterator<TinyPtrVector<DepTy>::iterator,
                                          decltype(&DepGetVal)>;
   using aaiterator = llvm::mapped_iterator<TinyPtrVector<DepTy>::iterator,
@@ -99,17 +99,16 @@ struct DepGraph {
   AsmState &asmState;
 };
 
-}  // namespace DFX
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace DFX
+} // namespace iree_compiler
+} // namespace mlir
 
 namespace llvm {
 
 using DFXDepGraph = mlir::iree_compiler::DFX::DepGraph;
 using DFXDepGraphNode = mlir::iree_compiler::DFX::DepGraphNode;
 
-template <>
-struct GraphTraits<DFXDepGraphNode *> {
+template <> struct GraphTraits<DFXDepGraphNode *> {
   using NodeRef = DFXDepGraphNode *;
   using DepTy = llvm::PointerIntPair<DFXDepGraphNode *, 1>;
   using EdgeRef = llvm::PointerIntPair<DFXDepGraphNode *, 1>;
@@ -141,6 +140,6 @@ struct GraphTraits<DFXDepGraph *> : public GraphTraits<DFXDepGraphNode *> {
   static nodes_iterator nodes_end(DFXDepGraph *graph) { return graph->end(); }
 };
 
-}  // end namespace llvm
+} // end namespace llvm
 
-#endif  // IREE_COMPILER_DIALECT_UTIL_ANALYSIS_DFX_DEPGRAPH_H_
+#endif // IREE_COMPILER_DIALECT_UTIL_ANALYSIS_DFX_DEPGRAPH_H_

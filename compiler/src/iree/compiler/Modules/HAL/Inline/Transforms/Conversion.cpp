@@ -15,7 +15,6 @@
 #include "iree/compiler/Modules/HAL/Inline/IR/HALInlineDialect.h"
 #include "iree/compiler/Modules/HAL/Inline/Transforms/PassDetail.h"
 #include "iree/compiler/Modules/HAL/Inline/Transforms/Passes.h"
-#include "llvm/ADT/STLExtras.h"
 #include "mlir/Dialect/Affine/IR/AffineOps.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Dialect/Math/IR/Math.h"
@@ -25,6 +24,7 @@
 #include "mlir/Pass/Pass.h"
 #include "mlir/Pass/PassRegistry.h"
 #include "mlir/Transforms/DialectConversion.h"
+#include "llvm/ADT/STLExtras.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -34,7 +34,7 @@ namespace Inline {
 
 // Runs conversion with registered input dialects.
 class ConversionPass : public ConversionBase<ConversionPass> {
- public:
+public:
   void getDependentDialects(DialectRegistry &registry) const override {
     registry.insert<IREE::Util::UtilDialect, IREE::HAL::HALDialect,
                     IREE::HAL::Inline::HALInlineDialect,
@@ -97,8 +97,8 @@ std::unique_ptr<OperationPass<mlir::ModuleOp>> createConversionPass() {
   return std::make_unique<ConversionPass>();
 }
 
-}  // namespace Inline
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Inline
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

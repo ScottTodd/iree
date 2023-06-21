@@ -6,8 +6,8 @@
 #include "iree/compiler/Preprocessing/Passes.h"
 
 #include "iree/compiler/Preprocessing/Common/Passes.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Pass/PassRegistry.h"
+#include "llvm/Support/Debug.h"
 
 #define DEBUG_TYPE "iree-preprocessing-pass-pipeline"
 
@@ -54,7 +54,7 @@ void extendWithTextPipeline(OpPassManager &passManager,
   });
 }
 
-}  // namespace
+} // namespace
 
 void buildPreprocessingPassPipeline(
     OpPassManager &passManager,
@@ -73,6 +73,6 @@ void buildPreprocessingPassPipeline(
 
 void registerPreprocessingPasses() { registerCommonPreprocessingPasses(); }
 
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

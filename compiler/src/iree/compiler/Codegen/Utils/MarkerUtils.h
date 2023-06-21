@@ -14,9 +14,9 @@
 #ifndef IREE_COMPILER_CODEGEN_CODEGENUTILS_MARKERUTILS_H_
 #define IREE_COMPILER_CODEGEN_CODEGENUTILS_MARKERUTILS_H_
 
-#include "llvm/ADT/ArrayRef.h"
 #include "mlir/IR/Operation.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/ArrayRef.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -59,7 +59,7 @@ bool hasMarker(Operation *, ArrayRef<StringRef> markers = {});
 /// Sets a given marker on an operation.
 void setMarker(Operation *, StringRef);
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_CODEGEN_CODEGENUTILS_MARKERUTILS_H_
+#endif // IREE_COMPILER_CODEGEN_CODEGENUTILS_MARKERUTILS_H_

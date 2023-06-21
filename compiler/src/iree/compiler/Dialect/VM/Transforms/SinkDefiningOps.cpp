@@ -6,7 +6,6 @@
 
 #include "iree/compiler/Dialect/VM/IR/VMOps.h"
 #include "iree/compiler/Dialect/VM/Transforms/Passes.h"
-#include "llvm/ADT/ArrayRef.h"
 #include "mlir/Dialect/Affine/Utils.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/Dominance.h"
@@ -17,6 +16,7 @@
 #include "mlir/Pass/PassRegistry.h"
 #include "mlir/Support/LLVM.h"
 #include "mlir/Support/LogicalResult.h"
+#include "llvm/ADT/ArrayRef.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -25,7 +25,7 @@ namespace VM {
 
 class SinkDefiningOpsPass
     : public PassWrapper<SinkDefiningOpsPass, OperationPass<ModuleOp>> {
- public:
+public:
   StringRef getArgument() const override { return "iree-vm-sink-defining-ops"; }
 
   StringRef getDescription() const override {
@@ -90,7 +90,7 @@ std::unique_ptr<OperationPass<ModuleOp>> createSinkDefiningOpsPass() {
 
 static PassRegistration<SinkDefiningOpsPass> pass;
 
-}  // namespace VM
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace VM
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

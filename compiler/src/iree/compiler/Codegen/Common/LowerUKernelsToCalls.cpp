@@ -7,10 +7,10 @@
 #include "iree/compiler/Codegen/Common/CommonPasses.h"
 #include "iree/compiler/Codegen/Interfaces/UKernelOpInterface.h"
 #include "iree/compiler/Codegen/PassDetail.h"
-#include "llvm/ADT/MapVector.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Dialect/MemRef/IR/MemRef.h"
 #include "mlir/Transforms/GreedyPatternRewriteDriver.h"
+#include "llvm/ADT/MapVector.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -23,7 +23,7 @@ struct LowerUKernelOpsToCallsPass
   }
   void runOnOperation() override;
 };
-}  // namespace
+} // namespace
 
 void LowerUKernelOpsToCallsPass::runOnOperation() {
   MLIRContext *context = &getContext();
@@ -58,5 +58,5 @@ std::unique_ptr<OperationPass<ModuleOp>> createLowerUKernelOpsToCallsPass() {
   return std::make_unique<LowerUKernelOpsToCallsPass>();
 }
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir

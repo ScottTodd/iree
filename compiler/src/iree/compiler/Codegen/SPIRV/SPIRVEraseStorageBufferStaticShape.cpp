@@ -9,7 +9,6 @@
 #include "iree/compiler/Codegen/Transforms/Transforms.h"
 #include "iree/compiler/Codegen/Utils/Utils.h"
 #include "iree/compiler/Dialect/HAL/IR/HALTypes.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/Affine/Utils.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Dialect/MemRef/IR/MemRef.h"
@@ -17,6 +16,7 @@
 #include "mlir/IR/BuiltinTypes.h"
 #include "mlir/IR/Matchers.h"
 #include "mlir/Transforms/GreedyPatternRewriteDriver.h"
+#include "llvm/Support/Debug.h"
 
 #define DEBUG_TYPE "iree-spirv-erase-storage-buffer-static-shape"
 
@@ -36,10 +36,12 @@ class EraseStorageBufferStaticShapePass final
 bool is1DStaticShapedStorageBuffer(
     IREE::HAL::InterfaceBindingSubspanOp subspanOp) {
   auto type = llvm::dyn_cast<MemRefType>(subspanOp.getType());
-  if (!type) return false;
+  if (!type)
+    return false;
   auto attr = llvm::dyn_cast_if_present<IREE::HAL::DescriptorTypeAttr>(
       type.getMemorySpace());
-  if (!attr) return false;
+  if (!attr)
+    return false;
   return type.hasStaticShape() && type.getRank() == 1 &&
          attr.getValue() == IREE::HAL::DescriptorType::StorageBuffer;
 }
@@ -58,8 +60,9 @@ bool is1DStaticShapedStorageBuffer(
 ///  hal.interface.binding.subspan set(0) binding(0) offset(%offset)
 ///      : memref<?xf32>{%c16}
 /// ```
-IREE::HAL::InterfaceBindingSubspanOp rewriteStorageBufferSubspanOp(
-    RewriterBase &rewriter, IREE::HAL::InterfaceBindingSubspanOp subspanOp) {
+IREE::HAL::InterfaceBindingSubspanOp
+rewriteStorageBufferSubspanOp(RewriterBase &rewriter,
+                              IREE::HAL::InterfaceBindingSubspanOp subspanOp) {
   assert(is1DStaticShapedStorageBuffer(subspanOp));
   LLVM_DEBUG({
     llvm::dbgs() << "Rewriting subspan op: ";
@@ -94,7 +97,7 @@ IREE::HAL::InterfaceBindingSubspanOp rewriteStorageBufferSubspanOp(
   return newOp;
 }
 
-}  // namespace
+} // namespace
 
 void EraseStorageBufferStaticShapePass::runOnOperation() {
   func::FuncOp funcOp = getOperation();
@@ -131,5 +134,5 @@ createSPIRVEraseStorageBufferStaticShapePass() {
   return std::make_unique<EraseStorageBufferStaticShapePass>();
 }
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir

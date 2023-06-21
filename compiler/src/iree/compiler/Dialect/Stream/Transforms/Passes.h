@@ -9,11 +9,11 @@
 
 #include "iree/compiler/Dialect/Stream/IR/StreamOps.h"
 #include "iree/compiler/Dialect/Stream/Transforms/PassDetail.h"
-#include "llvm/ADT/StringMap.h"
 #include "mlir/IR/BuiltinOps.h"
 #include "mlir/Pass/Pass.h"
 #include "mlir/Pass/PassManager.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/StringMap.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -179,9 +179,9 @@ std::unique_ptr<OperationPass<mlir::ModuleOp>> createVerifyLoweringToCmdPass();
 
 void registerStreamPasses();
 
-}  // namespace Stream
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Stream
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_DIALECT_STREAM_TRANSFORMS_PASSES_H_
+#endif // IREE_COMPILER_DIALECT_STREAM_TRANSFORMS_PASSES_H_

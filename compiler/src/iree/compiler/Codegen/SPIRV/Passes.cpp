@@ -23,7 +23,6 @@
 #include "iree/compiler/Codegen/Utils/GPUUtils.h"
 #include "iree/compiler/Codegen/Utils/MarkerUtils.h"
 #include "iree/compiler/Dialect/Util/Transforms/Passes.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Conversion/AffineToStandard/AffineToStandard.h"
 #include "mlir/Conversion/ComplexToStandard/ComplexToStandard.h"
 #include "mlir/Conversion/MemRefToSPIRV/MemRefToSPIRV.h"
@@ -43,6 +42,7 @@
 #include "mlir/Pass/PassOptions.h"
 #include "mlir/Pass/PassRegistry.h"
 #include "mlir/Transforms/Passes.h"
+#include "llvm/Support/Debug.h"
 
 #define DEBUG_TYPE "iree-spirv-lowering-pass-pipeline"
 
@@ -98,7 +98,8 @@ static LogicalResult gpuCopyFn(OpBuilder &builder, Location loc, Value from,
 
   bool needsBarrier = hasSharedMemoryAddressSpace(fromType) ||
                       hasSharedMemoryAddressSpace(toType);
-  if (needsBarrier) builder.create<gpu::BarrierOp>(loc);
+  if (needsBarrier)
+    builder.create<gpu::BarrierOp>(loc);
   Operation *copy = builder.create<memref::CopyOp>(loc, from, to);
   if (needsBarrier) {
     setMarker(copy, getCopyToWorkgroupMemoryMarker());
@@ -138,9 +139,9 @@ static void addTileAndDistributeToWorkgroupsPasses(
   nestedModulePM.addPass(createCSEPass());
 }
 
-static void addSPIRVBufferizePasses(
-    OpPassManager &passManager,
-    BufferizationOptions::AllocationFn allocationFn) {
+static void
+addSPIRVBufferizePasses(OpPassManager &passManager,
+                        BufferizationOptions::AllocationFn allocationFn) {
   // Resolve dim ops first so that we don't have compute Linalg ops lingering on
   // becuase of dim op usage. This avoids bufferizing those compute ops just for
   // their shape dimensions.
@@ -598,5 +599,5 @@ void buildSPIRVCodegenPassPipeline(OpPassManager &pm, bool enableFastMath) {
   });
 }
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir

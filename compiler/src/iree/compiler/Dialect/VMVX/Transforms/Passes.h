@@ -8,12 +8,12 @@
 #define IREE_COMPILER_DIALECT_VMVX_TRANSFORMS_PASSES_H_
 
 #include "iree/compiler/Dialect/VMVX/IR/VMVXOps.h"
-#include "llvm/ADT/StringMap.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/IR/BuiltinOps.h"
 #include "mlir/Pass/Pass.h"
 #include "mlir/Pass/PassManager.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/StringMap.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -55,9 +55,9 @@ std::unique_ptr<OperationPass<>> createResolveBufferDescriptorsPass();
 
 void registerVMVXPasses();
 
-}  // namespace VMVX
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace VMVX
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_DIALECT_VMVX_TRANSFORMS_PASSES_H_
+#endif // IREE_COMPILER_DIALECT_VMVX_TRANSFORMS_PASSES_H_

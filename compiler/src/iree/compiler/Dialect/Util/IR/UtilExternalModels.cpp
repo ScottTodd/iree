@@ -30,8 +30,7 @@ struct GenericNumericCastExternalModel {
       : public NumericCastOpInterface::ExternalModel<ExternalModel<OpTy>,
                                                      OpTy> {};
 
-  template <typename OpTy>
-  static void add(MLIRContext *ctx) {
+  template <typename OpTy> static void add(MLIRContext *ctx) {
     OpTy::template attachInterface<ExternalModel<OpTy>>(*ctx);
   }
 
@@ -51,13 +50,13 @@ struct InsertSliceOpTiedOpInterface
         insertSliceOp.getDest());
   }
 
-  ::std::optional<unsigned> getTiedResultOperandIndex(
-      Operation *op, unsigned resultIndex) const {
-    return {1};  // dest
+  ::std::optional<unsigned>
+  getTiedResultOperandIndex(Operation *op, unsigned resultIndex) const {
+    return {1}; // dest
   }
 
   SmallVector<int64_t> getTiedResultOperandIndices(Operation *op) const {
-    return {1};  // dest
+    return {1}; // dest
   }
 };
 
@@ -71,8 +70,8 @@ struct LinalgOpTiedOpInterface
         linalgOp.getDpsInitOperands()[resultIndex]->get());
   }
 
-  ::std::optional<unsigned> getTiedResultOperandIndex(
-      Operation *op, unsigned resultIndex) const {
+  ::std::optional<unsigned>
+  getTiedResultOperandIndex(Operation *op, unsigned resultIndex) const {
     auto linalgOp = cast<OpTy>(op);
     return {linalgOp.getDpsInitOperands()[resultIndex]->getOperandNumber()};
   }
@@ -87,8 +86,7 @@ struct LinalgOpTiedOpInterface
 
 /// Helper structure that iterates over all LinalgOps in `OpTys` and registers
 /// the `TiedOpInterface` with each of them.
-template <typename... Ops>
-struct LinalgOpTiedOpInterfaceHelper {
+template <typename... Ops> struct LinalgOpTiedOpInterfaceHelper {
   static void registerOpInterface(MLIRContext *ctx) {
     (void)std::initializer_list<int>{
         0, (Ops::template attachInterface<LinalgOpTiedOpInterface<Ops>>(*ctx),
@@ -115,7 +113,7 @@ struct GlobalOpInterfaceExternalModel
   }
 };
 
-}  // namespace
+} // namespace
 
 void registerUtilExternalModels(DialectRegistry &registry) {
   // Must ensure that any dependent dialects are registered.
@@ -150,33 +148,32 @@ void registerUtilExternalModels(DialectRegistry &registry) {
 
   // TODO(matthias-springer): Use a helper instead of listing all ops. This is
   // tricky because LinalgExtOps.td includes YieldOp.
-  registry.addExtension(
-      +[](MLIRContext *ctx, LinalgExt::IREELinalgExtDialect *dialect) {
-        LinalgExt::ScatterOp::attachInterface<
-            LinalgOpTiedOpInterface<LinalgExt::ScatterOp>>(*ctx);
-        LinalgExt::SortOp::attachInterface<
-            LinalgOpTiedOpInterface<LinalgExt::SortOp>>(*ctx);
-        LinalgExt::FftOp::attachInterface<
-            LinalgOpTiedOpInterface<LinalgExt::FftOp>>(*ctx);
-        LinalgExt::ScanOp::attachInterface<
-            LinalgOpTiedOpInterface<LinalgExt::ScanOp>>(*ctx);
-        LinalgExt::ReverseOp::attachInterface<
-            LinalgOpTiedOpInterface<LinalgExt::ReverseOp>>(*ctx);
-        LinalgExt::TopkOp::attachInterface<
-            LinalgOpTiedOpInterface<LinalgExt::TopkOp>>(*ctx);
-        LinalgExt::WinogradInputTransformOp::attachInterface<
-            LinalgOpTiedOpInterface<LinalgExt::WinogradInputTransformOp>>(*ctx);
-        LinalgExt::WinogradOutputTransformOp::attachInterface<
-            LinalgOpTiedOpInterface<LinalgExt::WinogradOutputTransformOp>>(
-            *ctx);
-        LinalgExt::SoftmaxOp::attachInterface<
-            LinalgOpTiedOpInterface<LinalgExt::SoftmaxOp>>(*ctx);
-        LinalgExt::AttentionOp::attachInterface<
-            LinalgOpTiedOpInterface<LinalgExt::AttentionOp>>(*ctx);
-      });
+  registry.addExtension(+[](MLIRContext *ctx,
+                            LinalgExt::IREELinalgExtDialect *dialect) {
+    LinalgExt::ScatterOp::attachInterface<
+        LinalgOpTiedOpInterface<LinalgExt::ScatterOp>>(*ctx);
+    LinalgExt::SortOp::attachInterface<
+        LinalgOpTiedOpInterface<LinalgExt::SortOp>>(*ctx);
+    LinalgExt::FftOp::attachInterface<
+        LinalgOpTiedOpInterface<LinalgExt::FftOp>>(*ctx);
+    LinalgExt::ScanOp::attachInterface<
+        LinalgOpTiedOpInterface<LinalgExt::ScanOp>>(*ctx);
+    LinalgExt::ReverseOp::attachInterface<
+        LinalgOpTiedOpInterface<LinalgExt::ReverseOp>>(*ctx);
+    LinalgExt::TopkOp::attachInterface<
+        LinalgOpTiedOpInterface<LinalgExt::TopkOp>>(*ctx);
+    LinalgExt::WinogradInputTransformOp::attachInterface<
+        LinalgOpTiedOpInterface<LinalgExt::WinogradInputTransformOp>>(*ctx);
+    LinalgExt::WinogradOutputTransformOp::attachInterface<
+        LinalgOpTiedOpInterface<LinalgExt::WinogradOutputTransformOp>>(*ctx);
+    LinalgExt::SoftmaxOp::attachInterface<
+        LinalgOpTiedOpInterface<LinalgExt::SoftmaxOp>>(*ctx);
+    LinalgExt::AttentionOp::attachInterface<
+        LinalgOpTiedOpInterface<LinalgExt::AttentionOp>>(*ctx);
+  });
 }
 
-}  // namespace Util
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Util
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

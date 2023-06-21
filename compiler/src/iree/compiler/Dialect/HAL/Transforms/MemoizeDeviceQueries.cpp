@@ -8,7 +8,6 @@
 
 #include "iree/compiler/Dialect/HAL/IR/HALOps.h"
 #include "iree/compiler/Dialect/HAL/Transforms/Passes.h"
-#include "llvm/ADT/StringSet.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/Builders.h"
@@ -16,6 +15,7 @@
 #include "mlir/IR/Diagnostics.h"
 #include "mlir/Pass/Pass.h"
 #include "mlir/Transforms/GreedyPatternRewriteDriver.h"
+#include "llvm/ADT/StringSet.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -26,7 +26,7 @@ namespace HAL {
 // support multiple devices we'll need to change this to be per-device.
 class MemoizeDeviceQueriesPass
     : public PassWrapper<MemoizeDeviceQueriesPass, OperationPass<ModuleOp>> {
- public:
+public:
   StringRef getArgument() const override {
     return "iree-hal-memoize-device-queries";
   }
@@ -127,7 +127,7 @@ std::unique_ptr<OperationPass<ModuleOp>> createMemoizeDeviceQueriesPass() {
 
 static PassRegistration<MemoizeDeviceQueriesPass> pass;
 
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

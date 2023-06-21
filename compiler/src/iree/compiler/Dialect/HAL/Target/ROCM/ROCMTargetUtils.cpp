@@ -5,6 +5,8 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
 #include "iree/compiler/Dialect/HAL/Target/ROCM/ROCMTarget.h"
+#include "mlir/Support/FileUtilities.h"
+#include "mlir/Support/LogicalResult.h"
 #include "llvm/IR/Module.h"
 #include "llvm/IRReader/IRReader.h"
 #include "llvm/Linker/Linker.h"
@@ -14,8 +16,6 @@
 #include "llvm/Support/SourceMgr.h"
 #include "llvm/Support/WithColor.h"
 #include "llvm/Transforms/IPO/Internalize.h"
-#include "mlir/Support/FileUtilities.h"
-#include "mlir/Support/LogicalResult.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -60,8 +60,9 @@ std::unique_ptr<llvm::Module> loadIRModule(const std::string &filename,
   return module;
 }
 
-LogicalResult linkWithBitcodeVector(
-    llvm::Module *module, const std::vector<std::string> &bitcode_path_vector) {
+LogicalResult
+linkWithBitcodeVector(llvm::Module *module,
+                      const std::vector<std::string> &bitcode_path_vector) {
   llvm::Linker linker(*module);
 
   for (auto &bitcode_path : bitcode_path_vector) {
@@ -210,7 +211,7 @@ std::string createHsaco(const std::string isa, StringRef name) {
 }
 //==============Create HSACO End=============//
 
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

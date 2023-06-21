@@ -13,7 +13,6 @@
 #include "iree/compiler/Dialect/HAL/IR/HALTypes.h"
 #include "iree/compiler/Dialect/Util/IR/UtilOps.h"
 #include "iree/compiler/Dialect/Util/IR/UtilTraits.h"
-#include "llvm/Support/Alignment.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/BuiltinOps.h"
 #include "mlir/IR/BuiltinTypes.h"
@@ -23,8 +22,9 @@
 #include "mlir/IR/SymbolTable.h"
 #include "mlir/Interfaces/SideEffectInterfaces.h"
 #include "mlir/Interfaces/ViewLikeInterface.h"
+#include "llvm/Support/Alignment.h"
 
 #define GET_OP_CLASSES
-#include "iree/compiler/Dialect/HAL/IR/HALOps.h.inc"  // IWYU pragma: export
+#include "iree/compiler/Dialect/HAL/IR/HALOps.h.inc" // IWYU pragma: export
 
-#endif  // IREE_COMPILER_DIALECT_HAL_IR_HALOPS_H_
+#endif // IREE_COMPILER_DIALECT_HAL_IR_HALOPS_H_

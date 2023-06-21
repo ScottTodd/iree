@@ -12,9 +12,9 @@
 #include "iree/compiler/Dialect/Util/Analysis/Explorer.h"
 #include "iree/compiler/Dialect/Util/IR/UtilDialect.h"
 #include "iree/compiler/Dialect/Util/IR/UtilOps.h"
+#include "mlir/Dialect/Linalg/IR/LinalgInterfaces.h"
 #include "llvm/ADT/SmallPtrSet.h"
 #include "llvm/Support/Debug.h"
-#include "mlir/Dialect/Linalg/IR/LinalgInterfaces.h"
 
 using llvm::SmallPtrSet;
 
@@ -130,13 +130,13 @@ class InferNumericNarrowingPass
   }
 };
 
-}  // namespace
+} // namespace
 
 std::unique_ptr<Pass> createInferNumericNarrowingPass() {
   return std::make_unique<InferNumericNarrowingPass>();
 }
 
-}  // namespace Flow
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Flow
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

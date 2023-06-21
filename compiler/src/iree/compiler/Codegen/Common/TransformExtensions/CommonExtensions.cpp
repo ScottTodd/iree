@@ -19,8 +19,6 @@
 #include "iree/compiler/Codegen/Utils/Utils.h"
 #include "iree/compiler/Dialect/Flow/IR/FlowOps.h"
 #include "iree/compiler/Dialect/HAL/IR/HALOps.h"
-#include "llvm/ADT/STLExtras.h"
-#include "llvm/ADT/TypeSwitch.h"
 #include "mlir/Conversion/VectorToGPU/VectorToGPU.h"
 #include "mlir/Dialect/Affine/IR/AffineOps.h"
 #include "mlir/Dialect/Affine/LoopUtils.h"
@@ -50,6 +48,8 @@
 #include "mlir/Transforms/DialectConversion.h"
 #include "mlir/Transforms/GreedyPatternRewriteDriver.h"
 #include "mlir/Transforms/LoopInvariantCodeMotionUtils.h"
+#include "llvm/ADT/STLExtras.h"
+#include "llvm/ADT/TypeSwitch.h"
 
 using namespace mlir;
 using namespace mlir::iree_compiler;
@@ -98,7 +98,8 @@ static void eraseDeadAllocAndStores(RewriterBase &rewriter,
       opToErase.push_back(op.getOperation());
     }
   });
-  for (Operation *op : opToErase) rewriter.eraseOp(op);
+  for (Operation *op : opToErase)
+    rewriter.eraseOp(op);
 }
 
 //===---------------------------------------------------------------------===//
@@ -134,7 +135,8 @@ void transform_dialect::ApplyBufferOptimizationsOp::build(
 //===---------------------------------------------------------------------===//
 
 static void addOperands(Operation *op, SetVector<Value> &operandSet) {
-  if (!op) return;
+  if (!op)
+    return;
   TypeSwitch<Operation *, void>(op)
       .Case<linalg::LinalgOp>([&](linalg::LinalgOp linalgOp) {
         SmallVector<Value> inputOperands{linalgOp.getDpsInputOperands()};
@@ -148,10 +150,12 @@ static void addOperands(Operation *op, SetVector<Value> &operandSet) {
 template <int limit = 3>
 static bool setFusedOpOperandLimit(OpOperand *fusedOperand) {
   Operation *producer = fusedOperand->get().getDefiningOp();
-  if (!producer) return false;
+  if (!producer)
+    return false;
   Operation *consumer = fusedOperand->getOwner();
   SetVector<Value> fusedOpOperands;
-  if (producer->getNumResults() != 1) return false;
+  if (producer->getNumResults() != 1)
+    return false;
   addOperands(consumer, fusedOpOperands);
   fusedOpOperands.remove(producer->getResult(0));
   addOperands(producer, fusedOpOperands);
@@ -212,7 +216,7 @@ struct FoldFillIntoPad : public OpRewritePattern<tensor::PadOp> {
     return success();
   }
 };
-}  // namespace
+} // namespace
 
 void transform_dialect::ApplyFoldFillIntoPadPatternsOp::populatePatterns(
     RewritePatternSet &patterns) {
@@ -232,7 +236,8 @@ void transform_dialect::ApplyUnrollVectorsGpuMmaSyncPatternsOp::
     populatePatterns(RewritePatternSet &patterns) {
   auto unrollOrder = [](Operation *op) -> std::optional<SmallVector<int64_t>> {
     auto contract = dyn_cast<vector::ContractionOp>(op);
-    if (!contract) return std::nullopt;
+    if (!contract)
+      return std::nullopt;
     return mlir::iree_compiler::gpuMmaUnrollOrder(contract);
   };
   vector::populateVectorUnrollPatterns(
@@ -245,8 +250,8 @@ void transform_dialect::ApplyUnrollVectorsGpuMmaSyncPatternsOp::
 // ApplyUnrollVectorsGpuWmmaSyncPatternsOp
 //===---------------------------------------------------------------------===//
 
-static std::optional<SmallVector<int64_t>> getGPUTensorCoreNativeWmmaVectorSize(
-    Operation *op) {
+static std::optional<SmallVector<int64_t>>
+getGPUTensorCoreNativeWmmaVectorSize(Operation *op) {
   return getWmmaNativeVectorSize(op);
 }
 
@@ -254,7 +259,8 @@ void transform_dialect::ApplyUnrollVectorsGpuWmmaSyncPatternsOp::
     populatePatterns(RewritePatternSet &patterns) {
   auto unrollOrder = [](Operation *op) -> std::optional<SmallVector<int64_t>> {
     auto contract = dyn_cast<vector::ContractionOp>(op);
-    if (!contract) return std::nullopt;
+    if (!contract)
+      return std::nullopt;
     return mlir::iree_compiler::gpuMmaUnrollOrder(contract);
   };
   vector::populateVectorUnrollPatterns(
@@ -312,15 +318,18 @@ transform_dialect::ApplyCommonSubexpressionEliminationOp::applyToOne(
       if (failed(eliminateCommonSubexpressions(op, /*domInfo=*/nullptr,
                                                &listener)))
         return WalkResult::interrupt();
-      if (listener.failed()) return WalkResult::interrupt();
+      if (listener.failed())
+        return WalkResult::interrupt();
       return WalkResult::skip();
     }
     return WalkResult::advance();
   });
 
-  if (!status.wasInterrupted()) return DiagnosedSilenceableFailure::success();
+  if (!status.wasInterrupted())
+    return DiagnosedSilenceableFailure::success();
 
-  if (listener.failed()) return listener.checkAndResetError();
+  if (listener.failed())
+    return listener.checkAndResetError();
 
   return mlir::emitDefiniteFailure(lastOpVisited, "CSE failed");
 }
@@ -419,7 +428,8 @@ transform_dialect::ShareForallOperandsOp::applyToOne(
     tensor::ExtractSliceOp extractSliceOp;
     for (Operation *user : toShare.getUsers()) {
       extractSliceOp = dyn_cast<tensor::ExtractSliceOp>(user);
-      if (extractSliceOp) break;
+      if (extractSliceOp)
+        break;
     }
     if (!extractSliceOp) {
       /*return mlir::emitSilenceableFailure(
@@ -434,8 +444,10 @@ transform_dialect::ShareForallOperandsOp::applyToOne(
     // (i.e., same source/target, offsets, sizes and strides).
     auto isMatchingParallelInsertSlice = [&](Operation &op) {
       auto insertSlice = dyn_cast<tensor::ParallelInsertSliceOp>(&op);
-      if (!insertSlice) return false;
-      if (insertSlice.getDest() != bbArg) return false;
+      if (!insertSlice)
+        return false;
+      if (insertSlice.getDest() != bbArg)
+        return false;
       return llvm::equal(insertSlice.getMixedOffsets(),
                          extractSliceOp.getMixedOffsets()) &&
              llvm::equal(insertSlice.getMixedSizes(),
@@ -575,7 +587,8 @@ DiagnosedSilenceableFailure transform_dialect::ForallToWorkgroupOp::applyToOne(
 
   IREE::HAL::ExecutableExportOp exportOp;
   state.getTopLevel()->walk([&](IREE::HAL::ExecutableExportOp op) {
-    if (op.getSymName() == target.getName()) exportOp = op;
+    if (op.getSymName() == target.getName())
+      exportOp = op;
   });
   if (!exportOp) {
     return mlir::emitSilenceableFailure(
@@ -586,7 +599,8 @@ DiagnosedSilenceableFailure transform_dialect::ForallToWorkgroupOp::applyToOne(
   auto walkResult = target->walk([&](scf::ForallOp forallOp) {
     if (forallOp->getParentOfType<scf::ForallOp>())
       return WalkResult::advance();
-    if (topLevelForallOp) return WalkResult::interrupt();
+    if (topLevelForallOp)
+      return WalkResult::interrupt();
     topLevelForallOp = forallOp;
     return WalkResult::advance();
   });
@@ -622,10 +636,10 @@ void transform_dialect::IREEPopulateWorkgroupCountRegionUsingNumThreadsSliceOp::
   transform::modifiesPayload(effects);
 }
 
-DiagnosedSilenceableFailure transform_dialect::
-    IREEPopulateWorkgroupCountRegionUsingNumThreadsSliceOp::applyToOne(
-        Operation *target, transform::ApplyToEachResultList &results,
-        transform::TransformState &state) {
+DiagnosedSilenceableFailure
+transform_dialect::IREEPopulateWorkgroupCountRegionUsingNumThreadsSliceOp::
+    applyToOne(Operation *target, transform::ApplyToEachResultList &results,
+               transform::TransformState &state) {
   auto forAllOp = dyn_cast<scf::ForallOp>(target);
   if (!forAllOp) {
     return mlir::emitDefiniteFailure(state.getTopLevel(),
@@ -780,14 +794,16 @@ static LogicalResult gpuComprehensiveBufferizeCopyFn(OpBuilder &builder,
       hasSharedMemoryAddressSpace(llvm::cast<MemRefType>(to.getType()))) {
     needsBarrier = true;
   }
-  if (needsBarrier) builder.create<gpu::BarrierOp>(loc);
+  if (needsBarrier)
+    builder.create<gpu::BarrierOp>(loc);
   // TODO: ideally we should use linalg.copy which was recently reintroduced
   // as an OpDSL named op. However, IREE-specific patterns to cleanup spurious
   // post-bufferization copies do not trigger properly.
   // So we keep using `createLinalgCopyOp` which builds a GenericOp.
   // builder.create<linalg::CopyOp>(loc, from, to);
   mlir::iree_compiler::createLinalgCopyOp(builder, loc, from, to);
-  if (needsBarrier) builder.create<gpu::BarrierOp>(loc);
+  if (needsBarrier)
+    builder.create<gpu::BarrierOp>(loc);
   return success();
 }
 
@@ -834,18 +850,18 @@ struct EmptyTensorLoweringPattern : public OpRewritePattern<tensor::EmptyOp> {
     return success();
   }
 };
-}  // namespace
+} // namespace
 
-DiagnosedSilenceableFailure transform_dialect::IREEBufferizeOp::apply(
-    transform::TransformResults &results, transform::TransformState &state) {
+DiagnosedSilenceableFailure
+transform_dialect::IREEBufferizeOp::apply(transform::TransformResults &results,
+                                          transform::TransformState &state) {
   auto payload = state.getPayloadOps(getTarget());
   if (!llvm::hasSingleElement(payload) ||
       !isa<ModuleOp, HAL::ExecutableOp, HAL::ExecutableVariantOp>(
           *payload.begin())) {
     return mlir::emitDefiniteFailure(
-        state.getTopLevel(),
-        "requires exactly a single HAL::ExecutableOp or "
-        "HAL::ExecutableVariantOp target op.");
+        state.getTopLevel(), "requires exactly a single HAL::ExecutableOp or "
+                             "HAL::ExecutableVariantOp target op.");
   }
 
   //===-------------------------------------------------------------------===//
@@ -878,7 +894,8 @@ DiagnosedSilenceableFailure transform_dialect::IREEBufferizeOp::apply(
     // overloads only accepts ops that are isolated from above.
     SmallVector<Operation *> ops;
     state.getTopLevel()->walk([&](Operation *nestedOp) {
-      if (state.getTopLevel() != nestedOp) ops.push_back(nestedOp);
+      if (state.getTopLevel() != nestedOp)
+        ops.push_back(nestedOp);
     });
     LogicalResult result =
         applyOpPatternsAndFold(ops, std::move(patterns), config);
@@ -886,7 +903,8 @@ DiagnosedSilenceableFailure transform_dialect::IREEBufferizeOp::apply(
       return mlir::emitDefiniteFailure(state.getTopLevel(),
                                        "greedy pattern application failed");
     }
-    if (listener.failed()) return listener.checkAndResetError();
+    if (listener.failed())
+      return listener.checkAndResetError();
   }
 
   //   2. Run one-shot-bufferize, without the pass baggage.

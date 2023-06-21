@@ -18,9 +18,6 @@
 #include "iree/compiler/Codegen/TransformStrategies/GPU/SmallReductionStrategy.h"
 #include "iree/compiler/Codegen/TransformStrategies/GPU/StagedReductionStrategy.h"
 #include "iree/compiler/Codegen/TransformStrategies/GPU/Strategies.h"
-#include "llvm/Support/CommandLine.h"
-#include "llvm/Support/Debug.h"
-#include "llvm/Support/ErrorHandling.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Dialect/Linalg/TransformOps/LinalgTransformOps.h"
 #include "mlir/Dialect/MemRef/IR/MemRef.h"
@@ -38,6 +35,9 @@
 #include "mlir/IR/ImplicitLocOpBuilder.h"
 #include "mlir/IR/TypeUtilities.h"
 #include "mlir/Support/MathExtras.h"
+#include "llvm/Support/CommandLine.h"
+#include "llvm/Support/Debug.h"
+#include "llvm/Support/ErrorHandling.h"
 
 using namespace mlir;
 
@@ -121,9 +121,9 @@ static FailureOr<ReductionConfig> applyKnownGoodReductionConfigurations(
 // TODO: Lift some of the strategy sizing logic as hints and/or heuristics to
 // also work properly in the dynamic case.
 // TODO: Support more HW configs and make it more pluggable.
-static ReductionConfig getReductionConfig(
-    const transform_ext::MatchedReductionCaptures &captures,
-    const GPUModel &gpuModel) {
+static ReductionConfig
+getReductionConfig(const transform_ext::MatchedReductionCaptures &captures,
+                   const GPUModel &gpuModel) {
   auto maybeHardcodedConfiguration =
       applyKnownGoodReductionConfigurations(captures, gpuModel);
   if (succeeded(maybeHardcodedConfiguration))
@@ -251,12 +251,14 @@ static FailureOr<MatmulStrategy> applyKnownGoodMatmulConfigurations(
   return failure();
 }
 
-static int64_t selectLargestFailsafeValueIfNeeded(
-    int64_t value, int64_t limit, ArrayRef<int64_t> thresholds,
-    ArrayRef<int64_t> failSafeValues) {
+static int64_t
+selectLargestFailsafeValueIfNeeded(int64_t value, int64_t limit,
+                                   ArrayRef<int64_t> thresholds,
+                                   ArrayRef<int64_t> failSafeValues) {
   for (auto [threshold, failSafeValue] :
        llvm::zip(thresholds, failSafeValues)) {
-    if (limit < threshold && value > failSafeValue) return failSafeValue;
+    if (limit < threshold && value > failSafeValue)
+      return failSafeValue;
   }
   return value;
 }
@@ -285,11 +287,13 @@ static void failSafeOverrides(MatmulStrategy &strategy,
 
 /// The configurations below have been determined empirically.
 // TODO: Significantly improve these heuristics.
-static MatmulStrategy getMatmulConfig(
-    MLIRContext *context, const transform_ext::MatchedMatmulCaptures &captures,
-    const GPUModel &gpuModel) {
+static MatmulStrategy
+getMatmulConfig(MLIRContext *context,
+                const transform_ext::MatchedMatmulCaptures &captures,
+                const GPUModel &gpuModel) {
   MatmulStrategy strategy(context, captures);
-  if (strategy.cliOptionsSpecified) return strategy;
+  if (strategy.cliOptionsSpecified)
+    return strategy;
 
   auto maybeHardcodedConfiguration =
       applyKnownGoodMatmulConfigurations(captures, gpuModel);

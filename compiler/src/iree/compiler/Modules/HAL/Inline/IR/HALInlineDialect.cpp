@@ -10,10 +10,10 @@
 #include "iree/compiler/Modules/HAL/Inline/Conversion/HALInlineToVM/Patterns.h"
 #include "iree/compiler/Modules/HAL/Inline/IR/HALInlineOps.h"
 #include "iree/compiler/Modules/HAL/Inline/hal_inline.imports.h"
-#include "llvm/Support/SourceMgr.h"
 #include "mlir/IR/DialectImplementation.h"
 #include "mlir/IR/OpImplementation.h"
 #include "mlir/Parser/Parser.h"
+#include "llvm/Support/SourceMgr.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -24,7 +24,7 @@ namespace Inline {
 namespace {
 
 class HALInlineToVMConversionInterface : public VMConversionDialectInterface {
- public:
+public:
   using VMConversionDialectInterface::VMConversionDialectInterface;
 
   OwningOpRef<mlir::ModuleOp> parseVMImportModule() const override {
@@ -34,17 +34,18 @@ class HALInlineToVMConversionInterface : public VMConversionDialectInterface {
         getDialect()->getContext());
   }
 
-  void populateVMConversionPatterns(
-      SymbolTable &importSymbols, RewritePatternSet &patterns,
-      ConversionTarget &conversionTarget,
-      TypeConverter &typeConverter) const override {
+  void
+  populateVMConversionPatterns(SymbolTable &importSymbols,
+                               RewritePatternSet &patterns,
+                               ConversionTarget &conversionTarget,
+                               TypeConverter &typeConverter) const override {
     conversionTarget.addIllegalDialect<IREE::HAL::Inline::HALInlineDialect>();
     populateHALInlineToVMPatterns(getDialect()->getContext(), conversionTarget,
                                   typeConverter, importSymbols, patterns);
   }
 };
 
-}  // namespace
+} // namespace
 
 HALInlineDialect::HALInlineDialect(MLIRContext *context)
     : Dialect(getDialectNamespace(), context, TypeID::get<HALInlineDialect>()) {
@@ -56,8 +57,8 @@ HALInlineDialect::HALInlineDialect(MLIRContext *context)
       >();
 }
 
-}  // namespace Inline
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Inline
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

@@ -12,9 +12,6 @@
 #include "iree/compiler/Codegen/TransformStrategies/Common/Common.h"
 #include "iree/compiler/Codegen/TransformStrategies/GPU/Common.h"
 #include "iree/compiler/Codegen/TransformStrategies/GPU/Strategies.h"
-#include "llvm/Support/CommandLine.h"
-#include "llvm/Support/Debug.h"
-#include "llvm/Support/raw_ostream.h"
 #include "mlir/Dialect/GPU/IR/GPUDialect.h"
 #include "mlir/Dialect/Linalg/TransformOps/LinalgTransformOps.h"
 #include "mlir/Dialect/SCF/IR/SCF.h"
@@ -23,6 +20,9 @@
 #include "mlir/Dialect/Transform/IR/TransformTypes.h"
 #include "mlir/Dialect/Vector/TransformOps/VectorTransformOps.h"
 #include "mlir/IR/ImplicitLocOpBuilder.h"
+#include "llvm/Support/CommandLine.h"
+#include "llvm/Support/Debug.h"
+#include "llvm/Support/raw_ostream.h"
 
 using namespace mlir;
 
@@ -80,8 +80,9 @@ void iree_compiler::gpu::PadStrategy::initDefaultValues() {
 
 void iree_compiler::gpu::PadStrategy::configure(GPUModel gpuModel) {}
 
-static std::tuple<Value, Value> buildPadStrategyBlockDistribution(
-    ImplicitLocOpBuilder &b, Value variantH, const PadStrategy &strategy) {
+static std::tuple<Value, Value>
+buildPadStrategyBlockDistribution(ImplicitLocOpBuilder &b, Value variantH,
+                                  const PadStrategy &strategy) {
   // Step 1. Call the matcher. Note that this is the same matcher as used to
   // trigger this compilation path, so it must always apply.
   b.create<RegisterMatchCallbacksOp>();

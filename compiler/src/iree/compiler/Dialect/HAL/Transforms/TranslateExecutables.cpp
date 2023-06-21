@@ -12,13 +12,13 @@
 #include "iree/compiler/Dialect/HAL/Target/TargetBackend.h"
 #include "iree/compiler/Dialect/HAL/Target/TargetRegistry.h"
 #include "iree/compiler/Utils/TracingUtils.h"
-#include "llvm/ADT/StringSet.h"
 #include "mlir/Dialect/Bufferization/IR/Bufferization.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/IR/Diagnostics.h"
 #include "mlir/Pass/Pass.h"
 #include "mlir/Pass/PassManager.h"
+#include "llvm/ADT/StringSet.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -28,7 +28,7 @@ namespace HAL {
 class TranslateTargetExecutableVariantsPass
     : public PassWrapper<TranslateTargetExecutableVariantsPass,
                          OperationPass<IREE::HAL::ExecutableVariantOp>> {
- public:
+public:
   TranslateTargetExecutableVariantsPass()
       : targetRegistry(TargetBackendRegistry::getGlobal()) {}
   TranslateTargetExecutableVariantsPass(
@@ -59,7 +59,8 @@ class TranslateTargetExecutableVariantsPass
 
   void runOnOperation() override {
     auto variantOp = getOperation();
-    if (variantOp.getTarget().getBackend().getValue() != target) return;
+    if (variantOp.getTarget().getBackend().getValue() != target)
+      return;
 
     auto targetBackend = targetRegistry.getTargetBackend(target);
     if (!targetBackend) {
@@ -77,7 +78,7 @@ class TranslateTargetExecutableVariantsPass
     }
   }
 
- private:
+private:
   Option<std::string> target{
       *this, "target",
       llvm::cl::desc(
@@ -100,7 +101,7 @@ static PassRegistration<TranslateTargetExecutableVariantsPass> linkTargetPass(
 class TranslateExecutablesPass
     : public PassWrapper<TranslateExecutablesPass,
                          OperationPass<IREE::HAL::ExecutableOp>> {
- public:
+public:
   TranslateExecutablesPass()
       : targetRegistry(TargetBackendRegistry::getGlobal()) {}
   TranslateExecutablesPass(const TranslateExecutablesPass &pass)
@@ -155,7 +156,7 @@ static PassRegistration<TranslateExecutablesPass> translatePass([] {
   return std::make_unique<TranslateExecutablesPass>();
 });
 
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

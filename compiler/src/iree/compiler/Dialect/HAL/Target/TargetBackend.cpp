@@ -8,12 +8,12 @@
 
 #include <algorithm>
 
+#include "mlir/IR/Dialect.h"
+#include "mlir/Support/FileUtilities.h"
 #include "llvm/ADT/StringExtras.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/Path.h"
 #include "llvm/Support/ToolOutputFile.h"
-#include "mlir/IR/Dialect.h"
-#include "mlir/Support/FileUtilities.h"
 
 IREE_DEFINE_COMPILER_OPTION_FLAGS(
     mlir::iree_compiler::IREE::HAL::TargetOptions);
@@ -48,11 +48,14 @@ void TargetOptions::bindOptions(OptionsBinder &binder) {
           "executable files (sources, benchmarks, intermediates, binaries) "
           "to."),
       llvm::cl::callback([&](const std::string &path) {
-        if (executableSourcesPath.empty()) executableSourcesPath = path;
-        if (executableBenchmarksPath.empty()) executableBenchmarksPath = path;
+        if (executableSourcesPath.empty())
+          executableSourcesPath = path;
+        if (executableBenchmarksPath.empty())
+          executableBenchmarksPath = path;
         if (executableIntermediatesPath.empty())
           executableIntermediatesPath = path;
-        if (executableBinariesPath.empty()) executableBinariesPath = path;
+        if (executableBinariesPath.empty())
+          executableBinariesPath = path;
       }),
       llvm::cl::cat(halTargetOptionsCategory));
 
@@ -97,7 +100,7 @@ void dumpDataToPath(StringRef path, StringRef baseName, StringRef suffix,
   file->keep();
 }
 
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

@@ -9,14 +9,14 @@
 #include "iree/compiler/Dialect/HAL/IR/HALOps.h"
 #include "iree/compiler/Dialect/Util/IR/UtilOps.h"
 #include "iree/compiler/Dialect/Util/IR/UtilTypes.h"
-#include "llvm/ADT/STLExtras.h"
-#include "llvm/Support/SMLoc.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/IR/OpImplementation.h"
 #include "mlir/IR/SymbolTable.h"
 #include "mlir/IR/TypeUtilities.h"
+#include "llvm/ADT/STLExtras.h"
+#include "llvm/Support/SMLoc.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -109,8 +109,8 @@ void ExecutableLookupOp::getAsmResultNames(
   setNameFn(getResult(), "exe");
 }
 
-LogicalResult ExecutableLookupOp::verifySymbolUses(
-    SymbolTableCollection &symbolTable) {
+LogicalResult
+ExecutableLookupOp::verifySymbolUses(SymbolTableCollection &symbolTable) {
   Operation *op = getOperation();
   auto exportOp = symbolTable.lookupNearestSymbolFrom<IREE::HAL::ExecutableOp>(
       op, getExecutableAttr());
@@ -182,7 +182,8 @@ struct FoldBindingSubspansIntoDispatchOp
       bindingBuffers.push_back(subspanOp.getSource());
       bindingOffsets.push_back(newOffset);
     }
-    if (!didChangeAny) return failure();
+    if (!didChangeAny)
+      return failure();
     rewriter.updateRootInPlace(op, [&]() {
       op.getBindingBuffersMutable().assign(bindingBuffers);
       op.getBindingOffsetsMutable().assign(bindingOffsets);
@@ -191,18 +192,18 @@ struct FoldBindingSubspansIntoDispatchOp
   }
 };
 
-}  // namespace
+} // namespace
 
 void ExecutableDispatchOp::getCanonicalizationPatterns(
     RewritePatternSet &results, MLIRContext *context) {
   results.insert<FoldBindingSubspansIntoDispatchOp>(context);
 }
 
-}  // namespace Loader
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Loader
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
 //===----------------------------------------------------------------------===//
 // TableGen definitions (intentionally last)

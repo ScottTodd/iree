@@ -12,10 +12,6 @@
 #include "iree/compiler/Codegen/TransformStrategies/Common/Common.h"
 #include "iree/compiler/Codegen/TransformStrategies/GPU/Common.h"
 #include "iree/compiler/Codegen/TransformStrategies/GPU/Strategies.h"
-#include "llvm/ADT/STLExtras.h"
-#include "llvm/Support/CommandLine.h"
-#include "llvm/Support/Debug.h"
-#include "llvm/Support/raw_ostream.h"
 #include "mlir/Dialect/GPU/IR/GPUDialect.h"
 #include "mlir/Dialect/Linalg/TransformOps/LinalgTransformOps.h"
 #include "mlir/Dialect/SCF/IR/SCF.h"
@@ -24,6 +20,10 @@
 #include "mlir/Dialect/Transform/IR/TransformTypes.h"
 #include "mlir/Dialect/Vector/TransformOps/VectorTransformOps.h"
 #include "mlir/IR/ImplicitLocOpBuilder.h"
+#include "llvm/ADT/STLExtras.h"
+#include "llvm/Support/CommandLine.h"
+#include "llvm/Support/Debug.h"
+#include "llvm/Support/raw_ostream.h"
 
 using namespace mlir;
 
@@ -133,7 +133,8 @@ void MatmulStrategy::print(llvm::raw_ostream &os) const {
   os << "- block tile sizes: {";
   bool isFirst = true;
   for (int64_t blockTileSize : blockTileSizes) {
-    if (!isFirst) os << ", ";
+    if (!isFirst)
+      os << ", ";
     os << blockTileSize;
     isFirst = false;
   }
@@ -143,7 +144,8 @@ void MatmulStrategy::print(llvm::raw_ostream &os) const {
   os << "- number of threads: {";
   isFirst = true;
   for (int64_t numThreadsForDim : numThreads) {
-    if (!isFirst) os << ", ";
+    if (!isFirst)
+      os << ", ";
     os << numThreadsForDim;
     isFirst = false;
   }
@@ -152,7 +154,8 @@ void MatmulStrategy::print(llvm::raw_ostream &os) const {
   os << "- number of warps: {";
   isFirst = true;
   for (int64_t numWarpsForDim : numWarps) {
-    if (!isFirst) os << ", ";
+    if (!isFirst)
+      os << ", ";
     os << numWarpsForDim;
     isFirst = false;
   }
@@ -282,7 +285,8 @@ void iree_compiler::gpu::buildMatmulTensorCoreStrategy(
 
   if (strategy.useAsyncCopies) {
     // Step 10. Multi-buffering.
-    if (strategy.pipelineDepth > 1) buildMultiBuffering(b, funcH, strategy);
+    if (strategy.pipelineDepth > 1)
+      buildMultiBuffering(b, funcH, strategy);
 
     // Step 11. Convert to async copies.
     // TODO: avoid consuming handles and returning here.

@@ -9,7 +9,6 @@
 #include "iree/compiler/Dialect/Stream/IR/StreamOps.h"
 #include "iree/compiler/Dialect/Stream/IR/StreamTypes.h"
 #include "iree/compiler/Dialect/Util/IR/UtilDialect.h"
-#include "llvm/Support/SourceMgr.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/Complex/IR/Complex.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
@@ -20,6 +19,7 @@
 #include "mlir/Parser/Parser.h"
 #include "mlir/Transforms/FoldUtils.h"
 #include "mlir/Transforms/InliningUtils.h"
+#include "llvm/Support/SourceMgr.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -92,7 +92,7 @@ struct StripResourceConversionCastPattern
   }
 };
 
-}  // namespace
+} // namespace
 
 StreamDialect::StreamDialect(MLIRContext *context)
     : Dialect(getDialectNamespace(), context, TypeID::get<StreamDialect>()) {
@@ -128,7 +128,7 @@ Operation *StreamDialect::materializeConstant(OpBuilder &builder,
   return nullptr;
 }
 
-}  // namespace Stream
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Stream
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

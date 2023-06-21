@@ -9,11 +9,11 @@
 #include "iree/compiler/Dialect/Util/IR/UtilOps.h"
 #include "iree/compiler/Dialect/Util/Transforms/PassDetail.h"
 #include "iree/compiler/Dialect/Util/Transforms/Passes.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Analysis/SliceAnalysis.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/IR/IRMapping.h"
 #include "mlir/IR/SymbolTable.h"
+#include "llvm/Support/Debug.h"
 
 #define DEBUG_TYPE "iree-util-hoist-into-globals"
 
@@ -35,7 +35,7 @@ using HoistedValueMap = llvm::DenseMap<Value, GlobalOp>;
 // can sink globals into the program where it is profitable to reduce
 // working set size.
 class HoistIntoGlobalsPass : public HoistIntoGlobalsBase<HoistIntoGlobalsPass> {
- public:
+public:
   void getDependentDialects(DialectRegistry &registry) const override {
     registerConstExprDependentDialects(registry);
   }
@@ -116,11 +116,13 @@ class HoistIntoGlobalsPass : public HoistIntoGlobalsBase<HoistIntoGlobalsPass> {
     return existingGlobal;
   }
 
-  void cloneProducerTreeInto(
-      OpBuilder &builder, const ConstExprAnalysis::ConstValueInfo *producerInfo,
-      HoistedValueMap &hoistedMap, IRMapping &cloneMapping,
-      const ConstExprAnalysis &constExprs) {
-    if (cloneMapping.contains(producerInfo->constValue)) return;
+  void
+  cloneProducerTreeInto(OpBuilder &builder,
+                        const ConstExprAnalysis::ConstValueInfo *producerInfo,
+                        HoistedValueMap &hoistedMap, IRMapping &cloneMapping,
+                        const ConstExprAnalysis &constExprs) {
+    if (cloneMapping.contains(producerInfo->constValue))
+      return;
 
     // We either have a global associated already or we need to traverse
     // down and materialize producers.
@@ -225,13 +227,13 @@ class HoistIntoGlobalsPass : public HoistIntoGlobalsBase<HoistIntoGlobalsPass> {
   }
 };
 
-}  // namespace
+} // namespace
 
 std::unique_ptr<OperationPass<mlir::ModuleOp>> createHoistIntoGlobalsPass() {
   return std::make_unique<HoistIntoGlobalsPass>();
 }
 
-}  // namespace Util
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Util
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

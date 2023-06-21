@@ -14,10 +14,6 @@
 #include "iree/compiler/Tools/init_passes.h"
 #include "iree/compiler/Tools/init_targets.h"
 #include "iree/compiler/tool_entry_points_api.h"
-#include "llvm/Support/InitLLVM.h"
-#include "llvm/Support/Process.h"
-#include "llvm/Support/SourceMgr.h"
-#include "llvm/Support/ToolOutputFile.h"
 #include "mlir/Debug/Counter.h"
 #include "mlir/IR/AsmState.h"
 #include "mlir/IR/Dialect.h"
@@ -26,6 +22,10 @@
 #include "mlir/Support/FileUtilities.h"
 #include "mlir/Support/LogicalResult.h"
 #include "mlir/Tools/mlir-opt/MlirOptMain.h"
+#include "llvm/Support/InitLLVM.h"
+#include "llvm/Support/Process.h"
+#include "llvm/Support/SourceMgr.h"
+#include "llvm/Support/ToolOutputFile.h"
 
 using namespace llvm;
 using namespace mlir;
@@ -35,7 +35,7 @@ using mlir::iree_compiler::IREE::HAL::TargetBackendRegistry;
 
 #if defined(_MSC_VER)
 #define fileno _fileno
-#endif  // _MSC_VER
+#endif // _MSC_VER
 
 static LogicalResult ireeOptMainFromCL(int argc, char **argv,
                                        llvm::StringRef toolName,
@@ -91,7 +91,8 @@ static LogicalResult ireeOptMainFromCL(int argc, char **argv,
   auto localBinder = mlir::iree_compiler::OptionsBinder::local();
   mlir::iree_compiler::PluginManagerSession pluginSession(
       pluginManager, localBinder, pluginManagerOptions);
-  if (failed(pluginSession.initializePlugins())) return failure();
+  if (failed(pluginSession.initializePlugins()))
+    return failure();
   pluginSession.registerDialects(registry);
 
   // In the normal compiler flow, activated plugins maintain a scoped registry

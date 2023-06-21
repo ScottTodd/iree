@@ -10,11 +10,11 @@
 #include "iree/compiler/Dialect/HAL/Target/TargetBackend.h"
 #include "iree/compiler/Dialect/HAL/Target/TargetRegistry.h"
 #include "iree/compiler/Modules/HAL/Inline/IR/HALInlineOps.h"
-#include "llvm/ADT/StringMap.h"
 #include "mlir/IR/BuiltinOps.h"
 #include "mlir/Pass/Pass.h"
 #include "mlir/Pass/PassManager.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/StringMap.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -56,10 +56,10 @@ std::unique_ptr<OperationPass<mlir::ModuleOp>> createConversionPass();
 
 void registerHALInlinePasses();
 
-}  // namespace Inline
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Inline
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_MODULES_HAL_INLINE_TRANSFORMS_PASSES_H_
+#endif // IREE_COMPILER_MODULES_HAL_INLINE_TRANSFORMS_PASSES_H_

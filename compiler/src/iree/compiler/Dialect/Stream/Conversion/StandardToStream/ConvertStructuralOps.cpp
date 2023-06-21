@@ -8,7 +8,6 @@
 #include "iree/compiler/Dialect/Stream/Conversion/StandardToStream/Patterns.h"
 #include "iree/compiler/Dialect/Stream/IR/StreamOps.h"
 #include "iree/compiler/Dialect/Stream/IR/StreamTypes.h"
-#include "llvm/ADT/DenseMap.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/ControlFlow/IR/ControlFlowOps.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
@@ -18,6 +17,7 @@
 #include "mlir/IR/IRMapping.h"
 #include "mlir/IR/Matchers.h"
 #include "mlir/Transforms/DialectConversion.h"
+#include "llvm/ADT/DenseMap.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -26,9 +26,9 @@ namespace {
 struct FuncOpSignatureConversion
     : public OpConversionPattern<mlir::func::FuncOp> {
   using OpConversionPattern::OpConversionPattern;
-  LogicalResult matchAndRewrite(
-      mlir::func::FuncOp funcOp, OpAdaptor adaptor,
-      ConversionPatternRewriter &rewriter) const override {
+  LogicalResult
+  matchAndRewrite(mlir::func::FuncOp funcOp, OpAdaptor adaptor,
+                  ConversionPatternRewriter &rewriter) const override {
     auto &typeConverter = *getTypeConverter();
 
     // Convert the input signature types.
@@ -65,8 +65,9 @@ struct FuncOpSignatureConversion
   }
 };
 
-static SmallVector<Value> expandResourceOperands(
-    Location loc, ValueRange operands, ConversionPatternRewriter &rewriter) {
+static SmallVector<Value>
+expandResourceOperands(Location loc, ValueRange operands,
+                       ConversionPatternRewriter &rewriter) {
   SmallVector<Value> expandedOperands;
   expandedOperands.reserve(operands.size());
   for (auto operand : operands) {
@@ -87,9 +88,9 @@ static SmallVector<Value> expandResourceOperands(
 
 struct CallOpConversion : public OpConversionPattern<mlir::func::CallOp> {
   using OpConversionPattern::OpConversionPattern;
-  LogicalResult matchAndRewrite(
-      mlir::func::CallOp op, OpAdaptor adaptor,
-      ConversionPatternRewriter &rewriter) const override {
+  LogicalResult
+  matchAndRewrite(mlir::func::CallOp op, OpAdaptor adaptor,
+                  ConversionPatternRewriter &rewriter) const override {
     // Expand any resource operands to resource + size.
     auto expandedOperands =
         expandResourceOperands(op.getLoc(), adaptor.getOperands(), rewriter);
@@ -145,9 +146,9 @@ struct CallOpConversion : public OpConversionPattern<mlir::func::CallOp> {
 
 struct ReturnOpConversion : public OpConversionPattern<mlir::func::ReturnOp> {
   using OpConversionPattern::OpConversionPattern;
-  LogicalResult matchAndRewrite(
-      mlir::func::ReturnOp op, OpAdaptor adaptor,
-      ConversionPatternRewriter &rewriter) const override {
+  LogicalResult
+  matchAndRewrite(mlir::func::ReturnOp op, OpAdaptor adaptor,
+                  ConversionPatternRewriter &rewriter) const override {
     // Expand any resource operands to resource + size.
     auto expandedOperands =
         expandResourceOperands(op.getLoc(), adaptor.getOperands(), rewriter);
@@ -158,9 +159,9 @@ struct ReturnOpConversion : public OpConversionPattern<mlir::func::ReturnOp> {
 
 struct BranchOpConversion : public OpConversionPattern<mlir::cf::BranchOp> {
   using OpConversionPattern::OpConversionPattern;
-  LogicalResult matchAndRewrite(
-      mlir::cf::BranchOp op, OpAdaptor adaptor,
-      ConversionPatternRewriter &rewriter) const override {
+  LogicalResult
+  matchAndRewrite(mlir::cf::BranchOp op, OpAdaptor adaptor,
+                  ConversionPatternRewriter &rewriter) const override {
     // Expand any resource operands to resource + size.
     auto expandedOperands = expandResourceOperands(
         op.getLoc(), adaptor.getDestOperands(), rewriter);
@@ -173,9 +174,9 @@ struct BranchOpConversion : public OpConversionPattern<mlir::cf::BranchOp> {
 struct CondBranchOpConversion
     : public OpConversionPattern<mlir::cf::CondBranchOp> {
   using OpConversionPattern::OpConversionPattern;
-  LogicalResult matchAndRewrite(
-      mlir::cf::CondBranchOp op, OpAdaptor adaptor,
-      ConversionPatternRewriter &rewriter) const override {
+  LogicalResult
+  matchAndRewrite(mlir::cf::CondBranchOp op, OpAdaptor adaptor,
+                  ConversionPatternRewriter &rewriter) const override {
     // Expand any resource operands to resource + size.
     auto trueDestOperands = expandResourceOperands(
         op.getLoc(), adaptor.getTrueDestOperands(), rewriter);
@@ -190,11 +191,12 @@ struct CondBranchOpConversion
 
 struct SelectOpConversion : public OpConversionPattern<mlir::arith::SelectOp> {
   using OpConversionPattern::OpConversionPattern;
-  LogicalResult matchAndRewrite(
-      mlir::arith::SelectOp op, OpAdaptor adaptor,
-      ConversionPatternRewriter &rewriter) const override {
+  LogicalResult
+  matchAndRewrite(mlir::arith::SelectOp op, OpAdaptor adaptor,
+                  ConversionPatternRewriter &rewriter) const override {
     // Only handle selects where the operands are tensors (resources).
-    if (!llvm::isa<TensorType>(op.getTrueValue().getType())) return failure();
+    if (!llvm::isa<TensorType>(op.getTrueValue().getType()))
+      return failure();
     auto trueOperand =
         consumeTensorOperand(op.getLoc(), adaptor.getTrueValue(), rewriter);
     auto falseOperand =
@@ -212,7 +214,7 @@ struct SelectOpConversion : public OpConversionPattern<mlir::arith::SelectOp> {
   }
 };
 
-}  // namespace
+} // namespace
 
 void populateStandardStructuralToStreamPatterns(
     MLIRContext *context, ConversionTarget &conversionTarget,
@@ -263,5 +265,5 @@ void populateStandardStructuralToStreamPatterns(
           typeConverter, context);
 }
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir

@@ -4,14 +4,14 @@
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
+#include "mlir/TableGen/CodeGenHelpers.h"
+#include "mlir/TableGen/GenInfo.h"
+#include "mlir/TableGen/Operator.h"
 #include "llvm/ADT/STLExtras.h"
 #include "llvm/ADT/StringExtras.h"
 #include "llvm/Support/FormatVariadic.h"
 #include "llvm/TableGen/Record.h"
 #include "llvm/TableGen/TableGenBackend.h"
-#include "mlir/TableGen/CodeGenHelpers.h"
-#include "mlir/TableGen/GenInfo.h"
-#include "mlir/TableGen/Operator.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -36,9 +36,11 @@ bool emitEncodeFnDefs(const llvm::RecordKeeper &recordKeeper, raw_ostream &os) {
 
   auto defs = recordKeeper.getAllDerivedDefinitions("VM_Op");
   for (const auto *def : defs) {
-    if (def->isValueUnset("encoding")) continue;
+    if (def->isValueUnset("encoding"))
+      continue;
     auto encodingExprs = def->getValueAsListOfDefs("encoding");
-    if (encodingExprs.empty()) continue;
+    if (encodingExprs.empty())
+      continue;
 
     Operator op(def);
     tblgen::NamespaceEmitter emitter(os, op.getDialect());
@@ -90,13 +92,13 @@ bool emitEncodeFnDefs(const llvm::RecordKeeper &recordKeeper, raw_ostream &os) {
   return false;
 }
 
-static GenRegistration genVMOpEncoderDefs(
-    "gen-iree-vm-op-encoder-defs",
-    "Generates IREE VM operation encoder definitions (.cpp)",
-    [](const llvm::RecordKeeper &records, raw_ostream &os) {
-      return emitEncodeFnDefs(records, os);
-    });
+static GenRegistration
+    genVMOpEncoderDefs("gen-iree-vm-op-encoder-defs",
+                       "Generates IREE VM operation encoder definitions (.cpp)",
+                       [](const llvm::RecordKeeper &records, raw_ostream &os) {
+                         return emitEncodeFnDefs(records, os);
+                       });
 
-}  // namespace
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace
+} // namespace iree_compiler
+} // namespace mlir

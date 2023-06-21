@@ -8,8 +8,6 @@
 
 #include "iree/compiler/Dialect/Util/IR/UtilOps.h"
 #include "iree/compiler/Dialect/Util/IR/UtilTypes.h"
-#include "llvm/ADT/SmallVector.h"
-#include "llvm/Support/SourceMgr.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/ControlFlow/IR/ControlFlowOps.h"
 #include "mlir/Dialect/MemRef/IR/MemRef.h"
@@ -22,6 +20,8 @@
 #include "mlir/IR/OpImplementation.h"
 #include "mlir/Parser/Parser.h"
 #include "mlir/Transforms/InliningUtils.h"
+#include "llvm/ADT/SmallVector.h"
+#include "llvm/Support/SourceMgr.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -69,7 +69,8 @@ struct UtilInlinerInterface : public DialectInlinerInterface {
 
   void handleTerminator(Operation *op, Block *newDest) const final {
     auto returnOp = dyn_cast<IREE::Util::InitializerReturnOp>(op);
-    if (!returnOp) return;
+    if (!returnOp)
+      return;
     // util.initialize.return takes no args - just branch to the new block.
     OpBuilder builder(op);
     builder.create<mlir::cf::BranchOp>(op->getLoc(), newDest, ValueRange{});
@@ -101,14 +102,14 @@ Operation *UtilDialect::materializeConstant(OpBuilder &builder, Attribute value,
   return nullptr;
 }
 
-template <typename DimOp>
-struct FoldDimOp : public OpRewritePattern<DimOp> {
+template <typename DimOp> struct FoldDimOp : public OpRewritePattern<DimOp> {
   using OpRewritePattern<DimOp>::OpRewritePattern;
   LogicalResult matchAndRewrite(DimOp op,
                                 PatternRewriter &rewriter) const override {
     auto shapeAwareOp =
         dyn_cast_or_null<ShapeAwareOpInterface>(op.getSource().getDefiningOp());
-    if (!shapeAwareOp) return failure();
+    if (!shapeAwareOp)
+      return failure();
 
     // We only support static dimension indices today (as in general we only
     // support ranked shapes). If we find dynamic indices sneaking in we will
@@ -145,7 +146,7 @@ void UtilDialect::getCanonicalizationPatterns(
   results.insert<FoldDimOp<tensor::DimOp>>(getContext());
 }
 
-}  // namespace Util
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Util
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

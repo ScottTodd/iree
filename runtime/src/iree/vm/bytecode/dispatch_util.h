@@ -281,7 +281,7 @@ static inline const iree_vm_register_list_t* VM_DecVariadicOperandsImpl(
   DEFINE_DISPATCH_TABLE_EXT_F64();
 
 #define DISPATCH_UNHANDLED_CORE()                                           \
-  _dispatch_unhandled : {                                                   \
+  _dispatch_unhandled: {                                                    \
     IREE_ASSERT(0);                                                         \
     return iree_make_status(IREE_STATUS_UNIMPLEMENTED, "unhandled opcode"); \
   }
@@ -293,7 +293,7 @@ static inline const iree_vm_register_list_t* VM_DecVariadicOperandsImpl(
   }
 
 #define DISPATCH_OP(ext, op_name, body)                               \
-  _dispatch_##ext##_##op_name:;                                       \
+  _dispatch_##ext##_##op_name :;                                      \
   IREE_DISPATCH_TRACE_INSTRUCTION(IREE_VM_PC_OFFSET_##ext, #op_name); \
   body;                                                               \
   goto* kDispatchTable_CORE[bytecode_data[pc++]];

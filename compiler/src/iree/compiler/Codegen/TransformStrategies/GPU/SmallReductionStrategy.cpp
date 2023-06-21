@@ -12,10 +12,10 @@
 #include "iree/compiler/Codegen/TransformStrategies/Common/Common.h"
 #include "iree/compiler/Codegen/TransformStrategies/GPU/Common.h"
 #include "iree/compiler/Codegen/TransformStrategies/GPU/Strategies.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/Transform/IR/TransformDialect.h"
 #include "mlir/Dialect/Transform/IR/TransformOps.h"
 #include "mlir/IR/ImplicitLocOpBuilder.h"
+#include "llvm/Support/Debug.h"
 
 using namespace mlir;
 
@@ -80,7 +80,8 @@ void mlir::iree_compiler::gpu::SmallReductionStrategy::configure(
   // in a crash in the associated upstream util.
   // TODO: More generally fix PadDynamicAlloc and the associated upstream util.
   bool hasTrailingElementwise = (captures.maybeTrailingRank > 0);
-  if (failed(maybeDivisor) && hasTrailingElementwise) maybeDivisor = 1;
+  if (failed(maybeDivisor) && hasTrailingElementwise)
+    maybeDivisor = 1;
 
   // If the captured dimension has no satisfactory divisor, just tile the last
   // parallel dimension by 2 * kCudaWarpSize.

@@ -7,10 +7,10 @@
 #ifndef IREE_COMPILER_CODEGEN_INTERFACES_PARTITIONABLE_LOOPS_INTERFACE_H_
 #define IREE_COMPILER_CODEGEN_INTERFACES_PARTITIONABLE_LOOPS_INTERFACE_H_
 
-#include "llvm/ADT/SmallVector.h"
 #include "mlir/Dialect/Utils/StructuredOpsUtils.h"
 #include "mlir/IR/OpDefinition.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/SmallVector.h"
 
 // clang-format off
 #include "iree/compiler/Codegen/Interfaces/PartitionableLoopsInterface.h.inc"  // IWYU pragma: export
@@ -22,7 +22,7 @@ namespace iree_compiler {
 /// Register external models for PartitionableLoopsInterface.
 void registerPartitionableLoopsInterfaceModels(DialectRegistry &registry);
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_CODEGEN_INTERFACES_PARTITIONABLE_LOOPS_INTERFACE_H_
+#endif // IREE_COMPILER_CODEGEN_INTERFACES_PARTITIONABLE_LOOPS_INTERFACE_H_

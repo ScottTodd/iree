@@ -6,7 +6,6 @@
 
 #include "iree/compiler/Dialect/VM/IR/VMOps.h"
 #include "iree/compiler/Dialect/VM/Transforms/Passes.h"
-#include "llvm/ADT/ArrayRef.h"
 #include "mlir/Dialect/Affine/Utils.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/MLIRContext.h"
@@ -15,6 +14,7 @@
 #include "mlir/Pass/PassRegistry.h"
 #include "mlir/Support/LLVM.h"
 #include "mlir/Support/LogicalResult.h"
+#include "llvm/ADT/ArrayRef.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -42,7 +42,7 @@ static size_t getGlobalStorageSize(IREE::Util::GlobalOpInterface globalOp) {
 // clustered together to make use of paging in memory mapped files.
 class OrdinalAllocationPass
     : public PassWrapper<OrdinalAllocationPass, OperationPass<ModuleOp>> {
- public:
+public:
   StringRef getArgument() const override {
     return "iree-vm-ordinal-allocation";
   }
@@ -94,7 +94,8 @@ class OrdinalAllocationPass
     int globalBytes = 0;
     for (auto sizeGlobalOps : llvm::enumerate(primitiveGlobalOps)) {
       size_t storageSize = sizeGlobalOps.index();
-      if (sizeGlobalOps.value().empty()) continue;
+      if (sizeGlobalOps.value().empty())
+        continue;
       nextGlobalBytesOrdinal =
           llvm::alignTo(nextGlobalBytesOrdinal, storageSize);
       for (auto &globalOp : sizeGlobalOps.value()) {
@@ -140,7 +141,7 @@ std::unique_ptr<OperationPass<ModuleOp>> createOrdinalAllocationPass() {
 
 static PassRegistration<OrdinalAllocationPass> pass;
 
-}  // namespace VM
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace VM
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

@@ -10,8 +10,6 @@
 #include "iree/compiler/Codegen/Interfaces/UKernelOpInterface.h"
 #include "iree/compiler/Dialect/Flow/IR/FlowOps.h"
 #include "iree/compiler/Dialect/HAL/IR/HALOps.h"
-#include "llvm/ADT/STLExtras.h"
-#include "llvm/ADT/TypeSwitch.h"
 #include "mlir/Dialect/Affine/IR/AffineOps.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/Arith/Utils/Utils.h"
@@ -22,6 +20,8 @@
 #include "mlir/IR/Matchers.h"
 #include "mlir/IR/SymbolTable.h"
 #include "mlir/Interfaces/TilingInterface.h"
+#include "llvm/ADT/STLExtras.h"
+#include "llvm/ADT/TypeSwitch.h"
 
 #define DEBUG_TYPE "iree-codegen-utils"
 
@@ -34,7 +34,8 @@ namespace iree_compiler {
 
 FailureOr<IREE::HAL::ExecutableExportOp> getEntryPoint(func::FuncOp funcOp) {
   auto variantOp = funcOp->getParentOfType<IREE::HAL::ExecutableVariantOp>();
-  if (!variantOp) return failure();
+  if (!variantOp)
+    return failure();
 
   for (auto op : variantOp.getOps<IREE::HAL::ExecutableExportOp>()) {
     if (op.getSymName() == funcOp.getName()) {
@@ -44,8 +45,8 @@ FailureOr<IREE::HAL::ExecutableExportOp> getEntryPoint(func::FuncOp funcOp) {
   return failure();
 }
 
-FailureOr<IREE::HAL::ExecutableVariantOp> getExecutableVariantOp(
-    Operation *op) {
+FailureOr<IREE::HAL::ExecutableVariantOp>
+getExecutableVariantOp(Operation *op) {
   if (auto result = dyn_cast<IREE::HAL::ExecutableVariantOp>(op)) {
     return result;
   }
@@ -59,8 +60,8 @@ bool isEntryPoint(func::FuncOp func) {
   return func.isPublic() && succeeded(getEntryPoint(func));
 }
 
-llvm::StringMap<IREE::HAL::ExecutableExportOp> getAllEntryPoints(
-    ModuleOp module) {
+llvm::StringMap<IREE::HAL::ExecutableExportOp>
+getAllEntryPoints(ModuleOp module) {
   auto variantOp = module->getParentOfType<IREE::HAL::ExecutableVariantOp>();
   llvm::StringMap<IREE::HAL::ExecutableExportOp> exportOps;
   for (auto op : variantOp.getOps<IREE::HAL::ExecutableExportOp>()) {
@@ -69,40 +70,53 @@ llvm::StringMap<IREE::HAL::ExecutableExportOp> getAllEntryPoints(
   return exportOps;
 }
 
-std::optional<StringAttr> getConfigStringAttr(
-    IREE::HAL::ExecutableTargetAttr targetAttr, StringRef stringAttr) {
-  if (!targetAttr) return std::nullopt;
+std::optional<StringAttr>
+getConfigStringAttr(IREE::HAL::ExecutableTargetAttr targetAttr,
+                    StringRef stringAttr) {
+  if (!targetAttr)
+    return std::nullopt;
   auto config = targetAttr.getConfiguration();
-  if (!config) return std::nullopt;
+  if (!config)
+    return std::nullopt;
   auto attr = config.getAs<StringAttr>(stringAttr);
-  if (!attr) return std::nullopt;
+  if (!attr)
+    return std::nullopt;
   return attr;
 }
 
-std::optional<IntegerAttr> getConfigIntegerAttr(
-    IREE::HAL::ExecutableTargetAttr targetAttr, StringRef integerAttr) {
-  if (!targetAttr) return std::nullopt;
+std::optional<IntegerAttr>
+getConfigIntegerAttr(IREE::HAL::ExecutableTargetAttr targetAttr,
+                     StringRef integerAttr) {
+  if (!targetAttr)
+    return std::nullopt;
   auto config = targetAttr.getConfiguration();
-  if (!config) return std::nullopt;
+  if (!config)
+    return std::nullopt;
   auto attr = config.getAs<IntegerAttr>(integerAttr);
-  if (!attr) return std::nullopt;
+  if (!attr)
+    return std::nullopt;
   return attr;
 }
 
-std::optional<BoolAttr> getConfigBoolAttr(
-    IREE::HAL::ExecutableTargetAttr targetAttr, StringRef integerAttr) {
-  if (!targetAttr) return std::nullopt;
+std::optional<BoolAttr>
+getConfigBoolAttr(IREE::HAL::ExecutableTargetAttr targetAttr,
+                  StringRef integerAttr) {
+  if (!targetAttr)
+    return std::nullopt;
   auto config = targetAttr.getConfiguration();
-  if (!config) return std::nullopt;
+  if (!config)
+    return std::nullopt;
   auto attr = config.getAs<BoolAttr>(integerAttr);
-  if (!attr) return std::nullopt;
+  if (!attr)
+    return std::nullopt;
   return attr;
 }
 
-std::optional<llvm::Triple> getTargetTriple(
-    IREE::HAL::ExecutableTargetAttr targetAttr) {
+std::optional<llvm::Triple>
+getTargetTriple(IREE::HAL::ExecutableTargetAttr targetAttr) {
   auto triple = getConfigStringAttr(targetAttr, "target_triple");
-  if (!triple) return std::nullopt;
+  if (!triple)
+    return std::nullopt;
   return llvm::Triple(triple.value().str());
 }
 
@@ -139,7 +153,8 @@ bool hasMicrokernels(IREE::HAL::ExecutableTargetAttr targetAttr) {
 
 bool isReadOnly(Value v) {
   Operation *definingOp = v.getDefiningOp();
-  if (!definingOp) return false;
+  if (!definingOp)
+    return false;
   return TypeSwitch<Operation *, bool>(definingOp)
       .Case<arith::ConstantOp>(
           [&](arith::ConstantOp constantOp) { return true; })
@@ -164,14 +179,14 @@ bool isReadOnly(Value v) {
 template <typename T>
 static AffineExpr getAffineExprOfType(ArrayRef<AffineExpr> exprs) {
   for (auto expr : exprs) {
-    if (expr.isa<T>()) return expr;
+    if (expr.isa<T>())
+      return expr;
   }
   return nullptr;
 }
 
 /// Returns true if the `expr` is on of the types in {`T1`, `T2`, `T3...`}.
-template <typename T>
-static bool isaAffineExprOfType(AffineExpr expr) {
+template <typename T> static bool isaAffineExprOfType(AffineExpr expr) {
   return expr.isa<T>();
 }
 template <typename T1, typename T2, typename... T3>
@@ -195,8 +210,9 @@ static Value getValueForDimOrSymbol(affine::AffineApplyOp applyOp,
   }
   return nullptr;
 }
-static SmallVector<Value> getValuesForDimsOrSymbols(
-    affine::AffineApplyOp applyOp, ArrayRef<AffineExpr> exprs) {
+static SmallVector<Value>
+getValuesForDimsOrSymbols(affine::AffineApplyOp applyOp,
+                          ArrayRef<AffineExpr> exprs) {
   SmallVector<Value> vals;
   for (auto expr : exprs) {
     vals.push_back(getValueForDimOrSymbol(applyOp, expr));
@@ -215,7 +231,8 @@ static std::optional<unsigned> getDimension(Operation *op) {
 }
 template <typename T1, typename T2, typename... T3>
 static std::optional<unsigned> getDimension(Operation *op) {
-  if (!op) return std::nullopt;
+  if (!op)
+    return std::nullopt;
   if (auto dimension = getDimension<T1>(op)) {
     return dimension;
   }
@@ -228,11 +245,13 @@ static std::optional<unsigned> getDimension(Operation *op) {
 /// returns the dimension.  If `refDimension` is passed checks if the dimension
 /// matches the given value.
 template <typename... T>
-static std::optional<unsigned> checkDimensions(
-    ArrayRef<Value> vals, std::optional<unsigned> refDimension = std::nullopt) {
+static std::optional<unsigned>
+checkDimensions(ArrayRef<Value> vals,
+                std::optional<unsigned> refDimension = std::nullopt) {
   for (auto v : vals) {
     auto currDimension = getDimension<T...>(v.getDefiningOp());
-    if (!currDimension) return std::nullopt;
+    if (!currDimension)
+      return std::nullopt;
     if (refDimension) {
       if (refDimension.value() != currDimension.value()) {
         return std::nullopt;
@@ -250,7 +269,7 @@ namespace {
 /// hal.interface.workgroup.id or hal.interface.workgroup.size.
 class LowerBoundExprVisitor
     : public AffineExprVisitor<LowerBoundExprVisitor, LogicalResult> {
- public:
+public:
   LowerBoundExprVisitor(affine::AffineApplyOp applyOp,
                         LoopTilingAndDistributionInfo &loopInfo)
       : applyOp(applyOp), loopInfo(loopInfo) {}
@@ -326,7 +345,7 @@ class LowerBoundExprVisitor
     return success();
   }
 
- private:
+private:
   affine::AffineApplyOp applyOp;
   LoopTilingAndDistributionInfo &loopInfo;
 };
@@ -337,7 +356,7 @@ class LowerBoundExprVisitor
 /// operation.
 class StepExprVisitor
     : public AffineExprVisitor<StepExprVisitor, LogicalResult> {
- public:
+public:
   StepExprVisitor(affine::AffineApplyOp applyOp,
                   LoopTilingAndDistributionInfo &loopInfo)
       : applyOp(applyOp), loopInfo(loopInfo) {}
@@ -425,7 +444,7 @@ class StepExprVisitor
     return success();
   }
 
- private:
+private:
   LogicalResult processSentinel(AffineExpr e,
                                 SmallVectorImpl<AffineExpr> &sentinels) {
     if (isaAffineExprOfType<AffineDimExpr, AffineSymbolExpr>(e)) {
@@ -445,7 +464,7 @@ class StepExprVisitor
   affine::AffineApplyOp applyOp;
   LoopTilingAndDistributionInfo &loopInfo;
 };
-}  // namespace
+} // namespace
 
 template <typename OpTy>
 static std::optional<unsigned> getInterfaceWorkgroupOpDim(Value value) {
@@ -468,8 +487,8 @@ static std::optional<unsigned> getInterfaceWorkgroupOpDim(Value value) {
 ///     affine_map<(d0)[s0, s1] -> (d0 * s0 * s1)>(%step)[%id, %size]
 ///   scf.for %iv = %offset to %ub step %new_step { ... }
 /// ```
-std::optional<LoopTilingAndDistributionInfo> isTiledAndDistributedLoop(
-    scf::ForOp forOp) {
+std::optional<LoopTilingAndDistributionInfo>
+isTiledAndDistributedLoop(scf::ForOp forOp) {
   LoopTilingAndDistributionInfo loopInfo;
   loopInfo.loop = forOp;
   loopInfo.untiledUpperBound = getAsOpFoldResult(forOp.getUpperBound());
@@ -492,7 +511,8 @@ std::optional<LoopTilingAndDistributionInfo> isTiledAndDistributedLoop(
       countDim = ifx.getDimIndex();
     }
 
-    if (!idDim || !countDim) return std::nullopt;
+    if (!idDim || !countDim)
+      return std::nullopt;
 
     Builder b(forOp.getContext());
     loopInfo.untiledLowerBound = b.getIndexAttr(0);
@@ -528,8 +548,8 @@ SmallVector<Operation *> getComputeOps(func::FuncOp funcOp) {
   return computeOps;
 }
 
-SmallVector<LoopTilingAndDistributionInfo> getTiledAndDistributedLoopInfo(
-    func::FuncOp funcOp) {
+SmallVector<LoopTilingAndDistributionInfo>
+getTiledAndDistributedLoopInfo(func::FuncOp funcOp) {
   SmallVector<LoopTilingAndDistributionInfo> info;
   funcOp.walk([&](scf::ForOp forOp) {
     if (auto tiledLoopInfo = isTiledAndDistributedLoop(forOp)) {
@@ -578,12 +598,13 @@ linalg::LinalgLoopDistributionOptions getIREELinalgLoopDistributionOptions(
     const SmallVector<int64_t> &tileSizes,
     linalg::DistributionMethod distributionMethod,
     int32_t maxWorkgroupParallelDims) {
-  return {[&tileSizes, distributionMethod, maxWorkgroupParallelDims](
-              OpBuilder &builder, Location loc,
-              ArrayRef<Range> parallelLoopRanges) {
+  return {[&tileSizes, distributionMethod,
+           maxWorkgroupParallelDims](OpBuilder &builder, Location loc,
+                                     ArrayRef<Range> parallelLoopRanges) {
     SmallVector<int64_t> nonZeroTileSizes;
     for (int64_t size : tileSizes) {
-      if (size != 0) nonZeroTileSizes.push_back(size);
+      if (size != 0)
+        nonZeroTileSizes.push_back(size);
     }
     auto numParallelDims = parallelLoopRanges.size();
 
@@ -660,8 +681,9 @@ OpFoldResult convertByteOffsetToElementOffset(RewriterBase &rewriter,
 
 /// Replaces a `use` with the `replacement` for cases where a simple substition
 /// might lead to verification errors.
-static std::optional<SmallVector<Value>> replaceNonTrivialUse(
-    RewriterBase &rewriter, Location loc, OpOperand &use, Value replacement) {
+static std::optional<SmallVector<Value>>
+replaceNonTrivialUse(RewriterBase &rewriter, Location loc, OpOperand &use,
+                     Value replacement) {
   Operation *user = use.getOwner();
   OpBuilder::InsertionGuard guard(rewriter);
   rewriter.setInsertionPoint(user);
@@ -834,10 +856,12 @@ void sinkOpsInCFG(const SmallVector<Operation *> &allocs,
 SmallVector<int64_t> getStaticNumWorkgroups(func::FuncOp funcOp) {
   SmallVector<int64_t> result;
   FailureOr<IREE::HAL::ExecutableExportOp> exportOp = getEntryPoint(funcOp);
-  if (failed(exportOp)) return result;
+  if (failed(exportOp))
+    return result;
 
   Block *body = exportOp->getWorkgroupCountBody();
-  if (!body) return result;
+  if (!body)
+    return result;
 
   auto returnOp = cast<IREE::HAL::ReturnOp>(body->getTerminator());
   assert(returnOp.getNumOperands() == 3);
@@ -854,5 +878,5 @@ SmallVector<int64_t> getStaticNumWorkgroups(func::FuncOp funcOp) {
   return result;
 }
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir

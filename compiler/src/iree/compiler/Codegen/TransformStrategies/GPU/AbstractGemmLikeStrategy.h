@@ -55,13 +55,15 @@ struct AbstractGemmLikeStrategy {
   /// Common values based on derived quantities.
   int64_t totalNumThreads() const {
     int64_t res = 1;
-    for (auto v : numThreads) res *= v;
+    for (auto v : numThreads)
+      res *= v;
     return res;
   }
 
   int64_t totalNumWarps() const {
     int64_t res = 1;
-    for (auto v : numWarps) res *= v;
+    for (auto v : numWarps)
+      res *= v;
     return res;
   }
 
@@ -75,13 +77,17 @@ struct AbstractGemmLikeStrategy {
   // Copy vector sizes based on innermost K/N dims.
   // TODO: These are now hardcoded for f32 but are element-type dependent.
   int64_t lhsCopyVectorSize() const {
-    if (k() % 4 == 0) return 4;
-    if (k() % 2 == 0) return 2;
+    if (k() % 4 == 0)
+      return 4;
+    if (k() % 2 == 0)
+      return 2;
     return 1;
   }
   int64_t rhsCopyVectorSize() const {
-    if (n() % 4 == 0) return 4;
-    if (n() % 2 == 0) return 2;
+    if (n() % 4 == 0)
+      return 4;
+    if (n() % 2 == 0)
+      return 2;
     return 1;
   }
   int64_t resCopyVectorSize() const { return rhsCopyVectorSize(); }
@@ -157,8 +163,8 @@ struct AbstractGemmLikeStrategy {
   constexpr static int64_t kMinMmaSyncMinK = 4;
 };
 
-}  // namespace gpu
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace gpu
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_CODEGEN_TRANSFORM_DIALECT_STRATEGIES_GPU_ABSTRACT_GEMM_LIKE_STRATEGY_H_
+#endif // IREE_COMPILER_CODEGEN_TRANSFORM_DIALECT_STRATEGIES_GPU_ABSTRACT_GEMM_LIKE_STRATEGY_H_

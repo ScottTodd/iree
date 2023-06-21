@@ -9,8 +9,8 @@
 
 #include <string>
 
-#include "llvm/ADT/SmallVector.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/SmallVector.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -40,7 +40,7 @@ std::string findToolInEnvironment(SmallVector<std::string> toolNames);
 std::string findTool(SmallVector<std::string> toolNames);
 std::string findTool(std::string toolName);
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_UTILS_TOOLUTILS_H_
+#endif // IREE_COMPILER_UTILS_TOOLUTILS_H_

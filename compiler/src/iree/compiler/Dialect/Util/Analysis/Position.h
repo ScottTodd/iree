@@ -7,14 +7,14 @@
 #ifndef IREE_COMPILER_DIALECT_UTIL_ANALYSIS_POSITION_H_
 #define IREE_COMPILER_DIALECT_UTIL_ANALYSIS_POSITION_H_
 
-#include "llvm/ADT/DenseMapInfo.h"
-#include "llvm/ADT/PointerIntPair.h"
-#include "llvm/ADT/STLExtras.h"
 #include "mlir/IR/Operation.h"
 #include "mlir/IR/Value.h"
 #include "mlir/Interfaces/CallInterfaces.h"
 #include "mlir/Interfaces/ControlFlowInterfaces.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/DenseMapInfo.h"
+#include "llvm/ADT/PointerIntPair.h"
+#include "llvm/ADT/STLExtras.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -26,7 +26,7 @@ namespace iree_compiler {
 // This is the MLIR equivalent to the IRPosition used in LLVM (see
 // llvm/Transforms/IPO/Attributor.h).
 class Position {
- public:
+public:
   static const Position EmptyKey;
   static const Position TombstoneKey;
 
@@ -81,9 +81,8 @@ class Position {
   void print(llvm::raw_ostream &os) const;
   void print(llvm::raw_ostream &os, AsmState &asmState) const;
 
- private:
-  template <typename T, typename Enable>
-  friend struct llvm::DenseMapInfo;
+private:
+  template <typename T, typename Enable> friend struct llvm::DenseMapInfo;
   friend llvm::raw_ostream &operator<<(llvm::raw_ostream &os, Position pos);
 
   explicit Position(char encoding, void *ptr, unsigned ordinal)
@@ -99,7 +98,7 @@ class Position {
       llvm::PointerLikeTypeTraits<void *>::NumLowBitsAvailable;
   static_assert(NumEncodingBits >= 2, "At least two bits are required!");
   llvm::PointerIntPair<void *, NumEncodingBits, char> enc;
-  unsigned ordinal;  // used only with ENC_RETURNED_VALUE
+  unsigned ordinal; // used only with ENC_RETURNED_VALUE
 };
 
 llvm::raw_ostream &operator<<(llvm::raw_ostream &os, Position pos);
@@ -136,16 +135,15 @@ static inline auto getArgumentPositions(Block &block) {
 // positions are references to the combined results of the region.
 SmallVector<Position> getReturnedValuePositions(Region &region);
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir
 
 namespace llvm {
 
 using mlir::iree_compiler::Position;
 
 // Helper that allows Position as a key in a DenseMap.
-template <>
-struct DenseMapInfo<Position> {
+template <> struct DenseMapInfo<Position> {
   static inline Position getEmptyKey() { return Position::EmptyKey; }
   static inline Position getTombstoneKey() { return Position::TombstoneKey; }
   static unsigned getHashValue(const Position &pos) {
@@ -156,6 +154,6 @@ struct DenseMapInfo<Position> {
   static bool isEqual(const Position &a, const Position &b) { return a == b; }
 };
 
-}  // end namespace llvm
+} // end namespace llvm
 
-#endif  // IREE_COMPILER_DIALECT_UTIL_ANALYSIS_POSITION_H_
+#endif // IREE_COMPILER_DIALECT_UTIL_ANALYSIS_POSITION_H_

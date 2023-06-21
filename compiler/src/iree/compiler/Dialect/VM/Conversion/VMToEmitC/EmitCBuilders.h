@@ -9,13 +9,13 @@
 
 #include <optional>
 
-#include "llvm/ADT/ArrayRef.h"
-#include "llvm/ADT/StringRef.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/IR/BuiltinAttributes.h"
 #include "mlir/IR/Location.h"
 #include "mlir/IR/Types.h"
 #include "mlir/IR/Value.h"
+#include "llvm/ADT/ArrayRef.h"
+#include "llvm/ADT/StringRef.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -122,8 +122,8 @@ Value ireeVmInstanceLookupType(OpBuilder builder, Location location,
 
 void ireeVmRefRelease(OpBuilder builder, Location location, Value operand);
 
-}  // namespace emitc_builders
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace emitc_builders
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_DIALECT_VM_CONVERSION_VMTOEMITC_EMITCBUILDERS_H_
+#endif // IREE_COMPILER_DIALECT_VM_CONVERSION_VMTOEMITC_EMITCBUILDERS_H_

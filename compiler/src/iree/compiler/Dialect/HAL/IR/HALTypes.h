@@ -12,11 +12,6 @@
 
 #include "iree/compiler/Dialect/Stream/IR/StreamTypes.h"
 #include "iree/compiler/Dialect/Util/IR/UtilTypes.h"
-#include "llvm/ADT/DenseMap.h"
-#include "llvm/ADT/DenseMapInfo.h"
-#include "llvm/ADT/SmallVector.h"
-#include "llvm/ADT/StringSwitch.h"
-#include "llvm/ADT/TypeSwitch.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/IR/BuiltinTypes.h"
@@ -25,6 +20,11 @@
 #include "mlir/IR/TypeSupport.h"
 #include "mlir/IR/Types.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/DenseMap.h"
+#include "llvm/ADT/DenseMapInfo.h"
+#include "llvm/ADT/SmallVector.h"
+#include "llvm/ADT/StringSwitch.h"
+#include "llvm/ADT/TypeSwitch.h"
 
 // clang-format off: must be included after all LLVM/MLIR headers.
 #include "iree/compiler/Dialect/HAL/IR/HALEnums.h.inc"  // IWYU pragma: keep
@@ -35,9 +35,9 @@ namespace iree_compiler {
 namespace IREE {
 namespace HAL {
 
-#include "iree/compiler/Dialect/HAL/IR/HALAttrInterfaces.h.inc"  // IWYU pragma: export
-#include "iree/compiler/Dialect/HAL/IR/HALOpInterfaces.h.inc"  // IWYU pragma: export
-#include "iree/compiler/Dialect/HAL/IR/HALTypeInterfaces.h.inc"  // IWYU pragma: export
+#include "iree/compiler/Dialect/HAL/IR/HALAttrInterfaces.h.inc" // IWYU pragma: export
+#include "iree/compiler/Dialect/HAL/IR/HALOpInterfaces.h.inc" // IWYU pragma: export
+#include "iree/compiler/Dialect/HAL/IR/HALTypeInterfaces.h.inc" // IWYU pragma: export
 
 //===----------------------------------------------------------------------===//
 // Enum utilities
@@ -51,8 +51,7 @@ std::optional<int32_t> getElementTypeValue(Type type);
 // type is unsupported in the ABI.
 std::optional<int32_t> getEncodingTypeValue(Attribute attr);
 
-template <typename T>
-inline bool allEnumBitsSet(T value, T required) {
+template <typename T> inline bool allEnumBitsSet(T value, T required) {
   return (static_cast<uint32_t>(value) & static_cast<uint32_t>(required)) ==
          static_cast<uint32_t>(required);
 }
@@ -154,18 +153,17 @@ struct DescriptorSetBindingValue {
   Value byteLength;
 };
 
-template <typename T>
-struct StaticRange {
+template <typename T> struct StaticRange {
   T min;
   T max;
   StaticRange(T value) : min(value), max(value) {}
   StaticRange(T min, T max) : min(min), max(max) {}
 };
 
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
 // It's unfortunate this is required.
 namespace mlir {
@@ -173,20 +171,22 @@ namespace mlir {
 template <>
 struct FieldParser<
     std::optional<mlir::iree_compiler::IREE::HAL::CollectiveReductionOp>> {
-  static FailureOr<mlir::iree_compiler::IREE::HAL::CollectiveReductionOp> parse(
-      AsmParser &parser) {
+  static FailureOr<mlir::iree_compiler::IREE::HAL::CollectiveReductionOp>
+  parse(AsmParser &parser) {
     std::string value;
-    if (parser.parseKeywordOrString(&value)) return failure();
+    if (parser.parseKeywordOrString(&value))
+      return failure();
     auto result = mlir::iree_compiler::IREE::HAL::symbolizeEnum<
         mlir::iree_compiler::IREE::HAL::CollectiveReductionOp>(value);
-    if (!result.has_value()) return failure();
+    if (!result.has_value())
+      return failure();
     return result.value();
   }
 };
-static inline AsmPrinter &operator<<(
-    AsmPrinter &printer,
-    std::optional<mlir::iree_compiler::IREE::HAL::CollectiveReductionOp>
-        param) {
+static inline AsmPrinter &
+operator<<(AsmPrinter &printer,
+           std::optional<mlir::iree_compiler::IREE::HAL::CollectiveReductionOp>
+               param) {
   printer << (param.has_value()
                   ? mlir::iree_compiler::IREE::HAL::stringifyEnum(param.value())
                   : StringRef{""});
@@ -196,13 +196,15 @@ static inline AsmPrinter &operator<<(
 template <>
 struct FieldParser<
     std::optional<mlir::iree_compiler::IREE::HAL::DescriptorFlags>> {
-  static FailureOr<mlir::iree_compiler::IREE::HAL::DescriptorFlags> parse(
-      AsmParser &parser) {
+  static FailureOr<mlir::iree_compiler::IREE::HAL::DescriptorFlags>
+  parse(AsmParser &parser) {
     std::string value;
-    if (parser.parseKeywordOrString(&value)) return failure();
+    if (parser.parseKeywordOrString(&value))
+      return failure();
     auto result = mlir::iree_compiler::IREE::HAL::symbolizeEnum<
         mlir::iree_compiler::IREE::HAL::DescriptorFlags>(value);
-    if (!result.has_value()) return failure();
+    if (!result.has_value())
+      return failure();
     return result.value();
   }
 };
@@ -215,17 +217,18 @@ static inline AsmPrinter &operator<<(
   return printer;
 }
 
-static inline AsmPrinter &operator<<(
-    AsmPrinter &printer, mlir::iree_compiler::IREE::HAL::DescriptorType param) {
+static inline AsmPrinter &
+operator<<(AsmPrinter &printer,
+           mlir::iree_compiler::IREE::HAL::DescriptorType param) {
   printer << mlir::iree_compiler::IREE::HAL::stringifyEnum(param);
   return printer;
 }
 
-}  // namespace mlir
+} // namespace mlir
 
 // clang-format off: must be included after all LLVM/MLIR headers.
 #define GET_ATTRDEF_CLASSES
 #include "iree/compiler/Dialect/HAL/IR/HALAttrs.h.inc"  // IWYU pragma: keep
 // clang-format on
 
-#endif  // IREE_COMPILER_DIALECT_HAL_IR_HALTYPES_H_
+#endif // IREE_COMPILER_DIALECT_HAL_IR_HALTYPES_H_

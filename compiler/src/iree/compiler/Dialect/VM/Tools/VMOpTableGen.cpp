@@ -4,14 +4,14 @@
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
+#include "mlir/TableGen/Attribute.h"
+#include "mlir/TableGen/GenInfo.h"
+#include "mlir/TableGen/Operator.h"
 #include "llvm/ADT/STLExtras.h"
 #include "llvm/Support/Format.h"
 #include "llvm/Support/FormatVariadic.h"
 #include "llvm/TableGen/Record.h"
 #include "llvm/TableGen/TableGenBackend.h"
-#include "mlir/TableGen/Attribute.h"
-#include "mlir/TableGen/GenInfo.h"
-#include "mlir/TableGen/Operator.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -80,6 +80,6 @@ static GenRegistration genVMOpDispatcherDefs(
       return emitOpTableDefs(records, os);
     });
 
-}  // namespace
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace
+} // namespace iree_compiler
+} // namespace mlir

@@ -9,14 +9,14 @@
 #include "iree/compiler/Codegen/Dialect/IREECodegenDialect.h"
 #include "iree/compiler/Codegen/Utils/EncodingUtils.h"
 #include "iree/compiler/Codegen/Utils/Utils.h"
-#include "llvm/ADT/TypeSwitch.h"
-#include "llvm/Support/FormatVariadic.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/Bufferization/IR/DstBufferizableOpInterfaceImpl.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Dialect/MemRef/IR/MemRef.h"
 #include "mlir/IR/OpImplementation.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/TypeSwitch.h"
+#include "llvm/Support/FormatVariadic.h"
 
 // clang-format off
 #define GET_OP_CLASSES
@@ -26,7 +26,7 @@
 namespace mlir {
 namespace iree_compiler {
 namespace IREE {
-namespace Codegen {}  // namespace Codegen
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+namespace Codegen {} // namespace Codegen
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

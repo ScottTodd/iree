@@ -8,15 +8,15 @@
 #define IREE_COMPILER_DIALECT_UTIL_ANALYSIS_EXPLORER_H_
 
 #include "iree/compiler/Dialect/Util/IR/UtilOps.h"
-#include "llvm/ADT/DenseMapInfo.h"
-#include "llvm/ADT/EquivalenceClasses.h"
-#include "llvm/ADT/PointerIntPair.h"
 #include "mlir/Analysis/CallGraph.h"
 #include "mlir/IR/AsmState.h"
 #include "mlir/IR/Operation.h"
 #include "mlir/IR/SymbolTable.h"
 #include "mlir/Pass/AnalysisManager.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/ADT/DenseMapInfo.h"
+#include "llvm/ADT/EquivalenceClasses.h"
+#include "llvm/ADT/PointerIntPair.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -77,7 +77,7 @@ inline llvm::raw_ostream &operator<<(llvm::raw_ostream &os,
 //
 // TODO(#7389): make this an abstract interface and hide the IREE details.
 class Explorer {
- public:
+public:
   Explorer(Operation *rootOp, TraversalAction defaultAction);
   ~Explorer();
 
@@ -92,8 +92,7 @@ class Explorer {
   // Registers a default action for all ops in the given dialect namespace.
   // Individual op actions can override this.
   void setDialectAction(StringRef dialectNamespace, TraversalAction action);
-  template <typename DialectT>
-  void setDialectAction(TraversalAction action) {
+  template <typename DialectT> void setDialectAction(TraversalAction action) {
     setDialectAction(DialectT::getDialectNamespace(), action);
   }
   template <typename DialectT, typename DialectT2, typename... DialectTs>
@@ -105,8 +104,7 @@ class Explorer {
   // Registers a traversal action for the given op, overriding the explorer
   // default and any dialect action specified.
   void setOpAction(OperationName op, TraversalAction action);
-  template <typename OpT>
-  void setOpAction(TraversalAction action) {
+  template <typename OpT> void setOpAction(TraversalAction action) {
     setOpAction(OperationName(OpT::getOperationName(), rootOp->getContext()),
                 action);
   }
@@ -214,9 +212,9 @@ class Explorer {
 
   // Walks all of the call ops calling into the given |callableOp|.
   // May be incomplete if there are indirect calls in the program.
-  TraversalResult walkIncomingCalls(
-      CallableOpInterface callableOp,
-      std::function<WalkResult(CallOpInterface)> fn);
+  TraversalResult
+  walkIncomingCalls(CallableOpInterface callableOp,
+                    std::function<WalkResult(CallOpInterface)> fn);
 
   // Walks all return-like (or region terminators to parent) ops in |parentOp|.
   // The operations enumerated will be either ReturnLike or implement
@@ -307,7 +305,7 @@ class Explorer {
   // deduplication on the owner of the use.
   TraversalResult walkTransitiveUsers(Value value, OperationWalkFn fn);
 
- private:
+private:
   // Maps callee callable region -> call sites.
   using InverseCallGraph = DenseMap<Region *, SmallVector<CallOpInterface>>;
 
@@ -337,7 +335,7 @@ class Explorer {
   ModuleAnalysisManager analysisManager;
 };
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir
 
-#endif  // IREE_COMPILER_DIALECT_UTIL_ANALYSIS_EXPLORER_H_
+#endif // IREE_COMPILER_DIALECT_UTIL_ANALYSIS_EXPLORER_H_

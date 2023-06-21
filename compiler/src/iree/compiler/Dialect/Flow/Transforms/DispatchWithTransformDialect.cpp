@@ -8,7 +8,6 @@
 #include "iree/compiler/Dialect/Flow/IR/FlowDialect.h"
 #include "iree/compiler/Dialect/Flow/Transforms/PassDetail.h"
 #include "iree/compiler/Dialect/Flow/Transforms/Passes.h"
-#include "llvm/Support/CommandLine.h"
 #include "mlir/Dialect/Affine/IR/AffineOps.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/Linalg/IR/Linalg.h"
@@ -20,6 +19,7 @@
 #include "mlir/Dialect/Transform/Transforms/TransformInterpreterPassBase.h"
 #include "mlir/Pass/Pass.h"
 #include "mlir/Support/LLVM.h"
+#include "llvm/Support/CommandLine.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -49,7 +49,7 @@ class DispatchWithTransformDialect
     // clang-format on
   }
 
- public:
+public:
   DispatchWithTransformDialect(StringRef transformFileName,
                                StringRef debugPayloadRootTag = StringRef(),
                                StringRef debugTransformRootTag = StringRef()) {
@@ -64,7 +64,7 @@ class DispatchWithTransformDialect
     this->debugTransformRootTag = pass.debugTransformRootTag;
   }
 
- private:
+private:
   Statistic numDispatches{this, "number of dispatches",
                           "Number of Flow dispatches created"};
 };
@@ -77,7 +77,7 @@ createDispatchWithTransformDialect(StringRef transformFileName,
       transformFileName, debugPayloadRootTag, debugTransformRootTag);
 }
 
-}  // namespace Flow
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Flow
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

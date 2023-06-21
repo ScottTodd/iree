@@ -8,14 +8,14 @@
 
 #include "iree/compiler/Dialect/Util/IR/UtilOps.h"
 #include "iree/compiler/Dialect/Util/IR/UtilTypes.h"
-#include "llvm/ADT/STLExtras.h"
-#include "llvm/Support/SMLoc.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/IR/Attributes.h"
 #include "mlir/IR/Builders.h"
 #include "mlir/IR/OpImplementation.h"
 #include "mlir/IR/SymbolTable.h"
 #include "mlir/IR/TypeUtilities.h"
+#include "llvm/ADT/STLExtras.h"
+#include "llvm/Support/SMLoc.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -107,7 +107,8 @@ void BufferStorageOp::getAsmResultNames(
 
 OpFoldResult BufferStorageOp::fold(FoldAdaptor operands) {
   auto *definingOp = getBuffer().getDefiningOp();
-  if (!definingOp) return {};
+  if (!definingOp)
+    return {};
   if (auto sourceOp =
           dyn_cast_or_null<IREE::HAL::Inline::BufferAllocateOp>(definingOp)) {
     return sourceOp.getStorage();
@@ -171,7 +172,8 @@ struct FoldBufferViewCreateSubspan
       needsUpdate = true;
     }
     rewriter.restoreInsertionPoint(ip);
-    if (!needsUpdate) return failure();
+    if (!needsUpdate)
+      return failure();
     rewriter.updateRootInPlace(op, [&]() {
       op.getSourceBufferMutable().assign(newSourceBuffer);
       op.getSourceOffsetMutable().assign(newSourceOffset);
@@ -180,7 +182,7 @@ struct FoldBufferViewCreateSubspan
   }
 };
 
-}  // namespace
+} // namespace
 
 void BufferViewCreateOp::getCanonicalizationPatterns(RewritePatternSet &results,
                                                      MLIRContext *context) {
@@ -213,7 +215,7 @@ struct SkipBufferViewBufferOp : public OpRewritePattern<BufferViewBufferOp> {
   }
 };
 
-}  // namespace
+} // namespace
 
 void BufferViewBufferOp::getCanonicalizationPatterns(RewritePatternSet &results,
                                                      MLIRContext *context) {
@@ -238,11 +240,11 @@ LogicalResult DeviceQueryOp::verify() {
   return success();
 }
 
-}  // namespace Inline
-}  // namespace HAL
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Inline
+} // namespace HAL
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir
 
 //===----------------------------------------------------------------------===//
 // TableGen definitions (intentionally last)

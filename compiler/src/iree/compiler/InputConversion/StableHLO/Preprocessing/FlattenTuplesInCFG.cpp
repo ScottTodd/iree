@@ -8,7 +8,6 @@
 
 #include "iree/compiler/InputConversion/StableHLO/Preprocessing/Passes.h"
 #include "iree/compiler/InputConversion/StableHLO/Preprocessing/Rewriters.h"
-#include "llvm/ADT/TypeSwitch.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/ControlFlow/IR/ControlFlowOps.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
@@ -20,6 +19,7 @@
 #include "mlir/Support/LogicalResult.h"
 #include "mlir/Transforms/GreedyPatternRewriteDriver.h"
 #include "stablehlo/dialect/StablehloOps.h"
+#include "llvm/ADT/TypeSwitch.h"
 
 namespace mlir::iree_compiler::stablehlo {
 
@@ -101,10 +101,9 @@ Value recursiveRetuple(Type oldType, Operation::result_range *values,
 }
 
 template <typename T>
-LogicalResult untupleAndLookupValues(T values,
-                                     llvm::SmallVectorImpl<Value> &newValues,
-                                     OpBuilder &builder, Location loc,
-                                     IRMapping &mapping) {
+LogicalResult
+untupleAndLookupValues(T values, llvm::SmallVectorImpl<Value> &newValues,
+                       OpBuilder &builder, Location loc, IRMapping &mapping) {
   for (auto operand : values) {
     auto newValue = mapping.lookupOrNull(operand);
     if (!newValue) {
@@ -339,5 +338,5 @@ struct FlattenTuplesInCFG final
   }
 };
 
-}  // namespace
-}  // namespace mlir::iree_compiler::stablehlo
+} // namespace
+} // namespace mlir::iree_compiler::stablehlo

@@ -6,8 +6,8 @@
 
 #include "iree/compiler/Dialect/Util/Analysis/Attributes/PotentialValues.h"
 
-#include "llvm/Support/Debug.h"
 #include "mlir/IR/Matchers.h"
+#include "llvm/Support/Debug.h"
 
 #define DEBUG_TYPE "iree-util-attributes"
 using llvm::dbgs;
@@ -76,7 +76,7 @@ const std::string ConstantAttributePVS::getAsStr(AsmState &asmState) const {
   return str;
 }
 
-}  // namespace Util
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Util
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

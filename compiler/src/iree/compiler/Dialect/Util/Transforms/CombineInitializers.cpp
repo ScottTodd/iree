@@ -12,8 +12,6 @@
 #include "iree/compiler/Dialect/Util/IR/UtilTraits.h"
 #include "iree/compiler/Dialect/Util/Transforms/PassDetail.h"
 #include "iree/compiler/Dialect/Util/Transforms/Passes.h"
-#include "llvm/ADT/SmallVector.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/IR/IRMapping.h"
 #include "mlir/IR/Matchers.h"
@@ -21,6 +19,8 @@
 #include "mlir/Pass/Pass.h"
 #include "mlir/Pass/PassRegistry.h"
 #include "mlir/Transforms/InliningUtils.h"
+#include "llvm/ADT/SmallVector.h"
+#include "llvm/Support/Debug.h"
 
 #define DEBUG_TYPE "iree-util-combine-initializers"
 
@@ -32,7 +32,7 @@ namespace {
 
 class CombineInitializersPass
     : public CombineInitializersBase<CombineInitializersPass> {
- public:
+public:
   void getDependentDialects(DialectRegistry &registry) const override {
     registry.insert<IREE::Util::UtilDialect>();
   }
@@ -48,7 +48,8 @@ class CombineInitializersPass
       initializerOps.push_back(initializerOp);
       locs.push_back(initializerOp.getLoc());
     }
-    if (initializerOps.size() <= 1) return;
+    if (initializerOps.size() <= 1)
+      return;
     auto fusedLoc = FusedLoc::get(&getContext(), locs);
 
     // Make the new initializer op in the same location as the last initializer
@@ -76,13 +77,13 @@ class CombineInitializersPass
   }
 };
 
-}  // namespace
+} // namespace
 
 std::unique_ptr<OperationPass<mlir::ModuleOp>> createCombineInitializersPass() {
   return std::make_unique<CombineInitializersPass>();
 }
 
-}  // namespace Util
-}  // namespace IREE
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace Util
+} // namespace IREE
+} // namespace iree_compiler
+} // namespace mlir

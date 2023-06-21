@@ -16,8 +16,6 @@
 #include "iree/compiler/Codegen/Utils/Utils.h"
 #include "iree/compiler/Codegen/VMVX/VMVXPasses.h"
 #include "iree/compiler/Dialect/Util/Transforms/Passes.h"
-#include "llvm/ADT/TypeSwitch.h"
-#include "llvm/Support/CommandLine.h"
 #include "mlir/Conversion/ComplexToStandard/ComplexToStandard.h"
 #include "mlir/Conversion/ReconcileUnrealizedCasts/ReconcileUnrealizedCasts.h"
 #include "mlir/Conversion/SCFToControlFlow/SCFToControlFlow.h"
@@ -27,6 +25,8 @@
 #include "mlir/Dialect/MemRef/Transforms/Passes.h"
 #include "mlir/Pass/PassManager.h"
 #include "mlir/Transforms/Passes.h"
+#include "llvm/ADT/TypeSwitch.h"
+#include "llvm/Support/CommandLine.h"
 
 #define DEBUG_TYPE "iree-llvm-cpu-lowering-pass-pipeline"
 
@@ -153,11 +153,13 @@ static void addTileAndDistributePasses(OpPassManager &pm) {
 //===---------------------------------------------------------------------===//
 
 static bool isValidInterchange(ArrayRef<int64_t> interchange, int numLoops) {
-  if (interchange.empty()) return true;
+  if (interchange.empty())
+    return true;
   llvm::SmallDenseSet<int64_t> s;
   s.insert(interchange.begin(), interchange.end());
   for (int i = 0; i < numLoops; ++i) {
-    if (!s.contains(i)) return false;
+    if (!s.contains(i))
+      return false;
   }
   return true;
 }
@@ -259,8 +261,10 @@ LogicalResult verifyConvTileAndDecomposeExpertConfig(
   SmallVector<int64_t> shape = linalgOp.getStaticLoopRanges();
   for (auto sizes : tilingConfig.getTileSizes()) {
     for (auto [i, size] : llvm::enumerate(sizes)) {
-      if (size == 1) shape[i] = 1;
-      if (shape[i] == -1 || size == 0) continue;
+      if (size == 1)
+        shape[i] = 1;
+      if (shape[i] == -1 || size == 0)
+        continue;
       if (shape[i] % size != 0) {
         shape[i] = -1;
       } else {
@@ -756,5 +760,5 @@ void buildLLVMCPULinkingPassPipeline(OpPassManager &passManager) {
   variantPM.addPass(createLLVMCPUAssignImportOrdinalsPass());
 }
 
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace iree_compiler
+} // namespace mlir

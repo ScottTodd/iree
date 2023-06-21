@@ -13,11 +13,11 @@
 #include "iree/compiler/Codegen/Dialect/LoweringConfig.h"
 #include "iree/compiler/Codegen/SPIRV/KernelConfig.h"
 #include "iree/compiler/Codegen/Utils/Utils.h"
-#include "llvm/Support/Debug.h"
 #include "mlir/Dialect/Linalg/IR/Linalg.h"
 #include "mlir/Dialect/SPIRV/IR/SPIRVAttributes.h"
 #include "mlir/Dialect/Tensor/IR/Tensor.h"
 #include "mlir/IR/BuiltinOps.h"
+#include "llvm/Support/Debug.h"
 
 #define DEBUG_TYPE "iree-spirv-amd-config"
 
@@ -86,7 +86,8 @@ LogicalResult setAMDCodeGenConfig(const spirv::TargetEnv &targetEnv,
     // Use the result type in case of larger bitwidth for accumulators.
     auto type = cast<ShapedType>(convOp->getResult(0).getType());
     const int bitwidth = type.getElementTypeBitWidth();
-    if (bitwidth > 32) return failure();
+    if (bitwidth > 32)
+      return failure();
     const int multipler = 32 / bitwidth;
     bool hasPaddedInput = convOp.image().getDefiningOp<tensor::PadOp>();
     const int bestTilingFactor = (hasPaddedInput ? 16 : 32) * multipler;
@@ -97,6 +98,6 @@ LogicalResult setAMDCodeGenConfig(const spirv::TargetEnv &targetEnv,
   return failure();
 }
 
-}  // namespace detail
-}  // namespace iree_compiler
-}  // namespace mlir
+} // namespace detail
+} // namespace iree_compiler
+} // namespace mlir
