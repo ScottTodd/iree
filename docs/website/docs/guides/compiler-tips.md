@@ -44,6 +44,94 @@
 
 7zip (`--iree-vm-emit-polyglot-zip=true`)
 
+## Dumping executable files
+
+The `--iree-hal-dump-executable-*` flags ...
+TODO: write more here (directory, one file per executable/artifact)
+
+Flag | Files dumped
+---- | ------------
+`iree-hal-dump-executable-files-to` | All files (meta-flag)
+`iree-hal-dump-executable-sources-to` | Source `.mlir` files prior to HAL compilation
+`iree-hal-dump-executable-intermediates-to` | Intermediate files (e.g. `.o` files, .mlir for intermediate stages)
+`iree-hal-dump-executable-binaries-to` | Binary files (e.g. `.so`, `.spv`, `.ptx`), as used in the `.vmfb`
+`iree-hal-dump-executable-benchmarks-to` | Standalone `hal.executable` benchmark files
+
+=== "CPU"
+
+    ```console hl_lines="5 6"
+    $ mkdir -p /tmp/iree/simple_abs/
+
+    $ iree-compile simple_abs.mlir \
+      --iree-hal-target-backends=llvm-cpu \
+      --iree-llvmcpu-link-embedded=false \
+      --iree-hal-dump-executable-files-to=/tmp/iree/simple_abs \
+      -o /tmp/iree/simple_abs/simple_abs.vmfb
+
+    $ ls /tmp/iree/simple_abs
+
+      module_abs_dispatch_0.mlir
+      module_abs_dispatch_0_system_elf_x86_64_benchmark.mlir
+      module_abs_dispatch_0_system_elf_x86_64.codegen.bc
+      module_abs_dispatch_0_system_elf_x86_64.linked.bc
+      module_abs_dispatch_0_system_elf_x86_64.optimized.bc
+      module_abs_dispatch_0_system_elf_x86_64.s
+      module_abs_dispatch_0_system_elf_x86_64.so
+      simple_abs.vmfb
+    ```
+
+    !!! tip
+
+        The default value of `--iree-llvmcpu-link-embedded=true` generates
+        platform-agnostic ELF files. By disabling that flag, the compiler will
+        produce `.so` files for Linux, `.dll` files for Windows, etc. While ELF
+        files are more portable, inspection of compiled artifacts is easier with
+        platform-specific shared object files.
+
+    TODO: recommend specific tools?
+
+=== "GPU - Vulkan"
+
+    ```console hl_lines="5"
+    $ mkdir -p /tmp/iree/simple_abs/
+
+    $ iree-compile simple_abs.mlir \
+      --iree-hal-target-backends=vulkan-spirv \
+      --iree-hal-dump-executable-files-to=/tmp/iree/simple_abs \
+      -o /tmp/iree/simple_abs/simple_abs.vmfb
+
+    $ ls /tmp/iree/simple_abs
+
+      module_abs_dispatch_0.mlir
+      module_abs_dispatch_0_vulkan_spirv_fb_benchmark.mlir
+      module_abs_dispatch_0_vulkan_spirv_fb.mlir
+      module_abs_dispatch_0_vulkan_spirv_fb.spv
+      simple_abs.vmfb
+    ```
+
+    TODO: recommend specific tools? (`spirv-dis`?)
+
+=== "GPU - CUDA"
+
+    ```console hl_lines="5"
+    $ mkdir -p /tmp/iree/simple_abs/
+
+    $ iree-compile simple_abs.mlir \
+      --iree-hal-target-backends=cuda \
+      --iree-hal-dump-executable-files-to=/tmp/iree/simple_abs \
+      -o /tmp/iree/simple_abs/simple_abs.vmfb
+
+    $ ls /tmp/iree/simple_abs
+
+      module_abs_dispatch_0_cuda_nvptx_fb_benchmark.mlir
+      module_abs_dispatch_0_cuda_nvptx_fb.codegen.bc
+      module_abs_dispatch_0_cuda_nvptx_fb.linked.bc
+      module_abs_dispatch_0_cuda_nvptx_fb.optimized.bc
+      module_abs_dispatch_0_cuda_nvptx_fb.ptx
+      module_abs_dispatch_0.mlir
+      simple_abs.vmfb
+    ```
+
 ## Compiler target intermediate files
 
 ??? example "Executable source MLIR"
