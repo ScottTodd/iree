@@ -59,7 +59,7 @@ Flag | Files dumped
 
 === "CPU"
 
-    ```console hl_lines="5 6"
+    ```bash hl_lines="5 6"
     $ mkdir -p /tmp/iree/simple_abs/
 
     $ iree-compile simple_abs.mlir \
@@ -76,9 +76,12 @@ Flag | Files dumped
       module_abs_dispatch_0_system_elf_x86_64.linked.bc
       module_abs_dispatch_0_system_elf_x86_64.optimized.bc
       module_abs_dispatch_0_system_elf_x86_64.s
-      module_abs_dispatch_0_system_elf_x86_64.so
+      module_abs_dispatch_0_system_elf_x86_64.so # (1)!
       simple_abs.vmfb
     ```
+
+    1.  These are platform-specific files, so this will be
+    `*_system_dll_x86_64.dll` on Windows, for example.
 
     !!! tip
 
