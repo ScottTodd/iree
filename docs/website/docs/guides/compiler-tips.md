@@ -43,11 +43,56 @@ modular compiler technologies.......
         extra_args=["--mlir-timing"])
     ```
 
-## Inspecting .vmfb files
+## Inspecting `.vmfb` files
+
+By default, the `.vmfb` module files produced by the IREE compiler can be opened
+as zip files, allowing inspection of the generated code using other tools.
+
+```console
+$ zip -sf simple_abs_cpu.vmfb
+
+  Archive contains:
+    module.fb
+    abs_dispatch_0_system_elf_x86_64.so
+  Total 2 entries (13892 bytes)
+```
+
+<!-- TODO(scotttodd): keep the shorter output ^, but use `unzip` to query
+                      symbols on the .so
+-->
+```console
+$ unzip -l simple_abs_cpu.vmfb
+
+  Archive:  simple_abs_cpu.vmfb
+    Length      Date    Time    Name
+  ---------  ---------- -----   ----
+      3964  1980-01-01 00:00   module.fb
+      9928  1980-01-01 00:00   abs_dispatch_0_system_elf_x86_64.so
+  ---------                     -------
+      13892                     2 files
+```
+
+<!-- TODO(scotttodd): add annotation (insiders only), qualifying "default" with
+                      `--iree-vm-emit-polyglot-zip=true`
+-->
 
 `iree-dump-module`
 
 7zip (`--iree-vm-emit-polyglot-zip=true`)
+
+??? info "Info - other output formats"
+
+    The IREE compiler can output multiple formats with the ``--output-format=`
+    flag:
+
+    Flag value | Output
+    ---------- | ------
+    `--output-format=vm-bytecode` (default) | VM Bytecode (`.vmfb`) files
+    `--output-format=vm-c` | C source modules
+
+    VM Bytecode files are usable across a range of deployment scenarios, while
+    C source modules provide low level connection points for constrained
+    environments like bare metal platforms.
 
 ## Dumping executable files
 
@@ -75,7 +120,7 @@ Flag | Files dumped
       --iree-hal-target-backends=llvm-cpu \
       --iree-llvmcpu-link-embedded=false \
       --iree-hal-dump-executable-files-to=/tmp/iree/simple_abs \
-      -o /tmp/iree/simple_abs/simple_abs.vmfb
+      -o /tmp/iree/simple_abs/simple_abs_cpu.vmfb
 
     $ ls /tmp/iree/simple_abs
 
@@ -86,7 +131,7 @@ Flag | Files dumped
       module_abs_dispatch_0_system_elf_x86_64.optimized.bc
       module_abs_dispatch_0_system_elf_x86_64.s
       module_abs_dispatch_0_system_elf_x86_64.so # (1)!
-      simple_abs.vmfb
+      simple_abs_cpu.vmfb
     ```
 
     1.  These are platform-specific files, so this will be
@@ -108,7 +153,7 @@ Flag | Files dumped
     $ iree-compile simple_abs.mlir \
       --iree-hal-target-backends=vulkan-spirv \
       --iree-hal-dump-executable-files-to=/tmp/iree/simple_abs \
-      -o /tmp/iree/simple_abs/simple_abs.vmfb
+      -o /tmp/iree/simple_abs/simple_abs_vulkan.vmfb
 
     $ ls /tmp/iree/simple_abs
 
@@ -116,7 +161,7 @@ Flag | Files dumped
       module_abs_dispatch_0_vulkan_spirv_fb_benchmark.mlir
       module_abs_dispatch_0_vulkan_spirv_fb.mlir
       module_abs_dispatch_0_vulkan_spirv_fb.spv
-      simple_abs.vmfb
+      simple_abs_vulkan.vmfb
     ```
 
     !!! tip
@@ -133,7 +178,7 @@ Flag | Files dumped
     $ iree-compile simple_abs.mlir \
       --iree-hal-target-backends=cuda \
       --iree-hal-dump-executable-files-to=/tmp/iree/simple_abs \
-      -o /tmp/iree/simple_abs/simple_abs.vmfb
+      -o /tmp/iree/simple_abs/simple_abs_cuda.vmfb
 
     $ ls /tmp/iree/simple_abs
 
@@ -143,7 +188,7 @@ Flag | Files dumped
       module_abs_dispatch_0_cuda_nvptx_fb.optimized.bc
       module_abs_dispatch_0_cuda_nvptx_fb.ptx
       module_abs_dispatch_0.mlir
-      simple_abs.vmfb
+      simple_abs_cuda.vmfb
     ```
 
 <!-- TODO(scotttodd): Link to a playground Colab notebook that dumps files -->
