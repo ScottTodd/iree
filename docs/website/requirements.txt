@@ -2,3 +2,4 @@
 
 mkdocs-material
 mkdocs-redirects
+mkdocstrings[python]
