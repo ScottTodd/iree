@@ -1,23 +1,5 @@
 # IREE compiler tips and tricks
 
-!!! note ""
-
-    ```
-    Planning notes
-
-    Key: [ ] not started; [-] started; [x] finished
-
-    [x] MLIR overview?
-    [x] Dump sources (content tabs for each target)
-    [x] Inspect .vmfb as zip
-    [x] `--compile-to`
-    [ ] dot file export
-     ↳ [ ] `--iree-flow-dump-dispatch-graph`
-     ↳ [ ] `--view-op-graph`
-    [ ] `--iree-flow-trace-dispatch-tensors`
-
-    ```
-
 The IREE compiler is built using [MLIR](https://mlir.llvm.org/), so it naturally
 supports the common
 [MLIR debugging workflows](https://mlir.llvm.org/getting_started/Debugging/).
