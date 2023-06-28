@@ -10,7 +10,7 @@
     [x] MLIR overview?
     [x] Dump sources (content tabs for each target)
     [x] Inspect .vmfb as zip
-    [ ] `--compile-to`
+    [x] `--compile-to`
     [ ] dot file export
      ↳ [ ] `--iree-flow-dump-dispatch-graph`
      ↳ [ ] `--view-op-graph`
@@ -244,6 +244,49 @@ Flag | Files dumped
 
 <!-- TODO(scotttodd): Link to a playground Colab notebook that dumps files? -->
 
-## Run phases with `--compile-to`
+## Compiling phase by phase
 
-blah blah blah pipelines stop/resume blah blah
+IREE compiles programs through a series of broad phases:
+
+``` mermaid
+graph LR
+  accTitle: Compilation phases overview
+  accDescr: Input to ABI to Flow to Stream to HAL to VM
+
+  A([Input])
+  A --> B([ABI])
+  B --> C([Flow])
+  C --> D([Stream])
+  D --> E([HAL])
+  E --> F([VM])
+```
+
+You can output a program snapshot at intermediate phases with the
+`--compile-to=<phase name>` flag:
+
+```console
+$ cat simple_abs.mlir
+
+func.func @abs(%input : tensor<f32>) -> (tensor<f32>) {
+  %result = math.absf %input : tensor<f32>
+  return %result : tensor<f32>
+}
+
+$ iree-compile simple_abs.mlir --compile-to=abi
+
+module {
+  func.func @abs(%arg0: !hal.buffer_view) -> !hal.buffer_view attributes {iree.abi.stub} {
+    %0 = hal.tensor.import %arg0 "input 0" : !hal.buffer_view -> tensor<f32>
+    %1 = math.absf %0 : tensor<f32>
+    %2 = hal.tensor.export %1 "output 0" : tensor<f32> -> !hal.buffer_view
+    return %2 : !hal.buffer_view
+  }
+}
+```
+
+This is similar to the `--mlir-print-ir-after=` flag, but at clearly defined
+pipeline phases.
+
+Similarly, compilation can be continued from any intermediate phase. This allows
+for interative workflows - compile to a phase, make edits to the `.mlir` file,
+then resume compilation and continue through the pipeline.
