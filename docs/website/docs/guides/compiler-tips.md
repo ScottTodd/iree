@@ -23,6 +23,22 @@
 IREE targets a diverse range of hardware platform targets and is built using
 modular compiler technologies.......
 
+## Setting compiler options
+
+Tools such as `iree-compile` take options via command-line flags. Pass `--help`
+to see the full list:
+
+```console
+$ iree-compile --help
+
+OVERVIEW: IREE compilation driver
+
+USAGE: iree-compile [options] <input file or '-' for stdin>
+
+OPTIONS:
+  ...
+```
+
 !!! tip "Tip - Options and the Python bindings"
 
     If you are using the Python bindings, options can be passed via the
@@ -45,40 +61,132 @@ modular compiler technologies.......
 
 ## Inspecting `.vmfb` files
 
-By default, the `.vmfb` module files produced by the IREE compiler can be opened
-as zip files, allowing inspection of the generated code using other tools.
-
-```console
-$ zip -sf simple_abs_cpu.vmfb
-
-  Archive contains:
-    module.fb
-    abs_dispatch_0_system_elf_x86_64.so
-  Total 2 entries (13892 bytes)
-```
-
-<!-- TODO(scotttodd): keep the shorter output ^, but use `unzip` to query
-                      symbols on the .so
--->
-```console
-$ unzip -l simple_abs_cpu.vmfb
-
-  Archive:  simple_abs_cpu.vmfb
-    Length      Date    Time    Name
-  ---------  ---------- -----   ----
-      3964  1980-01-01 00:00   module.fb
-      9928  1980-01-01 00:00   abs_dispatch_0_system_elf_x86_64.so
-  ---------                     -------
-      13892                     2 files
-```
+The IREE compiler generates [FlatBuffer](https://flatbuffers.dev/) files using
+the `.vmfb` file extension, short for "Virtual Machine FlatBuffer", which can
+then be loaded and executed using IREE's runtime. By default, these files can
+be opened as zip files:
 
 <!-- TODO(scotttodd): add annotation (insiders only), qualifying "default" with
                       `--iree-vm-emit-polyglot-zip=true`
 -->
 
-`iree-dump-module`
+```console
+$ unzip -d simple_abs_cpu ./simple_abs_cpu.vmfb
 
-7zip (`--iree-vm-emit-polyglot-zip=true`)
+Archive:  ./simple_abs_cpu.vmfb
+  extracting: simple_abs_cpu/module.fb
+  extracting: simple_abs_cpu/abs_dispatch_0_system_elf_x86_64.so
+```
+
+The embedded binary (here an ELF shared object with CPU code) can be parsed by
+standard tools:
+
+```console
+$ readelf -Ws ./simple_abs_cpu/abs_dispatch_0_system_elf_x86_64.so
+
+Symbol table '.dynsym' contains 2 entries:
+  Num:    Value          Size Type    Bind   Vis      Ndx Name
+    0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
+    1: 0000000000001760    17 FUNC    GLOBAL DEFAULT    7 iree_hal_executable_library_query
+
+Symbol table '.symtab' contains 42 entries:
+  Num:    Value          Size Type    Bind   Vis      Ndx Name
+    0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
+    1: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS abs_dispatch_0
+    2: 0000000000001730    34 FUNC    LOCAL  DEFAULT    7 abs_dispatch_0_generic
+    3: 00000000000034c0    80 OBJECT  LOCAL  DEFAULT    8 iree_hal_executable_library_query_v0
+    4: 0000000000001780   111 FUNC    LOCAL  DEFAULT    7 iree_h2f_ieee
+    5: 00000000000017f0   207 FUNC    LOCAL  DEFAULT    7 iree_f2h_ieee
+    ...
+```
+
+The `iree-dump-module` tool can also be used to see information about a given
+`.vmfb` file:
+
+```console
+$ iree-dump-module simple_abs.vmfb
+
+//===--------------------------------------------------------------------------------------------------------------===//
+// @module : version 0
+//===--------------------------------------------------------------------------------------------------------------===//
+
+Required Types:
+  [  0] i32
+  [  1] i64
+  [  2] !hal.allocator
+  [  3] !hal.buffer
+  [  4] !hal.buffer_view
+  [  5] !hal.command_buffer
+  [  6] !hal.descriptor_set_layout
+  [  7] !hal.device
+  [  8] !hal.executable
+  [  9] !hal.fence
+  [ 10] !hal.pipeline_layout
+  [ 11] !vm.buffer
+
+Module Dependencies:
+  hal, version >= 0, required
+
+Imported Functions:
+  [  0] hal.ex.shared_device() -> (!vm.ref<?>)
+  [  1] hal.allocator.allocate(!vm.ref<?>, i32, i32, i64) -> (!vm.ref<?>)
+  [  2] hal.buffer.assert(!vm.ref<?>, !vm.ref<?>, !vm.ref<?>, i64, i32, i32) -> ()
+  [  3] hal.buffer_view.create(!vm.ref<?>, i64, i64, i32, i32, tuple<i64>...) -> (!vm.ref<?>)
+  [  4] hal.buffer_view.assert(!vm.ref<?>, !vm.ref<?>, i32, i32, tuple<i64>...) -> ()
+  [  5] hal.buffer_view.buffer(!vm.ref<?>) -> (!vm.ref<?>)
+  [  6] hal.command_buffer.create(!vm.ref<?>, i32, i32, i32) -> (!vm.ref<?>)
+  [  7] hal.command_buffer.finalize(!vm.ref<?>) -> ()
+  [  8] hal.command_buffer.execution_barrier(!vm.ref<?>, i32, i32, i32) -> ()
+  [  9] hal.command_buffer.push_descriptor_set(!vm.ref<?>, !vm.ref<?>, i32, tuple<i32, i32, !vm.ref<?>, i64, i64>...) -> ()
+  [ 10] hal.command_buffer.dispatch(!vm.ref<?>, !vm.ref<?>, i32, i32, i32, i32) -> ()
+  [ 11] hal.descriptor_set_layout.create(!vm.ref<?>, i32, tuple<i32, i32, i32>...) -> (!vm.ref<?>)
+  [ 12] hal.device.allocator(!vm.ref<?>) -> (!vm.ref<?>)
+  [ 13] hal.device.query.i64(!vm.ref<?>, !vm.ref<?>, !vm.ref<?>) -> (i32, i64)
+  [ 14] hal.device.queue.execute(!vm.ref<?>, i64, !vm.ref<?>, !vm.ref<?>, tuple<!vm.ref<?>>...) -> ()
+  [ 15] hal.executable.create(!vm.ref<?>, !vm.ref<?>, !vm.ref<?>, !vm.ref<?>, tuple<!vm.ref<?>>...) -> (!vm.ref<?>)
+  [ 16] hal.fence.create(!vm.ref<?>, i32) -> (!vm.ref<?>)
+  [ 17] hal.fence.await(i32, tuple<!vm.ref<?>>...) -> (i32)
+  [ 18] hal.pipeline_layout.create(!vm.ref<?>, i32, tuple<!vm.ref<?>>...) -> (!vm.ref<?>)
+
+Exported Functions:
+  [  0] abs(!vm.ref<?>) -> (!vm.ref<?>)
+  [  1] __init() -> ()
+
+//===--------------------------------------------------------------------------------------------------------------===//
+// Sections
+//===--------------------------------------------------------------------------------------------------------------===//
+
+Module State:
+  4 bytes, 2 refs, ~36 bytes total
+
+FlatBuffer: 3964 bytes
+  Bytecode: 896 bytes
+  .rodata[  0] external     9928 bytes (offset 96 / 60h to 2728h)
+  .rodata[  1] embedded       21 bytes `hal.executable.format`
+  .rodata[  2] embedded       17 bytes `system-elf-x86_64`
+  .rodata[  3] embedded        7 bytes `input 0`
+  .rodata[  4] embedded        6 bytes `tensor`
+
+External .rodata: ~9928 bytes
+
+//===--------------------------------------------------------------------------------------------------------------===//
+// Bytecode : version 0
+//===--------------------------------------------------------------------------------------------------------------===//
+
+  # | Offset   |   Length | Blocks | i32 # | ref # | Requirements | Aliases
+----+----------+----------+--------+-------+-------+--------------+-----------------------------------------------------
+  0 | 00000000 |      621 |      5 |    20 |     7 |              | abs
+  1 | 00000270 |      270 |      4 |     6 |     5 |              | __init
+
+//===--------------------------------------------------------------------------------------------------------------===//
+// Debug Information
+//===--------------------------------------------------------------------------------------------------------------===//
+// NOTE: debug databases are large and should be stripped in deployed artifacts.
+
+Locations: 7
+```
+
+`iree-dump-module`
 
 ??? info "Info - other output formats"
 
@@ -113,7 +221,7 @@ Flag | Files dumped
 
 === "CPU"
 
-    ```bash hl_lines="5 6"
+    ```console hl_lines="5 6"
     $ mkdir -p /tmp/iree/simple_abs/
 
     $ iree-compile simple_abs.mlir \
@@ -124,18 +232,15 @@ Flag | Files dumped
 
     $ ls /tmp/iree/simple_abs
 
-      module_abs_dispatch_0.mlir
-      module_abs_dispatch_0_system_elf_x86_64_benchmark.mlir
-      module_abs_dispatch_0_system_elf_x86_64.codegen.bc
-      module_abs_dispatch_0_system_elf_x86_64.linked.bc
-      module_abs_dispatch_0_system_elf_x86_64.optimized.bc
-      module_abs_dispatch_0_system_elf_x86_64.s
-      module_abs_dispatch_0_system_elf_x86_64.so # (1)!
-      simple_abs_cpu.vmfb
+    module_abs_dispatch_0.mlir
+    module_abs_dispatch_0_system_elf_x86_64_benchmark.mlir
+    module_abs_dispatch_0_system_elf_x86_64.codegen.bc
+    module_abs_dispatch_0_system_elf_x86_64.linked.bc
+    module_abs_dispatch_0_system_elf_x86_64.optimized.bc
+    module_abs_dispatch_0_system_elf_x86_64.s
+    module_abs_dispatch_0_system_elf_x86_64.so
+    simple_abs_cpu.vmfb
     ```
-
-    1.  These are platform-specific files, so this will be
-    `*_system_dll_x86_64.dll` on Windows, for example.
 
     !!! tip
 
@@ -157,11 +262,11 @@ Flag | Files dumped
 
     $ ls /tmp/iree/simple_abs
 
-      module_abs_dispatch_0.mlir
-      module_abs_dispatch_0_vulkan_spirv_fb_benchmark.mlir
-      module_abs_dispatch_0_vulkan_spirv_fb.mlir
-      module_abs_dispatch_0_vulkan_spirv_fb.spv
-      simple_abs_vulkan.vmfb
+    module_abs_dispatch_0.mlir
+    module_abs_dispatch_0_vulkan_spirv_fb_benchmark.mlir
+    module_abs_dispatch_0_vulkan_spirv_fb.mlir
+    module_abs_dispatch_0_vulkan_spirv_fb.spv
+    simple_abs_vulkan.vmfb
     ```
 
     !!! tip
@@ -182,13 +287,13 @@ Flag | Files dumped
 
     $ ls /tmp/iree/simple_abs
 
-      module_abs_dispatch_0_cuda_nvptx_fb_benchmark.mlir
-      module_abs_dispatch_0_cuda_nvptx_fb.codegen.bc
-      module_abs_dispatch_0_cuda_nvptx_fb.linked.bc
-      module_abs_dispatch_0_cuda_nvptx_fb.optimized.bc
-      module_abs_dispatch_0_cuda_nvptx_fb.ptx
-      module_abs_dispatch_0.mlir
-      simple_abs_cuda.vmfb
+    module_abs_dispatch_0_cuda_nvptx_fb_benchmark.mlir
+    module_abs_dispatch_0_cuda_nvptx_fb.codegen.bc
+    module_abs_dispatch_0_cuda_nvptx_fb.linked.bc
+    module_abs_dispatch_0_cuda_nvptx_fb.optimized.bc
+    module_abs_dispatch_0_cuda_nvptx_fb.ptx
+    module_abs_dispatch_0.mlir
+    simple_abs_cuda.vmfb
     ```
 
 <!-- TODO(scotttodd): Link to a playground Colab notebook that dumps files -->
