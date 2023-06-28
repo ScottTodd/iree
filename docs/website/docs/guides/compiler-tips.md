@@ -7,9 +7,9 @@
 
     Key: [ ] not started; [-] started; [x] finished
 
-    [ ] MLIR overview?
+    [x] MLIR overview?
     [x] Dump sources (content tabs for each target)
-    [ ] Inspect .vmfb as zip
+    [x] Inspect .vmfb as zip
     [ ] `--compile-to`
     [ ] dot file export
      ↳ [ ] `--iree-flow-dump-dispatch-graph`
@@ -18,10 +18,11 @@
 
     ```
 
-(Introduce goals and supported workflows here?)
-
-IREE targets a diverse range of hardware platform targets and is built using
-modular compiler technologies.......
+The IREE compiler is built using [MLIR](https://mlir.llvm.org/), so it naturally
+supports the common
+[MLIR debugging workflows](https://mlir.llvm.org/getting_started/Debugging/).
+For areas where IREE differentiates itself, this page lists other helpful tips
+and tricks.
 
 ## Setting compiler options
 
@@ -63,8 +64,23 @@ OPTIONS:
 
 The IREE compiler generates [FlatBuffer](https://flatbuffers.dev/) files using
 the `.vmfb` file extension, short for "Virtual Machine FlatBuffer", which can
-then be loaded and executed using IREE's runtime. By default, these files can
-be opened as zip files:
+then be loaded and executed using IREE's runtime.
+
+??? info "Info - other output formats"
+
+    The IREE compiler can output different formats with the ``--output-format=`
+    flag:
+
+    Flag value | Output
+    ---------- | ------
+    `--output-format=vm-bytecode` (default) | VM Bytecode (`.vmfb`) files
+    `--output-format=vm-c` | C source modules
+
+    VM Bytecode files are usable across a range of deployment scenarios, while
+    C source modules provide low level connection points for constrained
+    environments like bare metal platforms.
+
+By default, `.vmfb` files can be opened as zip files:
 
 <!-- TODO(scotttodd): add annotation (insiders only), qualifying "default" with
                       `--iree-vm-emit-polyglot-zip=true`
@@ -106,23 +122,16 @@ The `iree-dump-module` tool can also be used to see information about a given
 ```console
 $ iree-dump-module simple_abs.vmfb
 
-//===--------------------------------------------------------------------------------------------------------------===//
+//===---------------------------------------------------------------------===//
 // @module : version 0
-//===--------------------------------------------------------------------------------------------------------------===//
+//===---------------------------------------------------------------------===//
 
 Required Types:
   [  0] i32
   [  1] i64
   [  2] !hal.allocator
   [  3] !hal.buffer
-  [  4] !hal.buffer_view
-  [  5] !hal.command_buffer
-  [  6] !hal.descriptor_set_layout
-  [  7] !hal.device
-  [  8] !hal.executable
-  [  9] !hal.fence
-  [ 10] !hal.pipeline_layout
-  [ 11] !vm.buffer
+  ...
 
 Module Dependencies:
   hal, version >= 0, required
@@ -130,77 +139,14 @@ Module Dependencies:
 Imported Functions:
   [  0] hal.ex.shared_device() -> (!vm.ref<?>)
   [  1] hal.allocator.allocate(!vm.ref<?>, i32, i32, i64) -> (!vm.ref<?>)
-  [  2] hal.buffer.assert(!vm.ref<?>, !vm.ref<?>, !vm.ref<?>, i64, i32, i32) -> ()
-  [  3] hal.buffer_view.create(!vm.ref<?>, i64, i64, i32, i32, tuple<i64>...) -> (!vm.ref<?>)
-  [  4] hal.buffer_view.assert(!vm.ref<?>, !vm.ref<?>, i32, i32, tuple<i64>...) -> ()
-  [  5] hal.buffer_view.buffer(!vm.ref<?>) -> (!vm.ref<?>)
-  [  6] hal.command_buffer.create(!vm.ref<?>, i32, i32, i32) -> (!vm.ref<?>)
-  [  7] hal.command_buffer.finalize(!vm.ref<?>) -> ()
-  [  8] hal.command_buffer.execution_barrier(!vm.ref<?>, i32, i32, i32) -> ()
-  [  9] hal.command_buffer.push_descriptor_set(!vm.ref<?>, !vm.ref<?>, i32, tuple<i32, i32, !vm.ref<?>, i64, i64>...) -> ()
-  [ 10] hal.command_buffer.dispatch(!vm.ref<?>, !vm.ref<?>, i32, i32, i32, i32) -> ()
-  [ 11] hal.descriptor_set_layout.create(!vm.ref<?>, i32, tuple<i32, i32, i32>...) -> (!vm.ref<?>)
-  [ 12] hal.device.allocator(!vm.ref<?>) -> (!vm.ref<?>)
-  [ 13] hal.device.query.i64(!vm.ref<?>, !vm.ref<?>, !vm.ref<?>) -> (i32, i64)
-  [ 14] hal.device.queue.execute(!vm.ref<?>, i64, !vm.ref<?>, !vm.ref<?>, tuple<!vm.ref<?>>...) -> ()
-  [ 15] hal.executable.create(!vm.ref<?>, !vm.ref<?>, !vm.ref<?>, !vm.ref<?>, tuple<!vm.ref<?>>...) -> (!vm.ref<?>)
-  [ 16] hal.fence.create(!vm.ref<?>, i32) -> (!vm.ref<?>)
-  [ 17] hal.fence.await(i32, tuple<!vm.ref<?>>...) -> (i32)
-  [ 18] hal.pipeline_layout.create(!vm.ref<?>, i32, tuple<!vm.ref<?>>...) -> (!vm.ref<?>)
+  ...
 
 Exported Functions:
   [  0] abs(!vm.ref<?>) -> (!vm.ref<?>)
   [  1] __init() -> ()
 
-//===--------------------------------------------------------------------------------------------------------------===//
-// Sections
-//===--------------------------------------------------------------------------------------------------------------===//
-
-Module State:
-  4 bytes, 2 refs, ~36 bytes total
-
-FlatBuffer: 3964 bytes
-  Bytecode: 896 bytes
-  .rodata[  0] external     9928 bytes (offset 96 / 60h to 2728h)
-  .rodata[  1] embedded       21 bytes `hal.executable.format`
-  .rodata[  2] embedded       17 bytes `system-elf-x86_64`
-  .rodata[  3] embedded        7 bytes `input 0`
-  .rodata[  4] embedded        6 bytes `tensor`
-
-External .rodata: ~9928 bytes
-
-//===--------------------------------------------------------------------------------------------------------------===//
-// Bytecode : version 0
-//===--------------------------------------------------------------------------------------------------------------===//
-
-  # | Offset   |   Length | Blocks | i32 # | ref # | Requirements | Aliases
-----+----------+----------+--------+-------+-------+--------------+-----------------------------------------------------
-  0 | 00000000 |      621 |      5 |    20 |     7 |              | abs
-  1 | 00000270 |      270 |      4 |     6 |     5 |              | __init
-
-//===--------------------------------------------------------------------------------------------------------------===//
-// Debug Information
-//===--------------------------------------------------------------------------------------------------------------===//
-// NOTE: debug databases are large and should be stripped in deployed artifacts.
-
-Locations: 7
+...
 ```
-
-`iree-dump-module`
-
-??? info "Info - other output formats"
-
-    The IREE compiler can output multiple formats with the ``--output-format=`
-    flag:
-
-    Flag value | Output
-    ---------- | ------
-    `--output-format=vm-bytecode` (default) | VM Bytecode (`.vmfb`) files
-    `--output-format=vm-c` | C source modules
-
-    VM Bytecode files are usable across a range of deployment scenarios, while
-    C source modules provide low level connection points for constrained
-    environments like bare metal platforms.
 
 ## Dumping executable files
 
@@ -296,7 +242,7 @@ Flag | Files dumped
     simple_abs_cuda.vmfb
     ```
 
-<!-- TODO(scotttodd): Link to a playground Colab notebook that dumps files -->
+<!-- TODO(scotttodd): Link to a playground Colab notebook that dumps files? -->
 
 ## Run phases with `--compile-to`
 
