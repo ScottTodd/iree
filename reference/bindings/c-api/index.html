@@ -17,7 +17,7 @@
         <link rel="next" href="../python/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.16">
     
     
       
@@ -899,8 +899,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../guides/compiler-tips/" class="md-nav__link">
-        Compiler tips and tricks
+      <a href="../../../guides/developer-tips/" class="md-nav__link">
+        Developer tips and tricks
       </a>
     </li>
   
@@ -1815,6 +1815,7 @@ through the Hardware Abstraction Layer (HAL) interface.</p>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;iree/hal/drivers/local_task/registration/driver_module.h&quot;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;iree/vm/bytecode/module.h&quot;</span>
 </code></pre></div>
+
 <p>Check the API version and register components:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Device drivers are managed through registries.</span>
 <span class="c1">// Applications may use multiple registries to more finely control driver</span>
@@ -1822,6 +1823,7 @@ through the Hardware Abstraction Layer (HAL) interface.</p>
 <span class="n">IREE_CHECK_OK</span><span class="p">(</span><span class="n">iree_hal_local_task_driver_module_register</span><span class="p">(</span>
 <span class="w">    </span><span class="n">iree_hal_driver_registry_default</span><span class="p">()));</span>
 </code></pre></div>
+
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>The <code>IREE_CHECK_OK()</code> macro calls <code>assert()</code> if an error occurs.
@@ -1862,6 +1864,7 @@ Applications should propagate errors and handle or report them as desired.</p>
 <span class="c1">// The reference to the driver can be released now.</span>
 <span class="n">iree_hal_driver_release</span><span class="p">(</span><span class="n">driver</span><span class="p">);</span>
 </code></pre></div>
+
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>The default <code>iree_allocator_system()</code> is backed by <code>malloc</code> and <code>free</code>,
@@ -1877,6 +1880,7 @@ but custom allocators may also be used.</p>
 <span class="w">    </span><span class="cm">/*flatbuffer_allocator=*/</span><span class="n">iree_allocator_null</span><span class="p">(),</span>
 <span class="w">    </span><span class="cm">/*allocator=*/</span><span class="n">iree_allocator_system</span><span class="p">(),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">bytecode_module</span><span class="p">));</span>
 </code></pre></div>
+
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Many IREE samples use
@@ -1896,11 +1900,13 @@ configurations.</p>
 <span class="n">iree_vm_module_release</span><span class="p">(</span><span class="n">hal_module</span><span class="p">);</span>
 <span class="n">iree_vm_module_release</span><span class="p">(</span><span class="n">bytecode_module</span><span class="p">);</span>
 </code></pre></div>
+
 <p>Look up the function(s) to call:</p>
 <div class="highlight"><pre><span></span><code><span class="n">iree_vm_function_t</span><span class="w"> </span><span class="n">main_function</span><span class="p">;</span>
 <span class="n">IREE_CHECK_OK</span><span class="p">(</span><span class="n">iree_vm_context_resolve_function</span><span class="p">(</span>
 <span class="w">    </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">iree_string_view_literal</span><span class="p">(</span><span class="s">&quot;module.main_function&quot;</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">main_function</span><span class="p">));</span>
 </code></pre></div>
+
 <h3 id="invoke-functions">Invoke functions<a class="headerlink" href="#invoke-functions" title="Permanent link">link</a></h3>
 <!-- TODO(scotttodd): I/O buffers (TODO pending new helpers) -->
 
@@ -1912,22 +1918,29 @@ configurations.</p>
 
 <span class="c1">// (Application-specific output buffer retrieval and reading back from the device)</span>
 </code></pre></div>
+
 <h3 id="cleanup-resources">Cleanup resources<a class="headerlink" href="#cleanup-resources" title="Permanent link">link</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">iree_hal_device_release</span><span class="p">(</span><span class="n">device</span><span class="p">);</span>
 <span class="n">iree_vm_context_release</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
 <span class="n">iree_vm_instance_release</span><span class="p">(</span><span class="n">instance</span><span class="p">);</span>
 </code></pre></div>
+
 <!-- ## Advanced usage -->
 
 <!-- TODO(scotttodd): async execution and synchronization -->
+
 <!-- TODO(scotttodd): specialized HAL APIs -->
+
 <!-- TODO(scotttodd): threadpools -->
+
 <!-- TODO(scotttodd): heterogenous execution -->
 
 <!-- ## Troubleshooting -->
 
 <!-- TODO(scotttodd): link to GitHub issues -->
+
 <!-- TODO(scotttodd): compiler/runtime compatibility -->
+
 <!-- TODO(scotttodd): common problems? object ownership? loaded modules (HAL)? -->
 
 <div class="footnote">
@@ -2018,7 +2031,7 @@ configurations.</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a51614de.min.js"></script>
       
     
   </body>

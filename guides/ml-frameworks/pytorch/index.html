@@ -17,7 +17,7 @@
         <link rel="next" href="../../deployment-configurations/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.16">
     
     
       
@@ -1008,8 +1008,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../compiler-tips/" class="md-nav__link">
-        Compiler tips and tricks
+      <a href="../../developer-tips/" class="md-nav__link">
+        Developer tips and tricks
       </a>
     </li>
   
@@ -1782,6 +1782,7 @@ as well as models defined using <a href="https://pytorch.org/functorch/"><code>f
   A -- torch_mlir --&gt; B
   B --&gt; C
   C --&gt; D</code></pre>
+
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">link</a></h2>
 <p>Install IREE pip packages, either from pip or by
 <a href="../../../building-from-source/getting-started/#python-bindings">building from source</a>:</p>
@@ -1789,12 +1790,14 @@ as well as models defined using <a href="https://pytorch.org/functorch/"><code>f
 <span class="w">  </span>iree-compiler<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>iree-runtime
 </code></pre></div>
+
 <p>Install <a href="https://github.com/llvm/torch-mlir"><code>torch-mlir</code></a>, necessary for
 compiling PyTorch models to a format IREE is able to execute:</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>torch-mlir<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>https://llvm.github.io/torch-mlir/package-index/
 <span class="w">  </span>--extra-index-url<span class="w"> </span>https://download.pytorch.org/whl/nightly/cpu
 </code></pre></div>
+
 <p>The command will also install the right version of <code>torch</code> that has been tested
 with the version of <code>torch-mlir</code> being installed.</p>
 <h2 id="running-a-model">Running a model<a class="headerlink" href="#running-a-model" title="Permanent link">link</a></h2>
@@ -1822,6 +1825,7 @@ and assuming it is available as <code>model</code>.</p>
     <span class="n">output_type</span><span class="o">=</span><span class="s2">&quot;linalg-on-tensors&quot;</span><span class="p">,</span>
     <span class="n">use_tracing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
+
 <p>The full list of available output types can be found
 <a href="https://github.com/llvm/torch-mlir/blob/main/python/torch_mlir/__init__.py">in the source code</a>,
 and includes <code>linalg-on-tensors</code>, <code>stablehlo</code>, and <code>tosa</code>.</p>
@@ -1835,6 +1839,7 @@ and includes <code>linalg-on-tensors</code>, <code>stablehlo</code>, and <code>t
                               <span class="n">target_backends</span><span class="o">=</span><span class="p">[</span><span class="n">iree_backend</span><span class="p">],</span>
                               <span class="n">input_type</span><span class="o">=</span><span class="n">iree_input_type</span><span class="p">)</span>
 </code></pre></div>
+
 <p>Here we have a choice of backend we want to target. See the
 <a href="../../deployment-configurations/">deployment configuration guides</a>
 for more details about specific targets and configurations.</p>
@@ -1858,11 +1863,13 @@ to cross the border from the Torch-MLIR MLIR C API to the IREE MLIR C API.</p>
 <span class="n">ctx</span><span class="o">.</span><span class="n">add_vm_module</span><span class="p">(</span><span class="n">vm_module</span><span class="p">)</span>
 <span class="n">invoker</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">module</span>
 </code></pre></div>
+
 <h3 id="execute-the-model-via-iree">Execute the model via IREE<a class="headerlink" href="#execute-the-model-via-iree" title="Permanent link">link</a></h3>
 <p>Finally, we can execute the loaded model:</p>
 <div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">invoker</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">example_input</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
 <span class="n">numpy_result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre></div>
+
 <h2 id="training">Training<a class="headerlink" href="#training" title="Permanent link">link</a></h2>
 <p>Training with PyTorch in IREE is supported via <code>functorch</code>. The steps for
 loading the model into IREE, once defined, are nearly identical to the above
@@ -1986,7 +1993,7 @@ This binary runs a model without a Python interpreter.</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a51614de.min.js"></script>
       
     
   </body>
