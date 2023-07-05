@@ -48,6 +48,19 @@ CMake.
 
 TODO
 
+### Concepts
+
+TODO
+
+* Sessions
+    * Plugins
+* Invocations
+    * Pipelines
+* Sources (inputs), outputs
+
+
+### Quickstart
+
 ## Runtime API
 
 ### Concepts
@@ -65,6 +78,11 @@ through the Hardware Abstraction Layer (HAL) interface.
 Most interaction with IREE's C API involves either the VM or the HAL.
 
 <!-- TODO(scotttodd): diagrams -->
+
+<!-- command buffer construction -> dispatch diagram -->
+<!-- input buffers -> output buffers diagram -->
+<!-- HAL interface diagram -->
+<!-- VM module diagram (bytecode, HAL, custom) -->
 
 #### IREE VM
 
@@ -84,7 +102,14 @@ Most interaction with IREE's C API involves either the VM or the HAL.
 * HAL _buffers_ and _buffer views_ represent storage and shaped/typed views
   into that storage (aka "tensors")
 
-### Setup
+### Quickstart
+
+!!! todo
+    TODO: Convert this to the style in
+    [hello_world.c](https://github.com/benvanik/iree-template-runtime-cmake/blob/main/hello_world.c)
+    and link to that file
+
+#### Setup
 
 Include headers:
 
@@ -115,7 +140,7 @@ IREE_CHECK_OK(iree_hal_local_task_driver_module_register(
     The `IREE_CHECK_OK()` macro calls `assert()` if an error occurs.
     Applications should propagate errors and handle or report them as desired.
 
-### Configure stateful objects
+#### Configure stateful objects
 
 Create a VM instance along with a HAL driver and device:
 
@@ -200,7 +225,7 @@ IREE_CHECK_OK(iree_vm_context_resolve_function(
     context, iree_string_view_literal("module.main_function"), &main_function));
 ```
 
-### Invoke functions
+#### Invoke functions
 
 <!-- TODO(scotttodd): I/O buffers (TODO pending new helpers) -->
 
@@ -214,7 +239,7 @@ IREE_CHECK_OK(iree_vm_invoke(context, main_function, IREE_VM_INVOCATION_FLAG_NON
 // (Application-specific output buffer retrieval and reading back from the device)
 ```
 
-### Cleanup resources
+#### Cleanup resources
 
 ``` c
 iree_hal_device_release(device);
