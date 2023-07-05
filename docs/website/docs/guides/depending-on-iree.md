@@ -1,17 +1,40 @@
 # Depending on IREE
 
-!!! note
+!!! note - "Planning notes"
 
-    ```
-    Planning notes
+    - [ ] Python via pip packages
+    - [ ] Compiler via C API
+    - [ ] Runtime via C API
+    - [ ] https://github.com/iree-org/iree-samples/tree/main/runtime-library
+    - [ ] https://github.com/benvanik/iree-template-runtime-cmake
+    - [ ] https://github.com/iml130/iree-template-cpp
 
-    Key: [ ] not started; [-] started; [x] finished
+    [Discussion thread](https://discord.com/channels/689900678990135345/689900680009482386/1123726574525612032)
 
-    [ ] Python via pip packages
-    [ ] Compiler via C API
-    [ ] Runtime via C API
-    ```
+## From Python
 
-## Section 2
+TODO
 
-### Section 3
+## From C/C++
+
+### Compiler
+
+TODO
+
+### Runtime
+
+TODO
+
+## From other languages
+
+### Java
+
+TODO
+
+### Julia
+
+TODO
+
+### Rust
+
+TODO
