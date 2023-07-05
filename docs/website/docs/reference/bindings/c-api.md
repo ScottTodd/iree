@@ -1,5 +1,27 @@
 # C API bindings
 
+!!! note - "Planning notes"
+
+    [Discussion thread](https://discord.com/channels/689900678990135345/689900680009482386/1123726574525612032)
+
+    - [ ] Compiler via C API
+    - [ ] Runtime via C API
+    - [ ] [runtime-library](https://github.com/iree-org/iree-samples/tree/main/runtime-library)
+    - [ ] [iree-template-runtime-cmake](https://github.com/benvanik/iree-template-runtime-cmake)
+    - [ ] [iree-template-cpp](https://github.com/iml130/iree-template-cpp)
+    - [ ] `libIREECompiler.so`
+    - [ ] CMake installed development packages
+
+    > Integrators often like to link against a single runtime library, and the method of doing so is naturally owned by the integrator -- not necessarily by IREE itself (i.e. IREE will never release a full libireert.a). This separation of concerns is of practical importance because IREE's low level runtime API is fine-grained and geared towards usage via LTO style optimizations. This makes it inherently non-distributable, since every toolchain defines such features and interop differently.
+    >
+    > Also, it is often convenient during early development (of language bindings, etc) to simply dynamically link to something that works, even if not optimal. Because it cannot produce the best integration, IREE itself does not export a shared runtime library. However, to aid development, it can be useful for users to produce one.
+
+## Overview
+
+TODO (explain depending on C/C++ code)
+
+---------------
+
 IREE provides a low level C API for its runtime[^1], which can be used directly or
 through higher level APIs and language bindings built on top of it.
 
@@ -22,7 +44,13 @@ To use IREE's C API, you will need to build the runtime
 project also shows how to integrate IREE into an external project using
 CMake.
 
-## Concepts
+## Compiler API
+
+TODO
+
+## Runtime API
+
+### Concepts
 
 By default, IREE uses its own tiny Virtual Machine (VM) at runtime to interpret
 program instructions on the host system. VM instructions may also be lowered
@@ -38,7 +66,7 @@ Most interaction with IREE's C API involves either the VM or the HAL.
 
 <!-- TODO(scotttodd): diagrams -->
 
-### IREE VM
+#### IREE VM
 
 * VM _instances_ can serve multiple isolated execution _contexts_
 * VM _contexts_ are effectively sandboxes for loading modules and running
@@ -47,7 +75,7 @@ Most interaction with IREE's C API involves either the VM or the HAL.
   access to hardware accelerators through the HAL. Compiled user programs are
   also modules.
 
-### IREE HAL
+#### IREE HAL
 
 * HAL _drivers_ are used to enumerate and create HAL _devices_
 * HAL _devices_ interface with hardware, such as by allocating device memory,
@@ -55,8 +83,6 @@ Most interaction with IREE's C API involves either the VM or the HAL.
   synchronizing with the host
 * HAL _buffers_ and _buffer views_ represent storage and shaped/typed views
   into that storage (aka "tensors")
-
-## Using the C API
 
 ### Setup
 
