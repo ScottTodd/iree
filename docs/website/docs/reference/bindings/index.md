@@ -15,6 +15,9 @@ to be written in a variety of other languages.
 
 ## Official API bindings
 
+Members of the core project team and OpenXLA partners maintain these official
+bindings:
+
 Language | Compiler API? | Runtime API? | Published packages?
 -------- | ------------ | ----------- | ------------------
 [C/C++](#cc) | :white_check_mark: Supported | :white_check_mark: Supported | :x: Unsupported
@@ -37,7 +40,7 @@ directory.
 
 ## Unofficial API bindings
 
-Members of our developer community have authored bindings using other languages.
+Members of our developer community have authored bindings using other languages:
 
 Language | Compiler API? | Runtime API? | Published packages?
 -------- | ------------ | ----------- | ------------------
