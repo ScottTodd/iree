@@ -25,7 +25,3 @@ Guides for specific configurations:
 * [CPU - Bare-Metal](./deployment-configurations/bare-metal.md)
 * [GPU - Vulkan](./deployment-configurations/gpu-vulkan.md)
 * [GPU - CUDA/ROCm](./deployment-configurations/gpu-cuda-rocm.md)
-
-## Other topics
-
-* [Depending on IREE](./depending-on-iree.md)
