@@ -64,6 +64,22 @@ def main(args):
 
             print(line, end="")
 
+    # Add frontmatter to the start of each file.
+    frontmatter = """
+---
+hide:
+  - tags
+tags:
+  - MLIR
+---
+
+"""
+    for filename in files:
+        with open(filename, "r+") as f:
+            original_content = f.read()
+            f.seek(0, 0)
+            f.write(frontmatter + original_content)
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Dialect doc postprocessor.")
