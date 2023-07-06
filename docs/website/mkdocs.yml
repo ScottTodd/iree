@@ -191,7 +191,6 @@ plugins:
         "bindings/index.md": "reference/bindings/index.md"
         "bindings/c-api.md": "reference/bindings/c-api.md"
         "bindings/python.md": "reference/bindings/python.md"
-        "bindings/tensorflow-lite.md": "reference/bindings/tensorflow-lite.md"
 
         # "blog/" moved under "community/"
         "blog/index.md": "community/blog/index.md"
