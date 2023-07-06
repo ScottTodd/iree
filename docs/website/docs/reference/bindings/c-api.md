@@ -34,7 +34,69 @@ The IREE runtime
 * VM
 * HAL drivers and executable loaders
 
-[TOC]
+<!-- TODO(scotttodd): accessibility labels -->
+```mermaid
+graph TD
+  subgraph compiler[libIREECompiler.so]
+    subgraph pipelines[Pipelines]
+        pipelines_list(Flow<br>Stream<br>etc.)
+    end
+    subgraph targets[Compiler targets]
+        targets_list(llvm-cpu<br>vulkan-spirv<br>etc.)
+    end
+    subgraph passes[General passes]
+        passes_list(Const eval<br>DCE<br>etc.)
+    end
+  end
+
+  subgraph plugins[Compiler plugins]
+    plugins_list(Custom targets<br>Custom dialects<br>etc.)
+  end
+
+  application(Your application)
+
+  compiler <-- Plugin API --> plugins
+  compiler <-. Compiler C API .-> application
+```
+
+```mermaid
+graph TD
+  subgraph iree_runtime[IREE Runtime]
+    subgraph base
+        subgraph Base_Types[Types]
+            base_types(status<br>loop<br>etc.)
+        end
+    end
+    subgraph hal[HAL]
+        subgraph HAL_Types[Types]
+            hal_types(buffer<br>device<br>etc.)
+        end
+        subgraph HAL_Drivers[Drivers]
+            hal_drivers(local<br>vulkan<br>etc.)
+        end
+    end
+    subgraph vm[VM]
+        subgraph VM_Types[Types]
+            vm_types(context<br>invocation<br>etc.)
+        end
+    end
+
+    runtime_api("Runtime API
+
+    - instance
+    - session
+    - call")
+
+    base_types --> runtime_api
+    hal_types --> runtime_api
+    hal_drivers --> runtime_api
+    vm_types --> runtime_api
+  end
+
+  application(Your application)
+
+  runtime_api --> application
+```
 
 ## (Old) Runtime overview
 
