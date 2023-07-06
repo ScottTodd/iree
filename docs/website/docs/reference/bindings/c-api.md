@@ -20,7 +20,23 @@
 
 TODO (explain depending on C/C++ code)
 
----------------
+The IREE compiler
+
+* link against a monolithic shared object, call across a versioned API
+* plugin architecture
+* optional components to reduce binary size
+* bring your own LLVM / linker / backend
+
+The IREE runtime
+
+* link into your project with your own toolchain, call functions directly
+* optimized for small binary size, LTO compiler optimization
+* VM
+* HAL drivers and executable loaders
+
+[TOC]
+
+## (Old) Runtime overview
 
 IREE provides a low level C API for its runtime[^1], which can be used directly or
 through higher level APIs and language bindings built on top of it.
@@ -57,7 +73,6 @@ TODO
 * Invocations
     * Pipelines
 * Sources (inputs), outputs
-
 
 ### Quickstart
 
@@ -246,6 +261,10 @@ iree_hal_device_release(device);
 iree_vm_context_release(context);
 iree_vm_instance_release(instance);
 ```
+
+## Compiler + Runtime = JIT
+
+TODO: `iree-run-mlir`, pjrt plugin, compile "ahead of time" or "just in time"
 
 <!-- ## Advanced usage -->
 
