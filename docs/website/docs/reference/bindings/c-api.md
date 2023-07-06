@@ -38,65 +38,130 @@ The IREE runtime
 ```mermaid
 graph TD
   subgraph compiler[libIREECompiler.so]
-    subgraph pipelines[Pipelines]
-        pipelines_list(Flow<br>Stream<br>etc.)
-    end
-    subgraph targets[Compiler targets]
-        targets_list(llvm-cpu<br>vulkan-spirv<br>etc.)
-    end
-    subgraph passes[General passes]
-        passes_list(Const eval<br>DCE<br>etc.)
-    end
+    pipelines("Pipelines
+
+    • Flow
+    • Stream
+    • etc.")
+
+    targets("Compiler targets
+
+    • llvm-cpu
+    • vulkan-spirv
+    • etc.")
+
+    passes("General passes
+
+    • Const eval
+    • DCE
+    • etc.")
   end
 
-  subgraph plugins[Compiler plugins]
-    plugins_list(Custom targets<br>Custom dialects<br>etc.)
-  end
+  plugins("Compiler plugins
+
+    • Custom targets
+    • Custom dialects
+    • etc.")
 
   application(Your application)
 
-  compiler <-- Plugin API --> plugins
-  compiler <-. Compiler C API .-> application
+  compiler <-- "Plugin API<br>(static or dynamic linking)" --> plugins
+  compiler -. "Compiler C API<br>(rigid, versioned)" .-> application
 ```
 
-```mermaid
-graph TD
-  subgraph iree_runtime[IREE Runtime]
-    subgraph base
-        subgraph Base_Types[Types]
-            base_types(status<br>loop<br>etc.)
+=== "High level API"
+
+    The high level 'runtime' API sits on top of the low level components. It is
+    relatively terse but does not expose the full flexibility of the underlying
+    systems. Components from both APIs can be intermixed.
+
+    ```mermaid
+    graph TD
+    subgraph iree_runtime[IREE Runtime]
+        subgraph base
+            base_types("Types
+
+            • allocator
+            • status
+            • etc.")
         end
+        subgraph hal[HAL]
+            hal_types("Types
+
+            • buffer
+            • device
+            • etc.")
+
+            hal_drivers("Drivers
+
+            • local-*
+            • vulkan
+            • etc.")
+        end
+        subgraph vm[VM]
+            vm_types("Types
+
+            • context
+            • invocation
+            • etc.")
+        end
+
+        runtime_api("Runtime API
+
+        • instance
+        • session
+        • call")
+
+        base_types & hal_types & hal_drivers & vm_types --> runtime_api
     end
-    subgraph hal[HAL]
-        subgraph HAL_Types[Types]
-            hal_types(buffer<br>device<br>etc.)
+
+    application(Your application)
+
+    runtime_api --> application
+    ```
+
+=== "Low level API"
+
+    Each runtime component has its own low level API. The low level APIs are
+    typically verbose as they expose the full flexibility of each underlying
+    system. Components from both APIs can be intermixed.
+
+    ```mermaid
+    graph TD
+        subgraph iree_runtime[IREE Runtime]
+            subgraph base
+                base_types("Types
+
+                • allocator
+                • status
+                • etc.")
+            end
+            subgraph hal[HAL]
+                hal_types("Types
+
+                • buffer
+                • device
+                • etc.")
+
+                hal_drivers("Drivers
+
+                • local-*
+                • vulkan
+                • etc.")
+            end
+            subgraph vm[VM]
+                vm_types("Types
+
+                • context
+                • invocation
+                • etc.")
+            end
         end
-        subgraph HAL_Drivers[Drivers]
-            hal_drivers(local<br>vulkan<br>etc.)
-        end
-    end
-    subgraph vm[VM]
-        subgraph VM_Types[Types]
-            vm_types(context<br>invocation<br>etc.)
-        end
-    end
 
-    runtime_api("Runtime API
+        application(Your application)
 
-    - instance
-    - session
-    - call")
-
-    base_types --> runtime_api
-    hal_types --> runtime_api
-    hal_drivers --> runtime_api
-    vm_types --> runtime_api
-  end
-
-  application(Your application)
-
-  runtime_api --> application
-```
+        base_types & hal_types & hal_drivers & vm_types --> application
+    ```
 
 ## (Old) Runtime overview
 
