@@ -18,7 +18,19 @@
 
 ## Overview
 
-TODO (explain depending on C/C++ code)
+The IREE compiler and IREE runtime both have their own C/C++ APIs for use in
+other projects.
+
+!!! note
+
+    There are multiple ways to distribute and depend on C/C++ projects, each
+    with varying levels of portability, flexibility, and toolchain
+    compatibility. IREE aims to support common configurations and platforms,
+    but there is no official package manager for C/C++ like there is for
+    languages such as Python.
+
+## Compiler API
+
 
 The IREE compiler
 
@@ -26,13 +38,6 @@ The IREE compiler
 * plugin architecture
 * optional components to reduce binary size
 * bring your own LLVM / linker / backend
-
-The IREE runtime
-
-* link into your project with your own toolchain, call functions directly
-* optimized for small binary size, LTO compiler optimization
-* VM
-* HAL drivers and executable loaders
 
 <!-- TODO(scotttodd): accessibility labels -->
 ```mermaid
@@ -68,6 +73,30 @@ graph TD
   compiler <-- "Plugin API<br>(static or dynamic linking)" --> plugins
   compiler -. "Compiler C API<br>(rigid, versioned)" .-> application
 ```
+
+### Concepts
+
+TODO
+
+* Sessions
+    * Plugins
+* Invocations
+    * Pipelines
+* Sources (inputs), outputs
+
+### Quickstart
+
+## Runtime API
+
+IREE provides a low level C API for its runtime, which can be used directly or
+through higher level APIs and language bindings built on top of it.
+
+The IREE runtime
+
+* link into your project with your own toolchain, call functions directly
+* optimized for small binary size, LTO compiler optimization
+* VM
+* HAL drivers and executable loaders
 
 === "High level API"
 
@@ -163,11 +192,6 @@ graph TD
         base_types & hal_types & hal_drivers & vm_types --> application
     ```
 
-## (Old) Runtime overview
-
-IREE provides a low level C API for its runtime[^1], which can be used directly or
-through higher level APIs and language bindings built on top of it.
-
 API header files are organized by runtime component:
 
 | Component header file                                                       | Overview                                                                  |
@@ -179,31 +203,13 @@ API header files are organized by runtime component:
 The [samples/](https://github.com/openxla/iree/tree/main/samples)
 directory demonstrates several ways to use IREE's C API.
 
-## Prerequisites
+### Prerequisites
 
 To use IREE's C API, you will need to build the runtime
 [from source](../../building-from-source/getting-started.md). The
 [iree-template-cpp](https://github.com/iml130/iree-template-cpp) community
 project also shows how to integrate IREE into an external project using
 CMake.
-
-## Compiler API
-
-TODO
-
-### Concepts
-
-TODO
-
-* Sessions
-    * Plugins
-* Invocations
-    * Pipelines
-* Sources (inputs), outputs
-
-### Quickstart
-
-## Runtime API
 
 ### Concepts
 
@@ -226,7 +232,7 @@ Most interaction with IREE's C API involves either the VM or the HAL.
 <!-- HAL interface diagram -->
 <!-- VM module diagram (bytecode, HAL, custom) -->
 
-#### IREE VM
+#### VM
 
 * VM _instances_ can serve multiple isolated execution _contexts_
 * VM _contexts_ are effectively sandboxes for loading modules and running
@@ -235,7 +241,7 @@ Most interaction with IREE's C API involves either the VM or the HAL.
   access to hardware accelerators through the HAL. Compiled user programs are
   also modules.
 
-#### IREE HAL
+#### HAL
 
 * HAL _drivers_ are used to enumerate and create HAL _devices_
 * HAL _devices_ interface with hardware, such as by allocating device memory,
@@ -405,9 +411,5 @@ TODO: `iree-run-mlir`, pjrt plugin, compile "ahead of time" or "just in time"
 <!-- TODO(scotttodd): link to GitHub issues -->
 <!-- TODO(scotttodd): compiler/runtime compatibility -->
 <!-- TODO(scotttodd): common problems? object ownership? loaded modules (HAL)? -->
-
-[^1]:
-  We also have a C API for IREE's compiler, see
-  [this GitHub issue](https://github.com/openxla/iree/issues/3817)
 
 *[vmfb]: VM FlatBuffer
