@@ -1,21 +1,5 @@
 # C API bindings
 
-!!! note - "Planning notes"
-
-    [Discussion thread](https://discord.com/channels/689900678990135345/689900680009482386/1123726574525612032)
-
-    - [ ] Compiler via C API
-    - [ ] Runtime via C API
-    - [ ] [runtime-library](https://github.com/iree-org/iree-samples/tree/main/runtime-library)
-    - [ ] [iree-template-runtime-cmake](https://github.com/benvanik/iree-template-runtime-cmake)
-    - [ ] [iree-template-cpp](https://github.com/iml130/iree-template-cpp)
-    - [ ] `libIREECompiler.so`
-    - [ ] CMake installed development packages
-
-    > Integrators often like to link against a single runtime library, and the method of doing so is naturally owned by the integrator -- not necessarily by IREE itself (i.e. IREE will never release a full libireert.a). This separation of concerns is of practical importance because IREE's low level runtime API is fine-grained and geared towards usage via LTO style optimizations. This makes it inherently non-distributable, since every toolchain defines such features and interop differently.
-    >
-    > Also, it is often convenient during early development (of language bindings, etc) to simply dynamically link to something that works, even if not optimal. Because it cannot produce the best integration, IREE itself does not export a shared runtime library. However, to aid development, it can be useful for users to produce one.
-
 ## Overview
 
 The IREE compiler and IREE runtime both have their own C/C++ APIs for use in
@@ -27,20 +11,11 @@ other projects.
     with varying levels of portability, flexibility, and toolchain
     compatibility. IREE aims to support common configurations and platforms.
 
-### Compatibility
-
 ## Compiler API
 
 The IREE compiler is structured as a monolithic shared object with a dynamic
 plugin system allowing for extensions. The shared object exports symbols for
 versioned API functions.
-
-!!! Tip "Tip - building from source"
-
-    When [building from source](../../building-from-source/getting-started.md),
-    some components may be disabled to reduce binary size and improve build
-    time. There are also options for using your own LLVM or linking in external
-    target backends.
 
 ```mermaid
 graph TD
@@ -159,11 +134,22 @@ An _output_ represents a compilation artifact.
 A _plugin_ extends the compiler with some combination of target backends,
 options, passes, or pipelines.
 
-### Quickstart
+### Usage
 
-!!! todo - "Under construction"
+!!! todo - "Under construction, more coming soon"
 
-    TODO: how to obtain `libIREECompiler.so`, link to a sample/template project
+!!! Tip "Tip - building from source"
+
+    When [building from source](../../building-from-source/getting-started.md),
+    some components may be disabled to reduce binary size and improve build
+    time. There are also options for using your own LLVM or linking in external
+    target backends.
+
+#### Samples
+
+| Project | Source | Description |
+| ------- |------- | ----------- |
+[openxla-pjrt-plugin](https://github.com/openxla/openxla-pjrt-plugin/) | [`iree_compiler.cc`](https://github.com/openxla/openxla-pjrt-plugin/blob/main/iree/integrations/pjrt/common/iree_compiler.cc) | JIT engine connecting TensorFlow and JAX to IREE
 
 ## Runtime API
 
@@ -298,32 +284,32 @@ Runtime API header files are organized by component:
 
 ### Concepts
 
+<!-- TODO(scotttodd): high level runtime API diagram(s) -->
+
+#### High level - Session
+
+!!! todo - "Under construction, more coming soon"
+
+#### High level - Instance
+
+!!! todo - "Under construction, more coming soon"
+
+#### High level - Call
+
+!!! todo - "Under construction, more coming soon"
+
+#### Low level - VM
+
+<!-- TODO(scotttodd): VM module diagram (bytecode, HAL, custom) -->
+
 By default, IREE uses its own tiny Virtual Machine (VM) at runtime to interpret
 program instructions on the host system. VM instructions may also be lowered
 further to LLVM IR, C, or other representations for static or resource
 constrained deployment.
 
 The VM supports generic operations like loads, stores, arithmetic, function
-calls, and control flow. It builds streams of more complex program logic and
-dense math into command buffers that are dispatched to hardware backends
-through the Hardware Abstraction Layer (HAL) interface.
-
-Most interaction with IREE's C API involves either the VM or the HAL.
-
-<!-- TODO(scotttodd): diagrams -->
-
-<!-- command buffer construction -> dispatch diagram -->
-<!-- input buffers -> output buffers diagram -->
-<!-- HAL interface diagram -->
-<!-- VM module diagram (bytecode, HAL, custom) -->
-
-#### High level - Session
-
-#### High level - Instance
-
-#### High level - Call
-
-#### Low level - VM
+calls, and control flow. The VM builds streams of more complex program logic and
+dense math into HAL command buffers that are dispatched to hardware backends.
 
 * VM _instances_ can serve multiple isolated execution _contexts_
 * VM _contexts_ are effectively sandboxes for loading modules and running
@@ -334,6 +320,10 @@ Most interaction with IREE's C API involves either the VM or the HAL.
 
 #### Low level - HAL
 
+<!-- TODO(scotttodd): command buffer construction -> dispatch diagram -->
+<!-- TODO(scotttodd): input buffers -> output buffers diagram -->
+<!-- TODO(scotttodd): HAL interface diagram -->
+
 * HAL _drivers_ are used to enumerate and create HAL _devices_
 * HAL _devices_ interface with hardware, such as by allocating device memory,
   preparing executables, recording and dispatching command buffers, and
@@ -341,38 +331,23 @@ Most interaction with IREE's C API involves either the VM or the HAL.
 * HAL _buffers_ and _buffer views_ represent storage and shaped/typed views
   into that storage (aka "tensors")
 
-### Quickstart
+### Usage
 
-To use IREE's C API, you will need to build the runtime
-[from source](../../building-from-source/getting-started.md). The
-[iree-template-cpp](https://github.com/iml130/iree-template-cpp) community
-project also shows how to integrate IREE into an external project using
-CMake.
+!!! todo - "Under construction, more coming soon"
 
-The [samples/](https://github.com/openxla/iree/tree/main/samples)
-directory demonstrates several ways to use IREE's C API.
+#### Samples
 
-!!! todo
-    TODO: link to [hello_world.c](https://github.com/benvanik/iree-template-runtime-cmake/blob/main/hello_world.c)
-
-    TODO: link to [hello_world_explained.c](https://github.com/openxla/iree/blob/main/runtime/src/iree/runtime/demo/hello_world_explained.c)
-
-    TODO: link to [simple_embedding.c](https://github.com/openxla/iree/blob/main/samples/simple_embedding/simple_embedding.c)
+| Source location | Description |
+| --------------- | ----------- |
+[iree `runtime/demo/`](https://github.com/openxla/iree/blob/main/runtime/src/iree/runtime/demo/) | In-tree demos of the high level runtime API
+[iree `samples/`](https://github.com/openxla/iree/tree/main/samples) | In-tree sample applications
+[iree-template-runtime-cmake](https://github.com/benvanik/iree-template-runtime-cmake/) | Template repository for runtime applications
+[iree-template-cpp](https://github.com/iml130/iree-template-cpp) | Demonstration of integration into a downstream project
+[iree-samples `runtime-library/`](https://github.com/iree-org/iree-samples/tree/main/runtime-library) | Shared runtime library builder
 
 ## Compiler + Runtime = JIT
 
-TODO: `iree-run-mlir`, pjrt plugin, compile "ahead of time" or "just in time"
-
-<!-- ## Advanced usage -->
-
-<!-- TODO(scotttodd): async execution and synchronization -->
-<!-- TODO(scotttodd): specialized HAL APIs -->
-<!-- TODO(scotttodd): threadpools -->
-<!-- TODO(scotttodd): heterogenous execution -->
-
-<!-- ## Troubleshooting -->
-
-<!-- TODO(scotttodd): link to GitHub issues -->
-<!-- TODO(scotttodd): common problems? object ownership? loaded modules (HAL)? -->
-
-*[vmfb]: VM FlatBuffer
+The compiler and runtime APIs may be used together to build a "just in time"
+(JIT) execution engine. JIT compilation allows for last-minute specialization
+with no prior knowledge of target devices and avoids issues with version drift,
+but it can also constrain deployment options and usage scenarios.
