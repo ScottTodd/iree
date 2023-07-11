@@ -17,7 +17,7 @@
         <link rel="next" href="../gpu-vulkan/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.16">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -135,7 +135,7 @@
 
     <!-- Link to site home -->
     <a
-      href="../../.."
+      href="https://openxla.github.io/iree/"
       title="IREE"
       class="md-header__button md-logo"
       aria-label="IREE"
@@ -1095,8 +1095,6 @@
         
           
         
-          
-        
       
       
         
@@ -1126,7 +1124,7 @@
   
     <li class="md-nav__item">
       <a href="../../../reference/bindings/c-api/" class="md-nav__link">
-        Runtime C API
+        C API
       </a>
     </li>
   
@@ -1141,20 +1139,6 @@
     <li class="md-nav__item">
       <a href="../../../reference/bindings/python/" class="md-nav__link">
         Python
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../reference/bindings/tensorflow-lite/" class="md-nav__link">
-        TensorFlow Lite
       </a>
     </li>
   
@@ -1752,7 +1736,6 @@ to retrieve the IREE compiler.</p>
 <span class="w">    </span>samples/models/simple_abs.mlir<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-o<span class="w"> </span>/tmp/simple_abs_cpu.vmfb
 </code></pre></div>
-
 <p>In which</p>
 <ul>
 <li><code>--iree-stream-partitioning-favor=min-peak-memory</code>: Optimize for minimum peak
@@ -1811,7 +1794,6 @@ model execution is in a single-thread synchronous fashion.</p>
 <span class="c"># Build samples</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">IREE_BUILD_SAMPLES</span><span class="w"> </span><span class="s">ON</span><span class="p">)</span>
 </code></pre></div>
-
 <div class="admonition todo">
 <p class="admonition-title">Todo</p>
 <p>Clean the list up after <a href="https://github.com/openxla/iree/issues/6353">#6353</a>
@@ -1825,7 +1807,6 @@ architecture, target abi, linker script, system library path, etc.</p>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_FLAGS</span><span class="w"> </span><span class="o">${</span><span class="nv">MY_FLAGS</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">CMAKE_C_FLAGS</span><span class="o">}</span><span class="p">)</span>
 <span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_FLAGS</span><span class="w"> </span><span class="o">${</span><span class="nv">MY_FLAGS</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">CMAKE_CXX_FLAGS</span><span class="o">}</span><span class="p">)</span>
 </code></pre></div>
-
 <table>
 <thead>
 <tr>
@@ -1948,7 +1929,7 @@ bare-metal target.</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.a51614de.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.b4d07000.min.js"></script>
       
     
   </body>

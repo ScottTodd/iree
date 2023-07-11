@@ -17,7 +17,7 @@
         <link rel="next" href="../jax/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.16">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -135,7 +135,7 @@
 
     <!-- Link to site home -->
     <a
-      href="../../.."
+      href="https://openxla.github.io/iree/"
       title="IREE"
       class="md-header__button md-logo"
       aria-label="IREE"
@@ -1082,8 +1082,6 @@
         
           
         
-          
-        
       
       
         
@@ -1113,7 +1111,7 @@
   
     <li class="md-nav__item">
       <a href="../../../reference/bindings/c-api/" class="md-nav__link">
-        Runtime C API
+        C API
       </a>
     </li>
   
@@ -1128,20 +1126,6 @@
     <li class="md-nav__item">
       <a href="../../../reference/bindings/python/" class="md-nav__link">
         Python
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../reference/bindings/tensorflow-lite/" class="md-nav__link">
-        TensorFlow Lite
       </a>
     </li>
   
@@ -1730,20 +1714,17 @@ imported into an IREE-compatible format then compiled to a series of backends.</
   A -- iree-import-tflite --&gt; B
   B --&gt; C
   C --&gt; D</code></pre>
-
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">link</a></h2>
 <p>Install TensorFlow by following the
 <a href="https://www.tensorflow.org/install">official documentation</a>:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>tf-nightly
 </code></pre></div>
-
 <p>Install TensorFlow-Lite specific dependencies using pip:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>iree-compiler<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>iree-runtime<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>iree-tools-tflite
 </code></pre></div>
-
 <h2 id="importing-and-compiling">Importing and Compiling<a class="headerlink" href="#importing-and-compiling" title="Permanent link">link</a></h2>
 <p>IREE's tooling is divided into two components: import and compilation.</p>
 <ol>
@@ -1774,7 +1755,6 @@ iree-compile<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="si">${</span><span class="nv">IMPORT_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-o<span class="w"> </span><span class="si">${</span><span class="nv">MODULE_PATH</span><span class="si">}</span>
 </code></pre></div>
-
 <h3 id="using-the-python-api">Using the Python API<a class="headerlink" href="#using-the-python-api" title="Permanent link">link</a></h3>
 <p>The example below demonstrates downloading, compiling, and executing a TFLite
 model using the Python API. This includes some initial setup to declare global
@@ -1802,7 +1782,6 @@ be reconfigured to select alternative targets.</p>
 <span class="n">backends</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;llvm-cpu&quot;</span><span class="p">]</span>
 <span class="n">config</span> <span class="o">=</span> <span class="s2">&quot;local-task&quot;</span>
 </code></pre></div>
-
 <p>The TFLite sample model and input are downloaded locally.</p>
 <div class="highlight"><pre><span></span><code><span class="n">tfliteUrl</span> <span class="o">=</span> <span class="s2">&quot;https://storage.googleapis.com/iree-model-artifacts/tflite-integration-tests/posenet_i8.tflite&quot;</span>
 <span class="n">jpgUrl</span> <span class="o">=</span> <span class="s2">&quot;https://storage.googleapis.com/iree-model-artifacts/tflite-integration-tests/posenet_i8_input.jpg&quot;</span>
@@ -1810,7 +1789,6 @@ be reconfigured to select alternative targets.</p>
 <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">tfliteUrl</span><span class="p">,</span> <span class="n">tfliteFile</span><span class="p">)</span>
 <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">jpgUrl</span><span class="p">,</span> <span class="n">jpgFile</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Once downloaded we can compile the model for the selected backends. Both the
 TFLite and TOSA representations of the model are saved for debugging purposes.
 This is optional and can be omitted.</p>
@@ -1823,7 +1801,6 @@ This is optional and can be omitted.</p>
   <span class="n">target_backends</span><span class="o">=</span><span class="n">backends</span><span class="p">,</span>
   <span class="n">import_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
-
 <p>After compilation is completed we configure the VmModule using the local-task
 configuration and compiled IREE module.</p>
 <div class="highlight"><pre><span></span><code><span class="n">config</span> <span class="o">=</span> <span class="n">iree_rt</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="s2">&quot;local-task&quot;</span><span class="p">)</span>
@@ -1832,7 +1809,6 @@ configuration and compiled IREE module.</p>
   <span class="n">vm_module</span> <span class="o">=</span> <span class="n">iree_rt</span><span class="o">.</span><span class="n">VmModule</span><span class="o">.</span><span class="n">from_flatbuffer</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">vm_instance</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
   <span class="n">context</span><span class="o">.</span><span class="n">add_vm_module</span><span class="p">(</span><span class="n">vm_module</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Finally, the IREE module is loaded and ready for execution. Here we load the
 sample image, manipulate to the expected input size, and execute the module. By
 default TFLite models include a single function named 'main'. The final results
@@ -1844,7 +1820,6 @@ are printed.</p>
 <span class="n">iree_results</span> <span class="o">=</span> <span class="n">invoke</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">iree_results</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">link</a></h2>
 <p>Failures during the import step usually indicate a failure to lower from
 TensorFlow Lite's operations to TOSA, the intermediate representation used by
@@ -1970,7 +1945,7 @@ once it is complete at
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.a51614de.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.b4d07000.min.js"></script>
       
     
   </body>

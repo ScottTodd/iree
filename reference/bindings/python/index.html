@@ -14,10 +14,10 @@
         <link rel="prev" href="../c-api/">
       
       
-        <link rel="next" href="../tensorflow-lite/">
+        <link rel="next" href="../../mlir-dialects/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.16">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -135,7 +135,7 @@
 
     <!-- Link to site home -->
     <a
-      href="../../.."
+      href="https://openxla.github.io/iree/"
       title="IREE"
       class="md-header__button md-logo"
       aria-label="IREE"
@@ -1000,8 +1000,6 @@
         
           
         
-          
-        
       
       
         
@@ -1031,7 +1029,7 @@
   
     <li class="md-nav__item">
       <a href="../c-api/" class="md-nav__link">
-        Runtime C API
+        C API
       </a>
     </li>
   
@@ -1123,26 +1121,25 @@
     Using the Python bindings
   </a>
   
+    <nav class="md-nav" aria-label="Using the Python bindings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    Quickstart
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tensorflow-lite/" class="md-nav__link">
-        TensorFlow Lite
-      </a>
     </li>
   
 
@@ -1664,6 +1661,19 @@
     Using the Python bindings
   </a>
   
+    <nav class="md-nav" aria-label="Using the Python bindings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    Quickstart
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1749,7 +1759,9 @@ available on Windows yet (see
 <p>To use IREE's Python bindings, you will first need to install
 <a href="https://www.python.org/downloads/">Python 3</a> and
 <a href="https://pip.pypa.io/en/stable/installing/">pip</a>, as needed.</p>
-<details class="tip" open="open"><summary>Tip - Virtual environments</summary><p>We recommend using virtual environments to manage python packages, such as
+<details class="tip" open="open">
+<summary>Tip - Virtual environments</summary>
+<p>We recommend using virtual environments to manage python packages, such as
 through <code>venv</code>
 (<a href="https://docs.python.org/3/library/venv.html">about</a>,
 <a href="https://docs.python.org/3/tutorial/venv.html">tutorial</a>):</p>
@@ -1759,19 +1771,16 @@ through <code>venv</code>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
 <span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 </code></pre></div>
-
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
 <span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 </code></pre></div>
-
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
 <span class="p">.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">activate</span><span class="p">.</span><span class="n">bat</span>
 </code></pre></div>
-
 </div>
 </div>
 </div>
@@ -1788,7 +1797,6 @@ through <code>venv</code>
 <span class="w">  </span>iree-compiler<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>iree-runtime
 </code></pre></div>
-
 </div>
 <div class="tabbed-block">
 <p>Nightly releases are published on
@@ -1799,7 +1807,6 @@ through <code>venv</code>
 <span class="w">  </span>iree-compiler<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>iree-runtime
 </code></pre></div>
-
 </div>
 </div>
 </div>
@@ -1813,9 +1820,44 @@ page for instructions for building from source.</p>
 <a href="https://github.com/openxla/iree/tree/main/samples/colab">samples/colab/ directory</a>
 and the <a href="https://github.com/iree-org/iree-samples">iree-samples repository</a> for
 examples using the Python APIs.</p>
-<!-- ## Troubleshooting -->
+<h3 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">link</a></h3>
+<p><a href="https://colab.research.google.com/github/openxla/iree/blob/main/samples/colab/low_level_invoke_function.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>Compile a program:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">iree</span> <span class="kn">import</span> <span class="n">compiler</span> <span class="k">as</span> <span class="n">ireec</span>
 
-<!-- TODO(scotttodd): update python, update pip, search GitHub issues -->
+<span class="c1"># Compile a module.</span>
+<span class="n">INPUT_MLIR</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">module @arithmetic {</span>
+<span class="s2">  func.func @simple_mul(</span><span class="si">%a</span><span class="s2">rg0: tensor&lt;4xf32&gt;, </span><span class="si">%a</span><span class="s2">rg1: tensor&lt;4xf32&gt;) -&gt; tensor&lt;4xf32&gt; {</span>
+<span class="s2">    %0 = arith.mulf </span><span class="si">%a</span><span class="s2">rg0, </span><span class="si">%a</span><span class="s2">rg1 : tensor&lt;4xf32&gt;</span>
+<span class="s2">    return %0 : tensor&lt;4xf32&gt;</span>
+<span class="s2">  }</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># Compile using the vmvx (reference) target:</span>
+<span class="n">compiled_flatbuffer</span> <span class="o">=</span> <span class="n">ireec</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">compile_str</span><span class="p">(</span>
+    <span class="n">INPUT_MLIR</span><span class="p">,</span>
+    <span class="n">target_backends</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;vmvx&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p>Run a compiled program:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">iree</span> <span class="kn">import</span> <span class="n">runtime</span> <span class="k">as</span> <span class="n">ireert</span>
+
+<span class="c1"># Register the module with a runtime context.</span>
+<span class="c1"># Use the &quot;local-task&quot; CPU driver, which can load the vmvx executable:</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">ireert</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="s2">&quot;local-task&quot;</span><span class="p">)</span>
+<span class="n">ctx</span> <span class="o">=</span> <span class="n">ireert</span><span class="o">.</span><span class="n">SystemContext</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="n">vm_module</span> <span class="o">=</span> <span class="n">ireert</span><span class="o">.</span><span class="n">VmModule</span><span class="o">.</span><span class="n">copy_buffer</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">instance</span><span class="p">,</span> <span class="n">compiled_flatbuffer</span><span class="p">)</span>
+<span class="n">ctx</span><span class="o">.</span><span class="n">add_vm_module</span><span class="p">(</span><span class="n">vm_module</span><span class="p">)</span>
+
+<span class="c1"># Invoke the function and print the result.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INVOKE simple_mul&quot;</span><span class="p">)</span>
+<span class="n">arg0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">arg1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">arithmetic</span><span class="p">[</span><span class="s2">&quot;simple_mul&quot;</span><span class="p">]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">arg0</span><span class="p">,</span> <span class="n">arg1</span><span class="p">)</span><span class="o">.</span><span class="n">to_host</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Results:&quot;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+</code></pre></div>
 
 
 
@@ -1897,7 +1939,7 @@ examples using the Python APIs.</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.a51614de.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.b4d07000.min.js"></script>
       
     
   </body>
