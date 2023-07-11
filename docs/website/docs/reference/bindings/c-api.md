@@ -96,47 +96,35 @@ API definitions can be found in the following locations:
 
 ### Concepts
 
-```mermaid
-graph LR
-  subgraph session[Session]
-    source1[Source]
-    source2[Source]
-
-    invocation1[Invocation]
-    invocation2[Invocation]
-  end
-
-  output1[Output]
-  output2[Output]
-
-  source1 -- parse into --> invocation1
-  source2 -- parse into --> invocation2
-
-  invocation1 -- run pipeline --> invocation1
-  invocation2 -- run pipeline --> invocation2
-
-  invocation1 -. emit artifacts .-> output1
-  invocation2 -. emit artifacts .-> output2
-```
+The compiler API is centered around running pipelines to translate inputs to
+artifacts. These are modeled via _sessions_, _invocations_, _sources_, and
+_outputs_.
 
 ```mermaid
 stateDiagram-v2
-    direction LR
-    InputFile --> Source1 : open file
-    InputBuffer --> Source2 : wrap buffer
+  accTitle: IREE compiler session and invocation state diagram
+  accDescr {
+    Input files are opened (or buffers are wrapped) as sources in a session.
+    Sources are parsed into invocations, which run pipelines.
+    Output files are written (or buffers are mapped) for compilation artifacts.
+  }
 
-    state Session {
-        Source1 --> Invocation1
-        Source1 --> Invocation2
-        Source2 --> Invocation3
-        Invocation1 --> Invocation1 : run pipeline
-        Invocation2 --> Invocation2 : run pipeline
-        Invocation3 --> Invocation3 : run pipeline
-    }
+  direction LR
+  InputFile --> Source1 : open file
+  InputBuffer --> Source2 : wrap buffer
 
-    Invocation1 --> OutputFile1   : write file
-    Invocation2 --> OutputBuffer1 : map memory
-    Invocation3 --> OutputBuffer2 : map memory
+  state Session {
+    Source1 --> Invocation1
+    Source1 --> Invocation2
+    Source2 --> Invocation3
+    Invocation1 --> Invocation1 : run pipeline
+    Invocation2 --> Invocation2 : run pipeline
+    Invocation3 --> Invocation3 : run pipeline
+  }
+
+  Invocation1 --> OutputFile1   : write file
+  Invocation2 --> OutputBuffer1 : map memory
+  Invocation3 --> OutputBuffer2 : map memory
 ```
 
 #### Sessions
