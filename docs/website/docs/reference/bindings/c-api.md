@@ -33,14 +33,26 @@ The IREE compiler is structured as a monolithic shared object with a dynamic
 plugin system allowing for extensions. The shared object exports symbols for
 versioned API functions.
 
-When building from source, optional components may be disabled to reduce binary
-size and improve build times. There are also options for using your own LLVM or
-linking in external target backends.
+!!! Tip "Tip - building from source"
 
-<!-- TODO(scotttodd): accessibility labels -->
+    When [building from source](../../building-from-source/getting-started.md),
+    some components may be disabled to reduce binary size and improve build
+    time. There are also options for using your own LLVM or linking in external
+    target backends.
+
 ```mermaid
 graph TD
-  subgraph compiler[libIREECompiler.so]
+  accTitle: IREE compiler linkage model diagram
+  accDescr {
+    The libIREECompiler.so or IREECompiler.dll shared object contains pipelines,
+    target backends, and general passes as private implementation details.
+    Compiler plugins interface with the compiler shared object to extend it with
+    custom targets, dialects, etc.
+    Applications interface with the compiler shared object through the compiler
+    C API's exported symbols.
+  }
+
+  subgraph compiler[libIREECompiler.so / IREECompiler.dll]
     pipelines("Pipelines
 
     • Flow
@@ -106,33 +118,44 @@ API.
 
     ```mermaid
     graph TD
-    subgraph iree_runtime[IREE Runtime]
+      accTitle: IREE runtime high level API diagram
+      accDescr {
+      The IREE runtime includes 'base', 'HAL', and 'VM' components, each with
+      their own types and API methods.
+      A high level "runtime API" sits on top of these component APIs.
+      Applications can interface indirectly with the IREE runtime via this
+      high level runtime API.
+      }
+
+      subgraph iree_runtime[IREE Runtime]
         subgraph base
-            base_types("Types
+          base_types("Types
 
-            • allocator
-            • status
-            • etc.")
+          • allocator
+          • status
+          • etc.")
         end
+
         subgraph hal[HAL]
-            hal_types("Types
+          hal_types("Types
 
-            • buffer
-            • device
-            • etc.")
+          • buffer
+          • device
+          • etc.")
 
-            hal_drivers("Drivers
+          hal_drivers("Drivers
 
-            • local-*
-            • vulkan
-            • etc.")
+          • local-*
+          • vulkan
+          • etc.")
         end
-        subgraph vm[VM]
-            vm_types("Types
 
-            • context
-            • invocation
-            • etc.")
+        subgraph vm[VM]
+          vm_types("Types
+
+          • context
+          • invocation
+          • etc.")
         end
 
         runtime_api("Runtime API
@@ -142,11 +165,11 @@ API.
         • call")
 
         base_types & hal_types & hal_drivers & vm_types --> runtime_api
-    end
+      end
 
-    application(Your application)
+      application(Your application)
 
-    runtime_api --> application
+      runtime_api --> application
     ```
 
 === "Low level API"
@@ -157,39 +180,47 @@ API.
 
     ```mermaid
     graph TD
-        subgraph iree_runtime[IREE Runtime]
-            subgraph base
-                base_types("Types
+      accTitle: IREE runtime low level API diagram
+      accDescr {
+        The IREE runtime includes 'base', 'HAL', and 'VM' components, each with
+        their own types and API methods.
+        Applications can interface directly with the IREE runtime via the low
+        level component APIs.
+      }
 
-                • allocator
-                • status
-                • etc.")
-            end
-            subgraph hal[HAL]
-                hal_types("Types
+      subgraph iree_runtime[IREE Runtime]
+        subgraph base
+          base_types("Types
 
-                • buffer
-                • device
-                • etc.")
-
-                hal_drivers("Drivers
-
-                • local-*
-                • vulkan
-                • etc.")
-            end
-            subgraph vm[VM]
-                vm_types("Types
-
-                • context
-                • invocation
-                • etc.")
-            end
+          • allocator
+          • status
+          • etc.")
         end
+        subgraph hal[HAL]
+          hal_types("Types
 
-        application(Your application)
+          • buffer
+          • device
+          • etc.")
 
-        base_types & hal_types & hal_drivers & vm_types --> application
+          hal_drivers("Drivers
+
+          • local-*
+          • vulkan
+          • etc.")
+        end
+        subgraph vm[VM]
+          vm_types("Types
+
+          • context
+          • invocation
+          • etc.")
+        end
+      end
+
+      application(Your application)
+
+      base_types & hal_types & hal_drivers & vm_types --> application
     ```
 
 API header files are organized by runtime component:
