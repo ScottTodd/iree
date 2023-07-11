@@ -25,19 +25,17 @@ other projects.
 
     There are multiple ways to distribute and depend on C/C++ projects, each
     with varying levels of portability, flexibility, and toolchain
-    compatibility. IREE aims to support common configurations and platforms,
-    but there is no official package manager for C/C++ like there is for
-    languages such as Python.
+    compatibility. IREE aims to support common configurations and platforms.
 
 ## Compiler API
 
+The IREE compiler is structured as a monolithic shared object with a dynamic
+plugin system allowing for extensions. The shared object exports symbols for
+versioned API functions.
 
-The IREE compiler
-
-* link against a monolithic shared object, call across a versioned API
-* plugin architecture
-* optional components to reduce binary size
-* bring your own LLVM / linker / backend
+When building from source, optional components may be disabled to reduce binary
+size and improve build times. There are also options for using your own LLVM or
+linking in external target backends.
 
 <!-- TODO(scotttodd): accessibility labels -->
 ```mermaid
@@ -49,7 +47,7 @@ graph TD
     • Stream
     • etc.")
 
-    targets("Compiler targets
+    targets("Target backends
 
     • llvm-cpu
     • vulkan-spirv
@@ -71,7 +69,7 @@ graph TD
   application(Your application)
 
   compiler <-- "Plugin API<br>(static or dynamic linking)" --> plugins
-  compiler -. "Compiler C API<br>(rigid, versioned)" .-> application
+  compiler -. "Compiler C API<br>(exported symbols)" .-> application
 ```
 
 ### Concepts
@@ -86,17 +84,19 @@ TODO
 
 ### Quickstart
 
+TODO: how to obtain libIREECompiler.so, link to a sample/template project
+
 ## Runtime API
 
-IREE provides a low level C API for its runtime, which can be used directly or
-through higher level APIs and language bindings built on top of it.
+The IREE runtime is structured as a modular set of library components. Each
+component is designed to be linked into applications directly and compiled
+with LTO style optimizations.
 
-The IREE runtime
+Unless flexibility is needed, optional components should be disabled at build
+time to reduce binary size.
 
-* link into your project with your own toolchain, call functions directly
-* optimized for small binary size, LTO compiler optimization
-* VM
-* HAL drivers and executable loaders
+The low level library components can be used directly or through a higher level
+API.
 
 === "High level API"
 
@@ -203,14 +203,6 @@ API header files are organized by runtime component:
 The [samples/](https://github.com/openxla/iree/tree/main/samples)
 directory demonstrates several ways to use IREE's C API.
 
-### Prerequisites
-
-To use IREE's C API, you will need to build the runtime
-[from source](../../building-from-source/getting-started.md). The
-[iree-template-cpp](https://github.com/iml130/iree-template-cpp) community
-project also shows how to integrate IREE into an external project using
-CMake.
-
 ### Concepts
 
 By default, IREE uses its own tiny Virtual Machine (VM) at runtime to interpret
@@ -251,6 +243,12 @@ Most interaction with IREE's C API involves either the VM or the HAL.
   into that storage (aka "tensors")
 
 ### Quickstart
+
+To use IREE's C API, you will need to build the runtime
+[from source](../../building-from-source/getting-started.md). The
+[iree-template-cpp](https://github.com/iml130/iree-template-cpp) community
+project also shows how to integrate IREE into an external project using
+CMake.
 
 !!! todo
     TODO: Convert this to the style in
