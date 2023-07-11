@@ -27,6 +27,8 @@ other projects.
     with varying levels of portability, flexibility, and toolchain
     compatibility. IREE aims to support common configurations and platforms.
 
+### Compatibility
+
 ## Compiler API
 
 The IREE compiler is structured as a monolithic shared object with a dynamic
@@ -84,28 +86,102 @@ graph TD
   compiler -. "Compiler C API<br>(exported symbols)" .-> application
 ```
 
+API definitions can be found in the following locations:
+
+| Source location | Overview |
+| --------------- | -------- |
+[`iree/compiler/embedding_api.h`](https://github.com/openxla/iree/blob/main/compiler/bindings/c/iree/compiler/embedding_api.h) | Top-level IREE compiler embedding API
+[`iree/compiler/PluginAPI/` directory](https://github.com/openxla/iree/tree/main/compiler/src/iree/compiler/PluginAPI) | IREE compiler plugin API
+[`mlir/include/mlir-c/` directory](https://github.com/llvm/llvm-project/tree/main/mlir/include/mlir-c) | MLIR C API headers
+
 ### Concepts
 
-TODO
+```mermaid
+graph LR
+  subgraph session[Session]
+    source1[Source]
+    source2[Source]
 
-* Sessions
-    * Plugins
-* Invocations
-    * Pipelines
-* Sources (inputs), outputs
+    invocation1[Invocation]
+    invocation2[Invocation]
+  end
+
+  output1[Output]
+  output2[Output]
+
+  source1 -- parse into --> invocation1
+  source2 -- parse into --> invocation2
+
+  invocation1 -- run pipeline --> invocation1
+  invocation2 -- run pipeline --> invocation2
+
+  invocation1 -. emit artifacts .-> output1
+  invocation2 -. emit artifacts .-> output2
+```
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    InputFile --> Source1 : open file
+    InputBuffer --> Source2 : wrap buffer
+
+    state Session {
+        Source1 --> Invocation1
+        Source1 --> Invocation2
+        Source2 --> Invocation3
+        Invocation1 --> Invocation1 : run pipeline
+        Invocation2 --> Invocation2 : run pipeline
+        Invocation3 --> Invocation3 : run pipeline
+    }
+
+    Invocation1 --> OutputFile1   : write file
+    Invocation2 --> OutputBuffer1 : map memory
+    Invocation3 --> OutputBuffer2 : map memory
+```
+
+#### Sessions
+
+A _session_ represents a scope where one or more invocations can be executed.
+
+* Internally, _sessions_ consist of an `MLIRContext` and a private set of
+  _options_.
+* _Sessions_ may activate available _plugins_ based on their _options_.
+
+#### Invocations
+
+An _invocation_ represents a discrete run of the compiler.
+
+* _Invocations_ run _pipelines_, consisting of _passes_, to translate from
+  _sources_ to _outputs_.
+
+#### Sources
+
+A _source_ represents an input program, including operations and data.
+
+* _Sources_ may refer to files or buffers in memory.
+
+#### Outputs
+
+An _output_ represents a compilation artifact.
+
+* _Outputs_ can be standalone files or more advanced streams.
+
+#### Plugins
+
+A _plugin_ extends the compiler with some combination of target backends,
+options, passes, or pipelines.
 
 ### Quickstart
 
-TODO: how to obtain libIREECompiler.so, link to a sample/template project
+!!! todo - "Under construction"
+
+    TODO: how to obtain `libIREECompiler.so`, link to a sample/template project
 
 ## Runtime API
 
 The IREE runtime is structured as a modular set of library components. Each
 component is designed to be linked into applications directly and compiled
 with LTO style optimizations.
-
-Unless flexibility is needed, optional components should be disabled at build
-time to reduce binary size.
 
 The low level library components can be used directly or through a higher level
 API.
@@ -114,7 +190,7 @@ API.
 
     The high level 'runtime' API sits on top of the low level components. It is
     relatively terse but does not expose the full flexibility of the underlying
-    systems. Components from both APIs can be intermixed.
+    systems.
 
     ```mermaid
     graph TD
@@ -176,7 +252,7 @@ API.
 
     Each runtime component has its own low level API. The low level APIs are
     typically verbose as they expose the full flexibility of each underlying
-    system. Components from both APIs can be intermixed.
+    system.
 
     ```mermaid
     graph TD
@@ -223,16 +299,14 @@ API.
       base_types & hal_types & hal_drivers & vm_types --> application
     ```
 
-API header files are organized by runtime component:
+Runtime API header files are organized by component:
 
-| Component header file                                                       | Overview                                                                  |
-|-----------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| [iree/base/api.h](https://github.com/openxla/iree/blob/main/runtime/src/iree/base/api.h) | Core API, type definitions, ownership policies, utilities                 |
-| [iree/vm/api.h](https://github.com/openxla/iree/blob/main/runtime/src/iree/vm/api.h)     | VM APIs: loading modules, I/O, calling functions                          |
-| [iree/hal/api.h](https://github.com/openxla/iree/blob/main/runtime/src/iree/hal/api.h)   | HAL APIs: device management, synchronization, accessing hardware features |
-
-The [samples/](https://github.com/openxla/iree/tree/main/samples)
-directory demonstrates several ways to use IREE's C API.
+| Component header file | Overview |
+| --------------------- | -------- |
+[`iree/runtime/api.h`](https://github.com/openxla/iree/blob/main/runtime/src/iree/runtime/api.h) | High level runtime API
+[`iree/base/api.h`](https://github.com/openxla/iree/blob/main/runtime/src/iree/base/api.h) | Core API, type definitions, ownership policies, utilities
+[`iree/vm/api.h`](https://github.com/openxla/iree/blob/main/runtime/src/iree/vm/api.h) | VM APIs: loading modules, I/O, calling functions
+[`iree/hal/api.h`](https://github.com/openxla/iree/blob/main/runtime/src/iree/hal/api.h) | HAL APIs: device management, synchronization, accessing hardware features
 
 ### Concepts
 
@@ -255,7 +329,13 @@ Most interaction with IREE's C API involves either the VM or the HAL.
 <!-- HAL interface diagram -->
 <!-- VM module diagram (bytecode, HAL, custom) -->
 
-#### VM
+#### High level - Session
+
+#### High level - Instance
+
+#### High level - Call
+
+#### Low level - VM
 
 * VM _instances_ can serve multiple isolated execution _contexts_
 * VM _contexts_ are effectively sandboxes for loading modules and running
@@ -264,7 +344,7 @@ Most interaction with IREE's C API involves either the VM or the HAL.
   access to hardware accelerators through the HAL. Compiled user programs are
   also modules.
 
-#### HAL
+#### Low level - HAL
 
 * HAL _drivers_ are used to enumerate and create HAL _devices_
 * HAL _devices_ interface with hardware, such as by allocating device memory,
@@ -281,148 +361,15 @@ To use IREE's C API, you will need to build the runtime
 project also shows how to integrate IREE into an external project using
 CMake.
 
+The [samples/](https://github.com/openxla/iree/tree/main/samples)
+directory demonstrates several ways to use IREE's C API.
+
 !!! todo
-    TODO: Convert this to the style in
-    [hello_world.c](https://github.com/benvanik/iree-template-runtime-cmake/blob/main/hello_world.c)
-    and link to that file
+    TODO: link to [hello_world.c](https://github.com/benvanik/iree-template-runtime-cmake/blob/main/hello_world.c)
 
-#### Setup
+    TODO: link to [hello_world_explained.c](https://github.com/openxla/iree/blob/main/runtime/src/iree/runtime/demo/hello_world_explained.c)
 
-Include headers:
-
-``` c
-#include "iree/base/api.h"
-#include "iree/hal/api.h"
-#include "iree/vm/api.h"
-
-// The VM bytecode and HAL modules will typically be included, along
-// with those for the specific HAL drivers your application uses.
-// Functionality extensions can be used via custom modules.
-#include "iree/modules/hal/module.h"
-#include "iree/hal/drivers/local_task/registration/driver_module.h"
-#include "iree/vm/bytecode/module.h"
-```
-
-Check the API version and register components:
-
-``` c
-// Device drivers are managed through registries.
-// Applications may use multiple registries to more finely control driver
-// lifetimes and visibility.
-IREE_CHECK_OK(iree_hal_local_task_driver_module_register(
-    iree_hal_driver_registry_default()));
-```
-
-!!! tip
-    The `IREE_CHECK_OK()` macro calls `assert()` if an error occurs.
-    Applications should propagate errors and handle or report them as desired.
-
-#### Configure stateful objects
-
-Create a VM instance along with a HAL driver and device:
-
-``` c
-// Applications should try to reuse instances so resource usage across contexts
-// is handled and extraneous device interaction is avoided.
-iree_vm_instance_t* instance = NULL;
-IREE_CHECK_OK(iree_vm_instance_create(iree_allocator_system(), &instance));
-
-// Modules with custom types must be statically registered before use.
-IREE_CHECK_OK(iree_hal_module_register_all_types(instance));
-
-// We use the CPU "local-task" driver in this example, but could use a different
-// driver like the GPU "vulkan" driver. The driver(s) used should match with
-// the target(s) specified during compilation.
-iree_hal_driver_t* driver = NULL;
-IREE_CHECK_OK(iree_hal_driver_registry_try_create(
-    iree_hal_driver_registry_default(),
-    iree_string_view_literal("local-task"),
-    iree_allocator_system(), &driver));
-
-// Drivers may support multiple devices, such as when a machine has multiple
-// GPUs. You may either enumerate devices and select based on their properties,
-// or just use the default device.
-iree_hal_device_t* device = NULL;
-IREE_CHECK_OK(iree_hal_driver_create_default_device(
-    driver, iree_allocator_system(), &device));
-
-// Create a HAL module initialized to use the newly created device.
-// We'll load this module into a VM context later.
-iree_vm_module_t* hal_module = NULL;
-IREE_CHECK_OK(
-    iree_hal_module_create(instance, device, IREE_HAL_MODULE_FLAG_NONE,
-                           iree_allocator_system(), &hal_module));
-// The reference to the driver can be released now.
-iree_hal_driver_release(driver);
-```
-
-!!! tip
-    The default `iree_allocator_system()` is backed by `malloc` and `free`,
-    but custom allocators may also be used.
-
-Load a vmfb bytecode module containing program data:
-
-``` c
-// (Application-specific loading into memory, such as loading from a file)
-
-iree_vm_module_t* bytecode_module = NULL;
-IREE_CHECK_OK(iree_vm_bytecode_module_create(
-    instance,
-    iree_const_byte_span_t{module_data, module_size},
-    /*flatbuffer_allocator=*/iree_allocator_null(),
-    /*allocator=*/iree_allocator_system(), &bytecode_module));
-```
-
-!!! note
-    Many IREE samples use
-    [`c_embed_data`](https://github.com/openxla/iree/tree/main/build_tools/embed_data)
-    to embed vmfb files as C code to avoid file I/O and ease portability.
-    Applications should use what makes sense for their platforms and deployment
-    configurations.
-
-Create a VM context and load modules into it:
-
-``` c
-iree_vm_context_t* context = NULL;
-iree_vm_module_t* modules[2] = {hal_module, bytecode_module};
-IREE_CHECK_OK(iree_vm_context_create_with_modules(
-    instance, IREE_VM_CONTEXT_FLAG_NONE,
-    IREE_ARRAYSIZE(modules), modules,
-    iree_allocator_system(), &context));
-// References to the modules can be released now.
-iree_vm_module_release(hal_module);
-iree_vm_module_release(bytecode_module);
-```
-
-Look up the function(s) to call:
-
-``` c
-iree_vm_function_t main_function;
-IREE_CHECK_OK(iree_vm_context_resolve_function(
-    context, iree_string_view_literal("module.main_function"), &main_function));
-```
-
-#### Invoke functions
-
-<!-- TODO(scotttodd): I/O buffers (TODO pending new helpers) -->
-
-``` c
-// (Application-specific I/O buffer setup, making data available to the device)
-
-IREE_CHECK_OK(iree_vm_invoke(context, main_function, IREE_VM_INVOCATION_FLAG_NONE,
-                             /*policy=*/NULL, inputs, outputs,
-                             iree_allocator_system()));
-
-// (Application-specific output buffer retrieval and reading back from the device)
-```
-
-#### Cleanup resources
-
-``` c
-iree_hal_device_release(device);
-iree_vm_context_release(context);
-iree_vm_instance_release(instance);
-```
+    TODO: link to [simple_embedding.c](https://github.com/openxla/iree/blob/main/samples/simple_embedding/simple_embedding.c)
 
 ## Compiler + Runtime = JIT
 
@@ -438,7 +385,6 @@ TODO: `iree-run-mlir`, pjrt plugin, compile "ahead of time" or "just in time"
 <!-- ## Troubleshooting -->
 
 <!-- TODO(scotttodd): link to GitHub issues -->
-<!-- TODO(scotttodd): compiler/runtime compatibility -->
 <!-- TODO(scotttodd): common problems? object ownership? loaded modules (HAL)? -->
 
 *[vmfb]: VM FlatBuffer
