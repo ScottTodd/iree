@@ -4,7 +4,7 @@
 # See https://llvm.org/LICENSE.txt for license information.
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-# Utilities for working with IREE MLIR types.
+# General compiler utilities.
 
 load("//build_tools/bazel:build_defs.oss.bzl", "iree_compiler_cc_library")
 
@@ -23,6 +23,7 @@ iree_compiler_cc_library(
         "ModuleUtils.cpp",
         "OptionUtils.cpp",
         "PassUtils.cpp",
+        "ProgressReporter.cpp",
         "StringUtils.cpp",
         "ToolUtils.cpp",
         "TracingUtils.cpp",
@@ -36,6 +37,7 @@ iree_compiler_cc_library(
         "OptionUtils.h",
         "PassUtils.h",
         "PatternUtils.h",
+        "ProgressReporter.h",
         "StringUtils.h",
         "ToolUtils.h",
         "TracingUtils.h",

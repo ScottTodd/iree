@@ -52,6 +52,7 @@
 #include "iree/compiler/Tools/init_passes.h"
 #include "iree/compiler/Tools/init_targets.h"
 #include "iree/compiler/Tools/version.h"
+#include "iree/compiler/Utils/ProgressReporter.h"
 #include "iree/compiler/Utils/TracingUtils.h"
 #include "iree/compiler/embedding_api.h"
 #include "llvm/Support/Allocator.h"
@@ -577,6 +578,9 @@ Invocation::Invocation(Session &session)
     mlir::applyDefaultTimingPassManagerCLOptions(passManager);
   }
   passManager.addInstrumentation(std::make_unique<PassTracing>());
+  llvm::dbgs() << "Start.\n";
+  passManager.addInstrumentation(
+      std::make_unique<ProgressReporter>(llvm::dbgs()));
 
   // Since the jitter invokes much of the top-level compiler recursively,
   // it must be injected at the top-level here vs in the pass pipeline
