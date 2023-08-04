@@ -251,7 +251,7 @@ jobs:
 
   validate_and_publish:
     name: "Trigger validate and publish release"
-    needs: build_core
+    needs: build_packages
     if: github.event.inputs.release_id != ''
     runs-on: ubuntu-20.04
     steps:
