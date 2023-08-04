@@ -76,20 +76,13 @@ CONFIGURED_BINARY_DIR = "@IREE_BINARY_DIR@"
 IREE_SOURCE_DIR = None
 IREE_BINARY_DIR = None
 
-
-
-# TODO(scotttodd): shorten these paths for Windows?
-# FAILED: runtime/src/iree/hal/drivers/local_task/cts/CMakeFiles/iree_hal_drivers_local_task_cts_local-task_embedded-elf_command_buffer_push_constants_test.dir/local-task_embedded-elf_command_buffer_push_constants_test.cc.obj
-# C:\PROGRA~2\MICROS~1\2022\Preview\VC\Tools\MSVC\1431~1.311\bin\Hostx64\x64\cl.exe  /nologo /TP -DCPUINFO_SUPPORTED_PLATFORM=1 -DIREE_HAVE_HAL_EXECUTABLE_EMBEDDED_ELF_PLUGIN=1 -DIREE_HAVE_HAL_EXECUTABLE_LOADER_EMBEDDED_ELF=1 -DIREE_HAVE_HAL_EXECUTABLE_LOADER_SYSTEM_LIBRARY=1 -DIREE_HAVE_HAL_EXECUTABLE_LOADER_VMVX_MODULE=1 -DIREE_HAVE_HAL_EXECUTABLE_SYSTEM_LIBRARY_PLUGIN=1 -DIREE_HAVE_HAL_LOCAL_TASK_DRIVER_MODULE=1 -DIREE_HAVE_VMVX_MODULE -ID:\dev\projects\iree\third_party\cpuinfo\include -external:ID:\dev\projects\iree -external:ID:\dev\projects\iree\compiler\build\cmake_build -external:ID:\dev\projects\iree\runtime\src\iree\.. -external:ID:\dev\projects\iree\compiler\build\cmake_build\runtime\src\iree\.. -external:ID:\dev\projects\iree\compiler\build\cmake_build\runtime\src\iree\base\internal\flatcc -external:ID:\dev\projects\iree\third_party\flatcc\include -external:ID:\dev\projects\iree\compiler\build\cmake_build\runtime\src\iree\schemas -external:ID:\dev\projects\iree\third_party\googletest\googlemock\include -external:ID:\dev\projects\iree\third_party\googletest\googlemock -external:ID:\dev\projects\iree\third_party\googletest\googletest\include -external:ID:\dev\projects\iree\third_party\googletest\googletest -external:W0 /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /DWIN32_LEAN_AND_MEAN /DNOMINMAX /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES /GR- /bigobj /Zc:preprocessor /W3 /wd4200 /wd4018 /wd4146 /wd4244 /wd4267 /wd4005 /wd4065 /wd4141 /wd4624 /wd5105 -ID:/dev/projects/iree/third_party/flatcc/include/ -ID:/dev/projects/iree/third_party/flatcc/include/flatcc/reflection/ /showIncludes /Foruntime\src\iree\hal\drivers\local_task\cts\CMakeFiles\iree_hal_drivers_local_task_cts_local-task_embedded-elf_command_buffer_push_constants_test.dir\local-task_embedded-elf_command_buffer_push_constants_test.cc.obj /Fdruntime\src\iree\hal\drivers\local_task\cts\CMakeFiles\iree_hal_drivers_local_task_cts_local-task_embedded-elf_command_buffer_push_constants_test.dir\ /FS -c D:\dev\projects\iree\compiler\build\cmake_build\runtime\src\iree\hal\drivers\local_task\cts\local-task_embedded-elf_command_buffer_push_constants_test.cc
-# D:\dev\projects\iree\compiler\build\cmake_build\runtime\src\iree\hal\drivers\local_task\cts\local-task_embedded-elf_command_buffer_push_constants_test.cc : fatal error C1083: Cannot open compiler generated file: '': Invalid argument
-
-
-
 # We must do the intermediate installation to a fixed location that agrees
 # between what we pass to setup() and cmake. So hard-code it here.
 # Note that setup() needs a relative path (to the setup.py file).
+# We keep the path short ('i' instead of 'install') for platforms like Windows
+# that have file length limits.
 SETUPPY_DIR = os.path.realpath(os.path.dirname(__file__))
-CMAKE_INSTALL_DIR_REL = os.path.join("build", "cmake_install")
+CMAKE_INSTALL_DIR_REL = os.path.join("build", "i")
 CMAKE_INSTALL_DIR_ABS = os.path.join(SETUPPY_DIR, CMAKE_INSTALL_DIR_REL)
 
 IS_CONFIGURED = CONFIGURED_SOURCE_DIR[0] != "@"
@@ -109,7 +102,7 @@ else:
         # Note that setuptools always builds into a "build" directory that
         # is a sibling of setup.py, so we just colonize a sub-directory of that
         # by default.
-        IREE_BINARY_DIR = os.path.join(SETUPPY_DIR, "build", "cmake_build")
+        IREE_BINARY_DIR = os.path.join(SETUPPY_DIR, "build", "b")
     print(
         f"Running setup.py from source tree: "
         f"SOURCE_DIR = {IREE_SOURCE_DIR} "

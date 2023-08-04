@@ -7,7 +7,7 @@
 
 # build_windows_packages.sh
 # One stop build of IREE Python packages for Windows. This presumes that
-# dependencies are installed from install_windows_deps.sh.
+# dependencies are installed from install_windows_deps.ps1.
 #
 # Valid packages:
 #   iree-runtime
@@ -18,7 +18,7 @@ set -eu -o errtrace
 
 this_dir="$(cd $(dirname $0) && pwd)"
 repo_root="$(cd $this_dir/../../ && pwd)"
-python_versions="${override_python_versions:-3.9 3.10 3.11}"
+python_versions="${override_python_versions:-3.11}"
 output_dir="${output_dir:-${this_dir}/wheelhouse}"
 packages="${packages:-iree-runtime iree-runtime-instrumented iree-compiler}"
 
@@ -35,12 +35,11 @@ function run() {
   for package in $packages; do
     echo "******************** BUILDING PACKAGE ${package} ********************"
     for python_version in $python_versions; do
-      # python_dir="/Library/Frameworks/Python.framework/Versions/$python_version"
-      # if ! [ -x "$python_dir/bin/python3" ]; then
-      #   echo "ERROR: Could not find python3: $python_dir (skipping)"
-      #   continue
-      # fi
-      # export PATH=$python_dir/bin:$orig_path
+      if [[ $(py --list) != *${python_version}* ]]; then
+        echo "ERROR: Could not find python version: ${python_version}"
+        continue
+      fi
+
       echo ":::: Version: $(py -${python_version} --version)"
       case "$package" in
         iree-runtime)
@@ -89,12 +88,10 @@ function build_iree_compiler() {
 function clean_wheels() {
   local wheel_basename="$1"
   local python_version="$2"
-  # echo ":::: Clean wheels $wheel_basename $python_version"
+  echo ":::: Clean wheels $wheel_basename $python_version"
   # # python_version is something like "3.11", but we'd want something like "cp311".
-  # local cpython_version_string="cp${python_version%.*}${python_version#*.}"
-  # rm -f -v ${output_dir}/${wheel_basename}-*-${cpython_version_string}-*.whl
-  echo ":::: Clean wheels ${wheel_basename} ${python_version}"
-  rm -f -v "${output_dir}/${wheel_basename}-"*"-${python_version}-"*".whl"
+  local cpython_version_string="cp${python_version%.*}${python_version#*.}"
+  rm -f -v ${output_dir}/${wheel_basename}-*-${cpython_version_string}-*.whl
 }
 
 run

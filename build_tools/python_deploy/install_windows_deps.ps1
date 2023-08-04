@@ -4,7 +4,7 @@
 # See https://llvm.org/LICENSE.txt for license information.
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-# Installs dependencies on Windows necessary to build IREE.
+# Installs dependencies on Windows necessary to build IREE Python wheels.
 
 $PYTHON_VERSIONS = @(
   "311",
