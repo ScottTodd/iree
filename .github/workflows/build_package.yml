@@ -98,6 +98,11 @@ jobs:
       # OS specific setup
       ##########################################################################
 
+      - name: Install dependencies (Windows)
+        if: "matrix.build-family == 'windows'"
+        shell: powershell
+        run: ./main_checkout/build_tools/python_deploy/install_windows_deps.ps1
+
       ##########################################################################
       # Write version_info.json
       # Various tools will read this in order to embed release information.
@@ -162,9 +167,20 @@ jobs:
         run: |
           ./main_checkout/build_tools/python_deploy/build_macos_packages.sh
 
+      - name: Build runtime wheels (Windows)
+        if: "matrix.build-package == 'py-runtime-pkg' && matrix.build-family == 'windows'"
+        shell: bash
+        env:
+          package_suffix: ${{ github.event.inputs.package_suffix }}
+          packages: "iree-runtime iree-runtime-instrumented"
+          output_dir: "${{ github.workspace }}/bindist"
+          override_python_versions: "3.11"
+        run: |
+          ./main_checkout/build_tools/python_deploy/build_windows_packages.sh
+
       ##########################################################################
       # py-compiler-pkg
-      # Builds the iree-compielr wheel.
+      # Builds the iree-compiler wheel.
       # One step per OS.
       ##########################################################################
       - name: Build compiler wheels (Linux)
@@ -187,6 +203,17 @@ jobs:
           override_python_versions: "3.11"
         run: |
           ./main_checkout/build_tools/python_deploy/build_macos_packages.sh
+
+      - name: Build compiler wheels (Windows)
+        if: "matrix.build-package == 'py-compiler-pkg' && matrix.build-family == 'windows'"
+        shell: bash
+        env:
+          package_suffix: ${{ github.event.inputs.package_suffix }}
+          packages: "iree-compiler"
+          output_dir: "${{ github.workspace }}/bindist"
+          override_python_versions: "3.11"
+        run: |
+          ./main_checkout/build_tools/python_deploy/build_windows_packages.sh
 
       ##########################################################################
       # TF Compiler Tools
