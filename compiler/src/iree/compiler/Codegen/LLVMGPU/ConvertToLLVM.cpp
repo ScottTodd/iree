@@ -338,6 +338,22 @@ public:
       return failure();
     assert(llvmFuncOp.getNumArguments() > 0);
 
+    // clang-format off
+    // Debugging here
+    // These were merged:
+    //   %arg0: !llvm.ptr {llvm.align = 16 : i32, llvm.noalias, llvm.readonly},
+    //   %arg1: !llvm.ptr {llvm.align = 16 : i32, llvm.noalias}
+    // into this:
+    //   %arg0: !llvm.ptr {llvm.align = 16 : i32, llvm.noalias}
+    // but the regions in that buffer are still separate - there is a readonly
+    // portion.
+    // One idea is to update the uses from
+    //  %18 = llvm.getelementptr %arg0[%17] : (!llvm.ptr, i64) -> !llvm.ptr, f16
+    // to something like
+    //  %18 = llvm.getelementptr %arg0[%17] : (!llvm.ptr {llvm.readonly}, i64) -> !llvm.ptr, f16
+    // maybe by first expanding to %arg0_readonly and %arg0_readwrite
+    // clang-format on
+
     auto argMapping = getKernelArgMapping(llvmFuncOp);
     Location loc = op->getLoc();
     auto subspanOp = cast<IREE::HAL::InterfaceBindingSubspanOp>(op);
@@ -360,9 +376,14 @@ public:
     if (checkAllSubspansReadonly(llvmFuncOp, subspanOp.getBinding())) {
       // Setting the readonly attribute here will generate non-coherent cache
       // loads.
+      llvm::errs() << "subspanOp _is_ readonly:\n";
+      subspanOp.dump();
       llvmFuncOp.setArgAttr(llvmBufferArg.getArgNumber(),
                             LLVM::LLVMDialect::getReadonlyAttrName(),
                             rewriter.getUnitAttr());
+    } else {
+      llvm::errs() << "subspanOp is _not_ readonly:\n";
+      subspanOp.dump();
     }
     // Add the byte offset.
     Value llvmBufferBasePtr = llvmBufferArg;
