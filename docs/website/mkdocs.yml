@@ -137,6 +137,8 @@ nav:
           - GPU - Metal: "guides/deployment-configurations/gpu-metal.md"
       - "Other topics":
           - Developer tips and tricks: "guides/developer-tips.md"
+          - Benchmarking: "guides/benchmarking.md"
+          - Performance profiling: "guides/profiling.md"
   - "Reference":
       - "reference/index.md"
       - "API bindings":

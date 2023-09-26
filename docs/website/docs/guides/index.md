@@ -35,3 +35,5 @@ Guides for specific configurations:
 ## Other topics
 
 * [:material-lightbulb-on: Developer tips and tricks](./developer-tips.md)
+* [:material-chart-bar: Benchmarking](./benchmarking.md)
+* [:material-speedometer: Performance profiling](./profiling.md)
