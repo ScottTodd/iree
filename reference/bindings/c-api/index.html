@@ -905,6 +905,8 @@
       
         
       
+        
+      
     
     
       
@@ -1026,6 +1028,28 @@
   
   <span class="md-ellipsis">
     GPU - CUDA/ROCm
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/deployment-configurations/gpu-metal/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+  
+  <span class="md-ellipsis">
+    GPU - Metal
   </span>
   
 
@@ -3037,8 +3061,6 @@ their state.</p>
 <p class="admonition-title">Under construction, more coming soon</p>
 </div>
 <h4 id="vm">VM<a class="headerlink" href="#vm" title="Permanent link">link</a></h4>
-<!-- TODO(scotttodd): VM module diagram (bytecode, HAL, custom) -->
-
 <p>IREE uses its own Virtual Machine (VM) at runtime to interpret program
 instructions on the host system.</p>
 <details class="tip">
@@ -3056,9 +3078,31 @@ dense math into HAL command buffers that are dispatched to hardware backends.</p
 <li>VM <em>instances</em> can serve multiple isolated execution <em>contexts</em>.</li>
 <li>VM <em>contexts</em> are effectively sandboxes for loading modules and running
   programs.</li>
-<li>VM <em>modules</em> provide extra functionality to execution <em>contexts</em>, such as
+<li>
+<p>VM <em>modules</em> provide all functionality to execution <em>contexts</em>, including
   access to hardware accelerators through the HAL. Compiled user programs are
-  also modules.</li>
+  also modules.</p>
+<pre class="mermaid"><code>stateDiagram-v2
+  accTitle: Sample VM Modules
+  accDescr {
+    Bytecode modules contain program state, program functions, and debug
+    information.
+    HAL modules contain devices, executables, HAL functions, and HAL types.
+    Custom modules may contain external functions and custom types.
+  }
+
+  state "Bytecode module" as bytecode {
+    bytecode_contents: Module state&lt;br&gt;Program functions&lt;br&gt;Debug information
+  }
+
+  state "HAL module" as HAL {
+    hal_contents: Devices&lt;br&gt;Executables&lt;br&gt;HAL functions&lt;br&gt;HAL types
+  }
+
+  state "Custom module" as custom {
+    custom_contents: External functions&lt;br&gt;Custom types
+  }</code></pre>
+</li>
 </ul>
 <h4 id="hal">HAL<a class="headerlink" href="#hal" title="Permanent link">link</a></h4>
 <!-- TODO(scotttodd): command buffer construction -> dispatch diagram -->
