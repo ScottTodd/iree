@@ -15,6 +15,12 @@
 
 set -xeuo pipefail
 
+# which python
+# python --version
+# jupyter serverextension list
+# jupyter --config-dir
+# jupyter --paths
+
 # Run under a virtual environment to isolate Python packages.
 #
 # This is informed by Docker workarounds and we're walking a thin line here.
@@ -39,7 +45,10 @@ trap "deactivate 2> /dev/null" EXIT
 #   * https://stackoverflow.com/q/42449814
 #   * https://stackoverflow.com/a/19459977
 # python3 -m pip install --ignore-installed --quiet \
-#   jupyter_core nbconvert ipykernel
+#   jupyter_core nbconvert ipykernel jupyter-server
+# python3 -m pip install --ignore-installed --quiet \
+#   jupyter_core jupyter-client jupyter-console jupyter-server nbconvert ipykernel
+
 
 # # Install common notebook requirements, reusing system versions if possible.
 # python3 -m pip install --quiet \
@@ -52,5 +61,21 @@ trap "deactivate 2> /dev/null" EXIT
 # Tone down TensorFlow's logging by default.
 export TF_CPP_MIN_LOG_LEVEL=${TF_CPP_MIN_LOG_LEVEL:-2}
 
+
+# jupyter server extension disable google.colab._serverextension
+
+which python
+python --version
+# jupyter serverextension list
+jupyter --config-dir
+jupyter --paths
+# jupyter kernelspec list
+# jupyter kernelspec list --json
+# ls /.jupyter
+# cat /.jupyter/jupyter_notebook_config.py
+
 # Run the notebook, discarding output (still fails if an exception is thrown).
 jupyter nbconvert --to notebook --execute $1 --stdout > /dev/null
+# jupyter nbconvert --ExecutePreprocessor.kernel_name=python3 --to notebook --execute $1 --stdout > /dev/null
+# jupyter nbconvert --to notebook --execute $1 --stdout
+# jupyter nbconvert --to notebook --execute $1
