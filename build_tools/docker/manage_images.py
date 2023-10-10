@@ -54,6 +54,7 @@ IMAGES_TO_DEPENDENCIES = {
     "shark": [],
     "swiftshader": ["base"],
     "samples": ["swiftshader"],
+    "colab": [],
     "frontends-swiftshader": ["frontends", "swiftshader"],
     "frontends-nvidia": ["frontends"],
     # Containers with all the newest versions of dependencies that we support

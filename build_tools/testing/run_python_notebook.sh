@@ -13,8 +13,7 @@
 # This is intended for use on continuous integration servers within a Docker
 # container and as a reference for users, but it can also be run locally.
 
-set -e
-set -x
+set -xeuo pipefail
 
 # Run under a virtual environment to isolate Python packages.
 #
@@ -31,7 +30,7 @@ source .notebook.venv/bin/activate 2> /dev/null
 trap "deactivate 2> /dev/null" EXIT
 
 # Update pip within the venv (you'd think this wouldn't be needed, but it is).
-python3 -m pip install --quiet --upgrade pip
+# python3 -m pip install --quiet --upgrade pip
 
 # Install general Jupyter notebook requirements, ignoring any system versions
 # This ensures that the `jupyter` command runs within the venv.
@@ -39,16 +38,16 @@ python3 -m pip install --quiet --upgrade pip
 # See also:
 #   * https://stackoverflow.com/q/42449814
 #   * https://stackoverflow.com/a/19459977
-python3 -m pip install --ignore-installed --quiet \
-  jupyter_core nbconvert ipykernel
+# python3 -m pip install --ignore-installed --quiet \
+#   jupyter_core nbconvert ipykernel
 
-# Install common notebook requirements, reusing system versions if possible.
-python3 -m pip install --quiet \
-  numpy \
-  matplotlib \
-  tensorflow \
-  tensorflow_hub \
-  bottleneck
+# # Install common notebook requirements, reusing system versions if possible.
+# python3 -m pip install --quiet \
+#   numpy \
+#   matplotlib \
+#   tensorflow \
+#   tensorflow_hub \
+#   bottleneck
 
 # Tone down TensorFlow's logging by default.
 export TF_CPP_MIN_LOG_LEVEL=${TF_CPP_MIN_LOG_LEVEL:-2}

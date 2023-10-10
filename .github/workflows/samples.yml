@@ -32,7 +32,8 @@ jobs:
       - name: "Testing Colab Notebooks"
         run: |
           ./build_tools/github_actions/docker_run.sh  \
-            gcr.io/iree-oss/samples@sha256:c1312188958a58d464079651061311e5fb0e77a44ad19239b5c244ed2bf5b027 \
+            -it --entrypoint python3 \
+            gcr.io/iree-oss/colab@sha256:bc55715cbe8c2c808d88feef93ce6cd1d0385206fdacbdac11d5978536aeb5d2 \
             ./samples/colab/test_notebooks.py
 
   samples:
