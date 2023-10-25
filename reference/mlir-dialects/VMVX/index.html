@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://openxla.github.io/iree/reference/mlir-dialects/VMVX/">
+        <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/VMVX/">
       
       
         <link rel="prev" href="../VM/">
@@ -141,7 +141,7 @@
 
     <!-- Link to site home -->
     <a
-      href="https://openxla.github.io/iree/"
+      href="https://iree.dev/"
       title="IREE"
       class="md-header__button md-logo"
       aria-label="IREE"
@@ -870,6 +870,14 @@
     PyTorch
   </span>
   
+    
+  
+  
+    <span class="md-status md-status--new" title="Recently updated">
+    </span>
+  
+
+  
 
       </a>
     </li>
@@ -1147,14 +1155,6 @@
   <span class="md-ellipsis">
     Developer tips and tricks
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--new" title="Recently added">
-    </span>
-  
-
   
 
       </a>
@@ -2502,73 +2502,58 @@ map (roughly) 1:1 with the exported functions in the runtime module.</p>
 <p>Traits: SameVariadicOperandSize</p>
 <h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>opcode</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>element_type</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>type attribute of 8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>opcode</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>element_type</code></td><td>::mlir::TypeAttr</td><td>type attribute of 8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td></tr>
 </table>
+
 <h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>lhs_buffer</code></td>
+<td align="center"><code>lhs_buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>lhs_offset</code></td>
+<td align="center"><code>lhs_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>lhs_strides</code></td>
+<td align="center"><code>lhs_strides</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>rhs_buffer</code></td>
+<td align="center"><code>rhs_buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>rhs_offset</code></td>
+<td align="center"><code>rhs_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>rhs_strides</code></td>
+<td align="center"><code>rhs_strides</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_buffer</code></td>
+<td align="center"><code>out_buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_offset</code></td>
+<td align="center"><code>out_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_strides</code></td>
+<td align="center"><code>out_strides</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>sizes</code></td>
+<td align="center"><code>sizes</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -2585,56 +2570,45 @@ map (roughly) 1:1 with the exported functions in the runtime module.</p>
 <p>Traits: SameVariadicOperandSize</p>
 <h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>element_type</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>type attribute of 8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>element_type</code></td><td>::mlir::TypeAttr</td><td>type attribute of 8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td></tr>
 </table>
+
 <h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>in_buffer</code></td>
+<td align="center"><code>in_buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>in_offset</code></td>
+<td align="center"><code>in_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>in_strides</code></td>
+<td align="center"><code>in_strides</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_buffer</code></td>
+<td align="center"><code>out_buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_offset</code></td>
+<td align="center"><code>out_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_strides</code></td>
+<td align="center"><code>out_strides</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>sizes</code></td>
+<td align="center"><code>sizes</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -2652,33 +2626,33 @@ map (roughly) 1:1 with the exported functions in the runtime module.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>scalar</code></td>
+<td align="center"><code>scalar</code></td>
 <td>8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_buffer</code></td>
+<td align="center"><code>out_buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_offset</code></td>
+<td align="center"><code>out_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_row_stride</code></td>
+<td align="center"><code>out_row_stride</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>m</code></td>
+<td align="center"><code>m</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>n</code></td>
+<td align="center"><code>n</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -2699,61 +2673,46 @@ map (roughly) 1:1 with the exported functions in the runtime module.</p>
 <p>Traits: SameVariadicOperandSize</p>
 <h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>opcode</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>element_type</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>type attribute of 8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>opcode</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>element_type</code></td><td>::mlir::TypeAttr</td><td>type attribute of 8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer or 32-bit float or 64-bit float</td></tr>
 </table>
+
 <h5 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>in_buffer</code></td>
+<td align="center"><code>in_buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>in_offset</code></td>
+<td align="center"><code>in_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>in_strides</code></td>
+<td align="center"><code>in_strides</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_buffer</code></td>
+<td align="center"><code>out_buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_offset</code></td>
+<td align="center"><code>out_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>out_strides</code></td>
+<td align="center"><code>out_strides</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>sizes</code></td>
+<td align="center"><code>sizes</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -2778,13 +2737,13 @@ concrete sources.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>memref of any type values</td>
 </tr>
 </tbody>
@@ -2793,25 +2752,25 @@ concrete sources.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>base_buffer</code></td>
+<td align="center"><code>base_buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>offset</code></td>
+<td align="center"><code>offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>sizes</code></td>
+<td align="center"><code>sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>strides</code></td>
+<td align="center"><code>strides</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -2833,37 +2792,22 @@ buffer as passed to the interface.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>set</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>binding</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>set</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
+<tr><td><code>binding</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
+
 <h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>buffer</code></td>
+<td align="center"><code>buffer</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 </tbody>

@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://openxla.github.io/iree/reference/mlir-dialects/Util/">
+        <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/Util/">
       
       
         <link rel="prev" href="../Stream/">
@@ -141,7 +141,7 @@
 
     <!-- Link to site home -->
     <a
-      href="https://openxla.github.io/iree/"
+      href="https://iree.dev/"
       title="IREE"
       class="md-header__button md-logo"
       aria-label="IREE"
@@ -870,6 +870,14 @@
     PyTorch
   </span>
   
+    
+  
+  
+    <span class="md-status md-status--new" title="Recently updated">
+    </span>
+  
+
+  
 
       </a>
     </li>
@@ -1147,14 +1155,6 @@
   <span class="md-ellipsis">
     Developer tips and tricks
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--new" title="Recently added">
-    </span>
-  
-
   
 
       </a>
@@ -3354,17 +3354,17 @@
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>signless-integer-like</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>alignment</code></td>
+<td align="center"><code>alignment</code></td>
 <td>signless-integer-like</td>
 </tr>
 </tbody>
@@ -3373,13 +3373,13 @@
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>signless-integer-like</td>
 </tr>
 </tbody>
@@ -3401,32 +3401,21 @@ and FloatType. All others are not folded.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sizedType</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sizedType</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
 </table>
+
 <h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>size</code></td>
+<td align="center"><code>size</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3447,32 +3436,21 @@ result must assume nothing of the contents.</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Allocate on ::mlir::SideEffects::DefaultResource}, MemoryEffects::Effect{}</p>
 <h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>alignment</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>alignment</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
+
 <h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>storage_size</code></td>
+<td align="center"><code>storage_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3481,13 +3459,13 @@ result must assume nothing of the contents.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 </tbody>
@@ -3510,37 +3488,37 @@ result must assume nothing of the contents.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>lhs</code></td>
+<td align="center"><code>lhs</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>lhs_size</code></td>
+<td align="center"><code>lhs_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>lhs_offset</code></td>
+<td align="center"><code>lhs_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>rhs</code></td>
+<td align="center"><code>rhs</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>rhs_size</code></td>
+<td align="center"><code>rhs_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>rhs_offset</code></td>
+<td align="center"><code>rhs_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>length</code></td>
+<td align="center"><code>length</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3549,13 +3527,13 @@ result must assume nothing of the contents.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>1-bit signless integer</td>
 </tr>
 </tbody>
@@ -3573,47 +3551,24 @@ chosen host target.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>value</code></td>
-<td style="text-align: center;">::mlir::Attribute</td>
-<td>buffer-like constant attribute values</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>alignment</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>mime_type</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>value</code></td><td>::mlir::Attribute</td><td>buffer-like constant attribute values</td></tr>
+<tr><td><code>alignment</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
+<tr><td><code>mime_type</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
+
 <h5 id="results_4">Results:<a class="headerlink" href="#results_4" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 </tbody>
@@ -3635,37 +3590,37 @@ chosen host target.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>length</code></td>
+<td align="center"><code>length</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3685,17 +3640,17 @@ counted and other owners may keep it live beyond the dealloc.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
+<td align="center"><code>operand</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>operand_size</code></td>
+<td align="center"><code>operand_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3717,29 +3672,29 @@ The offset and length must match the natural alignment of the pattern type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>pattern</code></td>
+<td align="center"><code>pattern</code></td>
 <td>integer or floating-point or index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>length</code></td>
+<td align="center"><code>length</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3759,25 +3714,25 @@ result type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>length</code></td>
+<td align="center"><code>length</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3786,13 +3741,13 @@ result type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index or integer or floating-point</td>
 </tr>
 </tbody>
@@ -3812,13 +3767,13 @@ result type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
+<td align="center"><code>operand</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 </tbody>
@@ -3827,13 +3782,13 @@ result type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3851,44 +3806,33 @@ result type.</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Allocate on ::mlir::SideEffects::DefaultResource, MemoryEffects::Read on ::mlir::SideEffects::DefaultResource}, MemoryEffects::Effect{}</p>
 <h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>alignment</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>alignment</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
+
 <h5 id="operands_8">Operands:<a class="headerlink" href="#operands_8" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3897,13 +3841,13 @@ result type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 </tbody>
@@ -3926,17 +3870,17 @@ for the data they are accessing.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
+<td align="center"><code>operand</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>operand_size</code></td>
+<td align="center"><code>operand_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3945,17 +3889,17 @@ for the data they are accessing.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>memref of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>offset</code></td>
+<td align="center"><code>offset</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3976,29 +3920,29 @@ source type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>index or integer or floating-point</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>length</code></td>
+<td align="center"><code>length</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4024,25 +3968,25 @@ been used.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4051,13 +3995,13 @@ been used.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 </tbody>
@@ -4077,13 +4021,13 @@ has no effect at runtime.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
+<td align="center"><code>operands</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4092,13 +4036,13 @@ has no effect at runtime.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4110,32 +4054,21 @@ no folder. This is really just syntactic sugar as it is canonicalized to a
 std.constant wrapped in an util.optimization_barrier.</p>
 <h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>value</code></td>
-<td style="text-align: center;">::mlir::Attribute</td>
-<td>any attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td>::mlir::Attribute</td><td>any attribute</td></tr>
 </table>
+
 <h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">&laquo;unnamed&raquo;</td>
+<td align="center">&laquo;unnamed&raquo;</td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4158,25 +4091,14 @@ stripped during translation.</p>
   ...
 </code></pre></div>
 <p>Traits: ReturnLike, Terminator</p>
-<p>Interfaces: NoMemoryEffect (MemoryEffectOpInterface)</p>
+<p>Interfaces: NoMemoryEffect (MemoryEffectOpInterface), RegionBranchTerminatorOpInterface</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>message</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>message</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
+
 <h3 id="data-type-conversion-ops">Data type conversion ops<a class="headerlink" href="#data-type-conversion-ops" title="Permanent link">link</a></h3>
 <h4 id="utilnumericoptional_narrow-utilnumericoptionalnarrowop"><code>util.numeric.optional_narrow</code> (Util::NumericOptionalNarrowOp)<a class="headerlink" href="#utilnumericoptional_narrow-utilnumericoptionalnarrowop" title="Permanent link">link</a></h4>
 <p><em>Memorializes an optional numeric narrowing that is valid</em></p>
@@ -4204,42 +4126,23 @@ types) are tracked if known.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_6">Attributes:<a class="headerlink" href="#attributes_6" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>semantic_type</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>min_value</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>arbitrary integer attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>max_value</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>arbitrary integer attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>semantic_type</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>min_value</code></td><td>::mlir::IntegerAttr</td><td>arbitrary integer attribute</td></tr>
+<tr><td><code>max_value</code></td><td>::mlir::IntegerAttr</td><td>arbitrary integer attribute</td></tr>
 </table>
+
 <h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
+<td align="center"><code>operand</code></td>
 <td>signless integer or floating-point or tensor of signless integer or floating-point values</td>
 </tr>
 </tbody>
@@ -4248,13 +4151,13 @@ types) are tracked if known.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>signless integer or floating-point or tensor of signless integer or floating-point values</td>
 </tr>
 </tbody>
@@ -4272,32 +4175,21 @@ global load and store indirect ops.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_7">Attributes:<a class="headerlink" href="#attributes_7" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>global</code></td>
-<td style="text-align: center;">::mlir::FlatSymbolRefAttr</td>
-<td>flat symbol reference attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>global</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
 </table>
+
 <h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>a pointer-like reference</td>
 </tr>
 </tbody>
@@ -4313,13 +4205,13 @@ global load and store indirect ops.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>global</code></td>
+<td align="center"><code>global</code></td>
 <td>a pointer-like reference</td>
 </tr>
 </tbody>
@@ -4328,13 +4220,13 @@ global load and store indirect ops.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4348,32 +4240,21 @@ global load and store indirect ops.</p>
 <p>Interfaces: MemoryEffectOpInterface, OpAsmOpInterface, SymbolUserOpInterface, Util_GlobalLoadOpInterface</p>
 <h5 id="attributes_8">Attributes:<a class="headerlink" href="#attributes_8" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>global</code></td>
-<td style="text-align: center;">::mlir::FlatSymbolRefAttr</td>
-<td>flat symbol reference attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>global</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
 </table>
+
 <h5 id="results_15">Results:<a class="headerlink" href="#results_15" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4393,41 +4274,14 @@ contexts will have different variable storage.</p>
 <p>Interfaces: Symbol, Util_GlobalOpInterface</p>
 <h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>type</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>is_mutable</code></td>
-<td style="text-align: center;">::mlir::UnitAttr</td>
-<td>unit attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>initial_value</code></td>
-<td style="text-align: center;">::mlir::TypedAttr</td>
-<td>TypedAttr instance</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>type</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>is_mutable</code></td><td>::mlir::UnitAttr</td><td>unit attribute</td></tr>
+<tr><td><code>initial_value</code></td><td>::mlir::TypedAttr</td><td>TypedAttr instance</td></tr>
 </table>
+
 <h4 id="utilglobalstoreindirect-utilglobalstoreindirectop"><code>util.global.store.indirect</code> (Util::GlobalStoreIndirectOp)<a class="headerlink" href="#utilglobalstoreindirect-utilglobalstoreindirectop" title="Permanent link">link</a></h4>
 <p><em>Stores a value into a global variable</em></p>
 <p>Syntax:</p>
@@ -4439,17 +4293,17 @@ contexts will have different variable storage.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>any type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>global</code></td>
+<td align="center"><code>global</code></td>
 <td>a pointer-like reference</td>
 </tr>
 </tbody>
@@ -4463,32 +4317,21 @@ contexts will have different variable storage.</p>
 <p>Interfaces: SymbolUserOpInterface, Util_GlobalStoreOpInterface</p>
 <h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>global</code></td>
-<td style="text-align: center;">::mlir::FlatSymbolRefAttr</td>
-<td>flat symbol reference attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>global</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
 </table>
+
 <h5 id="operands_16">Operands:<a class="headerlink" href="#operands_16" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4508,13 +4351,13 @@ contexts will have different variable storage.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>initial_capacity</code></td>
+<td align="center"><code>initial_capacity</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4523,13 +4366,13 @@ contexts will have different variable storage.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>dense list container type</td>
 </tr>
 </tbody>
@@ -4547,17 +4390,17 @@ may be null if the element is null or the type does not match.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>list</code></td>
+<td align="center"><code>list</code></td>
 <td>dense list container type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>index</code></td>
+<td align="center"><code>index</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4566,13 +4409,13 @@ may be null if the element is null or the type does not match.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4591,17 +4434,17 @@ with the default list value of the element type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>list</code></td>
+<td align="center"><code>list</code></td>
 <td>dense list container type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>new_size</code></td>
+<td align="center"><code>new_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4618,21 +4461,21 @@ with the default list value of the element type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>list</code></td>
+<td align="center"><code>list</code></td>
 <td>dense list container type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>index</code></td>
+<td align="center"><code>index</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4649,13 +4492,13 @@ with the default list value of the element type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>list</code></td>
+<td align="center"><code>list</code></td>
 <td>dense list container type</td>
 </tr>
 </tbody>
@@ -4664,13 +4507,13 @@ with the default list value of the element type.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4691,17 +4534,17 @@ meaningful folding/optimizations.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>offsets</code></td>
+<td align="center"><code>offsets</code></td>
 <td>index or integer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>lengths</code></td>
+<td align="center"><code>lengths</code></td>
 <td>index or integer</td>
 </tr>
 </tbody>
@@ -4710,17 +4553,17 @@ meaningful folding/optimizations.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>min</code></td>
+<td align="center"><code>min</code></td>
 <td>index or integer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>max</code></td>
+<td align="center"><code>max</code></td>
 <td>index or integer</td>
 </tr>
 </tbody>
@@ -4740,13 +4583,13 @@ meaningful folding/optimizations.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
+<td align="center"><code>operands</code></td>
 <td>index or integer</td>
 </tr>
 </tbody>
@@ -4755,13 +4598,13 @@ meaningful folding/optimizations.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index or integer</td>
 </tr>
 </tbody>
@@ -4781,13 +4624,13 @@ meaningful folding/optimizations.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
+<td align="center"><code>operands</code></td>
 <td>index or integer</td>
 </tr>
 </tbody>
@@ -4796,13 +4639,13 @@ meaningful folding/optimizations.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index or integer</td>
 </tr>
 </tbody>
@@ -4824,32 +4667,21 @@ observe the failure. It's also possible that other work that is in-flight
 or pending when the failure occurs will complete.</p>
 <h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>message</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>message</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
+
 <h5 id="operands_25">Operands:<a class="headerlink" href="#operands_25" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>status</code></td>
+<td align="center"><code>status</code></td>
 <td>32-bit signless integer</td>
 </tr>
 </tbody>
@@ -4864,31 +4696,12 @@ module.</p>
 <p>Interfaces: CallableOpInterface, FunctionOpInterface, Symbol, Util_InitializerOpInterface</p>
 <h5 id="attributes_12">Attributes:<a class="headerlink" href="#attributes_12" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>function_type</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>type attribute of function type</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>arg_attrs</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>Array of dictionary attributes</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>res_attrs</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>Array of dictionary attributes</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>function_type</code></td><td>::mlir::TypeAttr</td><td>type attribute of function type</td></tr>
+<tr><td><code>arg_attrs</code></td><td>::mlir::ArrayAttr</td><td>Array of dictionary attributes</td></tr>
+<tr><td><code>res_attrs</code></td><td>::mlir::ArrayAttr</td><td>Array of dictionary attributes</td></tr>
 </table>
+
 <h4 id="utilinitializerreturn-utilinitializerreturnop"><code>util.initializer.return</code> (Util::InitializerReturnOp)<a class="headerlink" href="#utilinitializerreturn-utilinitializerreturnop" title="Permanent link">link</a></h4>
 <p><em>Return from a util.initializer</em></p>
 <p>Syntax:</p>
@@ -4896,7 +4709,7 @@ module.</p>
 </code></pre></div>
 <p>Returns control from an initializer function.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, HasParent<IREE::Util::InitializerOp>, ReturnLike, Terminator</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
+<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), RegionBranchTerminatorOpInterface</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h3 id="type-manipulation-ops">Type manipulation ops<a class="headerlink" href="#type-manipulation-ops" title="Permanent link">link</a></h3>
 <h4 id="utilcast-utilcastop"><code>util.cast</code> (Util::CastOp)<a class="headerlink" href="#utilcast-utilcastop" title="Permanent link">link</a></h4>
@@ -4912,13 +4725,13 @@ module.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
+<td align="center"><code>operand</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4927,13 +4740,13 @@ module.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4952,17 +4765,17 @@ reference types (like !util.buffer) that cannot be used with std.cmpi.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>lhs</code></td>
+<td align="center"><code>lhs</code></td>
 <td>any type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>rhs</code></td>
+<td align="center"><code>rhs</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4971,13 +4784,13 @@ reference types (like !util.buffer) that cannot be used with std.cmpi.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>1-bit signless integer</td>
 </tr>
 </tbody>
@@ -4996,13 +4809,13 @@ null/undefined/optional/etc values.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -5031,21 +4844,21 @@ the index is out of bounds.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>index</code></td>
+<td align="center"><code>index</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>default_value</code></td>
+<td align="center"><code>default_value</code></td>
 <td>index or integer or floating-point</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>values</code></td>
+<td align="center"><code>values</code></td>
 <td>index or integer or floating-point</td>
 </tr>
 </tbody>
@@ -5054,13 +4867,13 @@ the index is out of bounds.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index or integer or floating-point</td>
 </tr>
 </tbody>
@@ -5082,15 +4895,15 @@ the index is out of bounds.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Parameter</th>
-<th style="text-align: center;">C++ type</th>
+<th align="center">Parameter</th>
+<th align="center">C++ type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">element_type</td>
-<td style="text-align: center;"><code>Type</code></td>
+<td align="center">element_type</td>
+<td align="center"><code>Type</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -5113,15 +4926,15 @@ value that is strongly referenced.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Parameter</th>
-<th style="text-align: center;">C++ type</th>
+<th align="center">Parameter</th>
+<th align="center">C++ type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">target_type</td>
-<td style="text-align: center;"><code>Type</code></td>
+<td align="center">target_type</td>
+<td align="center"><code>Type</code></td>
 <td></td>
 </tr>
 </tbody>

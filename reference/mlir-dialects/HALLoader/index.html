@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://openxla.github.io/iree/reference/mlir-dialects/HALLoader/">
+        <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/HALLoader/">
       
       
         <link rel="prev" href="../HALInline/">
@@ -141,7 +141,7 @@
 
     <!-- Link to site home -->
     <a
-      href="https://openxla.github.io/iree/"
+      href="https://iree.dev/"
       title="IREE"
       class="md-header__button md-logo"
       aria-label="IREE"
@@ -870,6 +870,14 @@
     PyTorch
   </span>
   
+    
+  
+  
+    <span class="md-status md-status--new" title="Recently updated">
+    </span>
+  
+
+  
 
       </a>
     </li>
@@ -1147,14 +1155,6 @@
   <span class="md-ellipsis">
     Developer tips and tricks
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--new" title="Recently added">
-    </span>
-  
-
   
 
       </a>
@@ -2468,60 +2468,49 @@ restrictions.</p>
 <p>Traits: AttrSizedOperandSegments</p>
 <h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>entry_point</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>size_t</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>entry_point</code></td><td>::mlir::IntegerAttr</td><td>size_t</td></tr>
 </table>
+
 <h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>executable</code></td>
+<td align="center"><code>executable</code></td>
 <td>executable</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>workgroup_x</code></td>
+<td align="center"><code>workgroup_x</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>workgroup_y</code></td>
+<td align="center"><code>workgroup_y</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>workgroup_z</code></td>
+<td align="center"><code>workgroup_z</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>push_constants</code></td>
+<td align="center"><code>push_constants</code></td>
 <td>32-bit signless integer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>binding_buffers</code></td>
+<td align="center"><code>binding_buffers</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>binding_offsets</code></td>
+<td align="center"><code>binding_offsets</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>binding_lengths</code></td>
+<td align="center"><code>binding_lengths</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -2551,60 +2540,49 @@ The entry point is a symbolic reference to an exported entry point.</p>
 <p>Interfaces: SymbolUserOpInterface</p>
 <h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>entry_point</code></td>
-<td style="text-align: center;">::mlir::SymbolRefAttr</td>
-<td>symbol reference attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>entry_point</code></td><td>::mlir::SymbolRefAttr</td><td>symbol reference attribute</td></tr>
 </table>
+
 <h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>executable</code></td>
+<td align="center"><code>executable</code></td>
 <td>executable</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>workgroup_x</code></td>
+<td align="center"><code>workgroup_x</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>workgroup_y</code></td>
+<td align="center"><code>workgroup_y</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>workgroup_z</code></td>
+<td align="center"><code>workgroup_z</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>push_constants</code></td>
+<td align="center"><code>push_constants</code></td>
 <td>32-bit signless integer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>binding_buffers</code></td>
+<td align="center"><code>binding_buffers</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>binding_offsets</code></td>
+<td align="center"><code>binding_offsets</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>binding_lengths</code></td>
+<td align="center"><code>binding_lengths</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -2626,36 +2604,25 @@ runtime-derived parameters.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>format</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>format</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
+
 <h5 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>data</code></td>
+<td align="center"><code>data</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>constants</code></td>
+<td align="center"><code>constants</code></td>
 <td>32-bit signless integer</td>
 </tr>
 </tbody>
@@ -2664,13 +2631,13 @@ runtime-derived parameters.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>executable</td>
 </tr>
 </tbody>
@@ -2689,32 +2656,21 @@ possibly lazy-initialized executable.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>executable</code></td>
-<td style="text-align: center;">::mlir::FlatSymbolRefAttr</td>
-<td>flat symbol reference attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>executable</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
 </table>
+
 <h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>executable</td>
 </tr>
 </tbody>
@@ -2734,32 +2690,21 @@ functionality that cannot be met my the hosting runtime environment.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>executable_format</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>executable_format</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
+
 <h5 id="results_2">Results:<a class="headerlink" href="#results_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>supported</code></td>
+<td align="center"><code>supported</code></td>
 <td>1-bit signless integer</td>
 </tr>
 </tbody>

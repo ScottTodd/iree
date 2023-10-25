@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://openxla.github.io/iree/reference/mlir-dialects/Stream/">
+        <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/Stream/">
       
       
         <link rel="prev" href="../HALLoader/">
@@ -141,7 +141,7 @@
 
     <!-- Link to site home -->
     <a
-      href="https://openxla.github.io/iree/"
+      href="https://iree.dev/"
       title="IREE"
       class="md-header__button md-logo"
       aria-label="IREE"
@@ -870,6 +870,14 @@
     PyTorch
   </span>
   
+    
+  
+  
+    <span class="md-status md-status--new" title="Recently updated">
+    </span>
+  
+
+  
 
       </a>
     </li>
@@ -1147,14 +1155,6 @@
   <span class="md-ellipsis">
     Developer tips and tricks
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--new" title="Recently added">
-    </span>
-  
-
   
 
       </a>
@@ -1842,6 +1842,40 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#file-ops" class="md-nav__link">
+    File ops
+  </a>
+  
+    <nav class="md-nav" aria-label="File ops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streamfileconstant-streamfileconstantop" class="md-nav__link">
+    stream.file.constant (Stream::FileConstantOp)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streamfileread-streamfilereadop" class="md-nav__link">
+    stream.file.read (Stream::FileReadOp)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streamfilewrite-streamfilewriteop" class="md-nav__link">
+    stream.file.write (Stream::FileWriteOp)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#miscellaneous-ops" class="md-nav__link">
     Miscellaneous ops
   </a>
@@ -1934,13 +1968,6 @@
           <li class="md-nav__item">
   <a href="#streamresourceload-streamresourceloadop" class="md-nav__link">
     stream.resource.load (Stream::ResourceLoadOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#streamresourcemap-streamresourcemapop" class="md-nav__link">
-    stream.resource.map (Stream::ResourceMapOp)
   </a>
   
 </li>
@@ -2360,6 +2387,13 @@
           <li class="md-nav__item">
   <a href="#channeltype" class="md-nav__link">
     ChannelType
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filetype" class="md-nav__link">
+    FileType
   </a>
   
 </li>
@@ -3273,6 +3307,40 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#file-ops" class="md-nav__link">
+    File ops
+  </a>
+  
+    <nav class="md-nav" aria-label="File ops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streamfileconstant-streamfileconstantop" class="md-nav__link">
+    stream.file.constant (Stream::FileConstantOp)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streamfileread-streamfilereadop" class="md-nav__link">
+    stream.file.read (Stream::FileReadOp)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streamfilewrite-streamfilewriteop" class="md-nav__link">
+    stream.file.write (Stream::FileWriteOp)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#miscellaneous-ops" class="md-nav__link">
     Miscellaneous ops
   </a>
@@ -3365,13 +3433,6 @@
           <li class="md-nav__item">
   <a href="#streamresourceload-streamresourceloadop" class="md-nav__link">
     stream.resource.load (Stream::ResourceLoadOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#streamresourcemap-streamresourcemapop" class="md-nav__link">
-    stream.resource.map (Stream::ResourceMapOp)
   </a>
   
 </li>
@@ -3796,6 +3857,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#filetype" class="md-nav__link">
+    FileType
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#resourcetype" class="md-nav__link">
     ResourceType
   </a>
@@ -3945,6 +4013,12 @@ breaking execution correctness.</p>
 <li><a href="#streamcmdserial-streamcmdserialop">stream.cmd.serial (Stream::CmdSerialOp)</a></li>
 </ul>
 </li>
+<li><a href="#file-ops">File ops</a><ul>
+<li><a href="#streamfileconstant-streamfileconstantop">stream.file.constant (Stream::FileConstantOp)</a></li>
+<li><a href="#streamfileread-streamfilereadop">stream.file.read (Stream::FileReadOp)</a></li>
+<li><a href="#streamfilewrite-streamfilewriteop">stream.file.write (Stream::FileWriteOp)</a></li>
+</ul>
+</li>
 <li><a href="#miscellaneous-ops">Miscellaneous ops</a><ul>
 <li><a href="#streamreturn-streamreturnop">stream.return (Stream::ReturnOp)</a></li>
 <li><a href="#streamyield-streamyieldop">stream.yield (Stream::YieldOp)</a></li>
@@ -3961,7 +4035,6 @@ breaking execution correctness.</p>
 <li><a href="#streamresourceconstants-streamresourceconstantsop">stream.resource.constants (Stream::ResourceConstantsOp)</a></li>
 <li><a href="#streamresourcedealloca-streamresourcedeallocaop">stream.resource.dealloca (Stream::ResourceDeallocaOp)</a></li>
 <li><a href="#streamresourceload-streamresourceloadop">stream.resource.load (Stream::ResourceLoadOp)</a></li>
-<li><a href="#streamresourcemap-streamresourcemapop">stream.resource.map (Stream::ResourceMapOp)</a></li>
 <li><a href="#streamresourcepack-streamresourcepackop">stream.resource.pack (Stream::ResourcePackOp)</a></li>
 <li><a href="#streamresourcesize-streamresourcesizeop">stream.resource.size (Stream::ResourceSizeOp)</a></li>
 <li><a href="#streamresourcestore-streamresourcestoreop">stream.resource.store (Stream::ResourceStoreOp)</a></li>
@@ -4030,6 +4103,7 @@ breaking execution correctness.</p>
 <li><a href="#type-definition">Type definition</a><ul>
 <li><a href="#bindingtype">BindingType</a></li>
 <li><a href="#channeltype">ChannelType</a></li>
+<li><a href="#filetype">FileType</a></li>
 <li><a href="#resourcetype">ResourceType</a></li>
 <li><a href="#timepointtype">TimepointType</a></li>
 </ul>
@@ -4066,62 +4140,43 @@ asynchronous host call with 'coarse-fences' instead.</p>
 <p>Interfaces: AsyncAccessOpInterface, CallOpInterface, Stream_AffinityOp, Stream_StreamableOp, SymbolUserOpInterface, TiedOpInterface, Util_SizeAwareOp</p>
 <h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>callee</code></td>
-<td style="text-align: center;">::mlir::FlatSymbolRefAttr</td>
-<td>flat symbol reference attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>callee</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
+
 <h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>resource_operands</code></td>
+<td align="center"><code>resource_operands</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or index or integer or floating-point or complex-type or any type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_sizes</code></td>
+<td align="center"><code>resource_operand_sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_offsets</code></td>
+<td align="center"><code>resource_operand_offsets</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_ends</code></td>
+<td align="center"><code>resource_operand_ends</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_lengths</code></td>
+<td align="center"><code>resource_operand_lengths</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_sizes</code></td>
+<td align="center"><code>result_sizes</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4130,13 +4185,13 @@ asynchronous host call with 'coarse-fences' instead.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or index or integer or floating-point or complex-type</td>
 </tr>
 </tbody>
@@ -4183,49 +4238,34 @@ only ready once all nested ops complete execution.</p>
     stream.yield %1, %2
   }
 </code></pre></div></p>
-<p>Traits: AttrSizedOperandSegments, HasParent<IREE::Stream::AsyncExecuteOp, IREE::Stream::AsyncConcurrentOp>, RecursiveMemoryEffects, SingleBlockImplicitTerminator<IREE::Stream::YieldOp>, Stream_AsyncPhaseOp</p>
+<p>Traits: AttrSizedOperandSegments, HasParent<IREE::Stream::AsyncExecuteOp, IREE::Stream::AsyncConcurrentOp>, RecursiveMemoryEffects, SingleBlock, SingleBlockImplicitTerminator<IREE::Stream::YieldOp>, Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, ClosureOpInterface, RegionBranchOpInterface, Stream_AffinityOp, Stream_StreamableOp, TiedOpInterface, Util_SizeAwareOp</p>
 <h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
+
 <h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>resource_operands</code></td>
+<td align="center"><code>resource_operands</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_sizes</code></td>
+<td align="center"><code>resource_operand_sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_sizes</code></td>
+<td align="center"><code>result_sizes</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4234,13 +4274,13 @@ only ready once all nested ops complete execution.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 </tbody>
@@ -4266,53 +4306,38 @@ results are only ready once all nested ops complete execution and the
 returned timepoint is reached. Zero or more timepoints may be provided to
 block execution until they are all reached; zero timepoints indicates that
 execution may begin immediately.</p>
-<p>Traits: AttrSizedOperandSegments, RecursiveMemoryEffects, SingleBlockImplicitTerminator<IREE::Stream::YieldOp>, Stream_AsyncPhaseOp</p>
+<p>Traits: AttrSizedOperandSegments, RecursiveMemoryEffects, SingleBlock, SingleBlockImplicitTerminator<IREE::Stream::YieldOp>, Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, ClosureOpInterface, RegionBranchOpInterface, Stream_AffinityOp, Stream_TimelineOp, TiedOpInterface, Util_SizeAwareOp</p>
 <h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
+
 <h5 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>resource_operands</code></td>
+<td align="center"><code>resource_operands</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_sizes</code></td>
+<td align="center"><code>resource_operand_sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_sizes</code></td>
+<td align="center"><code>result_sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>await_timepoint</code></td>
+<td align="center"><code>await_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -4321,17 +4346,17 @@ execution may begin immediately.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_timepoint</code></td>
+<td align="center"><code>result_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -4356,46 +4381,15 @@ allowed.</p>
 <p>Interfaces: CallableOpInterface, FunctionOpInterface, Symbol</p>
 <h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>function_type</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>type attribute of function type</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>arg_attrs</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>Array of dictionary attributes</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>res_attrs</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>Array of dictionary attributes</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>function_type</code></td><td>::mlir::TypeAttr</td><td>type attribute of function type</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>arg_attrs</code></td><td>::mlir::ArrayAttr</td><td>Array of dictionary attributes</td></tr>
+<tr><td><code>res_attrs</code></td><td>::mlir::ArrayAttr</td><td>Array of dictionary attributes</td></tr>
 </table>
+
 <h3 id="channel-ops">Channel ops<a class="headerlink" href="#channel-ops" title="Permanent link">link</a></h3>
 <h4 id="streamchannelcount-streamchannelcountop"><code>stream.channel.count</code> (Stream::ChannelCountOp)<a class="headerlink" href="#streamchannelcount-streamchannelcountop" title="Permanent link">link</a></h4>
 <p><em>Returns the total number of participants in the group</em></p>
@@ -4411,13 +4405,13 @@ allowed.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collective communication channel</td>
 </tr>
 </tbody>
@@ -4426,13 +4420,13 @@ allowed.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4459,45 +4453,30 @@ configuration at runtime.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>group</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>group</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
+
 <h5 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>id</code></td>
+<td align="center"><code>id</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>rank</code></td>
+<td align="center"><code>rank</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>count</code></td>
+<td align="center"><code>count</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4506,13 +4485,13 @@ configuration at runtime.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>a collective communication channel</td>
 </tr>
 </tbody>
@@ -4532,13 +4511,13 @@ group in <code>[0, count)</code>.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collective communication channel</td>
 </tr>
 </tbody>
@@ -4547,13 +4526,13 @@ group in <code>[0, count)</code>.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4579,21 +4558,21 @@ subgroup and will return a null channel.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collective communication channel</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>color</code></td>
+<td align="center"><code>color</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>key</code></td>
+<td align="center"><code>key</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4602,13 +4581,13 @@ subgroup and will return a null channel.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>a collective communication channel</td>
 </tr>
 </tbody>
@@ -4629,21 +4608,21 @@ binding may have multiple subviews at different byte offsets.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>binding</code></td>
+<td align="center"><code>binding</code></td>
 <td>a managed resource binding into an executable scope</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>byte_offset</code></td>
+<td align="center"><code>byte_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>dynamic_dims</code></td>
+<td align="center"><code>dynamic_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4652,13 +4631,13 @@ binding may have multiple subviews at different byte offsets.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4686,31 +4665,12 @@ produces an XYZ workgroup count for the 3D grid dispatch.</p>
 <p>Interfaces: Symbol</p>
 <h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>function_ref</code></td>
-<td style="text-align: center;">::mlir::FlatSymbolRefAttr</td>
-<td>flat symbol reference attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>function_ref</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
 </table>
+
 <h4 id="streamexecutable-streamexecutableop"><code>stream.executable</code> (Stream::ExecutableOp)<a class="headerlink" href="#streamexecutable-streamexecutableop" title="Permanent link">link</a></h4>
 <p><em>Generic executable module</em></p>
 <p>Syntax:</p>
@@ -4722,30 +4682,15 @@ produces an XYZ workgroup count for the 3D grid dispatch.</p>
 <p>An executable module containing one or more public functions. The contents
 of the functions are safe to dispatch and can be lowered further to
 target-specific backend IR representations.</p>
-<p>Traits: IsolatedFromAbove, SingleBlockImplicitTerminator<IREE::Stream::ExecutableEndOp>, SymbolTable</p>
+<p>Traits: IsolatedFromAbove, SingleBlock, SingleBlockImplicitTerminator<IREE::Stream::ExecutableEndOp>, SymbolTable</p>
 <p>Interfaces: Symbol</p>
 <h5 id="attributes_6">Attributes:<a class="headerlink" href="#attributes_6" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
+
 <h3 id="explicit-command-ops">Explicit command ops<a class="headerlink" href="#explicit-command-ops" title="Permanent link">link</a></h3>
 <h4 id="streamcmdcall-streamcmdcallop"><code>stream.cmd.call</code> (Stream::CmdCallOp)<a class="headerlink" href="#streamcmdcall-streamcmdcallop" title="Permanent link">link</a></h4>
 <p><em>Calls a streamable external host function</em></p>
@@ -4768,58 +4713,39 @@ Asynchronous calls must have no side-effects.</p>
 <p>Interfaces: CallOpInterface, Stream_StreamableOp, Stream_SubviewEffectOp, SymbolUserOpInterface, Util_SizeAwareOp</p>
 <h5 id="attributes_7">Attributes:<a class="headerlink" href="#attributes_7" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>callee</code></td>
-<td style="text-align: center;">::mlir::FlatSymbolRefAttr</td>
-<td>flat symbol reference attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>resource_operand_accesses</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>access array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>callee</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
+<tr><td><code>resource_operand_accesses</code></td><td>::mlir::ArrayAttr</td><td>access array attribute</td></tr>
 </table>
+
 <h5 id="operands_8">Operands:<a class="headerlink" href="#operands_8" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>resource_operands</code></td>
+<td align="center"><code>resource_operands</code></td>
 <td>index or integer or floating-point or complex-type or resource or external resource or transient resource or variable resource or constant resource or any type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_sizes</code></td>
+<td align="center"><code>resource_operand_sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_offsets</code></td>
+<td align="center"><code>resource_operand_offsets</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_lengths</code></td>
+<td align="center"><code>resource_operand_lengths</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_sizes</code></td>
+<td align="center"><code>result_sizes</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4828,13 +4754,13 @@ Asynchronous calls must have no side-effects.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>index or integer or floating-point or complex-type</td>
 </tr>
 </tbody>
@@ -4858,61 +4784,46 @@ operations may fuse and execute more efficiently.</p>
 <p>Interfaces: Stream_StreamableOp, Stream_SubviewEffectOp, Util_SizeAwareOp</p>
 <h5 id="attributes_8">Attributes:<a class="headerlink" href="#attributes_8" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>op</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::CollectiveAttr</td>
-<td>collective operation and specification</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>resource_accesses</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>access array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>op</code></td><td>::mlir::iree_compiler::IREE::Stream::CollectiveAttr</td><td>collective operation and specification</td></tr>
+<tr><td><code>resource_accesses</code></td><td>::mlir::ArrayAttr</td><td>access array attribute</td></tr>
 </table>
+
 <h5 id="operands_9">Operands:<a class="headerlink" href="#operands_9" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collective communication channel</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>element_count</code></td>
+<td align="center"><code>element_count</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>param</code></td>
+<td align="center"><code>param</code></td>
 <td>32-bit signless integer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resources</code></td>
+<td align="center"><code>resources</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_sizes</code></td>
+<td align="center"><code>resource_sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_offsets</code></td>
+<td align="center"><code>resource_offsets</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_lengths</code></td>
+<td align="center"><code>resource_lengths</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4950,7 +4861,7 @@ same time).</p>
     }
   }
 </code></pre></div></p>
-<p>Traits: HasParent<IREE::Stream::CmdExecuteOp, IREE::Stream::CmdSerialOp, IREE::Stream::CmdConcurrentOp>, RecursiveMemoryEffects, SingleBlockImplicitTerminator<IREE::Stream::YieldOp>, Stream_CmdPhaseOp</p>
+<p>Traits: HasParent<IREE::Stream::CmdExecuteOp, IREE::Stream::CmdSerialOp, IREE::Stream::CmdConcurrentOp>, RecursiveMemoryEffects, SingleBlock, SingleBlockImplicitTerminator<IREE::Stream::YieldOp>, Stream_CmdPhaseOp</p>
 <p>Interfaces: RegionBranchOpInterface, Stream_StreamableOp</p>
 <h4 id="streamcmdcopy-streamcmdcopyop"><code>stream.cmd.copy</code> (Stream::CmdCopyOp)<a class="headerlink" href="#streamcmdcopy-streamcmdcopyop" title="Permanent link">link</a></h4>
 <p><em>Copies a subview of a stream resource to another</em></p>
@@ -4971,37 +4882,37 @@ resource.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>any stream-compatible type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>any stream-compatible type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>length</code></td>
+<td align="center"><code>length</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5022,25 +4933,25 @@ or invalidate caches.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>any stream-compatible type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_length</code></td>
+<td align="center"><code>target_length</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5064,57 +4975,42 @@ and results and is able to load/store at will.</p>
 <p>Interfaces: Stream_StreamableOp, Stream_SubviewEffectOp, SymbolUserOpInterface, Util_SizeAwareOp</p>
 <h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>entry_points</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>symbol ref array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>resource_accesses</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>access array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>entry_points</code></td><td>::mlir::ArrayAttr</td><td>symbol ref array attribute</td></tr>
+<tr><td><code>resource_accesses</code></td><td>::mlir::ArrayAttr</td><td>access array attribute</td></tr>
 </table>
+
 <h5 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>workload</code></td>
+<td align="center"><code>workload</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>uniform_operands</code></td>
+<td align="center"><code>uniform_operands</code></td>
 <td>index or integer or floating-point or complex-type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resources</code></td>
+<td align="center"><code>resources</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_sizes</code></td>
+<td align="center"><code>resource_sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_offsets</code></td>
+<td align="center"><code>resource_offsets</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_lengths</code></td>
+<td align="center"><code>resource_lengths</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5139,44 +5035,33 @@ results are only ready once all nested ops complete execution and the
 returned timepoint is reached. Zero or more timepoints may be provided to
 block execution until they are all reached; zero timepoints indicates that
 execution may begin immediately.</p>
-<p>Traits: AttrSizedOperandSegments, RecursiveMemoryEffects, SingleBlockImplicitTerminator<IREE::Stream::YieldOp>, Stream_CmdPhaseOp</p>
+<p>Traits: AttrSizedOperandSegments, RecursiveMemoryEffects, SingleBlock, SingleBlockImplicitTerminator<IREE::Stream::YieldOp>, Stream_CmdPhaseOp</p>
 <p>Interfaces: ClosureOpInterface, InferTypeOpInterface, RegionBranchOpInterface, Stream_AffinityOp, Stream_TimelineOp, Util_SizeAwareOp</p>
 <h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
+
 <h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>resource_operands</code></td>
+<td align="center"><code>resource_operands</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_sizes</code></td>
+<td align="center"><code>resource_operand_sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>await_timepoint</code></td>
+<td align="center"><code>await_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -5185,13 +5070,13 @@ execution may begin immediately.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_timepoint</code></td>
+<td align="center"><code>result_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -5213,29 +5098,29 @@ resource with the update applied.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_length</code></td>
+<td align="center"><code>target_length</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>8-bit signless integer or 16-bit signless integer or 32-bit signless integer</td>
 </tr>
 </tbody>
@@ -5255,44 +5140,33 @@ available to the target and can be made visible there using
 <p>Interfaces: Stream_StreamableOp, Stream_SubviewEffectOp, Util_SizeAwareOp</p>
 <h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>source_affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>source_affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
+
 <h5 id="operands_15">Operands:<a class="headerlink" href="#operands_15" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>any stream-compatible type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_length</code></td>
+<td align="center"><code>target_length</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5315,41 +5189,14 @@ allowed.</p>
 <p>Interfaces: CallableOpInterface, FunctionOpInterface, Symbol</p>
 <h5 id="attributes_12">Attributes:<a class="headerlink" href="#attributes_12" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>function_type</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>type attribute of function type</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>arg_attrs</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>Array of dictionary attributes</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>res_attrs</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>Array of dictionary attributes</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>function_type</code></td><td>::mlir::TypeAttr</td><td>type attribute of function type</td></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>arg_attrs</code></td><td>::mlir::ArrayAttr</td><td>Array of dictionary attributes</td></tr>
+<tr><td><code>res_attrs</code></td><td>::mlir::ArrayAttr</td><td>Array of dictionary attributes</td></tr>
 </table>
+
 <h4 id="streamcmdinvalidate-streamcmdinvalidateop"><code>stream.cmd.invalidate</code> (Stream::CmdInvalidateOp)<a class="headerlink" href="#streamcmdinvalidate-streamcmdinvalidateop" title="Permanent link">link</a></h4>
 <p><em>Invalidates a subview of a resource</em></p>
 <p>Syntax:</p>
@@ -5365,44 +5212,33 @@ resource memory is assumed to have been made available at the source via
 <p>Interfaces: Stream_StreamableOp, Stream_SubviewEffectOp, Util_SizeAwareOp</p>
 <h5 id="attributes_13">Attributes:<a class="headerlink" href="#attributes_13" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>source_affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>source_affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
+
 <h5 id="operands_16">Operands:<a class="headerlink" href="#operands_16" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>any stream-compatible type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_length</code></td>
+<td align="center"><code>target_length</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5444,8 +5280,235 @@ after the other).</p>
     }
   }
 </code></pre></div></p>
-<p>Traits: HasParent<IREE::Stream::CmdExecuteOp, IREE::Stream::CmdSerialOp, IREE::Stream::CmdConcurrentOp>, RecursiveMemoryEffects, SingleBlockImplicitTerminator<IREE::Stream::YieldOp>, Stream_CmdPhaseOp</p>
+<p>Traits: HasParent<IREE::Stream::CmdExecuteOp, IREE::Stream::CmdSerialOp, IREE::Stream::CmdConcurrentOp>, RecursiveMemoryEffects, SingleBlock, SingleBlockImplicitTerminator<IREE::Stream::YieldOp>, Stream_CmdPhaseOp</p>
 <p>Interfaces: RegionBranchOpInterface, Stream_StreamableOp</p>
+<h3 id="file-ops">File ops<a class="headerlink" href="#file-ops" title="Permanent link">link</a></h3>
+<p>File ops.</p>
+<h4 id="streamfileconstant-streamfileconstantop"><code>stream.file.constant</code> (Stream::FileConstantOp)<a class="headerlink" href="#streamfileconstant-streamfileconstantop" title="Permanent link">link</a></h4>
+<p><em>Creates a file backed by the provided constant host memory</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `stream.file.constant` (`on` `(` $affinity^ `)`)?
+              $source `[` $source_offset `for` $source_length `]` `:`
+              type($source) `` `{` $source_size `}`
+              `-&gt;`
+              type($result)
+              attr-dict-with-keyword
+</code></pre></div>
+<p>Synchronously wraps a host heap buffer into a stream-accessible file handle.
+Changing the source buffer after definition has undefined behavior.</p>
+<p>Traits: AlwaysSpeculatableImplTrait</p>
+<p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, MemoryEffectOpInterface (MemoryEffectOpInterface), NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface, Stream_AffinityOp, SubrangeOperandOpInterface, Util_SizeAwareOp</p>
+<p>Effects: MemoryEffects::Effect{MemoryEffects::Allocate on ::mlir::SideEffects::DefaultResource}, MemoryEffects::Effect{}</p>
+<h5 id="attributes_14">Attributes:<a class="headerlink" href="#attributes_14" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
+</table>
+
+<h5 id="operands_17">Operands:<a class="headerlink" href="#operands_17" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th align="center">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>source</code></td>
+<td>a reference counted byte buffer</td>
+</tr>
+<tr>
+<td align="center"><code>source_size</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>source_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>source_length</code></td>
+<td>index</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results_10">Results:<a class="headerlink" href="#results_10" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th align="center">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>result</code></td>
+<td>a file handle used for I/O operations</td>
+</tr>
+</tbody>
+</table>
+<h4 id="streamfileread-streamfilereadop"><code>stream.file.read</code> (Stream::FileReadOp)<a class="headerlink" href="#streamfileread-streamfilereadop" title="Permanent link">link</a></h4>
+<p><em>Reads a segment of a file into a resource</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `stream.file.read` (`on` `(` $affinity^ `)`)?
+              (`await` `(` $await_timepoint^ `)` `=` `` `&gt;`):(`:`)?
+              $source `[` $source_offset `]` `,`
+              $target `[` $target_offset `]` `,`
+              $length `:`
+              type($source) `-&gt;`
+              type($target) `` `{` $target_size `}`
+              `=` `` `&gt;`
+              type($result_timepoint)
+              attr-dict-with-keyword
+</code></pre></div>
+<p>Asynchronously reads a segment of a file into a resource.</p>
+<p>Some implementations this can stream directly from the file into
+device-local memory and should be preferred to manually staging memory
+through host buffers.</p>
+<p>Traits: Stream_CmdPhaseOp</p>
+<p>Interfaces: AffinityOpInterface, InferTypeOpInterface, Stream_TimelineOp, Util_SizeAwareOp</p>
+<h5 id="attributes_15">Attributes:<a class="headerlink" href="#attributes_15" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
+</table>
+
+<h5 id="operands_18">Operands:<a class="headerlink" href="#operands_18" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th align="center">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>source</code></td>
+<td>a file handle used for I/O operations</td>
+</tr>
+<tr>
+<td align="center"><code>source_offset</code></td>
+<td>64-bit signless integer</td>
+</tr>
+<tr>
+<td align="center"><code>target</code></td>
+<td>resource or external resource or transient resource or variable resource or constant resource</td>
+</tr>
+<tr>
+<td align="center"><code>target_size</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>target_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>length</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>await_timepoint</code></td>
+<td>a timepoint indicating execution availability</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th align="center">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>result_timepoint</code></td>
+<td>a timepoint indicating execution availability</td>
+</tr>
+</tbody>
+</table>
+<h4 id="streamfilewrite-streamfilewriteop"><code>stream.file.write</code> (Stream::FileWriteOp)<a class="headerlink" href="#streamfilewrite-streamfilewriteop" title="Permanent link">link</a></h4>
+<p><em>Writes a segment of a file from a resource</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `stream.file.write` (`on` `(` $affinity^ `)`)?
+              (`await` `(` $await_timepoint^ `)` `=` `` `&gt;`):(`:`)?
+              $source `[` $source_offset `]` `,`
+              $target `[` $target_offset `]` `,`
+              $length `:`
+              type($source) `` `{` $source_size `}` `-&gt;`
+              type($target)
+              `=` `` `&gt;`
+              type($result_timepoint)
+              attr-dict-with-keyword
+</code></pre></div>
+<p>Asynchronously writes a segment of a resource into a file.
+The file range must be valid within the file as this operation cannot
+grow the underlying file storage.</p>
+<p>Some implementations this can stream directly from device-local memory into
+the file and should be preferred to manually staging memory
+through host buffers.</p>
+<p>Traits: Stream_CmdPhaseOp</p>
+<p>Interfaces: AffinityOpInterface, InferTypeOpInterface, Stream_TimelineOp, Util_SizeAwareOp</p>
+<h5 id="attributes_16">Attributes:<a class="headerlink" href="#attributes_16" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
+</table>
+
+<h5 id="operands_19">Operands:<a class="headerlink" href="#operands_19" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th align="center">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>source</code></td>
+<td>resource or external resource or transient resource or variable resource or constant resource</td>
+</tr>
+<tr>
+<td align="center"><code>source_size</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>source_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>target</code></td>
+<td>a file handle used for I/O operations</td>
+</tr>
+<tr>
+<td align="center"><code>target_offset</code></td>
+<td>64-bit signless integer</td>
+</tr>
+<tr>
+<td align="center"><code>length</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>await_timepoint</code></td>
+<td>a timepoint indicating execution availability</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th align="center">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>result_timepoint</code></td>
+<td>a timepoint indicating execution availability</td>
+</tr>
+</tbody>
+</table>
 <h3 id="miscellaneous-ops">Miscellaneous ops<a class="headerlink" href="#miscellaneous-ops" title="Permanent link">link</a></h3>
 <h4 id="streamreturn-streamreturnop"><code>stream.return</code> (Stream::ReturnOp)<a class="headerlink" href="#streamreturn-streamreturnop" title="Permanent link">link</a></h4>
 <p><em>Returns results from a region</em></p>
@@ -5457,17 +5520,17 @@ after the other).</p>
 <p>Traits: AlwaysSpeculatableImplTrait, HasParent<IREE::Stream::ExecutableExportOp>, ReturnLike, Terminator</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), RegionBranchTerminatorOpInterface</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_17">Operands:<a class="headerlink" href="#operands_17" title="Permanent link">link</a></h5>
+<h5 id="operands_20">Operands:<a class="headerlink" href="#operands_20" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
+<td align="center"><code>operands</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -5482,24 +5545,24 @@ after the other).</p>
 </code></pre></div>
 <p>The values returned represent the asynchronous value at the point in time
 the SSA value is defined (or tied).</p>
-<p>Traits: AlwaysSpeculatableImplTrait, HasParent<IREE::Stream::AsyncExecuteOp, IREE::Stream::AsyncConcurrentOp, IREE::Stream::CmdExecuteOp, IREE::Stream::CmdSerialOp, IREE::Stream::CmdConcurrentOp>, ReturnLike, SameVariadicOperandSize, Terminator</p>
+<p>Traits: AlwaysSpeculatableImplTrait, HasParent<IREE::Stream::AsyncExecuteOp, IREE::Stream::AsyncConcurrentOp, IREE::Stream::CmdExecuteOp, IREE::Stream::CmdSerialOp, IREE::Stream::CmdConcurrentOp>, SameVariadicOperandSize, Terminator</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), RegionBranchTerminatorOpInterface, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_18">Operands:<a class="headerlink" href="#operands_18" title="Permanent link">link</a></h5>
+<h5 id="operands_21">Operands:<a class="headerlink" href="#operands_21" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>resource_operands</code></td>
+<td align="center"><code>resource_operands</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_sizes</code></td>
+<td align="center"><code>resource_operand_sizes</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5525,62 +5588,47 @@ types and those that prior to lowering do not handle them.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, TiedOpInterface, Util_ShapeAwareOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_14">Attributes:<a class="headerlink" href="#attributes_14" title="Permanent link">link</a></h5>
+<h5 id="attributes_17">Attributes:<a class="headerlink" href="#attributes_17" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>source_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>source_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_19">Operands:<a class="headerlink" href="#operands_19" title="Permanent link">link</a></h5>
+
+<h5 id="operands_22">Operands:<a class="headerlink" href="#operands_22" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
-<td>external resource</td>
+<td align="center"><code>source</code></td>
+<td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_encoding_dims</code></td>
+<td align="center"><code>source_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_10">Results:<a class="headerlink" href="#results_10" title="Permanent link">link</a></h5>
+<h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -5604,74 +5652,60 @@ types and those that prior to lowering do not handle them.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, TiedOpInterface, Util_ShapeAwareOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_15">Attributes:<a class="headerlink" href="#attributes_15" title="Permanent link">link</a></h5>
+<h5 id="attributes_18">Attributes:<a class="headerlink" href="#attributes_18" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>result_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>result_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_20">Operands:<a class="headerlink" href="#operands_20" title="Permanent link">link</a></h5>
+
+<h5 id="operands_23">Operands:<a class="headerlink" href="#operands_23" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>any type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_encoding_dims</code></td>
+<td align="center"><code>result_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
+<h5 id="results_14">Results:<a class="headerlink" href="#results_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
-<td>external resource</td>
+<td align="center"><code>result</code></td>
+<td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 </tbody>
 </table>
 <h3 id="resource-ops">Resource ops<a class="headerlink" href="#resource-ops" title="Permanent link">link</a></h3>
 <p>Generic resource ops.</p>
 <h4 id="streamresourcealloc-streamresourceallocop"><code>stream.resource.alloc</code> (Stream::ResourceAllocOp)<a class="headerlink" href="#streamresourcealloc-streamresourceallocop" title="Permanent link">link</a></h4>
-<p><em>Allocates a persistent value with undefined contents</em></p>
+<p><em>Allocates a persistent resource</em></p>
 <p>Syntax:</p>
 <div class="highlight"><pre><span></span><code>operation ::= `stream.resource.alloc` (`on` `(` $affinity^ `)`)?
               (`uninitialized` $uninitialized^)?
-              attr-dict `:` custom&lt;SizeAwareTypeList&gt;(type($results), $storage_sizes)
+              attr-dict `:`
+              type($result) `{` $storage_size `}`
 </code></pre></div>
 <p>Allocates a persistent value (one that is long-lived and possibly external
 to the program) with undefined contents. Consumers of the allocated
@@ -5685,59 +5719,43 @@ they have matching lifetimes. When lowering to execution environments the
 separate allocations may be fused into one or more slab allocations in order
 to reduce overheads. How many allocations can be fused is based on the size
 of the individual resources and the target constraints (how large any single
-buffer may be, etc). At the stream dialect level treat a multi-result alloc
-as a way to indicate similar lifetimes.</p>
+buffer may be, etc).</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: AffinityOpInterface, ConditionallySpeculatable, MemoryEffectOpInterface (MemoryEffectOpInterface), Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Allocate on ::mlir::SideEffects::DefaultResource}</p>
-<h5 id="attributes_16">Attributes:<a class="headerlink" href="#attributes_16" title="Permanent link">link</a></h5>
+<h5 id="attributes_19">Attributes:<a class="headerlink" href="#attributes_19" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>uninitialized</code></td>
-<td style="text-align: center;">::mlir::UnitAttr</td>
-<td>unit attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>uninitialized</code></td><td>::mlir::UnitAttr</td><td>unit attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_21">Operands:<a class="headerlink" href="#operands_21" title="Permanent link">link</a></h5>
+
+<h5 id="operands_24">Operands:<a class="headerlink" href="#operands_24" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>storage_sizes</code></td>
+<td align="center"><code>storage_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h5>
+<h5 id="results_15">Results:<a class="headerlink" href="#results_15" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>result</code></td>
 <td>any stream-compatible type</td>
 </tr>
 </tbody>
@@ -5761,57 +5779,46 @@ execution using this resource must await on the timepoint.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: AffinityOpInterface, ConditionallySpeculatable, MemoryEffectOpInterface (MemoryEffectOpInterface), Stream_TimelineOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Allocate on ::mlir::SideEffects::DefaultResource}</p>
-<h5 id="attributes_17">Attributes:<a class="headerlink" href="#attributes_17" title="Permanent link">link</a></h5>
+<h5 id="attributes_20">Attributes:<a class="headerlink" href="#attributes_20" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_22">Operands:<a class="headerlink" href="#operands_22" title="Permanent link">link</a></h5>
+
+<h5 id="operands_25">Operands:<a class="headerlink" href="#operands_25" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>storage_size</code></td>
+<td align="center"><code>storage_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>await_timepoint</code></td>
+<td align="center"><code>await_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
+<h5 id="results_16">Results:<a class="headerlink" href="#results_16" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
-<td>staging resource or transient resource</td>
+<td align="center"><code>result</code></td>
+<td>any stream-compatible type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_timepoint</code></td>
+<td align="center"><code>result_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -5846,58 +5853,43 @@ upload or mapping.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, SameVariadicResultSize</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, Stream_TimelineOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_18">Attributes:<a class="headerlink" href="#attributes_18" title="Permanent link">link</a></h5>
+<h5 id="attributes_21">Attributes:<a class="headerlink" href="#attributes_21" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>values</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>constant value array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>values</code></td><td>::mlir::ArrayAttr</td><td>constant value array attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_23">Operands:<a class="headerlink" href="#operands_23" title="Permanent link">link</a></h5>
+
+<h5 id="operands_26">Operands:<a class="headerlink" href="#operands_26" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_sizes</code></td>
+<td align="center"><code>result_sizes</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_14">Results:<a class="headerlink" href="#results_14" title="Permanent link">link</a></h5>
+<h5 id="results_17">Results:<a class="headerlink" href="#results_17" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>constant resource or variable resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_timepoint</code></td>
+<td align="center"><code>result_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -5918,57 +5910,46 @@ reached and the memory is only made available for future requests after
 the result timepoint is reached.</p>
 <p>Interfaces: AffinityOpInterface, InferTypeOpInterface, MemoryEffectOpInterface (MemoryEffectOpInterface), Stream_TimelineOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Free on ::mlir::SideEffects::DefaultResource}</p>
-<h5 id="attributes_19">Attributes:<a class="headerlink" href="#attributes_19" title="Permanent link">link</a></h5>
+<h5 id="attributes_22">Attributes:<a class="headerlink" href="#attributes_22" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_24">Operands:<a class="headerlink" href="#operands_24" title="Permanent link">link</a></h5>
+
+<h5 id="operands_27">Operands:<a class="headerlink" href="#operands_27" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
-<td>staging resource or transient resource</td>
+<td align="center"><code>operand</code></td>
+<td>any stream-compatible type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>operand_size</code></td>
+<td align="center"><code>operand_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>await_timepoint</code></td>
+<td align="center"><code>await_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_15">Results:<a class="headerlink" href="#results_15" title="Permanent link">link</a></h5>
+<h5 id="results_18">Results:<a class="headerlink" href="#results_18" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_timepoint</code></td>
+<td align="center"><code>result_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -5986,112 +5967,41 @@ the result timepoint is reached.</p>
 The operation will complete synchronously against the resource though it may
 introduce a yield point if the staging resource needs to be transferred.</p>
 <p>Interfaces: Util_SizeAwareOp</p>
-<h5 id="operands_25">Operands:<a class="headerlink" href="#operands_25" title="Permanent link">link</a></h5>
+<h5 id="operands_28">Operands:<a class="headerlink" href="#operands_28" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_16">Results:<a class="headerlink" href="#results_16" title="Permanent link">link</a></h5>
+<h5 id="results_19">Results:<a class="headerlink" href="#results_19" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index or integer or floating-point or complex-type or vector of any type values</td>
-</tr>
-</tbody>
-</table>
-<h4 id="streamresourcemap-streamresourcemapop"><code>stream.resource.map</code> (Stream::ResourceMapOp)<a class="headerlink" href="#streamresourcemap-streamresourcemapop" title="Permanent link">link</a></h4>
-<p><em>Maps read-only memory into a staging resource</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `stream.resource.map` (`on` `(` $affinity^ `)`)?
-              $source `[` $source_offset `]` `:`
-              type($source)
-              `-&gt;`
-              type($result) `` `{` $result_size `}`
-              attr-dict-with-keyword
-</code></pre></div>
-<p>Synchronously maps a host heap buffer into a stream-accessible staging
-resource. Will never fail but may induce a copy if required and as such the
-mapped resource is not coherent with the original source buffer: changing
-the source buffer after mapping has undefined behavior.</p>
-<p>Interfaces: MemoryEffectOpInterface (MemoryEffectOpInterface), Stream_AffinityOp, Util_SizeAwareOp</p>
-<p>Effects: MemoryEffects::Effect{MemoryEffects::Allocate on ::mlir::SideEffects::DefaultResource}</p>
-<h5 id="attributes_20">Attributes:<a class="headerlink" href="#attributes_20" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
-</table>
-<h5 id="operands_26">Operands:<a class="headerlink" href="#operands_26" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>source</code></td>
-<td>a reference counted byte buffer</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>source_offset</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>result_size</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h5 id="results_17">Results:<a class="headerlink" href="#results_17" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>result</code></td>
-<td>staging resource</td>
 </tr>
 </tbody>
 </table>
@@ -6143,62 +6053,47 @@ underlying allocation buffer.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface, Stream_AffinityOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_21">Attributes:<a class="headerlink" href="#attributes_21" title="Permanent link">link</a></h5>
+<h5 id="attributes_23">Attributes:<a class="headerlink" href="#attributes_23" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>lifetime_intervals</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>index array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>lifetime_intervals</code></td><td>::mlir::ArrayAttr</td><td>index array attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_27">Operands:<a class="headerlink" href="#operands_27" title="Permanent link">link</a></h5>
+
+<h5 id="operands_29">Operands:<a class="headerlink" href="#operands_29" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>offset</code></td>
+<td align="center"><code>offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>dynamic_slice_sizes</code></td>
+<td align="center"><code>dynamic_slice_sizes</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_18">Results:<a class="headerlink" href="#results_18" title="Permanent link">link</a></h5>
+<h5 id="results_20">Results:<a class="headerlink" href="#results_20" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>total_length</code></td>
+<td align="center"><code>total_length</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>packed_offsets</code></td>
+<td align="center"><code>packed_offsets</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -6217,49 +6112,38 @@ values such as sparse tensor formats.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_22">Attributes:<a class="headerlink" href="#attributes_22" title="Permanent link">link</a></h5>
+<h5 id="attributes_24">Attributes:<a class="headerlink" href="#attributes_24" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_28">Operands:<a class="headerlink" href="#operands_28" title="Permanent link">link</a></h5>
+
+<h5 id="operands_30">Operands:<a class="headerlink" href="#operands_30" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
+<td align="center"><code>operand</code></td>
 <td>any stream-compatible type</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_19">Results:<a class="headerlink" href="#results_19" title="Permanent link">link</a></h5>
+<h5 id="results_21">Results:<a class="headerlink" href="#results_21" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -6278,29 +6162,29 @@ values such as sparse tensor formats.</p>
 introduce a yield point if the staging resource needs to be acquired.</p>
 <p>Interfaces: MemoryEffectOpInterface (MemoryEffectOpInterface), Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Write on ::mlir::SideEffects::DefaultResource}</p>
-<h5 id="operands_29">Operands:<a class="headerlink" href="#operands_29" title="Permanent link">link</a></h5>
+<h5 id="operands_31">Operands:<a class="headerlink" href="#operands_31" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>index or integer or floating-point or complex-type or vector of any type values</td>
 </tr>
 </tbody>
@@ -6317,44 +6201,44 @@ introduce a yield point if the staging resource needs to be acquired.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), StreamableOpInterface, TiedOpInterface, Util_SizeAwareOp, Util_SubrangeOp, ViewLikeOpInterface</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_30">Operands:<a class="headerlink" href="#operands_30" title="Permanent link">link</a></h5>
+<h5 id="operands_32">Operands:<a class="headerlink" href="#operands_32" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>any stream-compatible type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_20">Results:<a class="headerlink" href="#results_20" title="Permanent link">link</a></h5>
+<h5 id="results_22">Results:<a class="headerlink" href="#results_22" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>any stream-compatible type</td>
 </tr>
 </tbody>
@@ -6370,69 +6254,58 @@ introduce a yield point if the staging resource needs to be acquired.</p>
               attr-dict-with-keyword
 </code></pre></div>
 <p>Synchronously maps a host heap buffer into a stream-accessible resource
-with constant lifetime. If the given source cannot be mapped into a constant
-a failure is returned and the resulting resource value is null. As with
-<code>stream.resource.map</code> the resulting resource is not coherent with the source
-and changes will not be reflected.</p>
+with the requested lifetime. If the given source cannot be mapped the
+<code>did_map</code> result will be 0 and users must find another route into memory
+(such as file I/O). The resulting resource is not coherent with the source
+and behavior is undefined if the underlying contents change.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, MemoryEffectOpInterface (MemoryEffectOpInterface), NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Allocate on ::mlir::SideEffects::DefaultResource}, MemoryEffects::Effect{}</p>
-<h5 id="attributes_23">Attributes:<a class="headerlink" href="#attributes_23" title="Permanent link">link</a></h5>
+<h5 id="attributes_25">Attributes:<a class="headerlink" href="#attributes_25" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_31">Operands:<a class="headerlink" href="#operands_31" title="Permanent link">link</a></h5>
+
+<h5 id="operands_33">Operands:<a class="headerlink" href="#operands_33" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>a reference counted byte buffer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_21">Results:<a class="headerlink" href="#results_21" title="Permanent link">link</a></h5>
+<h5 id="results_23">Results:<a class="headerlink" href="#results_23" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>did_map</code></td>
+<td align="center"><code>did_map</code></td>
 <td>1-bit signless integer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
-<td>constant resource</td>
+<td align="center"><code>result</code></td>
+<td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
 </table>
@@ -6449,49 +6322,38 @@ result must assume nothing of the contents and use <code>discard</code> access.<
 <p>Traits: AlwaysSpeculatableImplTrait, Stream_AsyncPhaseOp</p>
 <p>Interfaces: AffinityOpInterface, ConditionallySpeculatable, MemoryEffectOpInterface (MemoryEffectOpInterface), StreamableOpInterface, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Allocate on ::mlir::SideEffects::DefaultResource}</p>
-<h5 id="attributes_24">Attributes:<a class="headerlink" href="#attributes_24" title="Permanent link">link</a></h5>
+<h5 id="attributes_26">Attributes:<a class="headerlink" href="#attributes_26" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_32">Operands:<a class="headerlink" href="#operands_32" title="Permanent link">link</a></h5>
+
+<h5 id="operands_34">Operands:<a class="headerlink" href="#operands_34" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>storage_size</code></td>
+<td align="center"><code>storage_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_22">Results:<a class="headerlink" href="#results_22" title="Permanent link">link</a></h5>
+<h5 id="results_24">Results:<a class="headerlink" href="#results_24" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -6509,57 +6371,46 @@ result must assume nothing of the contents and use <code>discard</code> access.<
 cloned value will not effect the result. Acts as a copy-on-write operation.</p>
 <p>Traits: Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, Stream_AffinityOp, StreamableOpInterface, Util_SizeAwareOp</p>
-<h5 id="attributes_25">Attributes:<a class="headerlink" href="#attributes_25" title="Permanent link">link</a></h5>
+<h5 id="attributes_27">Attributes:<a class="headerlink" href="#attributes_27" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_33">Operands:<a class="headerlink" href="#operands_33" title="Permanent link">link</a></h5>
+
+<h5 id="operands_35">Operands:<a class="headerlink" href="#operands_35" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_23">Results:<a class="headerlink" href="#results_23" title="Permanent link">link</a></h5>
+<h5 id="results_25">Results:<a class="headerlink" href="#results_25" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -6585,102 +6436,87 @@ they have sequencing implications - or we could add optional sequencing to
 this base op.</p>
 <p>Traits: Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, InferTypeOpInterface, Stream_AffinityOp, Stream_StreamableOp, TiedOpInterface, Util_SizeAwareOp</p>
-<h5 id="attributes_26">Attributes:<a class="headerlink" href="#attributes_26" title="Permanent link">link</a></h5>
+<h5 id="attributes_28">Attributes:<a class="headerlink" href="#attributes_28" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>op</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::CollectiveAttr</td>
-<td>collective operation and specification</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>op</code></td><td>::mlir::iree_compiler::IREE::Stream::CollectiveAttr</td><td>collective operation and specification</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_34">Operands:<a class="headerlink" href="#operands_34" title="Permanent link">link</a></h5>
+
+<h5 id="operands_36">Operands:<a class="headerlink" href="#operands_36" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_end</code></td>
+<td align="center"><code>target_end</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_length</code></td>
+<td align="center"><code>target_length</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_end</code></td>
+<td align="center"><code>source_end</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_length</code></td>
+<td align="center"><code>source_length</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>element_count</code></td>
+<td align="center"><code>element_count</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collective communication channel</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>param</code></td>
+<td align="center"><code>param</code></td>
 <td>32-bit signless integer</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_24">Results:<a class="headerlink" href="#results_24" title="Permanent link">link</a></h5>
+<h5 id="results_26">Results:<a class="headerlink" href="#results_26" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -6699,54 +6535,39 @@ this base op.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface, Stream_AffinityOp, StreamableOpInterface, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_27">Attributes:<a class="headerlink" href="#attributes_27" title="Permanent link">link</a></h5>
+<h5 id="attributes_29">Attributes:<a class="headerlink" href="#attributes_29" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>value</code></td>
-<td style="text-align: center;">::mlir::ElementsAttr</td>
-<td>constant vector/tensor attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td>::mlir::Attribute</td><td>any attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_35">Operands:<a class="headerlink" href="#operands_35" title="Permanent link">link</a></h5>
+
+<h5 id="operands_37">Operands:<a class="headerlink" href="#operands_37" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_25">Results:<a class="headerlink" href="#results_25" title="Permanent link">link</a></h5>
+<h5 id="results_27">Results:<a class="headerlink" href="#results_27" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -6769,81 +6590,70 @@ in-place.</p>
 <p>Equivalent to a stream.async.slice + stream.async.update.</p>
 <p>Traits: Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, InferTypeOpInterface, Stream_AffinityOp, Stream_StreamableOp, TiedOpInterface, Util_SizeAwareOp</p>
-<h5 id="attributes_28">Attributes:<a class="headerlink" href="#attributes_28" title="Permanent link">link</a></h5>
+<h5 id="attributes_30">Attributes:<a class="headerlink" href="#attributes_30" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_36">Operands:<a class="headerlink" href="#operands_36" title="Permanent link">link</a></h5>
+
+<h5 id="operands_38">Operands:<a class="headerlink" href="#operands_38" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_end</code></td>
+<td align="center"><code>target_end</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_end</code></td>
+<td align="center"><code>source_end</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>length</code></td>
+<td align="center"><code>length</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_26">Results:<a class="headerlink" href="#results_26" title="Permanent link">link</a></h5>
+<h5 id="results_28">Results:<a class="headerlink" href="#results_28" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -6868,83 +6678,64 @@ specified workgroup count. Each workgroup has access to the same operands
 and results and is able to load/store at will.</p>
 <p>Traits: AttrSizedOperandSegments, Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, Stream_AffinityOp, Stream_StreamableOp, SymbolUserOpInterface, TiedOpInterface, Util_SizeAwareOp</p>
-<h5 id="attributes_29">Attributes:<a class="headerlink" href="#attributes_29" title="Permanent link">link</a></h5>
+<h5 id="attributes_31">Attributes:<a class="headerlink" href="#attributes_31" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>entry_point</code></td>
-<td style="text-align: center;">::mlir::SymbolRefAttr</td>
-<td>symbol reference attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>entry_point</code></td><td>::mlir::SymbolRefAttr</td><td>symbol reference attribute</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_37">Operands:<a class="headerlink" href="#operands_37" title="Permanent link">link</a></h5>
+
+<h5 id="operands_39">Operands:<a class="headerlink" href="#operands_39" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>workload</code></td>
+<td align="center"><code>workload</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operands</code></td>
+<td align="center"><code>resource_operands</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or index or integer or floating-point or complex-type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_sizes</code></td>
+<td align="center"><code>resource_operand_sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_offsets</code></td>
+<td align="center"><code>resource_operand_offsets</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_ends</code></td>
+<td align="center"><code>resource_operand_ends</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_lengths</code></td>
+<td align="center"><code>resource_operand_lengths</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_sizes</code></td>
+<td align="center"><code>result_sizes</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_27">Results:<a class="headerlink" href="#results_27" title="Permanent link">link</a></h5>
+<h5 id="results_29">Results:<a class="headerlink" href="#results_29" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -6964,69 +6755,58 @@ resource with the update applied.</p>
 <p>Equivalent to a stream.async.splat + stream.async.update.</p>
 <p>Traits: Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, InferTypeOpInterface, Stream_AffinityOp, Stream_StreamableOp, TiedOpInterface, Util_SizeAwareOp</p>
-<h5 id="attributes_30">Attributes:<a class="headerlink" href="#attributes_30" title="Permanent link">link</a></h5>
+<h5 id="attributes_32">Attributes:<a class="headerlink" href="#attributes_32" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_38">Operands:<a class="headerlink" href="#operands_38" title="Permanent link">link</a></h5>
+
+<h5 id="operands_40">Operands:<a class="headerlink" href="#operands_40" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_end</code></td>
+<td align="center"><code>target_end</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_length</code></td>
+<td align="center"><code>target_length</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_28">Results:<a class="headerlink" href="#results_28" title="Permanent link">link</a></h5>
+<h5 id="results_30">Results:<a class="headerlink" href="#results_30" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -7044,40 +6824,40 @@ resource with the update applied.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, Stream_AsyncPhaseOp</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_39">Operands:<a class="headerlink" href="#operands_39" title="Permanent link">link</a></h5>
+<h5 id="operands_41">Operands:<a class="headerlink" href="#operands_41" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_29">Results:<a class="headerlink" href="#results_29" title="Permanent link">link</a></h5>
+<h5 id="results_31">Results:<a class="headerlink" href="#results_31" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index or integer or floating-point or complex-type or vector of any type values</td>
 </tr>
 </tbody>
@@ -7096,65 +6876,54 @@ copy-on-write operation.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, Stream_StreamableOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_31">Attributes:<a class="headerlink" href="#attributes_31" title="Permanent link">link</a></h5>
+<h5 id="attributes_33">Attributes:<a class="headerlink" href="#attributes_33" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_40">Operands:<a class="headerlink" href="#operands_40" title="Permanent link">link</a></h5>
+
+<h5 id="operands_42">Operands:<a class="headerlink" href="#operands_42" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_offset</code></td>
+<td align="center"><code>source_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_end</code></td>
+<td align="center"><code>source_end</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_30">Results:<a class="headerlink" href="#results_30" title="Permanent link">link</a></h5>
+<h5 id="results_32">Results:<a class="headerlink" href="#results_32" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -7170,53 +6939,42 @@ copy-on-write operation.</p>
 the entire contents.</p>
 <p>Traits: Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, Stream_AffinityOp, StreamableOpInterface, Util_SizeAwareOp</p>
-<h5 id="attributes_32">Attributes:<a class="headerlink" href="#attributes_32" title="Permanent link">link</a></h5>
+<h5 id="attributes_34">Attributes:<a class="headerlink" href="#attributes_34" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_41">Operands:<a class="headerlink" href="#operands_41" title="Permanent link">link</a></h5>
+
+<h5 id="operands_43">Operands:<a class="headerlink" href="#operands_43" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>8-bit signless integer or 16-bit signless integer or 32-bit signless integer or 64-bit signless integer</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_31">Results:<a class="headerlink" href="#results_31" title="Permanent link">link</a></h5>
+<h5 id="results_33">Results:<a class="headerlink" href="#results_33" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -7236,44 +6994,44 @@ value.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, Stream_AsyncPhaseOp</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), TiedOpInterface, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_42">Operands:<a class="headerlink" href="#operands_42" title="Permanent link">link</a></h5>
+<h5 id="operands_44">Operands:<a class="headerlink" href="#operands_44" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>index or integer or floating-point or complex-type or vector of any type values</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_32">Results:<a class="headerlink" href="#results_32" title="Permanent link">link</a></h5>
+<h5 id="results_34">Results:<a class="headerlink" href="#results_34" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>staging resource</td>
 </tr>
 </tbody>
@@ -7294,62 +7052,47 @@ to a cast but may have special semantics when later lowered to one or more
 devices with discrete memory spaces or pools.</p>
 <p>Traits: Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, Stream_AffinityOp, Stream_StreamableOp, Util_SizeAwareOp</p>
-<h5 id="attributes_33">Attributes:<a class="headerlink" href="#attributes_33" title="Permanent link">link</a></h5>
+<h5 id="attributes_35">Attributes:<a class="headerlink" href="#attributes_35" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>source_affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>result_affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>source_affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
+<tr><td><code>result_affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_43">Operands:<a class="headerlink" href="#operands_43" title="Permanent link">link</a></h5>
+
+<h5 id="operands_45">Operands:<a class="headerlink" href="#operands_45" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_33">Results:<a class="headerlink" href="#results_33" title="Permanent link">link</a></h5>
+<h5 id="results_35">Results:<a class="headerlink" href="#results_35" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 </tbody>
@@ -7369,69 +7112,58 @@ is the entire updated target value. Updates can be turned into placement
 allocations and avoid copies.</p>
 <p>Traits: Stream_AsyncPhaseOp</p>
 <p>Interfaces: AsyncAccessOpInterface, InferTypeOpInterface, Stream_AffinityOp, Stream_StreamableOp, TiedOpInterface, Util_SizeAwareOp</p>
-<h5 id="attributes_34">Attributes:<a class="headerlink" href="#attributes_34" title="Permanent link">link</a></h5>
+<h5 id="attributes_36">Attributes:<a class="headerlink" href="#attributes_36" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_44">Operands:<a class="headerlink" href="#operands_44" title="Permanent link">link</a></h5>
+
+<h5 id="operands_46">Operands:<a class="headerlink" href="#operands_46" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_offset</code></td>
+<td align="center"><code>target_offset</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_end</code></td>
+<td align="center"><code>target_end</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>update</code></td>
+<td align="center"><code>update</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>update_size</code></td>
+<td align="center"><code>update_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_34">Results:<a class="headerlink" href="#results_34" title="Permanent link">link</a></h5>
+<h5 id="results_36">Results:<a class="headerlink" href="#results_36" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -7456,57 +7188,46 @@ timepoint.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, Stream_TimelineOp, TiedOpInterface, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_35">Attributes:<a class="headerlink" href="#attributes_35" title="Permanent link">link</a></h5>
+<h5 id="attributes_37">Attributes:<a class="headerlink" href="#attributes_37" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_45">Operands:<a class="headerlink" href="#operands_45" title="Permanent link">link</a></h5>
+
+<h5 id="operands_47">Operands:<a class="headerlink" href="#operands_47" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>resource_operands</code></td>
+<td align="center"><code>resource_operands</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_operand_sizes</code></td>
+<td align="center"><code>resource_operand_sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>await_timepoint</code></td>
+<td align="center"><code>await_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_35">Results:<a class="headerlink" href="#results_35" title="Permanent link">link</a></h5>
+<h5 id="results_37">Results:<a class="headerlink" href="#results_37" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 </tbody>
@@ -7529,57 +7250,46 @@ production timepoint.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, Stream_TimelineOp, TiedOpInterface, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_36">Attributes:<a class="headerlink" href="#attributes_36" title="Permanent link">link</a></h5>
+<h5 id="attributes_38">Attributes:<a class="headerlink" href="#attributes_38" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_46">Operands:<a class="headerlink" href="#operands_46" title="Permanent link">link</a></h5>
+
+<h5 id="operands_48">Operands:<a class="headerlink" href="#operands_48" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>resource</code></td>
+<td align="center"><code>resource</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>resource_size</code></td>
+<td align="center"><code>resource_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_36">Results:<a class="headerlink" href="#results_36" title="Permanent link">link</a></h5>
+<h5 id="results_38">Results:<a class="headerlink" href="#results_38" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource or staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_timepoint</code></td>
+<td align="center"><code>result_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -7598,38 +7308,27 @@ that is resolved during lowering into the stream dialect. This can be used
 to interoperate between levels of the stack that require specifying stream
 types and those that prior to lowering do not handle them.</p>
 <p>Interfaces: Stream_AffinityOp</p>
-<h5 id="attributes_37">Attributes:<a class="headerlink" href="#attributes_37" title="Permanent link">link</a></h5>
+<h5 id="attributes_39">Attributes:<a class="headerlink" href="#attributes_39" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_47">Operands:<a class="headerlink" href="#operands_47" title="Permanent link">link</a></h5>
+
+<h5 id="operands_49">Operands:<a class="headerlink" href="#operands_49" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>await_timepoint</code></td>
+<td align="center"><code>await_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>external_values</code></td>
+<td align="center"><code>external_values</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -7650,49 +7349,38 @@ types and those that prior to lowering do not handle them.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_38">Attributes:<a class="headerlink" href="#attributes_38" title="Permanent link">link</a></h5>
+<h5 id="attributes_40">Attributes:<a class="headerlink" href="#attributes_40" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_48">Operands:<a class="headerlink" href="#operands_48" title="Permanent link">link</a></h5>
+
+<h5 id="operands_50">Operands:<a class="headerlink" href="#operands_50" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>await_timepoint</code></td>
+<td align="center"><code>await_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_37">Results:<a class="headerlink" href="#results_37" title="Permanent link">link</a></h5>
+<h5 id="results_39">Results:<a class="headerlink" href="#results_39" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -7710,17 +7398,17 @@ away but can be useful if needing to initialize globals or branch args.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, ConstantLike</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), Stream_TimelineOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="results_38">Results:<a class="headerlink" href="#results_38" title="Permanent link">link</a></h5>
+<h5 id="results_40">Results:<a class="headerlink" href="#results_40" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_timepoint</code></td>
+<td align="center"><code>result_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -7741,49 +7429,38 @@ types and those that prior to lowering do not handle them.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_39">Attributes:<a class="headerlink" href="#attributes_39" title="Permanent link">link</a></h5>
+<h5 id="attributes_41">Attributes:<a class="headerlink" href="#attributes_41" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_49">Operands:<a class="headerlink" href="#operands_49" title="Permanent link">link</a></h5>
+
+<h5 id="operands_51">Operands:<a class="headerlink" href="#operands_51" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
+<td align="center"><code>operands</code></td>
 <td>any type</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_39">Results:<a class="headerlink" href="#results_39" title="Permanent link">link</a></h5>
+<h5 id="results_41">Results:<a class="headerlink" href="#results_41" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_timepoint</code></td>
+<td align="center"><code>result_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -7799,32 +7476,32 @@ been reached.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), Stream_TimelineOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_50">Operands:<a class="headerlink" href="#operands_50" title="Permanent link">link</a></h5>
+<h5 id="operands_52">Operands:<a class="headerlink" href="#operands_52" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>await_timepoints</code></td>
+<td align="center"><code>await_timepoints</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_40">Results:<a class="headerlink" href="#results_40" title="Permanent link">link</a></h5>
+<h5 id="results_42">Results:<a class="headerlink" href="#results_42" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_timepoint</code></td>
+<td align="center"><code>result_timepoint</code></td>
 <td>a timepoint indicating execution availability</td>
 </tr>
 </tbody>
@@ -7849,75 +7526,56 @@ cloned value will not effect the result. Acts as a copy-on-write operation.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments, Stream_TensorPhaseOp</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, Stream_StreamableOp, Util_ShapeAwareOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_40">Attributes:<a class="headerlink" href="#attributes_40" title="Permanent link">link</a></h5>
+<h5 id="attributes_42">Attributes:<a class="headerlink" href="#attributes_42" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>source_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>result_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>source_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>result_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_51">Operands:<a class="headerlink" href="#operands_51" title="Permanent link">link</a></h5>
+
+<h5 id="operands_53">Operands:<a class="headerlink" href="#operands_53" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_encoding_dims</code></td>
+<td align="center"><code>source_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_encoding_dims</code></td>
+<td align="center"><code>result_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_41">Results:<a class="headerlink" href="#results_41" title="Permanent link">link</a></h5>
+<h5 id="results_43">Results:<a class="headerlink" href="#results_43" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -7938,59 +7596,40 @@ cloned value will not effect the result. Acts as a copy-on-write operation.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, Stream_TensorPhaseOp</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface, Stream_AffinityOp, Stream_StreamableOp, Util_ShapeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_41">Attributes:<a class="headerlink" href="#attributes_41" title="Permanent link">link</a></h5>
+<h5 id="attributes_43">Attributes:<a class="headerlink" href="#attributes_43" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>value</code></td>
-<td style="text-align: center;">::mlir::ElementsAttr</td>
-<td>constant vector/tensor attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>result_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td>::mlir::Attribute</td><td>any attribute</td></tr>
+<tr><td><code>result_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_52">Operands:<a class="headerlink" href="#operands_52" title="Permanent link">link</a></h5>
+
+<h5 id="operands_54">Operands:<a class="headerlink" href="#operands_54" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_encoding_dims</code></td>
+<td align="center"><code>result_encoding_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_42">Results:<a class="headerlink" href="#results_42" title="Permanent link">link</a></h5>
+<h5 id="results_44">Results:<a class="headerlink" href="#results_44" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -8013,58 +7652,43 @@ read.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, Stream_TensorPhaseOp</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface, Stream_AffinityOp, StreamableOpInterface, Util_ShapeAwareOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_42">Attributes:<a class="headerlink" href="#attributes_42" title="Permanent link">link</a></h5>
+<h5 id="attributes_44">Attributes:<a class="headerlink" href="#attributes_44" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>result_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>result_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_53">Operands:<a class="headerlink" href="#operands_53" title="Permanent link">link</a></h5>
+
+<h5 id="operands_55">Operands:<a class="headerlink" href="#operands_55" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_encoding_dims</code></td>
+<td align="center"><code>result_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_43">Results:<a class="headerlink" href="#results_43" title="Permanent link">link</a></h5>
+<h5 id="results_45">Results:<a class="headerlink" href="#results_45" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -8086,74 +7710,59 @@ resource with the update applied.</p>
 <p>Equivalent to a stream.tensor.splat + stream.tensor.update.</p>
 <p>Traits: AttrSizedOperandSegments, Stream_TensorPhaseOp</p>
 <p>Interfaces: InferTypeOpInterface, Stream_AffinityOp, Stream_StreamableOp, TiedOpInterface, Util_ShapeAwareOp, Util_SizeAwareOp</p>
-<h5 id="attributes_43">Attributes:<a class="headerlink" href="#attributes_43" title="Permanent link">link</a></h5>
+<h5 id="attributes_45">Attributes:<a class="headerlink" href="#attributes_45" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>target_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>target_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_54">Operands:<a class="headerlink" href="#operands_54" title="Permanent link">link</a></h5>
+
+<h5 id="operands_56">Operands:<a class="headerlink" href="#operands_56" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_encoding_dims</code></td>
+<td align="center"><code>target_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>start_indices</code></td>
+<td align="center"><code>start_indices</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>lengths</code></td>
+<td align="center"><code>lengths</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>index or integer or floating-point or complex-type</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_44">Results:<a class="headerlink" href="#results_44" title="Permanent link">link</a></h5>
+<h5 id="results_46">Results:<a class="headerlink" href="#results_46" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -8173,61 +7782,50 @@ resource with the update applied.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments, Stream_TensorPhaseOp</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Util_ShapeAwareOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_44">Attributes:<a class="headerlink" href="#attributes_44" title="Permanent link">link</a></h5>
+<h5 id="attributes_46">Attributes:<a class="headerlink" href="#attributes_46" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>source_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>source_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
 </table>
-<h5 id="operands_55">Operands:<a class="headerlink" href="#operands_55" title="Permanent link">link</a></h5>
+
+<h5 id="operands_57">Operands:<a class="headerlink" href="#operands_57" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_encoding_dims</code></td>
+<td align="center"><code>source_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>indices</code></td>
+<td align="center"><code>indices</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_45">Results:<a class="headerlink" href="#results_45" title="Permanent link">link</a></h5>
+<h5 id="results_47">Results:<a class="headerlink" href="#results_47" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index or integer or floating-point or complex-type or vector of any type values</td>
 </tr>
 </tbody>
@@ -8247,54 +7845,39 @@ assigned.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, Stream_TensorPhaseOp</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_45">Attributes:<a class="headerlink" href="#attributes_45" title="Permanent link">link</a></h5>
+<h5 id="attributes_47">Attributes:<a class="headerlink" href="#attributes_47" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_56">Operands:<a class="headerlink" href="#operands_56" title="Permanent link">link</a></h5>
+
+<h5 id="operands_58">Operands:<a class="headerlink" href="#operands_58" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>encoding_dims</code></td>
+<td align="center"><code>encoding_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_46">Results:<a class="headerlink" href="#results_46" title="Permanent link">link</a></h5>
+<h5 id="results_48">Results:<a class="headerlink" href="#results_48" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>storage_size</code></td>
+<td align="center"><code>storage_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -8318,83 +7901,64 @@ copy-on-write operation.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments, Stream_TensorPhaseOp</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, Stream_StreamableOp, Util_ShapeAwareOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_46">Attributes:<a class="headerlink" href="#attributes_46" title="Permanent link">link</a></h5>
+<h5 id="attributes_48">Attributes:<a class="headerlink" href="#attributes_48" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>source_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>result_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>source_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>result_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_57">Operands:<a class="headerlink" href="#operands_57" title="Permanent link">link</a></h5>
+
+<h5 id="operands_59">Operands:<a class="headerlink" href="#operands_59" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_encoding_dims</code></td>
+<td align="center"><code>source_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_size</code></td>
+<td align="center"><code>source_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>start_indices</code></td>
+<td align="center"><code>start_indices</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>lengths</code></td>
+<td align="center"><code>lengths</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_encoding_dims</code></td>
+<td align="center"><code>result_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_47">Results:<a class="headerlink" href="#results_47" title="Permanent link">link</a></h5>
+<h5 id="results_49">Results:<a class="headerlink" href="#results_49" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -8415,62 +7979,47 @@ copy-on-write operation.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, Stream_TensorPhaseOp</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Stream_AffinityOp, StreamableOpInterface, Util_ShapeAwareOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_47">Attributes:<a class="headerlink" href="#attributes_47" title="Permanent link">link</a></h5>
+<h5 id="attributes_49">Attributes:<a class="headerlink" href="#attributes_49" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>result_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>result_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_58">Operands:<a class="headerlink" href="#operands_58" title="Permanent link">link</a></h5>
+
+<h5 id="operands_60">Operands:<a class="headerlink" href="#operands_60" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>index or integer or floating-point or complex-type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_encoding_dims</code></td>
+<td align="center"><code>result_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_size</code></td>
+<td align="center"><code>result_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_48">Results:<a class="headerlink" href="#results_48" title="Permanent link">link</a></h5>
+<h5 id="results_50">Results:<a class="headerlink" href="#results_50" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -8491,107 +8040,99 @@ copy-on-write operation.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments, Stream_TensorPhaseOp</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), TiedOpInterface, Util_ShapeAwareOp, Util_SizeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_48">Attributes:<a class="headerlink" href="#attributes_48" title="Permanent link">link</a></h5>
+<h5 id="attributes_50">Attributes:<a class="headerlink" href="#attributes_50" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>target_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>target_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
 </table>
-<h5 id="operands_59">Operands:<a class="headerlink" href="#operands_59" title="Permanent link">link</a></h5>
+
+<h5 id="operands_61">Operands:<a class="headerlink" href="#operands_61" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>staging resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_encoding_dims</code></td>
+<td align="center"><code>target_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>indices</code></td>
+<td align="center"><code>indices</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>index or integer or floating-point or complex-type or vector of any type values</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_49">Results:<a class="headerlink" href="#results_49" title="Permanent link">link</a></h5>
+<h5 id="results_51">Results:<a class="headerlink" href="#results_51" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>staging resource</td>
 </tr>
 </tbody>
 </table>
 <h4 id="streamtensortrace-streamtensortraceop"><code>stream.tensor.trace</code> (Stream::TensorTraceOp)<a class="headerlink" href="#streamtensortrace-streamtensortraceop" title="Permanent link">link</a></h4>
-<p><em>Trace value(s) operation</em></p>
+<p><em>Traces one or more tensor values at runtime</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `stream.tensor.trace` attr-dict ($operands^ `:` type($operands))?
+<div class="highlight"><pre><span></span><code>operation ::= `stream.tensor.trace` $key `=` `[`
+              custom&lt;EncodedResourceOperands&gt;(
+              $resources, type($resources), $resource_sizes,
+              $resource_encodings, $resource_encoding_dims)
+              `]` attr-dict-with-keyword
 </code></pre></div>
 <p>Traces out to a runtime trace sink (console, log file, etc) the given
-tensors and titles them with the given key. The key is informational only
-and useful for titling/marking specific sets of tensors for easier
-searching.</p>
-<h5 id="attributes_49">Attributes:<a class="headerlink" href="#attributes_49" title="Permanent link">link</a></h5>
+tensors. The key is arbitrary and can be used for identifying the set of
+values being traced.</p>
+<p>Traits: AttrSizedOperandSegments</p>
+<p>Interfaces: ShapeAwareOpInterface, Util_SizeAwareOp</p>
+<h5 id="attributes_51">Attributes:<a class="headerlink" href="#attributes_51" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>key</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>key</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>resource_encodings</code></td><td>::mlir::ArrayAttr</td><td>type array attribute</td></tr>
 </table>
-<h5 id="operands_60">Operands:<a class="headerlink" href="#operands_60" title="Permanent link">link</a></h5>
+
+<h5 id="operands_62">Operands:<a class="headerlink" href="#operands_62" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
-<td>tensor of any type values</td>
+<td align="center"><code>resources</code></td>
+<td>staging resource</td>
+</tr>
+<tr>
+<td align="center"><code>resource_sizes</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td align="center"><code>resource_encoding_dims</code></td>
+<td>index</td>
 </tr>
 </tbody>
 </table>
@@ -8613,83 +8154,64 @@ searching.</p>
 is the entire updated target value.</p>
 <p>Traits: AttrSizedOperandSegments, Stream_TensorPhaseOp</p>
 <p>Interfaces: InferTypeOpInterface, Stream_AffinityOp, Stream_StreamableOp, TiedOpInterface, Util_ShapeAwareOp, Util_SizeAwareOp</p>
-<h5 id="attributes_50">Attributes:<a class="headerlink" href="#attributes_50" title="Permanent link">link</a></h5>
+<h5 id="attributes_52">Attributes:<a class="headerlink" href="#attributes_52" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>target_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>update_encoding</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>affinity</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Stream::AffinityAttr</td>
-<td>defines execution context affinity</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>target_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>update_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
-<h5 id="operands_61">Operands:<a class="headerlink" href="#operands_61" title="Permanent link">link</a></h5>
+
+<h5 id="operands_63">Operands:<a class="headerlink" href="#operands_63" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_encoding_dims</code></td>
+<td align="center"><code>target_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_size</code></td>
+<td align="center"><code>target_size</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>start_indices</code></td>
+<td align="center"><code>start_indices</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>update</code></td>
+<td align="center"><code>update</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>update_encoding_dims</code></td>
+<td align="center"><code>update_encoding_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>update_size</code></td>
+<td align="center"><code>update_size</code></td>
 <td>index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_50">Results:<a class="headerlink" href="#results_50" title="Permanent link">link</a></h5>
+<h5 id="results_52">Results:<a class="headerlink" href="#results_52" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>resource or external resource or transient resource or variable resource or constant resource</td>
 </tr>
 </tbody>
@@ -8709,25 +8231,25 @@ is the entire updated target value.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Parameter</th>
-<th style="text-align: center;">C++ type</th>
+<th align="center">Parameter</th>
+<th align="center">C++ type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">kind</td>
-<td style="text-align: center;"><code>CollectiveKind</code></td>
+<td align="center">kind</td>
+<td align="center"><code>CollectiveKind</code></td>
 <td></td>
 </tr>
 <tr>
-<td style="text-align: center;">reduction</td>
-<td style="text-align: center;"><code>std::optional&lt;CollectiveReductionOp&gt;</code></td>
+<td align="center">reduction</td>
+<td align="center"><code>std::optional&lt;CollectiveReductionOp&gt;</code></td>
 <td></td>
 </tr>
 <tr>
-<td style="text-align: center;">element_type</td>
-<td style="text-align: center;"><code>CollectiveElementType</code></td>
+<td align="center">element_type</td>
+<td align="center"><code>CollectiveElementType</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -8743,15 +8265,15 @@ the amount of concurrency, parallelism, memory consumption, and latency.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Parameter</th>
-<th style="text-align: center;">C++ type</th>
+<th align="center">Parameter</th>
+<th align="center">C++ type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">favor</td>
-<td style="text-align: center;"><code>IREE::Stream::FavorAttr</code></td>
+<td align="center">favor</td>
+<td align="center"><code>IREE::Stream::FavorAttr</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -8764,40 +8286,40 @@ algorithms to ensure they are producing usable results on target devices.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Parameter</th>
-<th style="text-align: center;">C++ type</th>
+<th align="center">Parameter</th>
+<th align="center">C++ type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">maxAllocationSize</td>
-<td style="text-align: center;"><code>int64_t</code></td>
+<td align="center">maxAllocationSize</td>
+<td align="center"><code>int64_t</code></td>
 <td></td>
 </tr>
 <tr>
-<td style="text-align: center;">minBufferOffsetAlignment</td>
-<td style="text-align: center;"><code>int64_t</code></td>
+<td align="center">minBufferOffsetAlignment</td>
+<td align="center"><code>int64_t</code></td>
 <td></td>
 </tr>
 <tr>
-<td style="text-align: center;">maxBufferRange</td>
-<td style="text-align: center;"><code>int64_t</code></td>
+<td align="center">maxBufferRange</td>
+<td align="center"><code>int64_t</code></td>
 <td></td>
 </tr>
 <tr>
-<td style="text-align: center;">minBufferRangeAlignment</td>
-<td style="text-align: center;"><code>int64_t</code></td>
+<td align="center">minBufferRangeAlignment</td>
+<td align="center"><code>int64_t</code></td>
 <td></td>
 </tr>
 <tr>
-<td style="text-align: center;">indexBits</td>
-<td style="text-align: center;"><code>int64_t</code></td>
+<td align="center">indexBits</td>
+<td align="center"><code>int64_t</code></td>
 <td></td>
 </tr>
 <tr>
-<td style="text-align: center;">aliasMutableBindings</td>
-<td style="text-align: center;"><code>bool</code></td>
+<td align="center">aliasMutableBindings</td>
+<td align="center"><code>bool</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -8808,15 +8330,15 @@ algorithms to ensure they are producing usable results on target devices.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Parameter</th>
-<th style="text-align: center;">C++ type</th>
+<th align="center">Parameter</th>
+<th align="center">C++ type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">type</td>
-<td style="text-align: center;"><code>::mlir::Type</code></td>
+<td align="center">type</td>
+<td align="center"><code>::mlir::Type</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -8874,6 +8396,11 @@ provided by hosting applications. For example, the program could expose a
 <code>@set_channels(!util.list&lt;!stream.channel&gt;)</code> method that stores the channels
 in globals for use throughout the program allowing for
 application-controlled channel configuration.</p>
+<h3 id="filetype">FileType<a class="headerlink" href="#filetype" title="Permanent link">link</a></h3>
+<p>a file handle used for I/O operations</p>
+<p>Syntax: <code>!stream.file</code></p>
+<p>A file handle that can be asynchronously read and written into/from
+stream resources.</p>
 <h3 id="resourcetype">ResourceType<a class="headerlink" href="#resourcetype" title="Permanent link">link</a></h3>
 <p>a managed resource</p>
 <p>Stream external values represent asynchronously-available and sequenced
@@ -8888,15 +8415,15 @@ be transferred via <code>stream.transfer</code> - which may incur a copy.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Parameter</th>
-<th style="text-align: center;">C++ type</th>
+<th align="center">Parameter</th>
+<th align="center">C++ type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">lifetime</td>
-<td style="text-align: center;"><code>IREE::Stream::Lifetime</code></td>
+<td align="center">lifetime</td>
+<td align="center"><code>IREE::Stream::Lifetime</code></td>
 <td></td>
 </tr>
 </tbody>

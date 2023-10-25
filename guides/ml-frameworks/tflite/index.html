@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://openxla.github.io/iree/guides/ml-frameworks/tflite/">
+        <link rel="canonical" href="https://iree.dev/guides/ml-frameworks/tflite/">
       
       
         <link rel="prev" href="../tensorflow/">
@@ -141,7 +141,7 @@
 
     <!-- Link to site home -->
     <a
-      href="https://openxla.github.io/iree/"
+      href="https://iree.dev/"
       title="IREE"
       class="md-header__button md-logo"
       aria-label="IREE"
@@ -869,6 +869,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+     Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
      Prerequisites
   </a>
@@ -961,6 +968,14 @@
   <span class="md-ellipsis">
     PyTorch
   </span>
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="Recently updated">
+    </span>
+  
+
   
 
       </a>
@@ -1239,14 +1254,6 @@
   <span class="md-ellipsis">
     Developer tips and tricks
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--new" title="Recently added">
-    </span>
-  
-
   
 
       </a>
@@ -2329,6 +2336,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+     Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
      Prerequisites
   </a>
@@ -2414,6 +2428,7 @@
 
 
 <h1 id="tensorflow-lite-integration">TensorFlow Lite integration<a class="headerlink" href="#tensorflow-lite-integration" title="Permanent link">link</a></h1>
+<h2 id="overview"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/></svg></span> Overview<a class="headerlink" href="#overview" title="Permanent link">link</a></h2>
 <p>IREE supports compiling and running TensorFlow Lite (TFLite) programs stored as
 <a href="https://www.tensorflow.org/lite/guide">TFLite FlatBuffers</a>. These files can be
 imported into an IREE-compatible format then compiled to a series of backends.</p>
@@ -2467,7 +2482,7 @@ imported into an IREE-compatible format then compiled to a series of backends.</
 <p>Nightly releases are published on
 <a href="https://github.com/openxla/iree/releases">GitHub releases</a>.</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--find-links<span class="w"> </span>https://openxla.github.io/iree/pip-release-links.html<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--find-links<span class="w"> </span>https://iree.dev/pip-release-links.html<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--upgrade<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>iree-compiler<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>iree-runtime<span class="w"> </span><span class="se">\</span>

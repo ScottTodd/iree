@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://openxla.github.io/iree/reference/mlir-dialects/Flow/">
+        <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/Flow/">
       
       
         <link rel="prev" href="../Check/">
@@ -141,7 +141,7 @@
 
     <!-- Link to site home -->
     <a
-      href="https://openxla.github.io/iree/"
+      href="https://iree.dev/"
       title="IREE"
       class="md-header__button md-logo"
       aria-label="IREE"
@@ -870,6 +870,14 @@
     PyTorch
   </span>
   
+    
+  
+  
+    <span class="md-status md-status--new" title="Recently updated">
+    </span>
+  
+
+  
 
       </a>
     </li>
@@ -1147,14 +1155,6 @@
   <span class="md-ellipsis">
     Developer tips and tricks
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--new" title="Recently added">
-    </span>
-  
-
   
 
       </a>
@@ -3315,13 +3315,13 @@ workload size, shapes of inputs and outputs, etc.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collecive communication channel</td>
 </tr>
 </tbody>
@@ -3330,13 +3330,13 @@ workload size, shapes of inputs and outputs, etc.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3354,32 +3354,21 @@ workload size, shapes of inputs and outputs, etc.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>group</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>group</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
+
 <h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>a collecive communication channel</td>
 </tr>
 </tbody>
@@ -3399,13 +3388,13 @@ group in <code>[0, count)</code>.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collecive communication channel</td>
 </tr>
 </tbody>
@@ -3414,13 +3403,13 @@ group in <code>[0, count)</code>.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3443,21 +3432,21 @@ group.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collecive communication channel</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>color</code></td>
+<td align="center"><code>color</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>key</code></td>
+<td align="center"><code>key</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3466,13 +3455,13 @@ group.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>a collecive communication channel</td>
 </tr>
 </tbody>
@@ -3489,49 +3478,34 @@ group.</p>
 Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 <h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>element_type</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Flow::CollectiveElementTypeAttr</td>
-<td>valid CollectiveElementType</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>element_type</code></td><td>::mlir::iree_compiler::IREE::Flow::CollectiveElementTypeAttr</td><td>valid CollectiveElementType</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
 </table>
+
 <h5 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_dims</code></td>
+<td align="center"><code>target_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collecive communication channel</td>
 </tr>
 </tbody>
@@ -3540,13 +3514,13 @@ Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -3563,54 +3537,35 @@ Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 <h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>reduction_op</code></td>
-<td style="text-align: center;">mlir::iree_compiler::IREE::Flow::CollectiveReductionOpAttr</td>
-<td>valid CollectiveReductionOp</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>element_type</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Flow::CollectiveElementTypeAttr</td>
-<td>valid CollectiveElementType</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>reduction_op</code></td><td>mlir::iree_compiler::IREE::Flow::CollectiveReductionOpAttr</td><td>valid CollectiveReductionOp</td></tr>
+<tr><td><code>element_type</code></td><td>::mlir::iree_compiler::IREE::Flow::CollectiveElementTypeAttr</td><td>valid CollectiveElementType</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
 </table>
+
 <h5 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_dims</code></td>
+<td align="center"><code>target_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collecive communication channel</td>
 </tr>
 </tbody>
@@ -3619,13 +3574,13 @@ Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -3642,49 +3597,34 @@ Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 <h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>element_type</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Flow::CollectiveElementTypeAttr</td>
-<td>valid CollectiveElementType</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>element_type</code></td><td>::mlir::iree_compiler::IREE::Flow::CollectiveElementTypeAttr</td><td>valid CollectiveElementType</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
 </table>
+
 <h5 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_dims</code></td>
+<td align="center"><code>target_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collecive communication channel</td>
 </tr>
 </tbody>
@@ -3693,13 +3633,13 @@ Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -3717,54 +3657,35 @@ Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 <h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>reduction_op</code></td>
-<td style="text-align: center;">mlir::iree_compiler::IREE::Flow::CollectiveReductionOpAttr</td>
-<td>valid CollectiveReductionOp</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>element_type</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Flow::CollectiveElementTypeAttr</td>
-<td>valid CollectiveElementType</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>reduction_op</code></td><td>mlir::iree_compiler::IREE::Flow::CollectiveReductionOpAttr</td><td>valid CollectiveReductionOp</td></tr>
+<tr><td><code>element_type</code></td><td>::mlir::iree_compiler::IREE::Flow::CollectiveElementTypeAttr</td><td>valid CollectiveElementType</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
 </table>
+
 <h5 id="operands_6">Operands:<a class="headerlink" href="#operands_6" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_dims</code></td>
+<td align="center"><code>target_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collecive communication channel</td>
 </tr>
 </tbody>
@@ -3773,13 +3694,13 @@ Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -3799,57 +3720,42 @@ Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 <h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>element_type</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Flow::CollectiveElementTypeAttr</td>
-<td>valid CollectiveElementType</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>element_type</code></td><td>::mlir::iree_compiler::IREE::Flow::CollectiveElementTypeAttr</td><td>valid CollectiveElementType</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
 </table>
+
 <h5 id="operands_7">Operands:<a class="headerlink" href="#operands_7" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_dims</code></td>
+<td align="center"><code>target_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>channel</code></td>
+<td align="center"><code>channel</code></td>
 <td>a collecive communication channel</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>send</code></td>
+<td align="center"><code>send</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>recv</code></td>
+<td align="center"><code>recv</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3858,13 +3764,13 @@ Interfaces: InferTypeOpInterface, TiedOpInterface</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -3891,49 +3797,34 @@ arbitrary host logic.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_6">Attributes:<a class="headerlink" href="#attributes_6" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>entry_point</code></td>
-<td style="text-align: center;">::mlir::SymbolRefAttr</td>
-<td>symbol reference attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>entry_point</code></td><td>::mlir::SymbolRefAttr</td><td>symbol reference attribute</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
 </table>
+
 <h5 id="operands_8">Operands:<a class="headerlink" href="#operands_8" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>workload</code></td>
+<td align="center"><code>workload</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>arguments</code></td>
+<td align="center"><code>arguments</code></td>
 <td>any type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>argument_dims</code></td>
+<td align="center"><code>argument_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_dims</code></td>
+<td align="center"><code>result_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -3942,13 +3833,13 @@ arbitrary host logic.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -3978,31 +3869,12 @@ produces an XYZ workgroup count for the 3D grid dispatch.</p>
 <p>Interfaces: Symbol</p>
 <h5 id="attributes_7">Attributes:<a class="headerlink" href="#attributes_7" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>function_ref</code></td>
-<td style="text-align: center;">::mlir::FlatSymbolRefAttr</td>
-<td>flat symbol reference attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>function_ref</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
 </table>
+
 <h4 id="flowexecutable-flowexecutableop"><code>flow.executable</code> (Flow::ExecutableOp)<a class="headerlink" href="#flowexecutable-flowexecutableop" title="Permanent link">link</a></h4>
 <p><em>Generic executable module</em></p>
 <p>Syntax:</p>
@@ -4014,30 +3886,15 @@ produces an XYZ workgroup count for the 3D grid dispatch.</p>
 <p>An executable module containing one or more public functions. The contents
 of the functions are safe to dispatch and can be lowered further to
 target-specific backend IR representations.</p>
-<p>Traits: IsolatedFromAbove, SingleBlockImplicitTerminator<IREE::Flow::ExecutableEndOp>, SymbolTable</p>
+<p>Traits: IsolatedFromAbove, SingleBlock, SingleBlockImplicitTerminator<IREE::Flow::ExecutableEndOp>, SymbolTable</p>
 <p>Interfaces: Symbol</p>
 <h5 id="attributes_8">Attributes:<a class="headerlink" href="#attributes_8" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
+
 <h3 id="partitioned-region-ops">Partitioned region ops<a class="headerlink" href="#partitioned-region-ops" title="Permanent link">link</a></h3>
 <h4 id="flowdispatchregion-flowdispatchregionop"><code>flow.dispatch.region</code> (Flow::DispatchRegionOp)<a class="headerlink" href="#flowdispatchregion-flowdispatchregionop" title="Permanent link">link</a></h4>
 <p><em>A group of ops</em></p>
@@ -4053,24 +3910,24 @@ deciding which ops should form a dispatch region.</p>
 region represent the workload for the dispatch, and returns the number of
 workgroups for the dispatch. The region is lowered directly to
 <code>workload_count</code> region of <code>dispatch.workgroups</code>.</p>
-<p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments, SingleBlockImplicitTerminator<IREE::Flow::ReturnOp></p>
+<p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), Util_ShapeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="operands_9">Operands:<a class="headerlink" href="#operands_9" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_dims</code></td>
+<td align="center"><code>result_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>workload</code></td>
+<td align="center"><code>workload</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4079,13 +3936,13 @@ workgroups for the dispatch. The region is lowered directly to
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4110,58 +3967,39 @@ results of regions that may overlap.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>static_offsets</code></td>
-<td style="text-align: center;">::mlir::DenseI64ArrayAttr</td>
-<td>i64 dense array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>static_sizes</code></td>
-<td style="text-align: center;">::mlir::DenseI64ArrayAttr</td>
-<td>i64 dense array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>static_strides</code></td>
-<td style="text-align: center;">::mlir::DenseI64ArrayAttr</td>
-<td>i64 dense array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>static_offsets</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
+<tr><td><code>static_sizes</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
+<tr><td><code>static_strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
+
 <h5 id="operands_10">Operands:<a class="headerlink" href="#operands_10" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>dispatch.tensor</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_dims</code></td>
+<td align="center"><code>source_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>offsets</code></td>
+<td align="center"><code>offsets</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>sizes</code></td>
+<td align="center"><code>sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>strides</code></td>
+<td align="center"><code>strides</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4170,13 +4008,13 @@ results of regions that may overlap.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -4200,62 +4038,43 @@ workgroup stores into overlapping regions of the full output tensor.</p>
 <p>Interfaces: OffsetSizeAndStrideOpInterface, Util_ShapeAwareOp</p>
 <h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>static_offsets</code></td>
-<td style="text-align: center;">::mlir::DenseI64ArrayAttr</td>
-<td>i64 dense array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>static_sizes</code></td>
-<td style="text-align: center;">::mlir::DenseI64ArrayAttr</td>
-<td>i64 dense array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>static_strides</code></td>
-<td style="text-align: center;">::mlir::DenseI64ArrayAttr</td>
-<td>i64 dense array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>static_offsets</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
+<tr><td><code>static_sizes</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
+<tr><td><code>static_strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
+
 <h5 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>dispatch.tensor</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_dims</code></td>
+<td align="center"><code>target_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>offsets</code></td>
+<td align="center"><code>offsets</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>sizes</code></td>
+<td align="center"><code>sizes</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>strides</code></td>
+<td align="center"><code>strides</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4276,17 +4095,17 @@ pass-through result of this op to allow for SSA-based shape resolution.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
+<td align="center"><code>operand</code></td>
 <td>dispatch.tensor</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>dynamic_dims</code></td>
+<td align="center"><code>dynamic_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4295,13 +4114,13 @@ pass-through result of this op to allow for SSA-based shape resolution.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>dispatch.tensor</td>
 </tr>
 </tbody>
@@ -4324,32 +4143,21 @@ built-in variable.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>dimension</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
+
 <h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4373,32 +4181,21 @@ built-in variable.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_12">Attributes:<a class="headerlink" href="#attributes_12" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>dimension</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
+
 <h5 id="results_14">Results:<a class="headerlink" href="#results_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4427,32 +4224,21 @@ built-in variable.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_13">Attributes:<a class="headerlink" href="#attributes_13" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>dimension</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
+
 <h5 id="results_15">Results:<a class="headerlink" href="#results_15" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4519,49 +4305,38 @@ argument by writing the argument operand's SSA value instead of its type:
 E.g., in the above example, <code>-&gt; %0</code> would tie the first argument to the
 result. In that case, there would be no separate block argument for the
 result.</p>
-<p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments, IsolatedFromAbove, SingleBlockImplicitTerminator<IREE::Flow::ReturnOp></p>
+<p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments, IsolatedFromAbove</p>
 <p>Interfaces: ClosureOpInterface, ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), TiedOpInterface, Util_ShapeAwareOp</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_14">Attributes:<a class="headerlink" href="#attributes_14" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
 </table>
+
 <h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>workload</code></td>
+<td align="center"><code>workload</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>arguments</code></td>
+<td align="center"><code>arguments</code></td>
 <td>any type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>argument_dims</code></td>
+<td align="center"><code>argument_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_dims</code></td>
+<td align="center"><code>result_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4570,13 +4345,13 @@ result.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4588,19 +4363,19 @@ result.</p>
 </code></pre></div>
 <p>Returns the given values from the region and back to the host code.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, ReturnLike, Terminator</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
+<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), RegionBranchTerminatorOpInterface</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="operands_14">Operands:<a class="headerlink" href="#operands_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
+<td align="center"><code>operands</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4629,45 +4404,30 @@ asynchronous host call with 'coarse-fences' instead.</p>
 <p>Interfaces: CallOpInterface, FLOW_StreamableOp, SymbolUserOpInterface, TiedOpInterface, Util_ShapeAwareOp</p>
 <h5 id="attributes_15">Attributes:<a class="headerlink" href="#attributes_15" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>callee</code></td>
-<td style="text-align: center;">::mlir::FlatSymbolRefAttr</td>
-<td>flat symbol reference attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>callee</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
 </table>
+
 <h5 id="operands_15">Operands:<a class="headerlink" href="#operands_15" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>arguments</code></td>
+<td align="center"><code>arguments</code></td>
 <td>any type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>argument_dims</code></td>
+<td align="center"><code>argument_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_dims</code></td>
+<td align="center"><code>result_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4676,13 +4436,13 @@ asynchronous host call with 'coarse-fences' instead.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>results</code></td>
+<td align="center"><code>results</code></td>
 <td>any type</td>
 </tr>
 </tbody>
@@ -4706,46 +4466,15 @@ operation via <code>flow.call</code>. Today only external functions are allowed.
 <p>Interfaces: CallableOpInterface, FunctionOpInterface, Symbol</p>
 <h5 id="attributes_16">Attributes:<a class="headerlink" href="#attributes_16" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>function_type</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>type attribute of function type</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>arg_attrs</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>Array of dictionary attributes</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>res_attrs</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>Array of dictionary attributes</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>function_type</code></td><td>::mlir::TypeAttr</td><td>type attribute of function type</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>arg_attrs</code></td><td>::mlir::ArrayAttr</td><td>Array of dictionary attributes</td></tr>
+<tr><td><code>res_attrs</code></td><td>::mlir::ArrayAttr</td><td>Array of dictionary attributes</td></tr>
 </table>
+
 <h3 id="tensor-ops">Tensor ops<a class="headerlink" href="#tensor-ops" title="Permanent link">link</a></h3>
 <h4 id="flowdispatchworkgroup_count_from_dag_root-flowdispatchworkgroupcountfromdagrootop"><code>flow.dispatch.workgroup_count_from_dag_root</code> (Flow::DispatchWorkgroupCountFromDagRootOp)<a class="headerlink" href="#flowdispatchworkgroup_count_from_dag_root-flowdispatchworkgroupcountfromdagrootop" title="Permanent link">link</a></h4>
 <p>_
@@ -4769,13 +4498,13 @@ and distribute the root of the DAG).</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
+<td align="center"><code>operands</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4784,21 +4513,21 @@ and distribute the root of the DAG).</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>x</code></td>
+<td align="center"><code>x</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>y</code></td>
+<td align="center"><code>y</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>z</code></td>
+<td align="center"><code>z</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4830,13 +4559,13 @@ workload could be more than just values of index types.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
+<td align="center"><code>operands</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4845,21 +4574,21 @@ workload could be more than just values of index types.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>x</code></td>
+<td align="center"><code>x</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>y</code></td>
+<td align="center"><code>y</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>z</code></td>
+<td align="center"><code>z</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4887,32 +4616,21 @@ list/attribute that can be plumbed through without using explicit ops.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes_17">Attributes:<a class="headerlink" href="#attributes_17" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>ordinal</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>ordinal</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
+
 <h5 id="operands_18">Operands:<a class="headerlink" href="#operands_18" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
+<td align="center"><code>operand</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4921,13 +4639,13 @@ list/attribute that can be plumbed through without using explicit ops.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4951,13 +4669,13 @@ lowering.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_dims</code></td>
+<td align="center"><code>result_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -4966,13 +4684,13 @@ lowering.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -4991,17 +4709,17 @@ lowering.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
+<td align="center"><code>operand</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>argument_dims</code></td>
+<td align="center"><code>argument_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5010,13 +4728,13 @@ lowering.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -5035,32 +4753,21 @@ information should be hidden from the compiler and resolved at runtime.</p>
 </code></pre></div>
 <h5 id="attributes_18">Attributes:<a class="headerlink" href="#attributes_18" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>value</code></td>
-<td style="text-align: center;">::mlir::ElementsAttr</td>
-<td>constant vector/tensor attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td>::mlir::ElementsAttr</td><td>constant vector/tensor attribute</td></tr>
 </table>
+
 <h5 id="results_23">Results:<a class="headerlink" href="#results_23" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>tensor of any type values</td>
 </tr>
 </tbody>
@@ -5080,13 +4787,13 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result_dims</code></td>
+<td align="center"><code>result_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5095,13 +4802,13 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -5121,21 +4828,21 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_dims</code></td>
+<td align="center"><code>source_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>indices</code></td>
+<td align="center"><code>indices</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5144,13 +4851,13 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>index or signless integer or floating-point or complex-type or vector of any type values</td>
 </tr>
 </tbody>
@@ -5171,21 +4878,21 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_dims</code></td>
+<td align="center"><code>source_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_dims</code></td>
+<td align="center"><code>result_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5194,13 +4901,13 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -5221,29 +4928,29 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>source</code></td>
+<td align="center"><code>source</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>source_dims</code></td>
+<td align="center"><code>source_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>start_indices</code></td>
+<td align="center"><code>start_indices</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>lengths</code></td>
+<td align="center"><code>lengths</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_dims</code></td>
+<td align="center"><code>result_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5252,13 +4959,13 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -5277,17 +4984,17 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>index or signless integer or floating-point or complex-type</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>result_dims</code></td>
+<td align="center"><code>result_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5296,13 +5003,13 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -5322,25 +5029,25 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
+<td align="center"><code>value</code></td>
 <td>index or signless integer or floating-point or complex-type or vector of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_dims</code></td>
+<td align="center"><code>target_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>indices</code></td>
+<td align="center"><code>indices</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5349,13 +5056,13 @@ any ranges of the tensor that are later read.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
@@ -5376,17 +5083,17 @@ calculations and is removed during lowering.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operand</code></td>
+<td align="center"><code>operand</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>dynamic_dims</code></td>
+<td align="center"><code>dynamic_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5395,55 +5102,51 @@ calculations and is removed during lowering.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
 </table>
 <h4 id="flowtensortrace-flowtensortraceop"><code>flow.tensor.trace</code> (Flow::TensorTraceOp)<a class="headerlink" href="#flowtensortrace-flowtensortraceop" title="Permanent link">link</a></h4>
-<p><em>Trace value(s) operation</em></p>
+<p><em>Traces one or more tensor values at runtime</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `flow.tensor.trace` attr-dict ($operands^ `:` type($operands))?
+<div class="highlight"><pre><span></span><code>operation ::= `flow.tensor.trace` $key `=` `[`
+              custom&lt;ShapedOperandList&gt;($values, type($values), $value_dims)
+              `]` attr-dict-with-keyword
 </code></pre></div>
 <p>Traces out to a runtime trace sink (console, log file, etc) the given
-tensors and titles them with the given key. The key is informational only
-and useful for titling/marking specific sets of tensors for easier
-searching.</p>
+tensors. The key is arbitrary and can be used for identifying the set of
+values being traced.</p>
+<p>Traits: AttrSizedOperandSegments</p>
+<p>Interfaces: ShapeAwareOpInterface</p>
 <h5 id="attributes_19">Attributes:<a class="headerlink" href="#attributes_19" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>key</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>key</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
+
 <h5 id="operands_28">Operands:<a class="headerlink" href="#operands_28" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
+<td align="center"><code>values</code></td>
 <td>ranked tensor of any type values</td>
+</tr>
+<tr>
+<td align="center"><code>value_dims</code></td>
+<td>index</td>
 </tr>
 </tbody>
 </table>
@@ -5464,29 +5167,29 @@ given offset indices.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th align="center">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>target</code></td>
+<td align="center"><code>target</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>target_dims</code></td>
+<td align="center"><code>target_dims</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>start_indices</code></td>
+<td align="center"><code>start_indices</code></td>
 <td>index</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>update</code></td>
+<td align="center"><code>update</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>update_dims</code></td>
+<td align="center"><code>update_dims</code></td>
 <td>index</td>
 </tr>
 </tbody>
@@ -5495,13 +5198,13 @@ given offset indices.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Result</th>
+<th align="center">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
+<td align="center"><code>result</code></td>
 <td>ranked tensor of any type values</td>
 </tr>
 </tbody>
