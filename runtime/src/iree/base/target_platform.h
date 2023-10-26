@@ -204,7 +204,7 @@ enum iree_arch_enum_e {
 
 // Use alternate implementations of printf that support the "z" format types.
 // https://stackoverflow.com/questions/68900199/how-to-get-mingw-gcc-to-recognize-the-zu-format-specifier-for-size-t
-#define __USE_MINGW_ANSI_STDIO 1
+#define __USE_MINGW_ANSI_STDIO 0
 #elif defined(_MSC_VER)
 #define IREE_COMPILER_MSVC 1
 #else
