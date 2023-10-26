@@ -133,6 +133,11 @@ iree_select_compiler_opts(IREE_DEFAULT_COPTS
 
     # Enable C11 standards conforming mode.
     "$<$<COMPILE_LANGUAGE:C>:/std:c11>"
+
+  GCC
+    # Use alternate implementations of printf that support the "z" format types.
+    # https://stackoverflow.com/questions/68900199/how-to-get-mingw-gcc-to-recognize-the-zu-format-specifier-for-size-t
+    "-D__USE_MINGW_ANSI_STDIO=1"
 )
 
 # Compiler diagnostics.
