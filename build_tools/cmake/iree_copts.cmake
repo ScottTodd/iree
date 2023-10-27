@@ -133,6 +133,14 @@ iree_select_compiler_opts(IREE_DEFAULT_COPTS
 
     # Enable C11 standards conforming mode.
     "$<$<COMPILE_LANGUAGE:C>:/std:c11>"
+
+  CLANG_WINDOWS
+    # Copy some flags from the MSVC_OR_CLANG_CL group.
+    "-DWIN32_LEAN_AND_MEAN"
+    "-DNOMINMAX"
+    "-D_USE_MATH_DEFINES"
+    "-D_CRT_SECURE_NO_WARNINGS"
+    "-D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES"
 )
 
 # Compiler diagnostics.
