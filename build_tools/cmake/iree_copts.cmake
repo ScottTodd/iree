@@ -213,10 +213,6 @@ iree_select_compiler_opts(IREE_DEFAULT_COPTS
     # intrinsics (#14168).
     "-fno-lax-vector-conversions"
 
-  CLANG_WINDOWS
-    # TODO(scotttodd): fix unused variables detected by clang on Windows
-    "-Wno-unused-variable"
-
   GCC
     "-Wall"
     "-Werror"

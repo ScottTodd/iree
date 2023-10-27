@@ -62,9 +62,8 @@ static void iree_dynamic_library_init_temp_paths(void) {
   //
   // See:
   // https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-gettemppatha
-  // TODO(scotttodd): fix unused variable temp_path_length
   char temp_path[MAX_PATH];
-  DWORD temp_path_length = GetTempPathA(IREE_ARRAYSIZE(temp_path), temp_path);
+  GetTempPathA(IREE_ARRAYSIZE(temp_path), temp_path);
 
   // Append the process ID to the path; this is like what _mktemp does but
   // without all the hoops.
