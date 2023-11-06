@@ -1378,6 +1378,8 @@
       
         
       
+        
+      
     
     
     <li class="md-nav__item md-nav__item--nested">
@@ -1478,7 +1480,7 @@
         
   
   <span class="md-ellipsis">
-    HALInline
+    HAL/Inline
   </span>
   
 
@@ -1498,7 +1500,27 @@
         
   
   <span class="md-ellipsis">
-    HALLoader
+    HAL/Loader
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IOParameters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IO/Parameters
   </span>
   
 
@@ -1706,6 +1728,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#iree_inputbuffersubspan-inputbuffersubspanop" class="md-nav__link">
+    iree_input.buffer.subspan (Input::BufferSubspanOp)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#iree_inputbuffer_viewcreate-inputbufferviewcreateop" class="md-nav__link">
     iree_input.buffer_view.create (Input::BufferViewCreateOp)
   </a>
@@ -1722,6 +1751,26 @@
           <li class="md-nav__item">
   <a href="#iree_inputbuffer_viewrank-inputbufferviewrankop" class="md-nav__link">
     iree_input.buffer_view.rank (Input::BufferViewRankOp)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#byte-buffer-ops" class="md-nav__link">
+    Byte buffer ops
+  </a>
+  
+    <nav class="md-nav" aria-label="Byte buffer ops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iree_inputbyte_bufferconstant-inputbytebufferconstantop" class="md-nav__link">
+    iree_input.byte_buffer.constant (Input::ByteBufferConstantOp)
   </a>
   
 </li>
@@ -1942,6 +1991,13 @@
   
     <nav class="md-nav" aria-label="Tensor ops">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iree_inputtensorbitcast-inputtensorbitcastop" class="md-nav__link">
+    iree_input.tensor.bitcast (Input::TensorBitCastOp)
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#iree_inputtensorclone-inputtensorcloneop" class="md-nav__link">
@@ -2177,6 +2233,13 @@
           <li class="md-nav__item">
   <a href="#bufferviewtype" class="md-nav__link">
     BufferViewType
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bytebuffertype" class="md-nav__link">
+    ByteBufferType
   </a>
   
 </li>
@@ -2502,8 +2565,10 @@
       <a href="../../../developers/general/contributing/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 13H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25v-8.5C0 1.784.784 1 1.75 1ZM1.5 2.75v8.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Zm5.28 1.72a.75.75 0 0 1 0 1.06L5.31 7l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.75.75 0 0 1 1.06 0Zm2.44 0a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L10.69 7 9.22 5.53a.75.75 0 0 1 0-1.06Z"/></svg>
+  
   <span class="md-ellipsis">
-    Contributing
+    Contributing to IREE
   </span>
   
 
@@ -2521,6 +2586,8 @@
     <li class="md-nav__item">
       <a href="../../../developers/general/developer-overview/" class="md-nav__link">
         
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/></svg>
   
   <span class="md-ellipsis">
     Developer overview
@@ -2542,8 +2609,10 @@
       <a href="../../../developers/general/developer-tips/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 6a6 6 0 0 1 6 6c0 2.22-1.21 4.16-3 5.2V19a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6 6 0 0 1 6-6m2 15v1a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-1h4m6-10h3v2h-3v-2M1 11h3v2H1v-2M13 1v3h-2V1h2M4.92 3.5l2.13 2.14-1.42 1.41L3.5 4.93 4.92 3.5m12.03 2.13 2.12-2.13 1.43 1.43-2.13 2.12-1.42-1.42Z"/></svg>
+  
   <span class="md-ellipsis">
-    Developer tips
+    Developer tips and tricks
   </span>
   
 
@@ -2561,6 +2630,8 @@
     <li class="md-nav__item">
       <a href="../../../developers/general/release-management/" class="md-nav__link">
         
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 8.271 4.625-2.683a.25.25 0 0 0 .125-.216V5.677L8.75 8.432Z"/></svg>
   
   <span class="md-ellipsis">
     Release management
@@ -2581,6 +2652,8 @@
     <li class="md-nav__item">
       <a href="../../../developers/general/testing-guide/" class="md-nav__link">
         
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06Z"/></svg>
   
   <span class="md-ellipsis">
     Testing guide
@@ -2658,6 +2731,8 @@
       <a href="../../../developers/building/bazel/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M15 2.75a.75.75 0 0 1-.75.75h-4a.75.75 0 0 1 0-1.5h4a.75.75 0 0 1 .75.75Zm-8.5.75v1.25a.75.75 0 0 0 1.5 0v-4a.75.75 0 0 0-1.5 0V2H1.75a.75.75 0 0 0 0 1.5H6.5Zm1.25 5.25a.75.75 0 0 0 0-1.5h-6a.75.75 0 0 0 0 1.5h6ZM15 8a.75.75 0 0 1-.75.75H11.5V10a.75.75 0 1 1-1.5 0V6a.75.75 0 0 1 1.5 0v1.25h2.75A.75.75 0 0 1 15 8Zm-9 5.25v-2a.75.75 0 0 0-1.5 0v1.25H1.75a.75.75 0 0 0 0 1.5H4.5v1.25a.75.75 0 0 0 1.5 0v-2Zm9 0a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1 0-1.5h6a.75.75 0 0 1 .75.75Z"/></svg>
+  
   <span class="md-ellipsis">
     Building with Bazel
   </span>
@@ -2678,6 +2753,8 @@
       <a href="../../../developers/building/emscripten/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.745 0v.129a2.752 2.752 0 1 1-5.504 0V0H0v24h24V0h-9.255zm-3.291 21.431-1.169-5.783h-.02l-1.264 5.783H7.39l-1.824-8.497h1.59l1.088 5.783h.02l1.311-5.783h1.487l1.177 5.854h.02l1.242-5.854h1.561l-2.027 8.497h-1.581zm8.755 0-.542-1.891h-2.861l-.417 1.891h-1.59l2.056-8.497h2.509l2.5 8.497h-1.655zm-2.397-6.403-.694 3.118h2.159l-.796-3.118h-.669z"/></svg>
+  
   <span class="md-ellipsis">
     Building with Emscripten
   </span>
@@ -2695,11 +2772,13 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developers/building/cmake-options-and-variables/" class="md-nav__link">
+      <a href="../../../developers/building/cmake-options/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.769.066.067 23.206l12.76-10.843zm11.438 23.868L7.471 17.587 0 23.934zm.793-.198L12.298.463l1.719 19.24zM12.893 12.959l-5.025 4.298 5.62 2.248z"/></svg>
+  
   <span class="md-ellipsis">
-    CMake options and variables
+    CMake options
   </span>
   
 
@@ -2717,6 +2796,8 @@
     <li class="md-nav__item">
       <a href="../../../developers/building/cmake-with-ccache/" class="md-nav__link">
         
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.769.066.067 23.206l12.76-10.843zm11.438 23.868L7.471 17.587 0 23.934zm.793-.198L12.298.463l1.719 19.24zM12.893 12.959l-5.025 4.298 5.62 2.248z"/></svg>
   
   <span class="md-ellipsis">
     CMake with ccache
@@ -2796,8 +2877,10 @@
       <a href="../../../developers/debugging/android-with-lldb/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.523 15.341a1 1 0 0 1 0-1.999 1 1 0 0 1 0 2m-11.046 0a1 1 0 0 1 0-2 1 1 0 0 1 0 2m11.405-6.02 1.997-3.46a.416.416 0 0 0-.152-.567.416.416 0 0 0-.568.152L17.137 8.95c-1.547-.706-3.284-1.1-5.137-1.1s-3.59.394-5.137 1.1L4.841 5.447a.416.416 0 0 0-.568-.152.416.416 0 0 0-.152.567l1.997 3.46C2.688 11.186.343 14.658 0 18.76h24c-.344-4.102-2.69-7.574-6.119-9.44"/></svg>
+  
   <span class="md-ellipsis">
-    Android debugging with LLDB
+    Android LLDB debugging
   </span>
   
 
@@ -2815,6 +2898,8 @@
     <li class="md-nav__item">
       <a href="../../../developers/debugging/compile-time-regressions/" class="md-nav__link">
         
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>
   
   <span class="md-ellipsis">
     Compile time regression debugging
@@ -2836,6 +2921,8 @@
       <a href="../../../developers/debugging/integration-tests/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>
+  
   <span class="md-ellipsis">
     Integration test debugging
   </span>
@@ -2856,6 +2943,8 @@
       <a href="../../../developers/debugging/releases/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 8.271 4.625-2.683a.25.25 0 0 0 .125-.216V5.677L8.75 8.432Z"/></svg>
+  
   <span class="md-ellipsis">
     Release debugging playbook
   </span>
@@ -2875,6 +2964,8 @@
     <li class="md-nav__item">
       <a href="../../../developers/debugging/sanitizers/" class="md-nav__link">
         
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.36 2.72 1.42 1.42-5.72 5.71c1.07 1.54 1.22 3.39.32 4.59L9.06 8.12c1.2-.9 3.05-.75 4.59.32l5.71-5.72M5.93 17.57c-2.01-2.01-3.24-4.41-3.58-6.65l4.88-2.09 7.44 7.44-2.09 4.88c-2.24-.34-4.64-1.57-6.65-3.58Z"/></svg>
   
   <span class="md-ellipsis">
     Sanitizers (ASan/MSan/TSan)
@@ -2956,6 +3047,8 @@
       <a href="../../../developers/performance/benchmarking/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m11.628 16.186-2.047-2.14 6.791-5.953 1.21 1.302zm8.837 6.047c2.14-2.14 3.535-5.117 3.535-8.466 0-6.604-5.395-12-12-12s-12 5.396-12 12c0 3.35 1.302 6.326 3.535 8.466l1.674-1.675c-1.767-1.767-2.79-4.093-2.79-6.79A9.568 9.568 0 0 1 12 4.185a9.568 9.568 0 0 1 9.581 9.581c0 2.605-1.116 5.024-2.79 6.791Z"/></svg>
+  
   <span class="md-ellipsis">
     Benchmarking
   </span>
@@ -2975,6 +3068,8 @@
     <li class="md-nav__item">
       <a href="../../../developers/performance/benchmark-suites/" class="md-nav__link">
         
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m11.628 16.186-2.047-2.14 6.791-5.953 1.21 1.302zm8.837 6.047c2.14-2.14 3.535-5.117 3.535-8.466 0-6.604-5.395-12-12-12s-12 5.396-12 12c0 3.35 1.302 6.326 3.535 8.466l1.674-1.675c-1.767-1.767-2.79-4.093-2.79-6.79A9.568 9.568 0 0 1 12 4.185a9.568 9.568 0 0 1 9.581 9.581c0 2.605-1.116 5.024-2.79 6.791Z"/></svg>
   
   <span class="md-ellipsis">
     Benchmark suites
@@ -2996,6 +3091,8 @@
       <a href="../../../developers/performance/profiling/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8l6.5 3.78Z"/></svg>
+  
   <span class="md-ellipsis">
     Profiling overview
   </span>
@@ -3015,6 +3112,8 @@
     <li class="md-nav__item">
       <a href="../../../developers/performance/profiling-cpu-events/" class="md-nav__link">
         
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8l6.5 3.78Z"/></svg>
   
   <span class="md-ellipsis">
     Profiling CPUs
@@ -3036,6 +3135,8 @@
       <a href="../../../developers/performance/profiling-gpu-vulkan/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8l6.5 3.78Z"/></svg>
+  
   <span class="md-ellipsis">
     Profiling GPUs using Vulkan
   </span>
@@ -3055,6 +3156,8 @@
     <li class="md-nav__item">
       <a href="../../../developers/performance/profiling-with-tracy/" class="md-nav__link">
         
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8l6.5 3.78Z"/></svg>
   
   <span class="md-ellipsis">
     Profiling with Tracy
@@ -3133,7 +3236,7 @@
         
   
   <span class="md-ellipsis">
-    CUDA backend
+    CUDA backend design
   </span>
   
 
@@ -3264,6 +3367,8 @@
       <a href="../../../developers/usage-best-practices/" class="md-nav__link">
         
   
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 6a6 6 0 0 1 6 6c0 2.22-1.21 4.16-3 5.2V19a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6 6 0 0 1 6-6m2 15v1a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-1h4m6-10h3v2h-3v-2M1 11h3v2H1v-2M13 1v3h-2V1h2M4.92 3.5l2.13 2.14-1.42 1.41L3.5 4.93 4.92 3.5m12.03 2.13 2.12-2.13 1.43 1.43-2.13 2.12-1.42-1.42Z"/></svg>
+  
   <span class="md-ellipsis">
     Usage best practices
   </span>
@@ -3283,6 +3388,8 @@
     <li class="md-nav__item">
       <a href="../../../developers/vulkan-environment-setup/" class="md-nav__link">
         
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v4c0 .372-.116.717-.314 1 .198.283.314.628.314 1v4a1.75 1.75 0 0 1-1.75 1.75H1.75A1.75 1.75 0 0 1 0 12.75v-4c0-.358.109-.707.314-1a1.739 1.739 0 0 1-.314-1v-4C0 1.784.784 1 1.75 1ZM1.5 2.75v4c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-4a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Zm.25 5.75a.25.25 0 0 0-.25.25v4c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-4a.25.25 0 0 0-.25-.25ZM7 4.75A.75.75 0 0 1 7.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 7 4.75ZM7.75 10h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM3 4.75A.75.75 0 0 1 3.75 4h.5a.75.75 0 0 1 0 1.5h-.5A.75.75 0 0 1 3 4.75ZM3.75 10h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1 0-1.5Z"/></svg>
   
   <span class="md-ellipsis">
     Vulkan environment setup
@@ -3686,6 +3793,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#iree_inputbuffersubspan-inputbuffersubspanop" class="md-nav__link">
+    iree_input.buffer.subspan (Input::BufferSubspanOp)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#iree_inputbuffer_viewcreate-inputbufferviewcreateop" class="md-nav__link">
     iree_input.buffer_view.create (Input::BufferViewCreateOp)
   </a>
@@ -3702,6 +3816,26 @@
           <li class="md-nav__item">
   <a href="#iree_inputbuffer_viewrank-inputbufferviewrankop" class="md-nav__link">
     iree_input.buffer_view.rank (Input::BufferViewRankOp)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#byte-buffer-ops" class="md-nav__link">
+    Byte buffer ops
+  </a>
+  
+    <nav class="md-nav" aria-label="Byte buffer ops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iree_inputbyte_bufferconstant-inputbytebufferconstantop" class="md-nav__link">
+    iree_input.byte_buffer.constant (Input::ByteBufferConstantOp)
   </a>
   
 </li>
@@ -3922,6 +4056,13 @@
   
     <nav class="md-nav" aria-label="Tensor ops">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iree_inputtensorbitcast-inputtensorbitcastop" class="md-nav__link">
+    iree_input.tensor.bitcast (Input::TensorBitCastOp)
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#iree_inputtensorclone-inputtensorcloneop" class="md-nav__link">
@@ -4162,6 +4303,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#bytebuffertype" class="md-nav__link">
+    ByteBufferType
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#listtype" class="md-nav__link">
     ListType
   </a>
@@ -4227,9 +4375,14 @@ LLVM/MLIR's API surface is itself unstable.</p>
 <li><a href="#iree_input-dialect">'iree_input' Dialect</a><ul>
 <li><a href="#operation-definition">Operation definition</a><ul>
 <li><a href="#buffer-and-buffer-view-ops">Buffer and buffer view ops</a><ul>
+<li><a href="#iree_inputbuffersubspan-inputbuffersubspanop">iree_input.buffer.subspan (Input::BufferSubspanOp)</a></li>
 <li><a href="#iree_inputbuffer_viewcreate-inputbufferviewcreateop">iree_input.buffer_view.create (Input::BufferViewCreateOp)</a></li>
 <li><a href="#iree_inputbuffer_viewdim-inputbufferviewdimop">iree_input.buffer_view.dim (Input::BufferViewDimOp)</a></li>
 <li><a href="#iree_inputbuffer_viewrank-inputbufferviewrankop">iree_input.buffer_view.rank (Input::BufferViewRankOp)</a></li>
+</ul>
+</li>
+<li><a href="#byte-buffer-ops">Byte buffer ops</a><ul>
+<li><a href="#iree_inputbyte_bufferconstant-inputbytebufferconstantop">iree_input.byte_buffer.constant (Input::ByteBufferConstantOp)</a></li>
 </ul>
 </li>
 <li><a href="#compiler-hint-ops">Compiler hint ops</a><ul>
@@ -4269,6 +4422,7 @@ LLVM/MLIR's API surface is itself unstable.</p>
 </ul>
 </li>
 <li><a href="#tensor-ops">Tensor ops</a><ul>
+<li><a href="#iree_inputtensorbitcast-inputtensorbitcastop">iree_input.tensor.bitcast (Input::TensorBitCastOp)</a></li>
 <li><a href="#iree_inputtensorclone-inputtensorcloneop">iree_input.tensor.clone (Input::TensorCloneOp)</a></li>
 <li><a href="#iree_inputtensorload-inputtensorloadop">iree_input.tensor.load (Input::TensorLoadOp)</a></li>
 <li><a href="#iree_inputtensorreshape-inputtensorreshapeop">iree_input.tensor.reshape (Input::TensorReshapeOp)</a></li>
@@ -4310,6 +4464,7 @@ LLVM/MLIR's API surface is itself unstable.</p>
 <li><a href="#type-definition">Type definition</a><ul>
 <li><a href="#buffertype">BufferType</a></li>
 <li><a href="#bufferviewtype">BufferViewType</a></li>
+<li><a href="#bytebuffertype">ByteBufferType</a></li>
 <li><a href="#listtype">ListType</a></li>
 <li><a href="#ptrtype">PtrType</a></li>
 <li><a href="#varianttype">VariantType</a></li>
@@ -4321,6 +4476,56 @@ LLVM/MLIR's API surface is itself unstable.</p>
 </div>
 <h2 id="operation-definition">Operation definition<a class="headerlink" href="#operation-definition" title="Permanent link">link</a></h2>
 <h3 id="buffer-and-buffer-view-ops">Buffer and buffer view ops<a class="headerlink" href="#buffer-and-buffer-view-ops" title="Permanent link">link</a></h3>
+<h4 id="iree_inputbuffersubspan-inputbuffersubspanop"><code>iree_input.buffer.subspan</code> (Input::BufferSubspanOp)<a class="headerlink" href="#iree_inputbuffersubspan-inputbuffersubspanop" title="Permanent link">link</a></h4>
+<p><em>Buffer subspan operation</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_input.buffer.subspan` `&lt;` $source_buffer `:` type($source_buffer) `&gt;`
+              `` `[` $source_offset `,` $length `]`
+              `:` type($result)
+              attr-dict-with-keyword
+</code></pre></div>
+<p>Returns a reference to a subspan of the buffer.</p>
+<p>Traits: AlwaysSpeculatableImplTrait</p>
+<p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface</p>
+<p>Effects: MemoryEffects::Effect{}</p>
+<h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>source_buffer</code></td>
+<td>Buffer is an untyped bag of bits with no shape or dtype</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>source_offset</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>length</code></td>
+<td>index</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results">Results:<a class="headerlink" href="#results" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>result</code></td>
+<td>Buffer is an untyped bag of bits with no shape or dtype</td>
+</tr>
+</tbody>
+</table>
 <h4 id="iree_inputbuffer_viewcreate-inputbufferviewcreateop"><code>iree_input.buffer_view.create</code> (Input::BufferViewCreateOp)<a class="headerlink" href="#iree_inputbuffer_viewcreate-inputbufferviewcreateop" title="Permanent link">link</a></h4>
 <p><em>Buffer view reference initializer</em></p>
 <p>Syntax:</p>
@@ -4339,7 +4544,7 @@ along with the contents.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
+<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4370,11 +4575,11 @@ along with the contents.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>shape</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results">Results:<a class="headerlink" href="#results" title="Permanent link">link</a></h5>
+<h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4400,60 +4605,10 @@ along with the contents.</p>
 <p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>index</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>index</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
-<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>buffer_view</code></td>
-<td>View into a buffer, with runtime shape and element type</td>
-</tr>
-</tbody>
-</table>
-<h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>result</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h4 id="iree_inputbuffer_viewrank-inputbufferviewrankop"><code>iree_input.buffer_view.rank</code> (Input::BufferViewRankOp)<a class="headerlink" href="#iree_inputbuffer_viewrank-inputbufferviewrankop" title="Permanent link">link</a></h4>
-<p><em>Buffer view rank query</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `iree_input.buffer_view.rank` $buffer_view attr-dict `:` type($result)
-</code></pre></div>
-<p>Returns the rank of the buffer view.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+
 <h5 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -4484,17 +4639,15 @@ along with the contents.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="compiler-hint-ops">Compiler hint ops<a class="headerlink" href="#compiler-hint-ops" title="Permanent link">link</a></h3>
-<h4 id="iree_inputoptimization_barrier-inputoptimizationbarrierop"><code>iree_input.optimization_barrier</code> (Input::OptimizationBarrierOp)<a class="headerlink" href="#iree_inputoptimization_barrier-inputoptimizationbarrierop" title="Permanent link">link</a></h4>
-<p><em>Prevents compiler optimizations across a value.</em></p>
+<h4 id="iree_inputbuffer_viewrank-inputbufferviewrankop"><code>iree_input.buffer_view.rank</code> (Input::BufferViewRankOp)<a class="headerlink" href="#iree_inputbuffer_viewrank-inputbufferviewrankop" title="Permanent link">link</a></h4>
+<p><em>Buffer view rank query</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `iree_input.optimization_barrier` attr-dict
-              ($operands^ `:` type($operands))?
+<div class="highlight"><pre><span></span><code>operation ::= `iree_input.buffer_view.rank` $buffer_view attr-dict `:` type($result)
 </code></pre></div>
-<p>Wraps any operands in an unoptimizable identity to prevent its results from
-being folded. It will be dropped during the final step in compilation and
-has no effect at runtime.</p>
-<p>Traits: SameOperandsAndResultType</p>
+<p>Returns the rank of the buffer view.</p>
+<p>Traits: AlwaysSpeculatableImplTrait</p>
+<p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface)</p>
+<p>Effects: MemoryEffects::Effect{}</p>
 <h5 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -4505,8 +4658,8 @@ has no effect at runtime.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
-<td>any type</td>
+<td style="text-align: center;"><code>buffer_view</code></td>
+<td>View into a buffer, with runtime shape and element type</td>
 </tr>
 </tbody>
 </table>
@@ -4520,8 +4673,85 @@ has no effect at runtime.</p>
 </thead>
 <tbody>
 <tr>
+<td style="text-align: center;"><code>result</code></td>
+<td>index</td>
+</tr>
+</tbody>
+</table>
+<h3 id="byte-buffer-ops">Byte buffer ops<a class="headerlink" href="#byte-buffer-ops" title="Permanent link">link</a></h3>
+<h4 id="iree_inputbyte_bufferconstant-inputbytebufferconstantop"><code>iree_input.byte_buffer.constant</code> (Input::ByteBufferConstantOp)<a class="headerlink" href="#iree_inputbyte_bufferconstant-inputbytebufferconstantop" title="Permanent link">link</a></h4>
+<p><em>Constant host-side byte buffer</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_input.byte_buffer.constant` ($name^)? attr-dict `:` type($result) `=` $value
+</code></pre></div>
+<p>Defines a compile-time byte buffer based on the given attribute value.
+The attribute will be serialized into the canonical IREE format for the
+chosen host target.</p>
+<p>Traits: AlwaysSpeculatableImplTrait</p>
+<p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface</p>
+<p>Effects: MemoryEffects::Effect{}</p>
+<h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>value</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>alignment</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
+<tr><td><code>mime_type</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+</table>
+
+<h5 id="results_4">Results:<a class="headerlink" href="#results_4" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>result</code></td>
+<td>a reference counted byte buffer</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compiler-hint-ops">Compiler hint ops<a class="headerlink" href="#compiler-hint-ops" title="Permanent link">link</a></h3>
+<h4 id="iree_inputoptimization_barrier-inputoptimizationbarrierop"><code>iree_input.optimization_barrier</code> (Input::OptimizationBarrierOp)<a class="headerlink" href="#iree_inputoptimization_barrier-inputoptimizationbarrierop" title="Permanent link">link</a></h4>
+<p><em>Prevents compiler optimizations across a value.</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_input.optimization_barrier` attr-dict
+              ($operands^ `:` type($operands))?
+</code></pre></div>
+<p>Wraps any operands in an unoptimizable identity to prevent its results from
+being folded. It will be dropped during the final step in compilation and
+has no effect at runtime.</p>
+<p>Traits: SameOperandsAndResultType</p>
+<h5 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>operands</code></td>
+<td>variadic of any type</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results_5">Results:<a class="headerlink" href="#results_5" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
 <td style="text-align: center;"><code>results</code></td>
-<td>any type</td>
+<td>variadic of any type</td>
 </tr>
 </tbody>
 </table>
@@ -4540,29 +4770,14 @@ has no effect at runtime.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), SymbolUserOpInterface, TiedOpInterface</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
+<h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>entry_point</code></td>
-<td style="text-align: center;">::mlir::SymbolRefAttr</td>
-<td>symbol reference attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>tied_operands</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>64-bit integer array attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>entry_point</code></td><td>::mlir::SymbolRefAttr</td><td>symbol reference attribute</td></tr>
+<tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
 </table>
-<h5 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h5>
+
+<h5 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4573,23 +4788,23 @@ has no effect at runtime.</p>
 <tbody>
 <tr>
 <td style="text-align: center;"><code>workload</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>arguments</code></td>
-<td>any type</td>
+<td>variadic of any type</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>argument_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>result_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_4">Results:<a class="headerlink" href="#results_4" title="Permanent link">link</a></h5>
+<h5 id="results_6">Results:<a class="headerlink" href="#results_6" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4600,7 +4815,7 @@ has no effect at runtime.</p>
 <tbody>
 <tr>
 <td style="text-align: center;"><code>results</code></td>
-<td>any type</td>
+<td>variadic of any type</td>
 </tr>
 </tbody>
 </table>
@@ -4616,53 +4831,18 @@ has no effect at runtime.</p>
 </code></pre></div>
 <p>Traits: HasParent<IREE::Input::ExecutableSourceOp>, IsolatedFromAbove</p>
 <p>Interfaces: Symbol</p>
-<h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
+<h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>ordinal</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>size_t</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>layout</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Input::PipelineLayoutAttr</td>
-<td>executable entry point layout specification</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>workgroup_size</code></td>
-<td style="text-align: center;">::mlir::ArrayAttr</td>
-<td>index array attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>subgroup_size</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>size_t</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>workgroup_local_memory</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>ordinal</code></td><td>::mlir::IntegerAttr</td><td>size_t</td></tr>
+<tr><td><code>layout</code></td><td>::mlir::iree_compiler::IREE::Input::PipelineLayoutAttr</td><td>executable entry point layout specification</td></tr>
+<tr><td><code>workgroup_size</code></td><td>::mlir::ArrayAttr</td><td>index array attribute</td></tr>
+<tr><td><code>subgroup_size</code></td><td>::mlir::IntegerAttr</td><td>size_t</td></tr>
+<tr><td><code>workgroup_local_memory</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
+
 <h4 id="iree_inputexecutablesource_end-inputexecutablesourceendop"><code>iree_input.executable.source_end</code> (Input::ExecutableSourceEndOp)<a class="headerlink" href="#iree_inputexecutablesource_end-inputexecutablesourceendop" title="Permanent link">link</a></h4>
 <p><em>Terminator pseudo-op for the executable source op</em></p>
 <p>Syntax:</p>
@@ -4678,35 +4858,16 @@ has no effect at runtime.</p>
               ``
               regions
 </code></pre></div>
-<p>Traits: IsolatedFromAbove, SingleBlockImplicitTerminator<IREE::Input::ExecutableSourceEndOp>, SymbolTable</p>
+<p>Traits: IsolatedFromAbove, SingleBlock, SingleBlockImplicitTerminator<IREE::Input::ExecutableSourceEndOp>, SymbolTable</p>
 <p>Interfaces: Symbol</p>
-<h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
+<h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>objects</code></td>
-<td style="text-align: center;">::mlir::iree_compiler::IREE::Input::ExecutableObjectsAttr</td>
-<td>target-specific object file references</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>objects</code></td><td>::mlir::iree_compiler::IREE::Input::ExecutableObjectsAttr</td><td>target-specific object file references</td></tr>
 </table>
+
 <h3 id="global-variable-ops">Global variable ops<a class="headerlink" href="#global-variable-ops" title="Permanent link">link</a></h3>
 <h4 id="iree_inputglobaladdress-inputglobaladdressop"><code>iree_input.global.address</code> (Input::GlobalAddressOp)<a class="headerlink" href="#iree_inputglobaladdress-inputglobaladdressop" title="Permanent link">link</a></h4>
 <p><em>Returns an address reference to a global</em></p>
@@ -4718,24 +4879,13 @@ global load and store indirect ops.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
+<h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>global</code></td>
-<td style="text-align: center;">FlatSymbolRefAttr</td>
-<td>symbol reference attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>global</code></td><td>FlatSymbolRefAttr</td><td>symbol reference attribute</td></tr>
 </table>
-<h5 id="results_5">Results:<a class="headerlink" href="#results_5" title="Permanent link">link</a></h5>
+
+<h5 id="results_7">Results:<a class="headerlink" href="#results_7" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4756,7 +4906,7 @@ global load and store indirect ops.</p>
 <div class="highlight"><pre><span></span><code>operation ::= `iree_input.global.load.indirect` $global attr-dict `:` type($global) `-&gt;` type($result)
 </code></pre></div>
 <p>Returns a copy of the global value.</p>
-<h5 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h5>
+<h5 id="operands_6">Operands:<a class="headerlink" href="#operands_6" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4771,7 +4921,7 @@ global load and store indirect ops.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_6">Results:<a class="headerlink" href="#results_6" title="Permanent link">link</a></h5>
+<h5 id="results_8">Results:<a class="headerlink" href="#results_8" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4793,24 +4943,13 @@ global load and store indirect ops.</p>
 </code></pre></div>
 <p>Returns a copy of the global value.</p>
 <p>Interfaces: SymbolUserOpInterface</p>
-<h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
+<h5 id="attributes_6">Attributes:<a class="headerlink" href="#attributes_6" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>global</code></td>
-<td style="text-align: center;">FlatSymbolRefAttr</td>
-<td>symbol reference attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>global</code></td><td>FlatSymbolRefAttr</td><td>symbol reference attribute</td></tr>
 </table>
-<h5 id="results_7">Results:<a class="headerlink" href="#results_7" title="Permanent link">link</a></h5>
+
+<h5 id="results_9">Results:<a class="headerlink" href="#results_9" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4839,55 +4978,24 @@ global load and store indirect ops.</p>
 The value is tied to the execution context of the module and different
 contexts will have different global storage.</p>
 <p>Interfaces: Symbol</p>
-<h5 id="attributes_6">Attributes:<a class="headerlink" href="#attributes_6" title="Permanent link">link</a></h5>
+<h5 id="attributes_7">Attributes:<a class="headerlink" href="#attributes_7" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>sym_visibility</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sym_name</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>type</code></td>
-<td style="text-align: center;">::mlir::TypeAttr</td>
-<td>any type attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>is_mutable</code></td>
-<td style="text-align: center;">::mlir::UnitAttr</td>
-<td>unit attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>initializer</code></td>
-<td style="text-align: center;">::mlir::FlatSymbolRefAttr</td>
-<td>flat symbol reference attribute</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>initial_value</code></td>
-<td style="text-align: center;">::mlir::TypedAttr</td>
-<td>TypedAttr instance</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>sym_visibility</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
+<tr><td><code>type</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
+<tr><td><code>is_mutable</code></td><td>::mlir::UnitAttr</td><td>unit attribute</td></tr>
+<tr><td><code>initializer</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
+<tr><td><code>initial_value</code></td><td>::mlir::TypedAttr</td><td>TypedAttr instance</td></tr>
 </table>
+
 <h4 id="iree_inputglobalstoreindirect-inputglobalstoreindirectop"><code>iree_input.global.store.indirect</code> (Input::GlobalStoreIndirectOp)<a class="headerlink" href="#iree_inputglobalstoreindirect-inputglobalstoreindirectop" title="Permanent link">link</a></h4>
 <p><em>Stores a value into a global variable</em></p>
 <p>Syntax:</p>
 <div class="highlight"><pre><span></span><code>operation ::= `iree_input.global.store.indirect` $value `,` $global attr-dict `:` type($value) `-&gt;` type($global)
 </code></pre></div>
 <p>Stores a copy of the value into a global.</p>
-<h5 id="operands_6">Operands:<a class="headerlink" href="#operands_6" title="Permanent link">link</a></h5>
+<h5 id="operands_7">Operands:<a class="headerlink" href="#operands_7" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4913,24 +5021,13 @@ contexts will have different global storage.</p>
 </code></pre></div>
 <p>Stores a copy of the value into a global.</p>
 <p>Interfaces: SymbolUserOpInterface</p>
-<h5 id="attributes_7">Attributes:<a class="headerlink" href="#attributes_7" title="Permanent link">link</a></h5>
+<h5 id="attributes_8">Attributes:<a class="headerlink" href="#attributes_8" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>global</code></td>
-<td style="text-align: center;">FlatSymbolRefAttr</td>
-<td>symbol reference attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>global</code></td><td>FlatSymbolRefAttr</td><td>symbol reference attribute</td></tr>
 </table>
-<h5 id="operands_7">Operands:<a class="headerlink" href="#operands_7" title="Permanent link">link</a></h5>
+
+<h5 id="operands_8">Operands:<a class="headerlink" href="#operands_8" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4955,7 +5052,7 @@ contexts will have different global storage.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, MemoryEffectOpInterface (MemoryEffectOpInterface), NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Allocate on ::mlir::SideEffects::DefaultResource}, MemoryEffects::Effect{}</p>
-<h5 id="operands_8">Operands:<a class="headerlink" href="#operands_8" title="Permanent link">link</a></h5>
+<h5 id="operands_9">Operands:<a class="headerlink" href="#operands_9" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4970,7 +5067,7 @@ contexts will have different global storage.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_8">Results:<a class="headerlink" href="#results_8" title="Permanent link">link</a></h5>
+<h5 id="results_10">Results:<a class="headerlink" href="#results_10" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4994,7 +5091,7 @@ contexts will have different global storage.</p>
 may be null if the element is null or the type does not match.</p>
 <p>Interfaces: MemoryEffectOpInterface (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Read on ::mlir::SideEffects::DefaultResource}</p>
-<h5 id="operands_9">Operands:<a class="headerlink" href="#operands_9" title="Permanent link">link</a></h5>
+<h5 id="operands_10">Operands:<a class="headerlink" href="#operands_10" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5013,7 +5110,7 @@ may be null if the element is null or the type does not match.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_9">Results:<a class="headerlink" href="#results_9" title="Permanent link">link</a></h5>
+<h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5038,7 +5135,7 @@ the list if the existing size is greater than <code>new_size</code> or extend th
 with the default list value of the element type.</p>
 <p>Interfaces: MemoryEffectOpInterface (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Write on ::mlir::SideEffects::DefaultResource}</p>
-<h5 id="operands_10">Operands:<a class="headerlink" href="#operands_10" title="Permanent link">link</a></h5>
+<h5 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5065,7 +5162,7 @@ with the default list value of the element type.</p>
 <p>Sets the element at the given index to the new value.</p>
 <p>Interfaces: MemoryEffectOpInterface (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Write on ::mlir::SideEffects::DefaultResource}</p>
-<h5 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h5>
+<h5 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5096,7 +5193,7 @@ with the default list value of the element type.</p>
 <p>Returns the current size of the list in elements.</p>
 <p>Interfaces: InferTypeOpInterface, MemoryEffectOpInterface (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{MemoryEffects::Read on ::mlir::SideEffects::DefaultResource}</p>
-<h5 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h5>
+<h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5111,7 +5208,7 @@ with the default list value of the element type.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_10">Results:<a class="headerlink" href="#results_10" title="Permanent link">link</a></h5>
+<h5 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5136,7 +5233,7 @@ with the default list value of the element type.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
+<h5 id="operands_14">Operands:<a class="headerlink" href="#operands_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5151,11 +5248,11 @@ with the default list value of the element type.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>source_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
+<h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5179,7 +5276,7 @@ with the default list value of the element type.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_14">Operands:<a class="headerlink" href="#operands_14" title="Permanent link">link</a></h5>
+<h5 id="operands_15">Operands:<a class="headerlink" href="#operands_15" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5194,11 +5291,11 @@ with the default list value of the element type.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>target_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h5>
+<h5 id="results_14">Results:<a class="headerlink" href="#results_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5214,6 +5311,56 @@ with the default list value of the element type.</p>
 </tbody>
 </table>
 <h3 id="tensor-ops">Tensor ops<a class="headerlink" href="#tensor-ops" title="Permanent link">link</a></h3>
+<h4 id="iree_inputtensorbitcast-inputtensorbitcastop"><code>iree_input.tensor.bitcast</code> (Input::TensorBitCastOp)<a class="headerlink" href="#iree_inputtensorbitcast-inputtensorbitcastop" title="Permanent link">link</a></h4>
+<p><em>Bitcasts a tensor</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_input.tensor.bitcast` $source `:`
+              type($source) (`{` $source_dims^ `}`)? `-&gt;`
+              type($result) (`{` $result_dims^ `}`)?
+              attr-dict-with-keyword
+</code></pre></div>
+<p>Bitcasts a tensor to a new shape without modifying the contents.</p>
+<p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments</p>
+<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
+<p>Effects: MemoryEffects::Effect{}</p>
+<h5 id="operands_16">Operands:<a class="headerlink" href="#operands_16" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>source</code></td>
+<td>ranked tensor of any type values</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>source_dims</code></td>
+<td>variadic of index</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>result_dims</code></td>
+<td>variadic of index</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results_15">Results:<a class="headerlink" href="#results_15" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>result</code></td>
+<td>ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
 <h4 id="iree_inputtensorclone-inputtensorcloneop"><code>iree_input.tensor.clone</code> (Input::TensorCloneOp)<a class="headerlink" href="#iree_inputtensorclone-inputtensorcloneop" title="Permanent link">link</a></h4>
 <p><em>Performs a full tensor clone operation</em></p>
 <p>Syntax:</p>
@@ -5224,7 +5371,7 @@ with the default list value of the element type.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_15">Operands:<a class="headerlink" href="#operands_15" title="Permanent link">link</a></h5>
+<h5 id="operands_17">Operands:<a class="headerlink" href="#operands_17" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5239,11 +5386,11 @@ with the default list value of the element type.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>operand_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
+<h5 id="results_16">Results:<a class="headerlink" href="#results_16" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5269,7 +5416,7 @@ with the default list value of the element type.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_16">Operands:<a class="headerlink" href="#operands_16" title="Permanent link">link</a></h5>
+<h5 id="operands_18">Operands:<a class="headerlink" href="#operands_18" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5284,15 +5431,15 @@ with the default list value of the element type.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>source_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>indices</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_14">Results:<a class="headerlink" href="#results_14" title="Permanent link">link</a></h5>
+<h5 id="results_17">Results:<a class="headerlink" href="#results_17" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5319,7 +5466,7 @@ with the default list value of the element type.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_17">Operands:<a class="headerlink" href="#operands_17" title="Permanent link">link</a></h5>
+<h5 id="operands_19">Operands:<a class="headerlink" href="#operands_19" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5334,15 +5481,15 @@ with the default list value of the element type.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>source_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>result_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_15">Results:<a class="headerlink" href="#results_15" title="Permanent link">link</a></h5>
+<h5 id="results_18">Results:<a class="headerlink" href="#results_18" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5369,7 +5516,7 @@ with the default list value of the element type.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_18">Operands:<a class="headerlink" href="#operands_18" title="Permanent link">link</a></h5>
+<h5 id="operands_20">Operands:<a class="headerlink" href="#operands_20" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5384,23 +5531,23 @@ with the default list value of the element type.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>source_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>start_indices</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>lengths</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>result_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_16">Results:<a class="headerlink" href="#results_16" title="Permanent link">link</a></h5>
+<h5 id="results_19">Results:<a class="headerlink" href="#results_19" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5425,7 +5572,7 @@ with the default list value of the element type.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_19">Operands:<a class="headerlink" href="#operands_19" title="Permanent link">link</a></h5>
+<h5 id="operands_21">Operands:<a class="headerlink" href="#operands_21" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5440,11 +5587,11 @@ with the default list value of the element type.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>result_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_17">Results:<a class="headerlink" href="#results_17" title="Permanent link">link</a></h5>
+<h5 id="results_20">Results:<a class="headerlink" href="#results_20" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5470,7 +5617,7 @@ with the default list value of the element type.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_20">Operands:<a class="headerlink" href="#operands_20" title="Permanent link">link</a></h5>
+<h5 id="operands_22">Operands:<a class="headerlink" href="#operands_22" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5489,15 +5636,15 @@ with the default list value of the element type.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>target_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>indices</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_18">Results:<a class="headerlink" href="#results_18" title="Permanent link">link</a></h5>
+<h5 id="results_21">Results:<a class="headerlink" href="#results_21" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5513,32 +5660,23 @@ with the default list value of the element type.</p>
 </tbody>
 </table>
 <h4 id="iree_inputtensortrace-inputtensortraceop"><code>iree_input.tensor.trace</code> (Input::TensorTraceOp)<a class="headerlink" href="#iree_inputtensortrace-inputtensortraceop" title="Permanent link">link</a></h4>
-<p><em>Trace value(s) operation</em></p>
+<p><em>Traces one or more tensor values at runtime</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `iree_input.tensor.trace` $key attr-dict ($operands^ `:` type($operands))?
+<div class="highlight"><pre><span></span><code>operation ::= `iree_input.tensor.trace` $key `=` `[`
+              custom&lt;ShapedOperandList&gt;($values, type($values), $value_dims)
+              `]` attr-dict-with-keyword
 </code></pre></div>
 <p>Traces out to a runtime trace sink (console, log file, etc) the given
-tensors and titles them with the given key. The key is informational only
-and useful for titling/marking specific sets of tensors for easier
-searching.</p>
-<h5 id="attributes_8">Attributes:<a class="headerlink" href="#attributes_8" title="Permanent link">link</a></h5>
+tensors. The key is arbitrary and can be used for identifying the set of
+values being traced.</p>
+<p>Traits: AttrSizedOperandSegments</p>
+<h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>key</code></td>
-<td style="text-align: center;">::mlir::StringAttr</td>
-<td>string attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>key</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
-<h5 id="operands_21">Operands:<a class="headerlink" href="#operands_21" title="Permanent link">link</a></h5>
+
+<h5 id="operands_23">Operands:<a class="headerlink" href="#operands_23" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5548,8 +5686,12 @@ searching.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>operands</code></td>
-<td>ranked tensor of any type values</td>
+<td style="text-align: center;"><code>values</code></td>
+<td>variadic of ranked tensor of any type values</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>value_dims</code></td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
@@ -5566,7 +5708,7 @@ given offset indices.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, AttrSizedOperandSegments</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface), TiedOpInterface</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_22">Operands:<a class="headerlink" href="#operands_22" title="Permanent link">link</a></h5>
+<h5 id="operands_24">Operands:<a class="headerlink" href="#operands_24" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5581,11 +5723,11 @@ given offset indices.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>target_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>start_indices</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>update</code></td>
@@ -5593,11 +5735,11 @@ given offset indices.</p>
 </tr>
 <tr>
 <td style="text-align: center;"><code>update_dims</code></td>
-<td>index</td>
+<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_19">Results:<a class="headerlink" href="#results_19" title="Permanent link">link</a></h5>
+<h5 id="results_22">Results:<a class="headerlink" href="#results_22" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5622,7 +5764,7 @@ given offset indices.</p>
 <p>Traits: AlwaysSpeculatableImplTrait, SameOperandsAndResultType</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_23">Operands:<a class="headerlink" href="#operands_23" title="Permanent link">link</a></h5>
+<h5 id="operands_25">Operands:<a class="headerlink" href="#operands_25" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5641,7 +5783,7 @@ given offset indices.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_20">Results:<a class="headerlink" href="#results_20" title="Permanent link">link</a></h5>
+<h5 id="results_23">Results:<a class="headerlink" href="#results_23" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5665,7 +5807,7 @@ given offset indices.</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="results_21">Results:<a class="headerlink" href="#results_21" title="Permanent link">link</a></h5>
+<h5 id="results_24">Results:<a class="headerlink" href="#results_24" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5696,24 +5838,13 @@ restricted to 3 (XYZ).</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
+<h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>dimension</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
-<h5 id="results_22">Results:<a class="headerlink" href="#results_22" title="Permanent link">link</a></h5>
+
+<h5 id="results_25">Results:<a class="headerlink" href="#results_25" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5744,24 +5875,13 @@ restricted to 3 (XYZ).</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
+<h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>dimension</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
-<h5 id="results_23">Results:<a class="headerlink" href="#results_23" title="Permanent link">link</a></h5>
+
+<h5 id="results_26">Results:<a class="headerlink" href="#results_26" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5797,24 +5917,13 @@ restricted to 3 (XYZ).</p>
 <p>Traits: AlwaysSpeculatableImplTrait</p>
 <p>Interfaces: ConditionallySpeculatable, InferTypeOpInterface, NoMemoryEffect (MemoryEffectOpInterface)</p>
 <p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
+<h5 id="attributes_12">Attributes:<a class="headerlink" href="#attributes_12" title="Permanent link">link</a></h5>
 <table>
-<thead>
-<tr>
-<th style="text-align: center;">Attribute</th>
-<th style="text-align: center;">MLIR Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>dimension</code></td>
-<td style="text-align: center;">::mlir::IntegerAttr</td>
-<td>index attribute</td>
-</tr>
-</tbody>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
-<h5 id="results_24">Results:<a class="headerlink" href="#results_24" title="Permanent link">link</a></h5>
+
+<h5 id="results_27">Results:<a class="headerlink" href="#results_27" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5871,7 +5980,8 @@ restricted to 3 (XYZ).</p>
 <p>Syntax:</p>
 <div class="highlight"><pre><span></span><code>#iree_input.descriptor_set.layout&lt;
   int64_t,   # ordinal
-  ::llvm::ArrayRef&lt;DescriptorSetBindingAttr&gt;   # bindings
+  ::llvm::ArrayRef&lt;DescriptorSetBindingAttr&gt;,   # bindings
+  std::optional&lt;DescriptorSetLayoutFlags&gt;   # flags
 &gt;
 </code></pre></div>
 <h5 id="parameters_1">Parameters:<a class="headerlink" href="#parameters_1" title="Permanent link">link</a></h5>
@@ -5894,6 +6004,11 @@ restricted to 3 (XYZ).</p>
 <td style="text-align: center;"><code>::llvm::ArrayRef&lt;DescriptorSetBindingAttr&gt;</code></td>
 <td></td>
 </tr>
+<tr>
+<td style="text-align: center;">flags</td>
+<td style="text-align: center;"><code>std::optional&lt;DescriptorSetLayoutFlags&gt;</code></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 <h3 id="descriptortypeattr">DescriptorTypeAttr<a class="headerlink" href="#descriptortypeattr" title="Permanent link">link</a></h3>
@@ -5903,6 +6018,9 @@ restricted to 3 (XYZ).</p>
   ::mlir::iree_compiler::IREE::Input::DescriptorType   # value
 &gt;
 </code></pre></div>
+<p>Enum cases:
+* uniform_buffer (<code>UniformBuffer</code>)
+* storage_buffer (<code>StorageBuffer</code>)</p>
 <h5 id="parameters_2">Parameters:<a class="headerlink" href="#parameters_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -6076,6 +6194,10 @@ fully typed tensors, the primary mechanism for getting or using a
 BufferView at the high level is by casting to/from a tensor. It is left
 to higher level code to ensure that aliasing rules are enforced at such
 boundaries.</p>
+<h3 id="bytebuffertype">ByteBufferType<a class="headerlink" href="#bytebuffertype" title="Permanent link">link</a></h3>
+<p>a reference counted byte buffer</p>
+<p>Syntax: <code>!iree_input.byte_buffer</code></p>
+<p>A reference counted byte buffer that models a pointer, offset, and length.</p>
 <h3 id="listtype">ListType<a class="headerlink" href="#listtype" title="Permanent link">link</a></h3>
 <p>A one dimensional list of runtime values</p>
 <p>Represents a list of arbitrary type. Primitive types can be expected to
