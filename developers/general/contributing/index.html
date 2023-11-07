@@ -2137,6 +2137,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#git-workflows" class="md-nav__link">
+    Git workflows
+  </a>
+  
+    <nav class="md-nav" aria-label="Git workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-config" class="md-nav__link">
+    Git config
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3474,6 +3501,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#git-workflows" class="md-nav__link">
+    Git workflows
+  </a>
+  
+    <nav class="md-nav" aria-label="Git workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-config" class="md-nav__link">
+    Git config
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3685,15 +3739,14 @@ options and is synonomous with <code>ci-skip: all</code>.</p>
 </details>
 <details class="info -">
 <summary>Using <code>ci-skip</code>, <code>ci-extra</code>, <code>ci-exactly</code></summary>
-<h1 id="the-ci-options-instruct-the-setup-script-on-which-jobs-to-include-or">The <code>ci-*</code> options instruct the setup script on which jobs to include or<a class="headerlink" href="#the-ci-options-instruct-the-setup-script-on-which-jobs-to-include-or" title="Permanent link">link</a></h1>
-<p>exclude from its run. They take a comma-separated list of jobs which must be
+<p>The <code>ci-*</code> options instruct the setup script on which jobs to include or
+exclude from its run. They take a comma-separated list of jobs which must be
 from the set of top-level job identifiers in the <code>ci.yml</code> file or the
 special keyword "all" to indicate all jobs.</p>
-<p>``` text
-ci-skip: jobs,to,skip
+<div class="highlight"><pre><span></span><code>ci-skip: jobs,to,skip
 ci-extra: extra,jobs,to,run
-ci-exactly: exact,set,of,jobs,to,run</p>
-<h1 id="_1">```<a class="headerlink" href="#_1" title="Permanent link">link</a></h1>
+ci-exactly: exact,set,of,jobs,to,run
+</code></pre></div>
 <ul>
 <li><code>ci-skip</code> removes jobs that would otherwise be included, though it is not
 an error to list jobs that would not be included by default.</li>
@@ -3714,9 +3767,9 @@ skip-llvm-integrate-benchmark: free form reason
 </code></pre></div>
 <p>Benchmarks don't run by default on PRs, and must be specifically requested.</p>
 <p>The <code>benchmark-extra</code> option allows specifying additional benchmark presets
-to run as part of benchmarking. It accepts a comma-separated list of</p>
-<h1 id="benchmark-presets-this-combines-with-labels-added-to-the-pr-which-are-a">benchmark presets. This combines with labels added to the PR (which are a<a class="headerlink" href="#benchmark-presets-this-combines-with-labels-added-to-the-pr-which-are-a" title="Permanent link">link</a></h1>
-<p>more limited set of options). See the
+to run as part of benchmarking. It accepts a comma-separated list of
+benchmark presets. This combines with labels added to the PR (which are a
+more limited set of options). See the
 <a href="../../performance/benchmark-suites/">benchmark suites documentation</a>.</p>
 <p>Benchmarks <em>do</em> run by default on PRs detected to be an integration of LLVM
 into IREE, but this behavior can be disabled with
