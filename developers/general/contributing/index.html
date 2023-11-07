@@ -2082,12 +2082,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#information-for-contributors" class="md-nav__link">
-    Information for contributors
+  <a href="#tips-for-contributors" class="md-nav__link">
+    Tips for contributors
   </a>
   
-    <nav class="md-nav" aria-label="Information for contributors">
+    <nav class="md-nav" aria-label="Tips for contributors">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tool-recommendations" class="md-nav__link">
+    Tool recommendations
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#build-systems" class="md-nav__link">
@@ -2121,33 +2128,6 @@
           <li class="md-nav__item">
   <a href="#ci-behavior-manipulation" class="md-nav__link">
     CI behavior manipulation
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#contributor-tips" class="md-nav__link">
-     Contributor tips
-  </a>
-  
-    <nav class="md-nav" aria-label="Contributor tips">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#useful-tools" class="md-nav__link">
-    Useful tools
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#git-structure" class="md-nav__link">
-    Git structure
   </a>
   
 </li>
@@ -3439,12 +3419,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#information-for-contributors" class="md-nav__link">
-    Information for contributors
+  <a href="#tips-for-contributors" class="md-nav__link">
+    Tips for contributors
   </a>
   
-    <nav class="md-nav" aria-label="Information for contributors">
+    <nav class="md-nav" aria-label="Tips for contributors">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tool-recommendations" class="md-nav__link">
+    Tool recommendations
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#build-systems" class="md-nav__link">
@@ -3478,33 +3465,6 @@
           <li class="md-nav__item">
   <a href="#ci-behavior-manipulation" class="md-nav__link">
     CI behavior manipulation
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#contributor-tips" class="md-nav__link">
-     Contributor tips
-  </a>
-  
-    <nav class="md-nav" aria-label="Contributor tips">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#useful-tools" class="md-nav__link">
-    Useful tools
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#git-structure" class="md-nav__link">
-    Git structure
   </a>
   
 </li>
@@ -3642,7 +3602,34 @@ track of those who have made significant contributions to the project.</p>
 </ul>
 <!-- TODO(scotttodd): merge the sections below into "developer overview"? -->
 
-<h2 id="information-for-contributors">Information for contributors<a class="headerlink" href="#information-for-contributors" title="Permanent link">link</a></h2>
+<h2 id="tips-for-contributors">Tips for contributors<a class="headerlink" href="#tips-for-contributors" title="Permanent link">link</a></h2>
+<h3 id="tool-recommendations">Tool recommendations<a class="headerlink" href="#tool-recommendations" title="Permanent link">link</a></h3>
+<table>
+<thead>
+<tr>
+<th>Program or tool</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://code.visualstudio.com/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 16.47V7.39l-6 4.54M2.22 9.19a.858.858 0 0 1-.02-1.15l1.2-1.11c.2-.18.69-.26 1.05 0l3.42 2.61 7.93-7.25c.32-.32.87-.45 1.5-.12l4 1.91c.36.21.7.54.7 1.15v13.5c0 .4-.29.83-.6 1l-4.4 2.1c-.32.13-.92.01-1.13-.2l-8.02-7.3-3.4 2.6c-.38.26-.85.19-1.05 0l-1.2-1.1c-.32-.33-.28-.87.05-1.2l3-2.7"/></svg></span> Visual Studio Code (VSCode)</a></td>
+<td>The most commonly used editor amongst IREE developers</td>
+</tr>
+<tr>
+<td><a href="https://ccache.dev/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.769.066.067 23.206l12.76-10.843zm11.438 23.868L7.471 17.587 0 23.934zm.793-.198L12.298.463l1.719 19.24zM12.893 12.959l-5.025 4.298 5.62 2.248z"/></svg></span> Ccache</a></td>
+<td>A fast C/C++ compiler cache. See the <a href="../../building/cmake-with-ccache/">CMake with <code>ccache</code></a> page</td>
+</tr>
+<tr>
+<td><a href="https://github.com/cli/cli"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span> GitHub CLI</a></td>
+<td>A CLI for interacting with GitHub</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sindresorhus/refined-github"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span> "Refined GitHub" browser extensions</a></td>
+<td>Extension that add features to the GitHub UI</td>
+</tr>
+</tbody>
+</table>
 <h3 id="build-systems"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.78 15.3 6 6 2.11-2.16-6-6-2.11 2.16m3.72-5.2c-.39 0-.81-.05-1.14-.19L4.97 21.25l-2.11-2.11 7.41-7.4L8.5 9.96l-.72.7-1.45-1.41v2.86l-.7.7-3.52-3.56.7-.7h2.81l-1.4-1.41 3.56-3.56a2.976 2.976 0 0 1 4.22 0L9.89 5.74l1.41 1.4-.71.71 1.79 1.78 1.82-1.88c-.14-.33-.2-.75-.2-1.12a3.49 3.49 0 0 1 3.5-3.52c.59 0 1.11.14 1.58.42L16.41 6.2l1.5 1.5 2.67-2.67c.28.47.42.97.42 1.6 0 1.92-1.55 3.47-3.5 3.47Z"/></svg></span> Build systems<a class="headerlink" href="#build-systems" title="Permanent link">link</a></h3>
 <p>IREE supports building from source with both Bazel and CMake.</p>
 <ul>
@@ -3675,10 +3662,12 @@ the
 <a href="https://github.com/openxla/iree/blob/main/build_tools/github_actions/configure_ci.py">configure_ci.py</a>
 script. It will generally run a pre-determined set of jobs on presubmit with
 some jobs kept as post-submit only. If changes are only to a certain set of
-excluded files that we know don't affect CI (e.g. docs), then it will skip the
-jobs. You can customize which jobs run using
+excluded files that we know don't affect CI (e.g. Markdown files), then it will
+skip the jobs.</p>
+<p>You can customize which jobs run using
 <a href="https://git-scm.com/docs/git-interpret-trailers">git trailers</a> in the PR
-description. The available options are</p>
+description.</p>
+<p>The available options are</p>
 <div class="highlight"><pre><span></span><code>ci-skip: jobs,to,skip
 ci-extra: extra,jobs,to,run
 ci-exactly: exact,set,of,jobs,to,run
@@ -3687,86 +3676,91 @@ skip-llvm-integrate-benchmark: free form reason
 benchmark-extra: extra,benchmarks,to,run
 runner-env: [testing|prod]
 </code></pre></div>
-<p>The first three follow the same format and instruct the setup script on which
-jobs to include or exclude from its run. They take a comma-separated list of
-jobs which must be from the set of top-level job identifiers in ci.yml file or
-the special keyword "all" to indicate all jobs. <code>ci-skip</code> removes jobs that
-would otherwise be included, though it is not an error to list jobs that would
-not be included by default. <code>ci-extra</code> adds additional jobs that would not have
-otherwise been run, though it is not an error to list jobs that would have been
-included anyway. It <em>is</em> an error to list a job in both of these fields.
-<code>ci-exactly</code> provides an exact list of jobs that should run. It is mutually
-exclusive with both <code>ci-skip</code> and <code>ci-extra</code>. In all these cases, the setup does
-not make any effort to ensure that job dependencies are satisfied. Thus, if you
-request skipping the <code>build_all</code> job, all the jobs that depend on it will fail,
-not be skipped. <code>skip-ci</code> is an older option that simply skips all jobs. Its
-usage is deprecated and it is mutually exclusive with all of the other <code>ci-*</code>
-options. Prefer <code>ci-skip: all</code>.</p>
-<p>Benchmarks don't run by default on PRs, and must be specifically requested. They
-<em>do</em> run by default on PRs detected to be an integration of LLVM into IREE, but
-this behavior can be disabled with <code>skip-llvm-integrate-benchmark</code>. The
-<code>benchmark-extra</code> option allows specifying additional benchmark presets to run
-as part of benchmarking. It accepts a comma-separated list of benchmark presets.
-This combines with labels added to the PR (which are a more limited set of
-options). See the
+<details class="info -">
+<summary>Using <code>skip-ci</code></summary>
+<p><code>skip-ci</code> skips all jobs. It is mutually exclusive with the other <code>ci-*</code>
+options and is synonomous with <code>ci-skip: all</code>.</p>
+<div class="highlight"><pre><span></span><code>skip-ci: free form reason
+</code></pre></div>
+</details>
+<details class="info -">
+<summary>Using <code>ci-skip</code>, <code>ci-extra</code>, <code>ci-exactly</code></summary>
+<h1 id="the-ci-options-instruct-the-setup-script-on-which-jobs-to-include-or">The <code>ci-*</code> options instruct the setup script on which jobs to include or<a class="headerlink" href="#the-ci-options-instruct-the-setup-script-on-which-jobs-to-include-or" title="Permanent link">link</a></h1>
+<p>exclude from its run. They take a comma-separated list of jobs which must be
+from the set of top-level job identifiers in the <code>ci.yml</code> file or the
+special keyword "all" to indicate all jobs.</p>
+<p>``` text
+ci-skip: jobs,to,skip
+ci-extra: extra,jobs,to,run
+ci-exactly: exact,set,of,jobs,to,run</p>
+<h1 id="_1">```<a class="headerlink" href="#_1" title="Permanent link">link</a></h1>
+<ul>
+<li><code>ci-skip</code> removes jobs that would otherwise be included, though it is not
+an error to list jobs that would not be included by default.</li>
+<li><code>ci-extra</code> adds additional jobs that would not have otherwise been run,
+though it is not an error to list jobs that would have been included anyway.
+It <em>is</em> an error to list a job in both "skip" and "extra".</li>
+<li><code>ci-exactly</code> provides an exact list of jobs that should run. It is
+mutually exclusive with both "skip" and "extra".</li>
+</ul>
+<p>In all these cases, the setup does not make any effort to ensure that job
+dependencies are satisfied. Thus, if you request skipping the <code>build_all</code>
+job, all the jobs that depend on it will fail, not be skipped.</p>
+</details>
+<details class="info -">
+<summary>Using <code>benchmark-extra</code>, <code>skip-llvm-integrate-benchmark</code></summary>
+<div class="highlight"><pre><span></span><code>benchmark-extra: extra,benchmarks,to,run
+skip-llvm-integrate-benchmark: free form reason
+</code></pre></div>
+<p>Benchmarks don't run by default on PRs, and must be specifically requested.</p>
+<p>The <code>benchmark-extra</code> option allows specifying additional benchmark presets
+to run as part of benchmarking. It accepts a comma-separated list of</p>
+<h1 id="benchmark-presets-this-combines-with-labels-added-to-the-pr-which-are-a">benchmark presets. This combines with labels added to the PR (which are a<a class="headerlink" href="#benchmark-presets-this-combines-with-labels-added-to-the-pr-which-are-a" title="Permanent link">link</a></h1>
+<p>more limited set of options). See the
 <a href="../../performance/benchmark-suites/">benchmark suites documentation</a>.</p>
+<p>Benchmarks <em>do</em> run by default on PRs detected to be an integration of LLVM
+into IREE, but this behavior can be disabled with
+<code>skip-llvm-integrate-benchmark</code>.</p>
+</details>
+<details class="info -">
+<summary>Using <code>runner-env</code></summary>
 <p>The <code>runner-env</code> option controls which runner environment to target for our
 self-hosted runners. We maintain a test environment to allow testing out new
-configurations prior to rolling them out. This trailer is for advanced users who
-are working on the CI infrastructure itself.</p>
+configurations prior to rolling them out. This trailer is for advanced users
+who are working on the CI infrastructure itself.</p>
+<div class="highlight"><pre><span></span><code>runner-env: [testing|prod]
+</code></pre></div>
+</details>
 <h5 id="ci-configuration-recipes">CI configuration recipes<a class="headerlink" href="#ci-configuration-recipes" title="Permanent link">link</a></h5>
 <p>Copy/paste any of these at the bottom of a PR description to change what the CI
 runs.</p>
 <ul>
-<li>Also run Windows and macOS builds that are normally post-merge only:</li>
-</ul>
+<li>
+<p>Also run Windows and macOS builds that are normally post-merge only:</p>
 <div class="highlight"><pre><span></span><code>ci-extra: build_test_all_windows,build_test_all_macos_arm64,build_test_all_macos_x86_64
 </code></pre></div>
-<ul>
-<li>Also run GPU tests on NVIDIA A100 runners (opt-in due to low availability):</li>
-</ul>
+</li>
+<li>
+<p>Also run GPU tests on NVIDIA A100 runners (opt-in due to low availability):</p>
 <div class="highlight"><pre><span></span><code>ci-extra: test_a100
 </code></pre></div>
-<ul>
-<li>Skip all CI builds and tests, e.g. for comment-only changes:</li>
-</ul>
+</li>
+<li>
+<p>Skip all CI builds and tests, e.g. for comment-only changes:</p>
 <div class="highlight"><pre><span></span><code>skip-ci: Comment-only change.
 </code></pre></div>
-<ul>
-<li>Only run Bazel builds, e.g. for changes only affecting Bazel rules:</li>
-</ul>
+</li>
+<li>
+<p>Only run Bazel builds, e.g. for changes only affecting Bazel rules:</p>
 <div class="highlight"><pre><span></span><code>ci-exactly: build_test_all_bazel
 </code></pre></div>
+</li>
+</ul>
 <p>For example, this PR opted in to running the <code>build_test_all_windows</code> job:</p>
 <p><img alt="ci-extra" src="../contributing-ci-extra.png" /></p>
 <p>The enabled jobs can be viewed from the Summary page of an action run:</p>
 <p><img alt="ci_enabled_jobs" src="../contributing-ci-enabled-jobs.png" /></p>
-<h3 id="contributor-tips"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 6a6 6 0 0 1 6 6c0 2.22-1.21 4.16-3 5.2V19a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6 6 0 0 1 6-6m2 15v1a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-1h4m6-10h3v2h-3v-2M1 11h3v2H1v-2M13 1v3h-2V1h2M4.92 3.5l2.13 2.14-1.42 1.41L3.5 4.93 4.92 3.5m12.03 2.13 2.12-2.13 1.43 1.43-2.13 2.12-1.42-1.42Z"/></svg></span> Contributor tips<a class="headerlink" href="#contributor-tips" title="Permanent link">link</a></h3>
-<p>These are opinionated tips documenting workflows that some members of the team
-have found useful. They are focused on meta-tooling, not on IREE code
-specifically (you will find the latter in the
-<a href="../developer-overview/">Developer Overview</a>).</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It is certainly possible to use workflows other than these. Some common
-tasks, especially for maintainers, will likely be made easier by using
-these flows.</p>
-</div>
-<p>We assume a basic knowledge
-of <code>git</code> and GitHub and suggests some specific ways of using it.</p>
-<h4 id="useful-tools">Useful tools<a class="headerlink" href="#useful-tools" title="Permanent link">link</a></h4>
-<ul>
-<li>GitHub CLI (<a href="https://github.com/cli/cli">https://github.com/cli/cli</a>). A CLI for interacting with GitHub.
-    Most importantly, it allows scripting the creation of pull requests.</li>
-<li>Refined GitHub Chrome and Firefox Extension:
-    <a href="https://github.com/sindresorhus/refined-github">https://github.com/sindresorhus/refined-github</a>. Nice extension that adds a
-    bunch of features to the GitHub UI.</li>
-<li>VSCode: <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>. The most commonly used IDE amongst
-    IREE developers.</li>
-<li><a href="https://ccache.dev/">Ccache</a>, a fast C/C++ compiler cache. See the
-  <a href="../../building/cmake-with-ccache/">CMake with <code>ccache</code></a> page</li>
-</ul>
-<h4 id="git-structure">Git structure<a class="headerlink" href="#git-structure" title="Permanent link">link</a></h4>
+<h3 id="git-workflows">Git workflows<a class="headerlink" href="#git-workflows" title="Permanent link">link</a></h3>
 <p>We tend to use the "triangular" or "forking" workflow. Develop primarily on a
 clone of the repository on your development machine. Any local branches named
 the same as persistent branches from the
@@ -3777,7 +3771,7 @@ different branch on your public fork and create the PR from there.</p>
 <!-- TODO(scotttodd): screenshots / diagrams here
   (https://mermaid.js.org/syntax/gitgraph.html?) -->
 
-<h5 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">link</a></h5>
+<h4 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">link</a></h4>
 <ol>
 <li>
 <p>Create a fork of the main repository.</p>
@@ -3800,13 +3794,14 @@ $<span class="w"> </span>git<span class="w"> </span>remote<span class="w"> </spa
 </code></pre></div>
 <p>This is especially important for maintainers who have write access (so can
 push directly to the main repository) and admins who have elevated
-privileges (so can push directly to protected branches). These names are
-just suggestions, but you might find some scripts where the defaults are for
-remotes named like this. For extra safety, you can make it difficult to push
-directly to upstream by setting the push url to something invalid: <code>git
-remote set-url --push upstream DISABLE</code>, which requires re-enabling the push
-URL explicitly before pushing. You can wrap this behavior in a custom git
-command like
+privileges (so can push directly to protected branches).</p>
+<p>These names are just suggestions, but you might find some scripts where the
+defaults are for remotes named like this.</p>
+<p>For extra safety, you can make it difficult to push directly to upstream by
+setting the push url to something invalid:
+<code>git remote set-url --push upstream DISABLE</code>, which requires re-enabling the
+push URL explicitly before pushing. You can wrap this behavior in a custom
+git command like
 <a href="https://gist.github.com/GMNGeoffrey/42dd9a9792390094a43bdb69659320c0">git-sudo</a>.</p>
 </li>
 <li>
@@ -3817,7 +3812,7 @@ command like
     by adding it to your path as <code>git-update</code>.</p>
 </li>
 </ol>
-<h5 id="git-config">Git config<a class="headerlink" href="#git-config" title="Permanent link">link</a></h5>
+<h4 id="git-config">Git config<a class="headerlink" href="#git-config" title="Permanent link">link</a></h4>
 <p>These are some additional options you could put in your top-level <code>.gitconfig</code>
 or repository-specific <code>.git/config</code> files that are conducive the recommended
 workflow</p>
