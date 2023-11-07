@@ -289,6 +289,35 @@ The enabled jobs can be viewed from the Summary page of an action run:
 
 ![ci_enabled_jobs](./contributing-ci-enabled-jobs.png)
 
+
+#### CI job setup
+
+```mermaid
+graph LR
+  accTitle: TODO
+  accDescr {
+    TODO.
+  }
+
+  build_all("build_all\n• Builds install directory\n• Generates test files")
+
+  subgraph cross_compile_and_test
+    direction LR
+    android("android\n• Builds for Android\n• Runs tests on lab phones")
+    riscv_64("riscv_64\n• Builds for riscv\n• Run tests on an emulator")
+  end
+
+  build_all --> cross_compile_and_test
+
+  subgraph tests
+    direction LR
+    test_all("test_all\n• Runs baseline ctest")
+    test_gpu("test_gpu\n• Runs ctest with a physical GPU")
+  end
+
+  build_all --> tests
+```
+
 ### Git workflows
 
 We tend to use the "triangular" or "forking" workflow. Develop primarily on a
