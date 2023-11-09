@@ -3607,6 +3607,10 @@ information on using pull requests.</p>
 <ul>
 <li>Please keep PRs small (focused on a single issue) to make reviews and later
   culprit-finding easier.</li>
+<li>You may see trusted core contributors bending this rule for project
+  maintenance and major subsystem renovation. If you feel like the rules aren't
+  working for a certain situation, please ask as we bias towards pragmatism for
+  cases that require it.</li>
 </ul>
 <h3 id="github-actions-workflows"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.41 13.41 6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17 7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42-6.35 6.35 1.42 1.41L18 7Z"/></svg></span> GitHub Actions workflows<a class="headerlink" href="#github-actions-workflows" title="Permanent link">link</a></h3>
 <p>We use <a href="https://docs.github.com/en/actions">GitHub Actions</a> to automatically
@@ -3641,8 +3645,45 @@ learn how to customize this behavior.</p>
 someone else to merge it for them (e.g. because they don't have write access
 yet).</p>
 <h3 id="obtaining-commit-access"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5.45 5.154A4.25 4.25 0 0 0 9.25 7.5h1.378a2.251 2.251 0 1 1 0 1.5H9.25A5.734 5.734 0 0 1 5 7.123v3.505a2.25 2.25 0 1 1-1.5 0V5.372a2.25 2.25 0 1 1 1.95-.218ZM4.25 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm8.5-4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM5 3.25a.75.75 0 1 0 0 .005V3.25Z"/></svg></span> Obtaining commit access<a class="headerlink" href="#obtaining-commit-access" title="Permanent link">link</a></h3>
-<div class="admonition note">
-<p class="admonition-title">TODO(jpienaar): write this :)</p>
+<p>Access to affiliated repositories is divided into three tiers:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Description</th>
+<th>Team link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Triage</td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg></span> Can be <a href="https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users">assigned issues</a><br><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg></span> Can apply labels to issues / PRs<br><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg></span> Can run workflows <a href="https://docs.github.com/en/actions/managing-workflow-runs/approving-workflow-runs-from-public-forks">without approval</a></td>
+<td><a href="https://github.com/orgs/openxla/teams/iree-triage">iree-triage</a></td>
+</tr>
+<tr>
+<td>Write</td>
+<td><strong>Most developers should request this access</strong><br><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg></span> Can <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request">merge approved pull requests</a><br><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg></span> Can create branches</td>
+<td><a href="https://github.com/orgs/openxla/teams/iree-write">iree-write</a></td>
+</tr>
+<tr>
+<td>Maintain</td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg></span> Can <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features">edit repository settings</a><br><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg></span> Can push to <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches">protected branches</a></td>
+<td><a href="https://github.com/orgs/openxla/teams/iree-maintain">iree-maintain</a></td>
+</tr>
+</tbody>
+</table>
+<p>All access tiers first require joining the
+<a href="https://github.com/openxla/">OpenXLA GitHub organization</a>.</p>
+<!-- markdownlint-disable-next-line -->
+<p><a class="md-button md-button--primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfEwANtMvLJWq-ED4lub_xsMch0MgNY02VxgtXE61FqNvNVUg/viewform">Fill out this form to request access <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480v-83.6c0-4 1.5-7.8 4.2-10.7l167.6-182.9c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8l-88.3-44.2C7.1 311.3.3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"/></svg></span></a></p>
+<p>Once you are a member of the OpenXLA GitHub organization, you can request to
+join any of the teams on <a href="https://github.com/orgs/openxla/teams">https://github.com/orgs/openxla/teams</a>.</p>
+<div class="admonition note -">
+<p class="admonition-title">Note: other GitHub organizations</p>
+<p>Work on IREE sometimes spans other GitHub organizations like
+<a href="https://github.com/iree-org">iree-org</a> and
+<a href="https://github.com/shark-infra/">shark-infra</a>. Reach out to a project
+member if you would also like access to repositories in those organizations.</p>
 </div>
 <h3 id="credits-in-the-authors-file"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"/></svg></span> Credits in the AUTHORS file<a class="headerlink" href="#credits-in-the-authors-file" title="Permanent link">link</a></h3>
 <p>If you would like additional recognition for your contributions, you may add
