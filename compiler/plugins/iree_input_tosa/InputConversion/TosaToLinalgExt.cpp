@@ -10,10 +10,10 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include "input_tosa/InputConversion/PassDetail.h"
-#include "input_tosa/InputConversion/Passes.h"
 #include "iree-dialects/Dialect/LinalgExt/IR/LinalgExtDialect.h"
 #include "iree-dialects/Dialect/LinalgExt/IR/LinalgExtOps.h"
+#include "iree_input_tosa/InputConversion/PassDetail.h"
+#include "iree_input_tosa/InputConversion/Passes.h"
 #include "mlir/Dialect/Arith/IR/Arith.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Dialect/Linalg/IR/Linalg.h"
@@ -21,7 +21,6 @@
 #include "mlir/Dialect/Tosa/IR/TosaOps.h"
 #include "mlir/Dialect/Tosa/Transforms/Passes.h"
 #include "mlir/Transforms/DialectConversion.h"
-
 
 using namespace mlir;
 using namespace mlir::tosa;

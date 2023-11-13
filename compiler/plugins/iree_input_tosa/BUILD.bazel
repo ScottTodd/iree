@@ -13,7 +13,7 @@ package(
 )
 
 iree_compiler_register_plugin(
-    plugin_id = "input_tosa",
+    plugin_id = "iree_input_tosa",
     target = ":registration",
 )
 
@@ -22,9 +22,9 @@ iree_compiler_cc_library(
     srcs = [
         "PluginRegistration.cpp",
     ],
-    copts = ["-Icompiler/plugins/input_tosa"],
+    copts = ["-Icompiler/plugins/iree_input_tosa"],
     deps = [
-        "//compiler/plugins/input_tosa/InputConversion",
+        "//compiler/plugins/iree_input_tosa/InputConversion",
         "//compiler/src/iree/compiler/PluginAPI",
         "@llvm-project//mlir:ConversionPasses",
         "@llvm-project//mlir:IR",

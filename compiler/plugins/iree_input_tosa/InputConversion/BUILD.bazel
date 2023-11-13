@@ -35,8 +35,8 @@ iree_compiler_cc_library(
         "Passes.h.inc",
     ],
     copts = [
-        "-Icompiler/plugins/input_tosa",
-        "-I$(GENDIR)/compiler/plugins/input_tosa",
+        "-Icompiler/plugins/iree_input_tosa",
+        "-I$(GENDIR)/compiler/plugins/iree_input_tosa",
     ],
     deps = [
         ":PassesIncGen",
@@ -63,8 +63,8 @@ iree_compiler_cc_library(
         "Passes.h",
     ],
     copts = [
-        "-Icompiler/plugins/input_tosa",
-        "-I$(GENDIR)/compiler/plugins/input_tosa",
+        "-Icompiler/plugins/iree_input_tosa",
+        "-I$(GENDIR)/compiler/plugins/iree_input_tosa",
     ],
     deps = [
         ":PassHeaders",

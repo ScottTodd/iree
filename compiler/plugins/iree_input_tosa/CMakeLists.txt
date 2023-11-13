@@ -5,11 +5,11 @@
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
 set(IREE_PACKAGE_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
-set(IREE_PACKAGE_ROOT_PREFIX "input_tosa")
+set(IREE_PACKAGE_ROOT_PREFIX "iree_input_tosa")
 set(IREE_COMPILER_TABLEGEN_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}")
 
-add_library(input_tosa_compiler_defs INTERFACE)
-target_include_directories(input_tosa_compiler_defs
+add_library(iree_input_tosa_compiler_defs INTERFACE)
+target_include_directories(iree_input_tosa_compiler_defs
   INTERFACE
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}
@@ -17,13 +17,13 @@ target_include_directories(input_tosa_compiler_defs
 
 # Configures all iree_cc_* targets to take this implicit dep,
 # which provides common includes and copts for the tree.
-set(IREE_IMPLICIT_DEFS_CC_DEPS input_tosa_compiler_defs)
+set(IREE_IMPLICIT_DEFS_CC_DEPS iree_input_tosa_compiler_defs)
 
 iree_add_all_subdirs()
 
 iree_compiler_register_plugin(
   PLUGIN_ID
-    input_tosa
+    iree_input_tosa
   TARGET
     ::registration
 )
@@ -43,6 +43,6 @@ iree_cc_library(
     MLIRTosaToTensor
     MLIRTransforms
     iree::compiler::PluginAPI
-    input_tosa::InputConversion::InputConversion
+    iree_input_tosa::InputConversion::InputConversion
   PUBLIC
 )

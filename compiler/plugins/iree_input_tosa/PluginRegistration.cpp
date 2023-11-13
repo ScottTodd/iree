@@ -11,7 +11,7 @@
 #include "mlir/IR/BuiltinOps.h"
 #include "mlir/Pass/PassManager.h"
 
-#include "input_tosa/InputConversion/Passes.h"
+#include "iree_input_tosa/InputConversion/Passes.h"
 
 namespace mlir {
 namespace iree_compiler {
@@ -73,8 +73,9 @@ struct TOSASession
 } // namespace iree_compiler
 } // namespace mlir
 
-extern "C" bool iree_register_compiler_plugin_input_tosa(
+extern "C" bool iree_register_compiler_plugin_iree_input_tosa(
     mlir::iree_compiler::PluginRegistrar *registrar) {
-  registrar->registerPlugin<::mlir::iree_compiler::TOSASession>("input_tosa");
+  registrar->registerPlugin<::mlir::iree_compiler::TOSASession>(
+      "iree_input_tosa");
   return true;
 }

@@ -9,7 +9,7 @@ if(IREE_INPUT_TORCH)
 endif()
 
 if(IREE_INPUT_TOSA)
-  add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/input_tosa input_tosa)
+  add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/iree_input_tosa iree_input_tosa)
 endif()
 
 if(IREE_TARGET_BACKEND_CUDA)
