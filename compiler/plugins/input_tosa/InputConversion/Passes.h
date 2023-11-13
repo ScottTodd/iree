@@ -4,8 +4,8 @@
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-#ifndef TOSA_IREE_INPUTCONVERSION_PASSES_H_
-#define TOSA_IREE_INPUTCONVERSION_PASSES_H_
+#ifndef INPUT_TOSAINPUTCONVERSION_PASSES_H_
+#define INPUT_TOSAINPUTCONVERSION_PASSES_H_
 
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/IR/BuiltinOps.h"
@@ -54,4 +54,4 @@ void registerTOSAConversionPasses();
 } // namespace iree_compiler
 } // namespace mlir
 
-#endif // TOSA_IREE_INPUTCONVERSION_PASSES_H_
+#endif // INPUT_TOSAINPUTCONVERSION_PASSES_H_

@@ -35,8 +35,8 @@ iree_compiler_cc_library(
         "Passes.h.inc",
     ],
     copts = [
-        "-Icompiler/plugins/input/TOSA",
-        "-I$(GENDIR)/compiler/plugins/input/TOSA",
+        "-Icompiler/plugins/input_tosa",
+        "-I$(GENDIR)/compiler/plugins/input_tosa",
     ],
     deps = [
         ":PassesIncGen",
@@ -63,13 +63,12 @@ iree_compiler_cc_library(
         "Passes.h",
     ],
     copts = [
-        "-Icompiler/plugins/input/TOSA",
-        "-I$(GENDIR)/compiler/plugins/input/TOSA",
+        "-Icompiler/plugins/input_tosa",
+        "-I$(GENDIR)/compiler/plugins/input_tosa",
     ],
     deps = [
         ":PassHeaders",
         ":PassesIncGen",
-        "//compiler/src/iree/compiler/InputConversion/Common",
         "//llvm-external-projects/iree-dialects:IREELinalgExtDialect",
         "@llvm-project//mlir:ArithDialect",
         "@llvm-project//mlir:FuncDialect",

@@ -4,8 +4,8 @@
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-#ifndef TOSA_IREE_INPUTCONVERSION_PASSES
-#define TOSA_IREE_INPUTCONVERSION_PASSES
+#ifndef INPUT_TOSAINPUTCONVERSION_PASSES
+#define INPUT_TOSAINPUTCONVERSION_PASSES
 
 include "mlir/Pass/PassBase.td"
 
@@ -39,4 +39,4 @@ def VerifyCompilerTOSAInputLegality :
   let constructor = "mlir::iree_compiler::createVerifyCompilerTOSAInputLegality()";
 }
 
-#endif // TOSA_IREE_INPUTCONVERSION_PASSES
+#endif // INPUT_TOSAINPUTCONVERSION_PASSES
