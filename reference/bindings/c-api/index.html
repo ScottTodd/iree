@@ -3997,7 +3997,7 @@ backend with a plugin:</p>
 
 <span class="n">IREE_DEFINE_COMPILER_OPTION_FLAGS</span><span class="p">(</span><span class="o">::</span><span class="n">mlir</span><span class="o">::</span><span class="n">iree_compiler</span><span class="o">::</span><span class="n">TargetDemoOptions</span><span class="p">);</span>
 
-<span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">iree_register_compiler_plugin_input_demo</span><span class="p">(</span>
+<span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">iree_register_compiler_plugin_hal_target_demo</span><span class="p">(</span>
 <span class="w">    </span><span class="n">mlir</span><span class="o">::</span><span class="n">iree_compiler</span><span class="o">::</span><span class="n">PluginRegistrar</span><span class="w"> </span><span class="o">*</span><span class="n">registrar</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">registrar</span><span class="o">-&gt;</span><span class="n">registerPlugin</span><span class="o">&lt;</span><span class="n">TargetDemoSession</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;hal_target_demo&quot;</span><span class="p">);</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
