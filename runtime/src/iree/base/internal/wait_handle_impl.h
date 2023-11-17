@@ -43,6 +43,9 @@
 #define IREE_WAIT_API_KQUEUE 6
 #define IREE_WAIT_API_PROMISE 7
 
+// DO NOT SUBMIT
+#define IREE_WAIT_API IREE_WAIT_API_INPROC
+
 // We allow overriding the wait API via command line flags. If unspecified we
 // try to guess based on the target platform.
 #if !defined(IREE_WAIT_API)

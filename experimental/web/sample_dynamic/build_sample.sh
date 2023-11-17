@@ -90,14 +90,15 @@ emcmake "${CMAKE_BIN}" \
   -DIREE_HOST_BIN_DIR="${INSTALL_ROOT}/bin" \
   -DIREE_BUILD_EXPERIMENTAL_WEB_SAMPLES=ON \
   -DIREE_HAL_DRIVER_DEFAULTS=OFF \
-  -DIREE_HAL_DRIVER_LOCAL_SYNC=ON \
+  -DIREE_HAL_DRIVER_LOCAL_SYNC=OFF \
+  -DIREE_HAL_DRIVER_LOCAL_TASK=ON \
   -UIREE_EXTERNAL_HAL_DRIVERS \
   -DIREE_BUILD_COMPILER=OFF \
   -DIREE_BUILD_TESTS=OFF \
   .
 
 "${CMAKE_BIN}" --build "${BUILD_DIR}" --target \
-  iree_experimental_web_sample_dynamic_sync
+  iree_experimental_web_sample_dynamic_multithreaded
 
 echo "=== Copying static files (.html, .js) to the build directory ==="
 

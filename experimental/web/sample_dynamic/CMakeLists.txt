@@ -53,3 +53,65 @@ target_link_options(${_NAME} PRIVATE
   "-sMAIN_MODULE=2"
   # "-sALLOW_TABLE_GROWTH"
 )
+
+
+#-------------------------------------------------------------------------------
+# Multithreaded
+#-------------------------------------------------------------------------------
+
+set(_NAME "iree_experimental_web_sample_dynamic_multithreaded")
+add_executable(${_NAME} "")
+target_sources(${_NAME}
+  PRIVATE
+    main.c
+    device_multithreaded.c
+)
+set_target_properties(${_NAME} PROPERTIES OUTPUT_NAME "web-sample-dynamic-multithreaded")
+
+target_compile_options(${_NAME} PRIVATE ${IREE_DEFAULT_COPTS})
+
+# Note: we have to be very careful about dependencies here.
+#
+# The general purpose libraries link in multiple executable loaders and HAL
+# drivers/devices, which include code not compatible with Emscripten.
+target_link_libraries(${_NAME}
+  iree_runtime_runtime
+  iree_hal_local_executable_plugin_manager
+  iree_hal_local_loaders_system_library_loader
+  iree_hal_local_loaders_vmvx_module_loader
+  iree_hal_drivers_local_task_task_driver
+)
+
+target_link_options(${_NAME} PRIVATE
+  # https://emscripten.org/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#interacting-with-code-ccall-cwrap
+  "-sEXPORTED_FUNCTIONS=['_setup_sample', '_cleanup_sample', '_load_program', '_inspect_program', '_unload_program', '_call_function', '_malloc', '_free']"
+  "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap','UTF8ToString']"
+  #
+  "-sASSERTIONS=1"
+  #
+  # Programs loaded dynamically can require additional memory, so allow growth.
+  "-sALLOW_MEMORY_GROWTH"
+  #
+  # https://developer.chrome.com/blog/wasm-debugging-2020/
+  "-g"
+  "-gseparate-dwarf"
+  #
+  # Note: this -pthread flag also needs to be set in compile options.
+  "-pthread"
+  #
+  # IREE creates long lived worker threads during device creation around system
+  # startup time. No fixed size thread pool is necessary, so disable thread
+  # pool size checks and do not specify the pool size.
+  # By starting IREE from a Web Worker, we can avoid needing `PROXY_TO_PTHREAD`
+  # and can block when interacting with threads.
+  # Web Worker creation requires yielding back to the main browser event loop,
+  # so splitting program execution across multiple JavaScript function calls
+  # (e.g. `createDevice(); runInference();`) also helps avoid deadlocks.
+  "-sPTHREAD_POOL_SIZE_STRICT=0"
+  # "-sPTHREAD_POOL_SIZE=N"
+  # "-sPROXY_TO_PTHREAD"
+  #
+  # Dynamic linking: https://emscripten.org/docs/compiling/Dynamic-Linking.html
+  "-sMAIN_MODULE=2"
+  # "-sALLOW_TABLE_GROWTH"
+)
