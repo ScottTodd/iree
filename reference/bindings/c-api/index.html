@@ -1374,15 +1374,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#compiler-plugins-input-dialects" class="md-nav__link">
-    Compiler plugins - input dialects
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compiler-plugins-hal-target-backends" class="md-nav__link">
-    Compiler plugins - HAL target backends
+  <a href="#compiler-plugins" class="md-nav__link">
+    Compiler plugins
   </a>
   
 </li>
@@ -1889,6 +1882,8 @@
       
         
       
+        
+      
     
     
     <li class="md-nav__item md-nav__item--nested">
@@ -1950,6 +1945,26 @@
   
   <span class="md-ellipsis">
     IREELinalgExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-dialects/IREEVectorExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREEVectorExt
   </span>
   
 
@@ -3515,15 +3530,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#compiler-plugins-input-dialects" class="md-nav__link">
-    Compiler plugins - input dialects
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compiler-plugins-hal-target-backends" class="md-nav__link">
-    Compiler plugins - HAL target backends
+  <a href="#compiler-plugins" class="md-nav__link">
+    Compiler plugins
   </a>
   
 </li>
@@ -3818,14 +3826,11 @@ see the <a href="#samples">samples below</a>.</p>
 </div>
 <h4 id="compiler-session-api">Compiler session API<a class="headerlink" href="#compiler-session-api" title="Permanent link">link</a></h4>
 <p>To build a custom tool using the compiler API:</p>
-<div class="highlight"><pre><span></span><code><span class="c"># CMakeLists.txt</span>
-<span class="nb">set</span><span class="p">(</span><span class="s">_IREE_COMPILER_API</span><span class="w"> </span><span class="s2">&quot;${_IREE_COMPILER_ROOT}/bindings/c/iree/compiler&quot;</span><span class="p">)</span>
+<div class="highlight"><span class="filename">CMakeLists.txt</span><pre><span></span><code><span class="nb">set</span><span class="p">(</span><span class="s">_IREE_COMPILER_API</span><span class="w"> </span><span class="s2">&quot;${_IREE_COMPILER_ROOT}/bindings/c/iree/compiler&quot;</span><span class="p">)</span>
 <span class="nb">target_include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">SYSTEM</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="o">${</span><span class="nv">_IREE_COMPILER_API</span><span class="o">}</span><span class="p">)</span>
 <span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">iree_compiler_bindings_c_loader</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1">// iree_compiler_demo.c</span>
-
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iree/compiler/embedding_api.h&gt;</span>
+<div class="highlight"><span class="filename">iree_compiler_demo.c</span><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iree/compiler/embedding_api.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iree/compiler/loader.h&gt;</span>
 
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -3858,148 +3863,64 @@ see the <a href="#samples">samples below</a>.</p>
 <span class="w">  </span><span class="n">ireeCompilerGlobalShutdown</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div>
-<h4 id="compiler-plugins-input-dialects">Compiler plugins - input dialects<a class="headerlink" href="#compiler-plugins-input-dialects" title="Permanent link">link</a></h4>
-<p>Plugins can add support for input dialects to the compiler. Examples of in-tree
-input dialects are Torch, TOSA, and StableHLO. To add a custom input conversion
-with a plugin:</p>
-<div class="highlight"><pre><span></span><code><span class="c"># CMakeLists.txt</span>
+<h4 id="compiler-plugins">Compiler plugins<a class="headerlink" href="#compiler-plugins" title="Permanent link">link</a></h4>
+<p>To add a compiler plugin that extends the compiler with custom options:</p>
+<div class="highlight"><span class="filename">samples/compiler_plugins/example/CMakeLists.txt</span><pre><span></span><code><span class="nb">iree_cc_library</span><span class="p">(</span>
+<span class="w">  </span><span class="s">NAME</span>
+<span class="w">    </span><span class="s">registration</span>
+<span class="w">  </span><span class="s">SRCS</span>
+<span class="w">    </span><span class="s2">&quot;src/PluginRegistration.cpp&quot;</span>
+<span class="w">  </span><span class="s">DEPS</span>
+<span class="w">    </span><span class="s">::defs</span>
+<span class="w">    </span><span class="s">MLIRIR</span>
+<span class="w">    </span><span class="s">iree::compiler::PluginAPI</span>
+<span class="w">  </span><span class="s">PUBLIC</span>
+<span class="p">)</span>
 
 <span class="nb">iree_compiler_register_plugin</span><span class="p">(</span>
 <span class="w">  </span><span class="s">PLUGIN_ID</span>
-<span class="w">    </span><span class="s">input_demo</span>
+<span class="w">    </span><span class="s">example</span>
 <span class="w">  </span><span class="s">TARGET</span>
-<span class="w">    </span><span class="s">::input_registration</span>
-<span class="p">)</span>
-
-<span class="nb">iree_cc_library</span><span class="p">(</span>
-<span class="w">  </span><span class="s">NAME</span>
-<span class="w">    </span><span class="s">input_registration</span>
-<span class="w">  </span><span class="s">SRCS</span>
-<span class="w">    </span><span class="s2">&quot;InputPluginRegistration.cpp&quot;</span>
-<span class="w">  </span><span class="s">DEPS</span>
-<span class="w">    </span><span class="s">iree::compiler::PluginAPI</span>
+<span class="w">    </span><span class="s">::registration</span>
 <span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1">// InputPluginRegistration.cpp</span>
+<div class="highlight"><span class="filename">samples/compiler_plugins/example/src/PluginRegistration.cpp</span><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;iree/compiler/PluginAPI/Client.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;mlir/IR/Diagnostics.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;mlir/IR/Location.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;mlir/IR/MLIRContext.h&quot;</span>
 
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;iree/compiler/PluginAPI/Client.h&quot;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">mlir</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">mlir</span><span class="o">::</span><span class="nn">iree_compiler</span><span class="p">;</span>
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">mlir</span><span class="o">::</span><span class="nn">iree_compiler</span><span class="w"> </span><span class="p">{</span>
 <span class="k">namespace</span><span class="w"> </span><span class="p">{</span>
 
-<span class="k">struct</span><span class="w"> </span><span class="nc">InputDemoOptions</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">demoOption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">MyOptions</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
 <span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">bindOptions</span><span class="p">(</span><span class="n">OptionsBinder</span><span class="w"> </span><span class="o">&amp;</span><span class="n">binder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">llvm</span><span class="o">::</span><span class="n">cl</span><span class="o">::</span><span class="n">OptionCategory</span><span class="w"> </span><span class="n">category</span><span class="p">(</span><span class="s">&quot;Demo Input&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">binder</span><span class="p">.</span><span class="n">opt</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span>
-<span class="w">        </span><span class="s">&quot;iree-input-demo-option&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">demoOption</span><span class="p">,</span>
-<span class="w">        </span><span class="n">llvm</span><span class="o">::</span><span class="n">cl</span><span class="o">::</span><span class="n">cat</span><span class="p">(</span><span class="n">category</span><span class="p">),</span>
-<span class="w">        </span><span class="n">llvm</span><span class="o">::</span><span class="n">cl</span><span class="o">::</span><span class="n">desc</span><span class="p">(</span><span class="s">&quot;Some command-line option&quot;</span><span class="p">));</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">llvm</span><span class="o">::</span><span class="n">cl</span><span class="o">::</span><span class="n">OptionCategory</span><span class="w"> </span><span class="n">category</span><span class="p">(</span><span class="s">&quot;IREE Example Plugin&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">binder</span><span class="p">.</span><span class="n">opt</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;iree-example-flag&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">flag</span><span class="p">,</span>
+<span class="w">                     </span><span class="n">llvm</span><span class="o">::</span><span class="n">cl</span><span class="o">::</span><span class="n">desc</span><span class="p">(</span><span class="s">&quot;Dummy flag for the example plugin&quot;</span><span class="p">),</span>
+<span class="w">                     </span><span class="n">llvm</span><span class="o">::</span><span class="n">cl</span><span class="o">::</span><span class="n">cat</span><span class="p">(</span><span class="n">category</span><span class="p">));</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">};</span>
 
-<span class="k">struct</span><span class="w"> </span><span class="nc">InputDemoSession</span>
-<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">PluginSession</span><span class="o">&lt;</span><span class="n">InputDemoSession</span><span class="p">,</span><span class="w"> </span><span class="n">InputDemoOptions</span><span class="p">,</span>
-<span class="w">                           </span><span class="n">PluginActivationPolicy</span><span class="o">::</span><span class="n">DefaultActivated</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerPasses</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Register any passes used by this plugin here.</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">onRegisterDialects</span><span class="p">(</span><span class="n">DialectRegistry</span><span class="w"> </span><span class="o">&amp;</span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Register any dialects used by this plugin here.</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="nf">extendCustomInputConversionPassPipeline</span><span class="p">(</span>
-<span class="w">      </span><span class="n">OpPassManager</span><span class="w"> </span><span class="o">&amp;</span><span class="n">passManager</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">typeMnemonic</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">typeMnemonic</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">buildDemoPassPipeline</span><span class="p">(</span><span class="n">passManager</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">);</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">populateCustomInputConversionTypes</span><span class="p">(</span><span class="n">StringSet</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">typeMnemonics</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">typeMnemonics</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&quot;demo&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">populateDetectedCustomInputConversionTypes</span><span class="p">(</span>
-<span class="w">      </span><span class="n">ModuleOp</span><span class="w"> </span><span class="o">&amp;</span><span class="k">module</span><span class="p">,</span><span class="w"> </span><span class="n">StringSet</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">typeMnemonics</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">moduleContainsDemoOps</span><span class="p">(</span><span class="k">module</span><span class="p">))</span>
-<span class="w">      </span><span class="n">typeMnemonics</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&quot;demo&quot;</span><span class="p">);</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">MySession</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">PluginSession</span><span class="o">&lt;</span><span class="n">MySession</span><span class="p">,</span><span class="w"> </span><span class="n">MyOptions</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">LogicalResult</span><span class="w"> </span><span class="nf">onActivate</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">mlir</span><span class="o">::</span><span class="n">emitRemark</span><span class="p">(</span><span class="n">mlir</span><span class="o">::</span><span class="n">UnknownLoc</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;This remark is from the example plugin activation (flag=&quot;</span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">flag</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">success</span><span class="p">();</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">};</span>
 
-<span class="p">}</span><span class="w"> </span><span class="c1">// namespace</span>
-<span class="p">}</span><span class="w"> </span><span class="c1">// namespace mlir::iree_compiler</span>
+<span class="p">}</span><span class="w">  </span><span class="c1">// namespace</span>
 
-<span class="n">IREE_DEFINE_COMPILER_OPTION_FLAGS</span><span class="p">(</span><span class="o">::</span><span class="n">mlir</span><span class="o">::</span><span class="n">iree_compiler</span><span class="o">::</span><span class="n">InputDemoOptions</span><span class="p">);</span>
+<span class="n">IREE_DEFINE_COMPILER_OPTION_FLAGS</span><span class="p">(</span><span class="n">MyOptions</span><span class="p">);</span>
 
-<span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">iree_register_compiler_plugin_input_demo</span><span class="p">(</span>
+<span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">iree_register_compiler_plugin_example</span><span class="p">(</span>
 <span class="w">    </span><span class="n">mlir</span><span class="o">::</span><span class="n">iree_compiler</span><span class="o">::</span><span class="n">PluginRegistrar</span><span class="w"> </span><span class="o">*</span><span class="n">registrar</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">registrar</span><span class="o">-&gt;</span><span class="n">registerPlugin</span><span class="o">&lt;</span><span class="n">InputDemoSession</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;input_demo&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="compiler-plugins-hal-target-backends">Compiler plugins - HAL target backends<a class="headerlink" href="#compiler-plugins-hal-target-backends" title="Permanent link">link</a></h4>
-<p>Plugins can add HAL target backends to the compiler. Examples of in-tree target
-backends are <code>vulkan</code>, <code>cuda</code>, and <code>llvm-cpu</code>. To add a custom HAL target
-backend with a plugin:</p>
-<div class="highlight"><pre><span></span><code><span class="c"># CMakeLists.txt</span>
-
-<span class="nb">iree_compiler_register_plugin</span><span class="p">(</span>
-<span class="w">  </span><span class="s">PLUGIN_ID</span>
-<span class="w">    </span><span class="s">hal_target_demo</span>
-<span class="w">  </span><span class="s">TARGET</span>
-<span class="w">    </span><span class="s">::hal_target_registration</span>
-<span class="p">)</span>
-
-<span class="nb">iree_cc_library</span><span class="p">(</span>
-<span class="w">  </span><span class="s">NAME</span>
-<span class="w">    </span><span class="s">hal_target_registration</span>
-<span class="w">  </span><span class="s">SRCS</span>
-<span class="w">    </span><span class="s2">&quot;TargetPluginRegistration.cpp&quot;</span>
-<span class="w">  </span><span class="s">DEPS</span>
-<span class="w">    </span><span class="s">iree::compiler::PluginAPI</span>
-<span class="p">)</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1">// TargetPluginRegistration.cpp</span>
-
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;iree/compiler/Dialect/HAL/Target/TargetRegistry.h&quot;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;iree/compiler/PluginAPI/Client.h&quot;</span>
-
-<span class="k">namespace</span><span class="w"> </span><span class="nn">mlir</span><span class="o">::</span><span class="nn">iree_compiler</span><span class="w"> </span><span class="p">{</span>
-<span class="k">namespace</span><span class="w"> </span><span class="p">{</span>
-
-<span class="k">struct</span><span class="w"> </span><span class="nc">TargetDemoOptions</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">demoOption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
-<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">bindOptions</span><span class="p">(</span><span class="n">OptionsBinder</span><span class="w"> </span><span class="o">&amp;</span><span class="n">binder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">llvm</span><span class="o">::</span><span class="n">cl</span><span class="o">::</span><span class="n">OptionCategory</span><span class="w"> </span><span class="n">category</span><span class="p">(</span><span class="s">&quot;Target Demo&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">binder</span><span class="p">.</span><span class="n">opt</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span>
-<span class="w">        </span><span class="s">&quot;iree-target-demo-option&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">demoOption</span><span class="p">,</span>
-<span class="w">        </span><span class="n">llvm</span><span class="o">::</span><span class="n">cl</span><span class="o">::</span><span class="n">cat</span><span class="p">(</span><span class="n">category</span><span class="p">),</span>
-<span class="w">        </span><span class="n">llvm</span><span class="o">::</span><span class="n">cl</span><span class="o">::</span><span class="n">desc</span><span class="p">(</span><span class="s">&quot;Some command-line option&quot;</span><span class="p">));</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-
-<span class="k">struct</span><span class="w"> </span><span class="nc">TargetDemoSession</span>
-<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">PluginSession</span><span class="o">&lt;</span><span class="n">TargetDemoSession</span><span class="p">,</span><span class="w"> </span><span class="n">TargetDemoOptions</span><span class="p">,</span>
-<span class="w">                           </span><span class="n">PluginActivationPolicy</span><span class="o">::</span><span class="n">DefaultActivated</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">populateHALTargetBackends</span><span class="p">(</span><span class="n">IREE</span><span class="o">::</span><span class="n">HAL</span><span class="o">::</span><span class="n">TargetBackendList</span><span class="w"> </span><span class="o">&amp;</span><span class="n">targets</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">targets</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">DemoTargetBackend</span><span class="o">&gt;</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">};</span>
-
-<span class="p">}</span><span class="w"> </span><span class="c1">// namespace</span>
-<span class="p">}</span><span class="w"> </span><span class="c1">// namespace mlir::iree_compiler</span>
-
-<span class="n">IREE_DEFINE_COMPILER_OPTION_FLAGS</span><span class="p">(</span><span class="o">::</span><span class="n">mlir</span><span class="o">::</span><span class="n">iree_compiler</span><span class="o">::</span><span class="n">TargetDemoOptions</span><span class="p">);</span>
-
-<span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">iree_register_compiler_plugin_hal_target_demo</span><span class="p">(</span>
-<span class="w">    </span><span class="n">mlir</span><span class="o">::</span><span class="n">iree_compiler</span><span class="o">::</span><span class="n">PluginRegistrar</span><span class="w"> </span><span class="o">*</span><span class="n">registrar</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">registrar</span><span class="o">-&gt;</span><span class="n">registerPlugin</span><span class="o">&lt;</span><span class="n">TargetDemoSession</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;hal_target_demo&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">registrar</span><span class="o">-&gt;</span><span class="n">registerPlugin</span><span class="o">&lt;</span><span class="n">MySession</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;example&quot;</span><span class="p">);</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -4295,13 +4216,10 @@ hardware devices like CPUs, GPUs and other accelerators.</p>
 <p>This snippet shows the general layout of the API. For working examples, see
 the samples below.</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="c"># CMakeLists.txt</span>
-<span class="nb">target_include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">SYSTEM</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="o">${</span><span class="nv">_IREE_RUNTIME_ROOT</span><span class="o">}</span><span class="p">)</span>
+<div class="highlight"><span class="filename">CMakeLists.txt</span><pre><span></span><code><span class="nb">target_include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">SYSTEM</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="o">${</span><span class="nv">_IREE_RUNTIME_ROOT</span><span class="o">}</span><span class="p">)</span>
 <span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">iree_runtime_runtime</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1">// iree_runtime_demo.c</span>
-
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iree/runtime/api.h&gt;</span>
+<div class="highlight"><span class="filename">iree_runtime_demo.c</span><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iree/runtime/api.h&gt;</span>
 
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// Setup the shared runtime instance.</span>
