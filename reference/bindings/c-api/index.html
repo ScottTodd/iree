@@ -3820,11 +3820,11 @@ operations and data.</p>
 <p>A <em>plugin</em> extends the compiler with some combination of target backends,
 options, passes, or pipelines.</p>
 <h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">link</a></h3>
-<div class="admonition info">
-<p>These snippets show the general layout of the API. For working examples,
-see the <a href="#samples">samples below</a>.</p>
-</div>
 <h4 id="compiler-session-api">Compiler session API<a class="headerlink" href="#compiler-session-api" title="Permanent link">link</a></h4>
+<div class="admonition info">
+<p>This snippet shows the general layout of the API. For working examples, see
+the <a href="#samples">samples below</a>.</p>
+</div>
 <p>To build a custom tool using the compiler API:</p>
 <div class="highlight"><span class="filename">CMakeLists.txt</span><pre><span></span><code><span class="nb">set</span><span class="p">(</span><span class="s">_IREE_COMPILER_API</span><span class="w"> </span><span class="s2">&quot;${_IREE_COMPILER_ROOT}/bindings/c/iree/compiler&quot;</span><span class="p">)</span>
 <span class="nb">target_include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">SYSTEM</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="o">${</span><span class="nv">_IREE_COMPILER_API</span><span class="o">}</span><span class="p">)</span>
@@ -3864,6 +3864,11 @@ see the <a href="#samples">samples below</a>.</p>
 <span class="p">}</span>
 </code></pre></div>
 <h4 id="compiler-plugins">Compiler plugins<a class="headerlink" href="#compiler-plugins" title="Permanent link">link</a></h4>
+<div class="admonition info">
+<p>This snippet comes from the
+<a href="https://github.com/openxla/iree/tree/main/samples/compiler_plugins/example">example compiler plugin</a>.
+For other examples, see the <a href="#samples">samples below</a>.</p>
+</div>
 <p>To add a compiler plugin that extends the compiler with custom options:</p>
 <div class="highlight"><span class="filename">samples/compiler_plugins/example/CMakeLists.txt</span><pre><span></span><code><span class="nb">iree_cc_library</span><span class="p">(</span>
 <span class="w">  </span><span class="s">NAME</span>
@@ -4214,7 +4219,7 @@ hardware devices like CPUs, GPUs and other accelerators.</p>
 <h3 id="usage_1">Usage<a class="headerlink" href="#usage_1" title="Permanent link">link</a></h3>
 <div class="admonition info">
 <p>This snippet shows the general layout of the API. For working examples, see
-the samples below.</p>
+the <a href="#samples_1">samples below</a>.</p>
 </div>
 <div class="highlight"><span class="filename">CMakeLists.txt</span><pre><span></span><code><span class="nb">target_include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">SYSTEM</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="o">${</span><span class="nv">_IREE_RUNTIME_ROOT</span><span class="o">}</span><span class="p">)</span>
 <span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">iree_runtime_runtime</span><span class="p">)</span>
