@@ -14,9 +14,6 @@
 #ifdef IREE_HAVE_VMVX_TARGET
 #include "iree/compiler/Dialect/HAL/Target/VMVX/VMVXTarget.h"
 #endif // IREE_HAVE_VMVX_TARGET
-#ifdef IREE_HAVE_VULKANSPIRV_TARGET
-#include "iree/compiler/Dialect/HAL/Target/VulkanSPIRV/VulkanSPIRVTarget.h"
-#endif // IREE_HAVE_VULKANSPIRV_TARGET
 
 namespace mlir::iree_compiler {
 
@@ -34,10 +31,6 @@ void registerHALTargetBackends() {
 #ifdef IREE_HAVE_VMVX_TARGET
     IREE::HAL::registerVMVXTargetBackends();
 #endif // IREE_HAVE_VMVX_TARGET
-#ifdef IREE_HAVE_VULKANSPIRV_TARGET
-    IREE::HAL::registerVulkanSPIRVTargetBackends(
-        []() { return IREE::HAL::getVulkanSPIRVTargetOptionsFromFlags(); });
-#endif // IREE_HAVE_VULKANSPIRV_TARGET
     return true;
   }();
   (void)init_once;
