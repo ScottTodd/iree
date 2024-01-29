@@ -61,7 +61,7 @@ function(iree_hal_cts_test_suite)
     string(TOUPPER ${_RULE_COMPILER_TARGET_BACKEND} _UPPERCASE_TARGET_BACKEND)
     string(REPLACE "-" "_" _NORMALIZED_TARGET_BACKEND ${_UPPERCASE_TARGET_BACKEND})
     if(NOT DEFINED IREE_TARGET_BACKEND_${_NORMALIZED_TARGET_BACKEND})
-      message(SEND_ERROR "Unknown backend '${_RULE_COMPILER_TARGET_BACKEND}'. Check IREE_TARGET_BACKEND_* options.")
+      message(WARNING "Unknown backend '${_RULE_COMPILER_TARGET_BACKEND}' (maybe from a plugin?). Check IREE_TARGET_BACKEND_* options.")
     endif()
     if(IREE_HOST_BIN_DIR)
       # If we're not building the host tools from source under this configuration,

@@ -96,7 +96,7 @@ function(iree_check_test)
     string(REPLACE "-" "_" _NORMALIZED_TARGET_BACKEND ${_UPPERCASE_TARGET_BACKEND})
     # TODO(scotttodd): allow plugins to provide external backends here
     if(NOT DEFINED IREE_TARGET_BACKEND_${_NORMALIZED_TARGET_BACKEND})
-      message(SEND_ERROR "Unknown backend '${_RULE_TARGET_BACKEND}'. Check IREE_TARGET_BACKEND_* options.")
+      message(WARNING "Unknown backend '${_RULE_TARGET_BACKEND}' (maybe from a plugin?). Check IREE_TARGET_BACKEND_* options.")
     endif()
     if(NOT IREE_TARGET_BACKEND_${_NORMALIZED_TARGET_BACKEND})
       set(_BYTECODE_MODULE_BUILD_ENABLED FALSE)
