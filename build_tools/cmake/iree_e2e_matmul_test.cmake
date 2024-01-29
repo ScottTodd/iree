@@ -188,9 +188,10 @@ function(iree_single_backend_e2e_matmul_test)
     # rely on the runtime HAL driver check above for filtering.
   else()
     # We are building the host tools, so check enabled compiler target backends.
-    if(NOT IREE_TARGET_BACKEND_${_NORMALIZED_TARGET_BACKEND})
-      return()
-    endif()
+    # DO NOT SUBMIT
+    # if(NOT IREE_TARGET_BACKEND_${_NORMALIZED_TARGET_BACKEND})
+    #   return()
+    # endif()
   endif()
 
   iree_package_name(_PACKAGE_NAME)
