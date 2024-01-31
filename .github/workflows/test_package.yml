@@ -9,6 +9,8 @@ name: Test Package
 on:
   pull_request:
   workflow_dispatch:
+
+  # TODO(scotttodd): input for release tag or artifact location
     # inputs:
     #   release_id:
     #     description: "Release id to publish"
@@ -34,6 +36,7 @@ jobs:
         with:
           repository: "openxla/iree"
           tag: "candidate-20240131.787"
+          # TODO(scotttodd): infer filename if possible / get from inputs
           fileName: "iree-dist-20240131.787-linux-x86_64.tar.xz"
       - name: "Extracting package archive"
         run: |
@@ -42,3 +45,6 @@ jobs:
       - name: "Inspecting package archive"
         run: |
           ls iree-dist
+      - name: "Testing package"
+        run: |
+          ./build_tools/cmake/test_package.sh iree-dist
