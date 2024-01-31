@@ -47,4 +47,6 @@ jobs:
           ls iree-dist
       - name: "Testing package"
         run: |
+          ./build_tools/github_actions/docker_run.sh \
+            gcr.io/iree-oss/base@sha256:61e9aae211007dbad95e1f429e9e5121fd5968c204791038424979c21146cf75 \
           ./build_tools/cmake/test_package.sh iree-dist
