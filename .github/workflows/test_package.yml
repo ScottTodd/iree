@@ -1,0 +1,44 @@
+# Copyright 2024 The IREE Authors
+#
+# Licensed under the Apache License v2.0 with LLVM Exceptions.
+# See https://llvm.org/LICENSE.txt for license information.
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
+name: Test Package
+
+on:
+  pull_request:
+  workflow_dispatch:
+    # inputs:
+    #   release_id:
+    #     description: "Release id to publish"
+    #     required: true
+    #   package_version:
+    #     description: "Version of the package"
+    #     required: true
+    #   build_run_id:
+    #     description: "Run ID for the build_package.yml workflow that triggered this workflow"
+    #     required: true
+
+jobs:
+  linux_x86_64_cpu:
+    name: Test on Linux (x86_64) CPU
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checking out repository"
+        uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
+        with:
+          submodules: true
+      - name: "Downloading release package"
+        uses: robinraju/release-downloader@368754b9c6f47c345fcfbf42bcb577c2f0f5f395 # v1.9
+        with:
+          repository: "openxla/iree"
+          tag: "candidate-20240131.787"
+          fileName: "iree-dist-20240131.787-linux-x86_64.tar.xz"
+      - name: "Extracting package archive"
+        run: |
+          mkdir iree-dist
+          tar -xf "iree-dist-20240131.787-linux-x86_64.tar.xz" -C "iree-dist"
+      - name: "Inspecting package archive"
+        run: |
+          ls iree-dist
