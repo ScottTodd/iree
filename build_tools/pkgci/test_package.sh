@@ -19,7 +19,6 @@
 
 set -euo pipefail
 
-SOURCE_DIR_ROOT=$(git rev-parse --show-toplevel)
 TEST_BUILD_DIR="${TEST_BUILD_DIR:-build-tests}"
 
 # Respect user settings, but default to as many test actions as we have cores.
