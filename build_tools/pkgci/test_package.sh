@@ -31,8 +31,10 @@ set -x
 PACKAGE_DIR="$1"
 SOURCE_DIR_ROOT=$(git rev-parse --show-toplevel)
 TEST_BUILD_DIR="${TEST_BUILD_DIR:-build-tests}"
+
+# TODO(scotttodd): include this in the Dockerfile
+python -m pip install lit
 LLVM_EXTERNAL_LIT="${LLVM_EXTERNAL_LIT:-$(which lit)}"
-# ${SOURCE_DIR_ROOT?}/third_party/llvm-project/llvm/utils/lit/lit.py"
 
 # Respect user settings, but default to as many test actions as we have cores.
 get_default_parallel_level() {

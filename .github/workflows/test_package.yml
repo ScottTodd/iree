@@ -42,13 +42,8 @@ jobs:
         run: |
           mkdir iree-dist
           tar -xf "iree-dist-20240131.787-linux-x86_64.tar.xz" -C "iree-dist"
-      - name: "Installing dependencies"
-        run: |
-          python -m pip install lit
-          which lit
       - name: "Testing package"
         run: |
           ./build_tools/github_actions/docker_run.sh \
-            --env LLVM_EXTERNAL_LIT=$(which lit) \
             gcr.io/iree-oss/base@sha256:61e9aae211007dbad95e1f429e9e5121fd5968c204791038424979c21146cf75 \
           ./build_tools/pkgci/test_package.sh iree-dist
