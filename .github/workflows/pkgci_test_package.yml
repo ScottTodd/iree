@@ -7,17 +7,18 @@
 name: PkgCI Test Package
 
 on:
-  pull_request:
+  # pull_request:
   # workflow_call:
   #   inputs:
   #     artifact_run_id:
   #       type: string
   #       default: ""
-  # workflow_dispatch:
-  #   inputs:
-  #     artifact_run_id:
-  #       type: string
-  #       default: ""
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Git tag of the release to download packages from"
+        type: string
+        default: ""
 
   # TODO(scotttodd): input for release tag or artifact location
     # inputs:
@@ -30,10 +31,6 @@ on:
     #   build_run_id:
     #     description: "Run ID for the build_package.yml workflow that triggered this workflow"
     #     required: true
-
-# TODO(scotttodd): switch to runtime submodules only
-#   * Use a Docker image with `lit` installed (`python -m pip install lit`)
-#   * `run: ./build_tools/scripts/git/update_runtime_submodules.sh`
 
 jobs:
   linux_x86_64_cpu:
@@ -51,7 +48,8 @@ jobs:
         uses: robinraju/release-downloader@368754b9c6f47c345fcfbf42bcb577c2f0f5f395 # v1.9
         with:
           repository: "openxla/iree"
-          tag: "candidate-20240131.787"
+          # tag: "candidate-20240131.787"
+          tag: "${{ inputs.release_tag }}"
           fileName: "iree-dist-*-linux-x86_64.tar.xz"
       - name: "Extracting package archive"
         run: |
