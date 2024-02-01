@@ -8,7 +8,16 @@ name: PkgCI Test Package
 
 on:
   pull_request:
-  workflow_dispatch:
+  # workflow_call:
+  #   inputs:
+  #     artifact_run_id:
+  #       type: string
+  #       default: ""
+  # workflow_dispatch:
+  #   inputs:
+  #     artifact_run_id:
+  #       type: string
+  #       default: ""
 
   # TODO(scotttodd): input for release tag or artifact location
     # inputs:
@@ -43,12 +52,11 @@ jobs:
         with:
           repository: "openxla/iree"
           tag: "candidate-20240131.787"
-          # TODO(scotttodd): infer filename if possible / get from inputs
-          fileName: "iree-dist-20240131.787-linux-x86_64.tar.xz"
+          fileName: "iree-dist-*-linux-x86_64.tar.xz"
       - name: "Extracting package archive"
         run: |
           mkdir iree-dist
-          tar -xf "iree-dist-20240131.787-linux-x86_64.tar.xz" -C "iree-dist"
+          find . -iname "iree-dist-*" -exec tar -xf {} -C "iree-dist" \;
       - name: "Installing lit"
         run: python3 -m pip install lit
       - name: "Building tests"
