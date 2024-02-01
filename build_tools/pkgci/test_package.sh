@@ -31,6 +31,8 @@ set -x
 PACKAGE_DIR="$1"
 SOURCE_DIR_ROOT=$(git rev-parse --show-toplevel)
 TEST_BUILD_DIR="${TEST_BUILD_DIR:-build-tests}"
+LLVM_EXTERNAL_LIT="${LLVM_EXTERNAL_LIT:-$(which lit)}"
+# ${SOURCE_DIR_ROOT?}/third_party/llvm-project/llvm/utils/lit/lit.py"
 
 # Respect user settings, but default to as many test actions as we have cores.
 get_default_parallel_level() {
@@ -157,7 +159,7 @@ cmake_args=(
   "-DIREE_BUILD_PYTHON_BINDINGS=OFF"
   "-DIREE_BUILD_COMPILER=OFF"
   "-DIREE_HOST_BIN_DIR=${PACKAGE_DIR?}/bin"
-  "-DLLVM_EXTERNAL_LIT=$(which lit)"
+  "-DLLVM_EXTERNAL_LIT=${LLVM_EXTERNAL_LIT?}"
 )
 cmake_args+=(${cmake_config_options[@]})
 

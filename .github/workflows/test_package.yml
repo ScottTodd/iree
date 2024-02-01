@@ -45,6 +45,7 @@ jobs:
       - name: "Installing dependencies"
         run: |
           python -m pip install lit
+          which lit
       - name: "Testing package"
         run: |
           ./build_tools/github_actions/docker_run.sh \
