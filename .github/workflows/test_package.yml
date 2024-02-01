@@ -42,9 +42,6 @@ jobs:
         run: |
           mkdir iree-dist
           tar -xf "iree-dist-20240131.787-linux-x86_64.tar.xz" -C "iree-dist"
-      - name: "Inspecting package archive"
-        run: |
-          ls iree-dist
       - name: "Installing dependencies"
         run: |
           python -m pip install lit

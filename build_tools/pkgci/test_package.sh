@@ -26,6 +26,7 @@
 ###############################################################################
 
 set -euo pipefail
+set -x
 
 PACKAGE_DIR="$1"
 SOURCE_DIR_ROOT=$(git rev-parse --show-toplevel)
