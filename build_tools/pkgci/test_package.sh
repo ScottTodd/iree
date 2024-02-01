@@ -37,6 +37,11 @@ export IREE_CTEST_TESTS_REGEX="${IREE_CTEST_TESTS_REGEX:-}"
 # Allow users to provide any additional --label-regex parameters to ctest.
 export IREE_CTEST_LABEL_REGEX="${IREE_CTEST_LABEL_REGEX:-}"
 
+# Respect user settings, but default to turning off all GPU tests.
+export IREE_VULKAN_DISABLE="${IREE_VULKAN_DISABLE:-1}"
+export IREE_METAL_DISABLE="${IREE_METAL_DISABLE:-1}"
+export IREE_CUDA_DISABLE="${IREE_CUDA_DISABLE:-1}"
+
 # Respect user settings, but default to turning off specialized hardware tests.
 # The VK_KHR_shader_float16_int8 extension is optional prior to Vulkan 1.2.
 export IREE_VULKAN_F16_DISABLE="${IREE_VULKAN_F16_DISABLE:-1}"
