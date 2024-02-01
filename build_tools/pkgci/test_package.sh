@@ -6,17 +6,9 @@
 # See https://llvm.org/LICENSE.txt for license information.
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-# Runs tests using a provided "package build" of the compiler project.
+# Runs tests.
 #
-# The package directory to test is passed as the first argument.
-#
-# Tests considered in-scope for this script:
-#   * `runtime/` tests
-#   * `tests/`, `tools/`, `samples/`, etc. tests from other directories that
-#     use binaries from the CMake `IREE_HOST_BIN_DIR` option
-#
-# Tests considered out-of-scope for this script:
-#   * `compiler/` tests and others using the `IREE_BUILD_COMPILER` CMake option
+# This expects that `build_tests_using_package.sh` has already been run.
 
 # TODO(scotttodd): Test iree-compiler Python packages. This only tests native
 #   iree-dist packages right now.
@@ -26,9 +18,7 @@
 ###############################################################################
 
 set -euo pipefail
-set -x
 
-PACKAGE_DIR="$1"
 SOURCE_DIR_ROOT=$(git rev-parse --show-toplevel)
 TEST_BUILD_DIR="${TEST_BUILD_DIR:-build-tests}"
 LLVM_EXTERNAL_LIT="${LLVM_EXTERNAL_LIT:-${SOURCE_DIR_ROOT}/third_party/llvm-project/llvm/utils/lit/lit.py}"
@@ -48,11 +38,6 @@ export IREE_CTEST_TESTS_REGEX="${IREE_CTEST_TESTS_REGEX:-}"
 # Allow users to provide any additional --label-regex parameters to ctest.
 export IREE_CTEST_LABEL_REGEX="${IREE_CTEST_LABEL_REGEX:-}"
 
-# Respect user settings, but default to turning off all GPU tests.
-export IREE_VULKAN_DISABLE="${IREE_VULKAN_DISABLE:-1}"
-export IREE_METAL_DISABLE="${IREE_METAL_DISABLE:-1}"
-export IREE_CUDA_DISABLE="${IREE_CUDA_DISABLE:-1}"
-
 # Respect user settings, but default to turning off specialized hardware tests.
 # The VK_KHR_shader_float16_int8 extension is optional prior to Vulkan 1.2.
 export IREE_VULKAN_F16_DISABLE="${IREE_VULKAN_F16_DISABLE:-1}"
@@ -64,18 +49,6 @@ export IREE_NVIDIA_SM80_TESTS_DISABLE="${IREE_NVIDIA_SM80_TESTS_DISABLE:-1}"
 export IREE_AMD_RDNA3_TESTS_DISABLE="${IREE_AMD_RDNA3_TESTS_DISABLE:-1}"
 # Some tests require multiple devices (GPUs).
 export IREE_MULTI_DEVICE_TESTS_DISABLE="${IREE_MULTI_DEVICE_TESTS_DISABLE:-1}"
-
-# Set cmake options based on disabled features.
-declare -a cmake_config_options=()
-if (( IREE_VULKAN_DISABLE == 1 )); then
-  cmake_config_options+=("-DIREE_HAL_DRIVER_VULKAN=OFF")
-fi
-if (( IREE_METAL_DISABLE == 1 )); then
-  cmake_config_options+=("-DIREE_HAL_DRIVER_METAL=OFF")
-fi
-if (( IREE_CUDA_DISABLE == 1 )); then
-  cmake_config_options+=("-DIREE_HAL_DRIVER_CUDA=OFF")
-fi
 
 # Set ctest label exclusions based on disabled features.
 declare -a label_exclude_args=()
@@ -145,31 +118,6 @@ excluded_tests+=(
   "iree/samples/custom_dispatch/cpu/embedded/example_stream.mlir.test"
   "iree/samples/custom_dispatch/cpu/embedded/example_transform.mlir.test"
 )
-
-###############################################################################
-# Build the runtime and compile 'test deps'                                   #
-###############################################################################
-
-cmake_args=(
-  "."
-  "-G Ninja"
-  "-B ${TEST_BUILD_DIR?}"
-  "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
-  "-DIREE_BUILD_PYTHON_BINDINGS=OFF"
-  "-DIREE_BUILD_COMPILER=OFF"
-  "-DIREE_HOST_BIN_DIR=${PACKAGE_DIR?}/bin"
-  "-DLLVM_EXTERNAL_LIT=${LLVM_EXTERNAL_LIT?}"
-)
-cmake_args+=(${cmake_config_options[@]})
-
-echo "*************** Configuring runtime build ***************"
-cmake ${cmake_args[@]}
-
-echo "*************** Building all runtime targets ***************"
-cmake --build ${TEST_BUILD_DIR?}
-
-echo "*************** Building iree-test-deps ***************"
-cmake --build ${TEST_BUILD_DIR?} --target iree-test-deps
 
 ###############################################################################
 # Run tests                                                                   #
