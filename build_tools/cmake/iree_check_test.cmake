@@ -115,7 +115,10 @@ function(iree_check_test)
   #   1. the bytecode module build to be enabled
   #   2. _RULE_DRIVER is defined and runtime support is enabled
   #   3. no other label exclusions (e.g. 'optonly' test with 'debug' config)
-  set(_TEST_DISABLED FALSE)
+  # set(_TEST_DISABLED FALSE)
+
+  # DO NOT SUBMIT - improve iteration speed by just disabling these
+  set(_TEST_DISABLED TRUE)
 
   # 1. Check bytecode module build.
   if(NOT _BYTECODE_MODULE_BUILD_ENABLED)

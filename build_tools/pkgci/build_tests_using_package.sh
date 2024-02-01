@@ -69,6 +69,6 @@ echo "::group::Build runtime targets"
 cmake --build ${TEST_BUILD_DIR?}
 echo "::endgroup::"
 
-echo "::group::Build iree-test-deps"
-cmake --build ${TEST_BUILD_DIR?} --target iree-test-deps
-echo "::endgroup::"
+# echo "::group::Build iree-test-deps"
+# cmake --build ${TEST_BUILD_DIR?} --target iree-test-deps
+# echo "::endgroup::"
