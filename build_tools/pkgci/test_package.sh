@@ -156,7 +156,7 @@ cmake_args=(
   "-DIREE_BUILD_PYTHON_BINDINGS=OFF"
   "-DIREE_BUILD_COMPILER=OFF"
   "-DIREE_HOST_BIN_DIR=${PACKAGE_DIR?}/bin"
-  "-DLLVM_EXTERNAL_LIT=${SOURCE_DIR_ROOT?}/third_party/llvm-project/llvm/utils/lit/lit.py"
+  "-DLLVM_EXTERNAL_LIT=$(which lit)"
 )
 cmake_args+=(${cmake_config_options[@]})
 
