@@ -27,6 +27,7 @@ set -euo pipefail
 PACKAGE_DIR="$1"
 TEST_BUILD_DIR="${TEST_BUILD_DIR:-build-tests}"
 # LLVM_EXTERNAL_LIT="${LLVM_EXTERNAL_LIT:-$PWD/third_party/llvm-project/llvm/utils/lit/lit.py}"
+python -m pip install lit
 LLVM_EXTERNAL_LIT="${LLVM_EXTERNAL_LIT:-$(which lit)}"
 
 # Respect user settings, but default to turning off all GPU drivers and tests.
