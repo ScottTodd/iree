@@ -31,7 +31,9 @@ jobs:
     name: Test on Linux (x86_64) CPU
     runs-on: ubuntu-20.04
     # container: gcr.io/iree-oss/base@sha256:61e9aae211007dbad95e1f429e9e5121fd5968c204791038424979c21146cf75
-    container: docker://ghcr.io/nod-ai/manylinux_x86_64:main
+    container:
+      image: docker://ghcr.io/nod-ai/manylinux_x86_64:main
+      options: --user 1001
     steps:
       - name: "Checking out repository"
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
