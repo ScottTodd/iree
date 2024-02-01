@@ -30,6 +30,7 @@ jobs:
   linux_x86_64_cpu:
     name: Test on Linux (x86_64) CPU
     runs-on: ubuntu-20.04
+    container: gcr.io/iree-oss/base@sha256:61e9aae211007dbad95e1f429e9e5121fd5968c204791038424979c21146cf75
     steps:
       - name: "Checking out repository"
         uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
@@ -47,12 +48,6 @@ jobs:
           mkdir iree-dist
           tar -xf "iree-dist-20240131.787-linux-x86_64.tar.xz" -C "iree-dist"
       - name: "Building tests"
-        run: |
-          ./build_tools/github_actions/docker_run.sh \
-            gcr.io/iree-oss/base@sha256:61e9aae211007dbad95e1f429e9e5121fd5968c204791038424979c21146cf75 \
-          ./build_tools/pkgci/build_tests_using_package.sh iree-dist
+        run: ./build_tools/pkgci/build_tests_using_package.sh iree-dist
       - name: "Testing package"
-        run: |
-          ./build_tools/github_actions/docker_run.sh \
-            gcr.io/iree-oss/base@sha256:61e9aae211007dbad95e1f429e9e5121fd5968c204791038424979c21146cf75 \
-          ./build_tools/pkgci/test_package.sh
+        run: ./build_tools/pkgci/test_package.sh
