@@ -118,6 +118,10 @@ def main(args):
             args.artifact_path = td
             return main(args)
 
+    if not args.artifact_path:
+        print(f"Need to specify either --artifact-path or --fetch-gh-workflow")
+        return 1
+
     # Find the regression suite project.
     rs_dir = (
         (Path(__file__).resolve().parent.parent.parent)
@@ -128,7 +132,10 @@ def main(args):
         print(f"Could not find regression_suite project: {rs_dir}")
         return 1
 
-    artifact_prefix = f"{platform.system().lower()}_{platform.machine()}"
+    # artifact_prefix = f"{platform.system().lower()}_{platform.machine()}"
+    artifact_prefix = "linux_x86_64"
+    # artifact_prefix = "windows_AMD64"
+    print("Using artifact_prefix:", artifact_prefix)
     wheels = []
     for package_stem, variant in [
         ("iree-compiler", args.compiler_variant),
