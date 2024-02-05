@@ -37,9 +37,11 @@ this_dir="$(cd $(dirname $0) && pwd)"
 script_name="$(basename $0)"
 repo_root=$(cd "${this_dir}" && find_git_dir_parent)
 manylinux_docker_image="${manylinux_docker_image:-$(uname -m | awk '{print ($1 == "aarch64") ? "quay.io/pypa/manylinux_2_28_aarch64" : "ghcr.io/nod-ai/manylinux_x86_64:main" }')}"
-python_versions="${override_python_versions:-cp311-cp311}"
-output_dir="${output_dir:-${this_dir}/wheelhouse}"
+output_dir="${output_dir:-${this_dir}/build}"
 cache_dir="${cache_dir:-}"
+# TODO(scotttodd): 'packages' equivalent for 'target'
+#   iree-install-dist-stripped (full)
+#   iree-install-tools-runtime (lightweight)
 packages="${packages:-iree-runtime iree-compiler}"
 package_suffix="${package_suffix:-}"
 toolchain_suffix="${toolchain_suffix:-release}"
@@ -56,7 +58,6 @@ function run_on_host() {
   if ! [ -z "$cache_dir" ]; then
     echo "Setting up host cache dir ${cache_dir}"
     mkdir -p "${cache_dir}/ccache"
-    mkdir -p "${cache_dir}/pip"
     extra_args="${extra_args} -v ${cache_dir}:${cache_dir} -e cache_dir=${cache_dir}"
   fi
   docker run --rm \
@@ -100,12 +101,6 @@ function run_in_docker() {
     export CCACHE_MAXSIZE="2G"
     export CMAKE_C_COMPILER_LAUNCHER=ccache
     export CMAKE_CXX_COMPILER_LAUNCHER=ccache
-    # Configure pip cache dir.
-    # We make it two levels down from within the container because pip likes
-    # to know that it is owned by the current user.
-    export PIP_CACHE_DIR="${cache_dir}/pip/in/container"
-    mkdir -p "${PIP_CACHE_DIR}"
-    chown -R "$(whoami)" "${cache_dir}/pip"
   fi
 
   # Build phase.
@@ -126,14 +121,10 @@ function run_in_docker() {
       package_suffix="${package_suffix//-/_}"
       case "${package}" in
         iree-runtime)
-          clean_wheels "iree_runtime${package_suffix}" "${python_version}"
           build_iree_runtime
-          run_audit_wheel "iree_runtime${package_suffix}" "${python_version}"
           ;;
         iree-compiler)
-          clean_wheels "iree_compiler${package_suffix}" "${python_version}"
           build_iree_compiler
-          run_audit_wheel "iree_compiler${package_suffix}" "${python_version}"
           ;;
         *)
           echo "Unrecognized package '${package}'"
@@ -167,24 +158,6 @@ function build_iree_runtime() {
 function build_iree_compiler() {
   IREE_TARGET_BACKEND_ROCM=ON IREE_ENABLE_LLD=ON \
   build_wheel compiler/
-}
-
-function run_audit_wheel() {
-  local wheel_basename="$1"
-  local python_version="$2"
-  # Force wildcard expansion here
-  generic_wheel="$(echo "${output_dir}/${wheel_basename}-"*"-${python_version}-linux_$(uname -m).whl")"
-  ls "${generic_wheel}"
-  echo ":::: Auditwheel ${generic_wheel}"
-  auditwheel repair -w "${output_dir}" "${generic_wheel}"
-  rm -v "${generic_wheel}"
-}
-
-function clean_wheels() {
-  local wheel_basename="$1"
-  local python_version="$2"
-  echo ":::: Clean wheels ${wheel_basename} ${python_version}"
-  rm -f -v "${output_dir}/${wheel_basename}-"*"-${python_version}-"*".whl"
 }
 
 function prepare_python() {
