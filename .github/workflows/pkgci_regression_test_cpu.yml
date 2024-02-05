@@ -25,7 +25,6 @@ jobs:
       PACKAGE_DOWNLOAD_DIR: ${{ github.workspace }}/.packages
       IREERS_ARTIFACT_DIR: ${{ github.workspace }}/artifacts
       VENV_DIR: ${{ github.workspace }}/venv
-      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checking out repository
         uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
@@ -35,15 +34,25 @@ jobs:
         with:
           # Must match the subset of versions built in pkgci_build_packages.
           python-version: '3.11'
+
       # - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a  # v3.0.2
       #   with:
       #     name: linux_x86_64_release_packages
       #     path: ${{ env.PACKAGE_DOWNLOAD_DIR }}
 
-      # --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
+      # - name: "Downloading release package"
+      #   uses: robinraju/release-downloader@368754b9c6f47c345fcfbf42bcb577c2f0f5f395 # v1.9
+      #   with:
+      #     repository: "openxla/iree"
+      #     tag: "candidate-20240131.787"
+      #     # tag: "${{ inputs.release_tag }}"
+      #     fileName: "iree*-cp11-manylinux_*_x86_64.whl"
+      #     out-file-path: ".packages"
+
       - name: Setup venv
         run: |
           ./build_tools/pkgci/setup_venv.py $VENV_DIR \
+            --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
             --fetch-gh-workflow=${{ inputs.artifact_run_id }}
 
       - name: Run Tests
