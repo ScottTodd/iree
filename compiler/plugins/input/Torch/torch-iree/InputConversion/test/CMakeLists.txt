@@ -10,6 +10,7 @@ iree_lit_test_suite(
     "scatter.mlir"
     "sort.mlir"
     "torch_to_iree.mlir"
+    "verify_compiler_input_legality.mlir"
   TOOLS
     FileCheck
     iree-compile

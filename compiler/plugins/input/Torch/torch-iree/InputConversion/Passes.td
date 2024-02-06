@@ -27,4 +27,11 @@ def SetStrictSymbolicShapesPass :
   let constructor = "mlir::iree_compiler::TorchInput::createSetStrictSymbolicShapesPass()";
 }
 
+def VerifyCompilerTorchInputLegality :
+    Pass<"torch-iree-verify-compiler-input-legality", "mlir::ModuleOp"> {
+  let summary =
+      "Verifies that only supported IR constructs are passed to the compiler";
+  let constructor = "mlir::iree_compiler::TorchInput::createVerifyCompilerTorchInputLegality()";
+}
+
 #endif // TORCH_IREE_INPUTCONVERSION_PASSES

@@ -37,8 +37,9 @@ iree_cc_library(
   SRCS
     "BitCastQuantTensor.cpp"
     "ConvertTMTensorToLinalgExt.cpp"
-    "SetStrictSymbolicShapes.cpp"
     "Passes.cpp"
+    "SetStrictSymbolicShapes.cpp"
+    "VerifyCompilerInputLegality.cpp"
   DEPS
     ::PassHeaders
     ::PassesIncGen
