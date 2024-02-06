@@ -70,8 +70,9 @@ void createTorchToIREEPipeline(
   pm.addNestedPass<func::FuncOp>(
       torch::TorchConversion::createFinalizingBackendTypeConversionPass());
 
-  // TODO: Add validation pass.
   pm.addPass(createSymbolDCEPass());
+
+  pm.addPass(createVerifyCompilerTorchInputLegality());
 }
 
 void registerTMTensorConversionPasses() {
