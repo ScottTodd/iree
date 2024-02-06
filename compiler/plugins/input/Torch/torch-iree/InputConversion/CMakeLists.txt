@@ -55,5 +55,6 @@ iree_cc_library(
     torch-mlir::TorchDialectPasses
     torch-mlir-dialects::TMTensorDialectIR
     iree::compiler::Dialect::Flow::IR
+    iree::compiler::Utils
   PUBLIC
 )

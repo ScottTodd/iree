@@ -15,11 +15,13 @@ func.func @abs(%input : tensor<f32>) -> (tensor<f32>) {
 
 // -----
 
-// expected-error@+1 {{one or more illegal operations were found in the compiler input}}
+// expected-error-re@+1 {{The following illegal operations still remain:{{.*}}torch.constant.int (count: 1){{.*}}torch.operator (count: 1)}}
 module {
-func.func @unknown_onnx() {
-  // expected-note@+1 {{failed to legalize operation 'torch.operator' that was explicitly marked illegal}}
+func.func @unconverted_torch_ops() {
+  // expected-error@+1 {{'torch.operator' op : illegal op still exists}}
   torch.operator "test_unconverted_op" () : () -> ()
+  // expected-error@+1 {{'torch.constant.int' op : illegal op still exists}}
+  %int = torch.constant.int 1
   return
 }
 }

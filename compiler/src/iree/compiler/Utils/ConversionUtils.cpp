@@ -30,6 +30,7 @@ static void emitLegalizationErrors(Location loc,
     errorMessages.push_back(
         llvm::formatv("\t{0} (count: {1})", opInfo.first, opInfo.second));
   }
+  llvm::sort(errorMessages);
   emitError(loc) << "The following illegal operations still remain: \n"
                  << llvm::join(errorMessages, "\n") << "\n";
 }
