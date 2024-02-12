@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://iree.dev/building-from-source/ios/">
+        <link rel="canonical" href="https://iree.dev/guides/parameters/">
       
       
-        <link rel="prev" href="../android/">
+        <link rel="prev" href="../deployment-configurations/gpu-metal/">
       
       
-        <link rel="next" href="../riscv/">
+        <link rel="next" href="../../reference/">
       
       
       <link rel="icon" href="../../assets/images/ghost.svg">
@@ -22,7 +22,7 @@
     
     
       
-        <title>iOS cross-compilation - IREE</title>
+        <title>Parameters - IREE</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ios-cross-compilation" class="md-skip">
+        <a href="#parameters" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              iOS cross-compilation
+              Parameters
             
           </span>
         </div>
@@ -229,13 +229,11 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../building-from-source/" class="md-tabs__link">
           
   
     
@@ -251,11 +249,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../guides/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
     
@@ -345,8 +345,6 @@
           
             
               
-                
-              
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -403,8 +401,6 @@
       
   
   
-    
-  
   
     
     
@@ -423,18 +419,20 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../building-from-source/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -450,7 +448,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Building from source
@@ -465,7 +463,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../getting-started/" class="md-nav__link">
+      <a href="../../building-from-source/getting-started/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3 2.75C3 1.784 3.784 1 4.75 1h6.5c.966 0 1.75.784 1.75 1.75v11.5a.75.75 0 0 1-1.227.579L8 11.722l-3.773 3.107A.751.751 0 0 1 3 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.91l3.023-2.489a.75.75 0 0 1 .954 0l3.023 2.49V2.75a.25.25 0 0 0-.25-.25Z"/></svg>
@@ -487,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../android/" class="md-nav__link">
+      <a href="../../building-from-source/android/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.523 15.341a1 1 0 0 1 0-1.999 1 1 0 0 1 0 2m-11.046 0a1 1 0 0 1 0-2 1 1 0 0 1 0 2m11.405-6.02 1.997-3.46a.416.416 0 0 0-.152-.567.416.416 0 0 0-.568.152L17.137 8.95c-1.547-.706-3.284-1.1-5.137-1.1s-3.59.394-5.137 1.1L4.841 5.447a.416.416 0 0 0-.568-.152.416.416 0 0 0-.152.567l1.997 3.46C2.688 11.186.343 14.658 0 18.76h24c-.344-4.102-2.69-7.574-6.119-9.44"/></svg>
@@ -507,31 +505,9 @@
                 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
-  
-  <span class="md-ellipsis">
-    iOS cross-compilation
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../building-from-source/ios/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
@@ -542,87 +518,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-     Prerequisites
-  </a>
-  
-    <nav class="md-nav" aria-label="Prerequisites">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install-xcode-and-ios-sdk" class="md-nav__link">
-    Install Xcode and iOS SDK
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#host-environment-setup" class="md-nav__link">
-    Host environment setup
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configure-and-build" class="md-nav__link">
-     Configure and build
-  </a>
-  
-    <nav class="md-nav" aria-label="Configure and build">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#build-the-iree-compiler-for-the-host" class="md-nav__link">
-    Build the IREE compiler for the Host
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cross-compile-the-iree-runtime-for-ios" class="md-nav__link">
-    Cross-compile the IREE runtime for iOS
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-iree-modules-on-the-ios-simulator" class="md-nav__link">
-     Running IREE modules on the iOS Simulator
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -634,7 +529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../riscv/" class="md-nav__link">
+      <a href="../../building-from-source/riscv/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.5.75V2h3V.75a.75.75 0 0 1 1.5 0V2h1.25c.966 0 1.75.784 1.75 1.75V5h1.25a.75.75 0 0 1 0 1.5H14v3h1.25a.75.75 0 0 1 0 1.5H14v1.25A1.75 1.75 0 0 1 12.25 14H11v1.25a.75.75 0 0 1-1.5 0V14h-3v1.25a.75.75 0 0 1-1.5 0V14H3.75A1.75 1.75 0 0 1 2 12.25V11H.75a.75.75 0 0 1 0-1.5H2v-3H.75a.75.75 0 0 1 0-1.5H2V3.75C2 2.784 2.784 2 3.75 2H5V.75a.75.75 0 0 1 1.5 0Zm5.75 11.75a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25ZM5.75 5h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-.75.75h-4.5a.75.75 0 0 1-.75-.75v-4.5A.75.75 0 0 1 5.75 5Zm.75 4.5h3v-3h-3Z"/></svg>
@@ -661,6 +556,8 @@
       
   
   
+    
+  
   
     
     
@@ -677,20 +574,18 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../guides/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -706,7 +601,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Guides
@@ -752,7 +647,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../guides/ml-frameworks/" class="md-nav__link ">
+            <a href="../ml-frameworks/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -783,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/ml-frameworks/jax/" class="md-nav__link">
+      <a href="../ml-frameworks/jax/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg>
@@ -805,7 +700,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/ml-frameworks/pytorch/" class="md-nav__link">
+      <a href="../ml-frameworks/pytorch/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.005 0 4.952 7.053a9.865 9.865 0 0 0 0 14.022 9.866 9.866 0 0 0 14.022 0c3.984-3.9 3.986-10.205.085-14.023l-1.744 1.743c2.904 2.905 2.904 7.634 0 10.538s-7.634 2.904-10.538 0-2.904-7.634 0-10.538l4.647-4.646.582-.665zm3.568 3.899a1.327 1.327 0 0 0-1.327 1.327 1.327 1.327 0 0 0 1.327 1.328A1.327 1.327 0 0 0 16.9 5.226 1.327 1.327 0 0 0 15.573 3.9z"/></svg>
@@ -827,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/ml-frameworks/tensorflow/" class="md-nav__link">
+      <a href="../ml-frameworks/tensorflow/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1.292 5.856 11.54 0v24l-4.095-2.378V7.603l-6.168 3.564.015-5.31zm21.43 5.311-.014-5.31L12.46 0v24l4.095-2.378V14.87l3.092 1.788-.018-4.618-3.074-1.756V7.603l6.168 3.564z"/></svg>
@@ -849,7 +744,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/ml-frameworks/tflite/" class="md-nav__link">
+      <a href="../ml-frameworks/tflite/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1.292 5.856 11.54 0v24l-4.095-2.378V7.603l-6.168 3.564.015-5.31zm21.43 5.311-.014-5.31L12.46 0v24l4.095-2.378V14.87l3.092 1.788-.018-4.618-3.074-1.756V7.603l6.168 3.564z"/></svg>
@@ -914,7 +809,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../guides/deployment-configurations/" class="md-nav__link ">
+            <a href="../deployment-configurations/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -945,7 +840,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/deployment-configurations/cpu/" class="md-nav__link">
+      <a href="../deployment-configurations/cpu/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.5.75V2h3V.75a.75.75 0 0 1 1.5 0V2h1.25c.966 0 1.75.784 1.75 1.75V5h1.25a.75.75 0 0 1 0 1.5H14v3h1.25a.75.75 0 0 1 0 1.5H14v1.25A1.75 1.75 0 0 1 12.25 14H11v1.25a.75.75 0 0 1-1.5 0V14h-3v1.25a.75.75 0 0 1-1.5 0V14H3.75A1.75 1.75 0 0 1 2 12.25V11H.75a.75.75 0 0 1 0-1.5H2v-3H.75a.75.75 0 0 1 0-1.5H2V3.75C2 2.784 2.784 2 3.75 2H5V.75a.75.75 0 0 1 1.5 0Zm5.75 11.75a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25ZM5.75 5h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-.75.75h-4.5a.75.75 0 0 1-.75-.75v-4.5A.75.75 0 0 1 5.75 5Zm.75 4.5h3v-3h-3Z"/></svg>
@@ -967,7 +862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/deployment-configurations/bare-metal/" class="md-nav__link">
+      <a href="../deployment-configurations/bare-metal/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.5.75V2h3V.75a.75.75 0 0 1 1.5 0V2h1.25c.966 0 1.75.784 1.75 1.75V5h1.25a.75.75 0 0 1 0 1.5H14v3h1.25a.75.75 0 0 1 0 1.5H14v1.25A1.75 1.75 0 0 1 12.25 14H11v1.25a.75.75 0 0 1-1.5 0V14h-3v1.25a.75.75 0 0 1-1.5 0V14H3.75A1.75 1.75 0 0 1 2 12.25V11H.75a.75.75 0 0 1 0-1.5H2v-3H.75a.75.75 0 0 1 0-1.5H2V3.75C2 2.784 2.784 2 3.75 2H5V.75a.75.75 0 0 1 1.5 0Zm5.75 11.75a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25ZM5.75 5h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-.75.75h-4.5a.75.75 0 0 1-.75-.75v-4.5A.75.75 0 0 1 5.75 5Zm.75 4.5h3v-3h-3Z"/></svg>
@@ -989,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/deployment-configurations/gpu-vulkan/" class="md-nav__link">
+      <a href="../deployment-configurations/gpu-vulkan/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v4c0 .372-.116.717-.314 1 .198.283.314.628.314 1v4a1.75 1.75 0 0 1-1.75 1.75H1.75A1.75 1.75 0 0 1 0 12.75v-4c0-.358.109-.707.314-1a1.739 1.739 0 0 1-.314-1v-4C0 1.784.784 1 1.75 1ZM1.5 2.75v4c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-4a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Zm.25 5.75a.25.25 0 0 0-.25.25v4c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-4a.25.25 0 0 0-.25-.25ZM7 4.75A.75.75 0 0 1 7.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 7 4.75ZM7.75 10h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM3 4.75A.75.75 0 0 1 3.75 4h.5a.75.75 0 0 1 0 1.5h-.5A.75.75 0 0 1 3 4.75ZM3.75 10h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1 0-1.5Z"/></svg>
@@ -1011,7 +906,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/deployment-configurations/gpu-cuda/" class="md-nav__link">
+      <a href="../deployment-configurations/gpu-cuda/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.948 8.798v-1.43a6.7 6.7 0 0 1 .424-.018c3.922-.124 6.493 3.374 6.493 3.374s-2.774 3.851-5.75 3.851a3.67 3.67 0 0 1-1.158-.185v-4.346c1.528.185 1.837.857 2.747 2.385l2.04-1.714s-1.492-1.952-4-1.952a6.016 6.016 0 0 0-.796.035m0-4.735v2.138l.424-.027c5.45-.185 9.01 4.47 9.01 4.47s-4.08 4.964-8.33 4.964a6.46 6.46 0 0 1-1.095-.097v1.325c.3.035.61.062.91.062 3.957 0 6.82-2.023 9.593-4.408.459.371 2.34 1.263 2.73 1.652-2.633 2.208-8.772 3.984-12.253 3.984-.335 0-.653-.018-.971-.053v1.864H24V4.063zm0 10.326v1.131c-3.657-.654-4.673-4.46-4.673-4.46s1.758-1.944 4.673-2.262v1.237H8.94c-1.528-.186-2.73 1.245-2.73 1.245s.68 2.412 2.739 3.11M2.456 10.9s2.164-3.197 6.5-3.533V6.201C4.153 6.59 0 10.653 0 10.653s2.35 6.802 8.948 7.42v-1.237c-4.84-.6-6.492-5.936-6.492-5.936z"/></svg>
@@ -1033,7 +928,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/deployment-configurations/gpu-rocm/" class="md-nav__link">
+      <a href="../deployment-configurations/gpu-rocm/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m18.324 9.137 1.559 1.56h2.556v2.557L24 14.814V9.137zM2 9.52l-2 4.96h1.309l.37-.982H3.9l.408.982h1.338L3.432 9.52zm4.209 0v4.955h1.238v-3.092l1.338 1.562h.188l1.338-1.556v3.091h1.238V9.52H10.47l-1.592 1.845L7.287 9.52zm6.283 0v4.96h2.057c1.979 0 2.88-1.046 2.88-2.472 0-1.36-.937-2.488-2.747-2.488zm1.237.91h.792c1.17 0 1.63.711 1.63 1.57 0 .728-.372 1.572-1.616 1.572h-.806zm-10.985.273.791 1.932H2.008zm17.137.307-1.604 1.603v2.25h2.246l1.604-1.607h-2.246z"/></svg>
@@ -1055,7 +950,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/deployment-configurations/gpu-metal/" class="md-nav__link">
+      <a href="../deployment-configurations/gpu-metal/" class="md-nav__link">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
@@ -1083,6 +978,8 @@
                 
   
   
+    
+  
   
     
     
@@ -1093,15 +990,13 @@
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
         
           <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
             
@@ -1114,7 +1009,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_4">
             <span class="md-nav__icon md-icon"></span>
             General topics
@@ -1125,9 +1020,31 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../guides/parameters/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2 1.75C2 .784 2.784 0 3.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 12.25 15h-7a.75.75 0 0 1 0-1.5h7a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75a.25.25 0 0 0-.25.25V4.5a.75.75 0 0 1-1.5 0Zm-.5 10.487v1.013a.75.75 0 0 1-1.5 0v-1.012a3.748 3.748 0 0 1 3.77-3.749L4 8.49V6.573a.25.25 0 0 1 .42-.183l2.883 2.678a.25.25 0 0 1 0 .366L4.42 12.111a.25.25 0 0 1-.42-.183V9.99l-.238-.003a2.25 2.25 0 0 0-2.262 2.25Zm8-10.675V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Parameters
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2 1.75C2 .784 2.784 0 3.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 12.25 15h-7a.75.75 0 0 1 0-1.5h7a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75a.25.25 0 0 0-.25.25V4.5a.75.75 0 0 1-1.5 0Zm-.5 10.487v1.013a.75.75 0 0 1-1.5 0v-1.012a3.748 3.748 0 0 1 3.77-3.749L4 8.49V6.573a.25.25 0 0 1 .42-.183l2.883 2.678a.25.25 0 0 1 0 .366L4.42 12.111a.25.25 0 0 1-.42-.183V9.99l-.238-.003a2.25 2.25 0 0 0-2.262 2.25Zm8-10.675V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg>
@@ -1138,6 +1055,129 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+     Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-formats" class="md-nav__link">
+     Supported formats
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#irpa" class="md-nav__link">
+    
+ IRPA
+  </a>
+  
+    <nav class="md-nav" aria-label="IRPA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#splatted-values" class="md-nav__link">
+    Splatted values
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gguf" class="md-nav__link">
+    GGUF
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safetensors" class="md-nav__link">
+    Safetensors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-parameter-files" class="md-nav__link">
+     Working with parameter files
+  </a>
+  
+    <nav class="md-nav" aria-label="Working with parameter files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#converting-to-the-irpa-format" class="md-nav__link">
+    Converting to the IRPA format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-parameter-files" class="md-nav__link">
+    Creating parameter files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-parameter-files" class="md-nav__link">
+    Inspecting parameter files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planning" class="md-nav__link">
+    PLANNING
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#random-notes" class="md-nav__link">
+    RANDOM NOTES
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -3261,8 +3301,6 @@
             
             
               
-                
-              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -3282,23 +3320,51 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-     Prerequisites
+  <a href="#overview" class="md-nav__link">
+     Overview
   </a>
   
-    <nav class="md-nav" aria-label="Prerequisites">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-formats" class="md-nav__link">
+     Supported formats
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported formats">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-xcode-and-ios-sdk" class="md-nav__link">
-    Install Xcode and iOS SDK
+  <a href="#irpa" class="md-nav__link">
+    
+ IRPA
+  </a>
+  
+    <nav class="md-nav" aria-label="IRPA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#splatted-values" class="md-nav__link">
+    Splatted values
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gguf" class="md-nav__link">
+    GGUF
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#host-environment-setup" class="md-nav__link">
-    Host environment setup
+  <a href="#safetensors" class="md-nav__link">
+    Safetensors
   </a>
   
 </li>
@@ -3309,23 +3375,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-and-build" class="md-nav__link">
-     Configure and build
+  <a href="#working-with-parameter-files" class="md-nav__link">
+     Working with parameter files
   </a>
   
-    <nav class="md-nav" aria-label="Configure and build">
+    <nav class="md-nav" aria-label="Working with parameter files">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#build-the-iree-compiler-for-the-host" class="md-nav__link">
-    Build the IREE compiler for the Host
+  <a href="#converting-to-the-irpa-format" class="md-nav__link">
+    Converting to the IRPA format
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#cross-compile-the-iree-runtime-for-ios" class="md-nav__link">
-    Cross-compile the IREE runtime for iOS
+  <a href="#creating-parameter-files" class="md-nav__link">
+    Creating parameter files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspecting-parameter-files" class="md-nav__link">
+    Inspecting parameter files
   </a>
   
 </li>
@@ -3336,8 +3409,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-iree-modules-on-the-ios-simulator" class="md-nav__link">
-     Running IREE modules on the iOS Simulator
+  <a href="#planning" class="md-nav__link">
+    PLANNING
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#random-notes" class="md-nav__link">
+    RANDOM NOTES
   </a>
   
 </li>
@@ -3355,22 +3435,9 @@
               <article class="md-content__inner md-typeset">
                 
                   
-  
-  
-
-<nav class="md-tags" hidden>
-  
-    
-    
-    
-      <a href="../../community/tags/#ios" class="md-tag">iOS</a>
-    
-  
-</nav>
-
 
   
-    <a href="https://github.com/openxla/iree/blob/main/docs/website/docs/building-from-source/ios.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/openxla/iree/blob/main/docs/website/docs/guides/parameters.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
@@ -3378,110 +3445,299 @@
   
 
 
-<h1 id="ios-cross-compilation">iOS cross-compilation<a class="headerlink" href="#ios-cross-compilation" title="Permanent link">link</a></h1>
-<p>Cross-compilation for iOS consists of the two steps below.</p>
+<h1 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">link</a></h1>
+<h2 id="overview"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/></svg></span> Overview<a class="headerlink" href="#overview" title="Permanent link">link</a></h2>
+<p><em>Parameters</em> in IREE are externalized storage for resources that are
+asynchronously accessible and device-aware. Parameters offer efficient ways to
+store, manipulate, and load data for large resources like the weights in a
+machine learning model.</p>
+<p>Without using parameters, compiled programs include both code and data:</p>
+<pre class="mermaid"><code>graph LR
+  accTitle: .vmfb file without using parameters
+  accDescr {
+    Without using parameters, .vmfb files contain host code, device code,
+    small data, and large resources all in the same file.
+  }
+
+  subgraph VMFB[".vmfb file"]
+    HostCode(Host code)
+    DeviceCode(Device code)
+    SmallData(Small data)
+    LargeResources(Large resources)
+  end</code></pre>
+<p>Using parameters, data can be stored, transmitted, and loaded from separate
+sources:</p>
+<pre class="mermaid"><code>graph BT
+  accTitle: .vmfb file using parameters
+  accDescr {
+    Using parameters, .vmfb files contain host code, device code, small
+    constants, and parameters. External .irpa, .safetensors, and .gguf files
+    can be linked to these parameters.
+  }
+
+  subgraph VMFB[".vmfb file using parameters"]
+    HostCode(Host code)
+    DeviceCode(Device code)
+    SmallData(Small data)
+    Parameters("Parameters
+    • scope_1::key_1
+    • scope_1::key_2
+    • scope_2::key_1
+    • scope_2::key_2")
+  end
+
+  subgraph IRPA[".irpa file"]
+    key_1
+    key_2
+  end
+
+  subgraph Safetensors[".safetensors file"]
+    key_1a[key_1]
+  end
+
+  subgraph GGUF[".gguf file"]
+    key_2a[key_2]
+  end
+
+  IRPA -. "scope_1" .-&gt; Parameters
+  Safetensors -. "scope_2" .-&gt; Parameters
+  GGUF -. "scope_2" .-&gt; Parameters</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice that parameters are identified by a scope and a unique key within
+that scope, <em>not</em> strong references to specific file paths. Data from any
+supported file format or "parameter index provider" can be loaded.</p>
+</div>
+<h2 id="supported-formats"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 2.75C0 1.784.784 1 1.75 1H5c.55 0 1.07.26 1.4.7l.9 1.2a.25.25 0 0 0 .2.1h6.75c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25Zm1.75-.25a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25H7.5c-.55 0-1.07-.26-1.4-.7l-.9-1.2a.25.25 0 0 0-.2-.1Z"/></svg></span> Supported formats<a class="headerlink" href="#supported-formats" title="Permanent link">link</a></h2>
+<h3 id="irpa"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 128 128"><defs/><symbol id="h" viewBox="-64.5 -64.5 129 129"><g fill="none" stroke="#4285f4" stroke-miterlimit="10"><rect width="128" height="128" x="-64" y="-64"/><path d="M36.95 37.82C27.32 46.32 14.2 51 0 51c-14.27 0-27.39-4.62-36.96-13.01C-47.45 28.79-53 15.65-53 0c0-15.58 5.55-28.69 16.04-37.92C-27.36-46.35-14.24-51 0-51c14.17 0 27.29 4.71 36.95 13.25C47.45-28.45 53-15.4 53 0c0 15.47-5.55 28.55-16.05 37.82z"/><path d="M0 55h0c-29.59 0-57-19.01-57-55 0-35.8 27.41-55 57-55h0c29.59 0 57 19.69 57 55 0 35.51-27.41 55-57 55z"/><path d="M0-43c-12.29 0-23.54 3.94-31.68 11.09C-40.39-24.25-45-13.21-45 0c0 29.7 22.6 43 45 43 21.67 0 45-13.46 45-43S21.67-43 0-43h0z"/><line x1="-.01" x2="-.01" y1="51" y2="-51"/><line x1="-16" x2="-16" y1="48.95" y2="-48.93"/><line x1="15.99" x2="15.99" y1="48.91" y2="-48.93"/><line x1="53" x2="-53" y1=".08" y2=".08"/></g></symbol><linearGradient id="a" x1="64.0003" x2="64.0003" y1="8.5308" y2="121.1266" gradientUnits="userSpaceOnUse"><stop offset=".00131497" stop-color="#c7c7c7"/><stop offset=".2797" stop-color="#cacaca"/><stop offset=".5253" stop-color="#d5d5d5"/><stop offset=".7578" stop-color="#e7e7e7"/><stop offset=".9473" stop-color="#fcfcfc"/></linearGradient><path fill="url(#a)" d="M101.04 122.77c-1 0-3.35-1.25-5.43-2.36-3.88-2.06-8.72-4.63-13.51-4.63-4.25 0-7.42 2.02-10.22 3.8-2.51 1.6-4.88 3.11-7.87 3.17-3.22-.06-5.61-1.61-8.15-3.26-2.82-1.83-5.73-3.72-9.92-3.72-4.79 0-9.65 2.57-13.55 4.63-2.09 1.11-4.47 2.36-5.47 2.36-1.21 0-3.23-1.01-3.34-1.54.02-.07.05-.18.07-.25.02-.1 2.12-10.3 3.82-20.52 3.69-22.18 2.06-22.84.33-23.55C16.17 72.16 5.14 55.19 5.4 46c.05-1.97.79-4.08 1.95-4.2.09-.01.17-.02.25-.02.33 0 .44.05 1.44 1.3.6.75 1.34 1.67 2.44 2.74 5.12 4.96 9.32 7.17 16.01 8.45.13.02.25.04.38.04.46 0 .91-.16 1.27-.46.46-.38.73-.95.73-1.54V38.6c0-8.28 3.45-16.52 9.48-22.6 6.39-6.45 15.1-10 24.54-10 18.64 0 34.38 14.93 34.38 32.6v13.71c0 .61.28 1.19.75 1.56.36.28.8.44 1.25.44.15 0 .3-.02.45-.05 6.47-1.49 11.37-4.09 15.87-8.44 1.11-1.07 1.85-2.01 2.45-2.76 1.01-1.28 1.09-1.28 1.4-1.28.08 0 .16.01.24.01 1.15.12 1.88 2.23 1.93 4.19.24 9.2-10.8 26.17-22.43 30.93-1.73.71-3.36 1.37.33 23.55 1.7 10.22 3.8 20.42 3.82 20.52.01.07.03.13.05.2-.1.58-2.12 1.59-3.34 1.59z"/><path fill="#a1a1a1" d="M63.87 8c17.55 0 32.38 14.01 32.38 30.6v13.71c0 1.22.56 2.37 1.51 3.13.71.57 1.6.87 2.49.87.3 0 .6-.03.9-.1 6.85-1.57 12.03-4.34 16.81-8.95 1.09-1.05 1.86-1.99 2.44-2.72.11.41.19.92.21 1.5.12 4.4-2.47 10.6-6.93 16.6-4.33 5.83-9.8 10.59-14.26 12.42-3.44 1.4-4.48 4.12-.88 25.73 1.41 8.45 3.08 16.88 3.64 19.65-.38.17-.83.3-1.09.33-.79-.13-2.95-1.28-4.53-2.12-4.08-2.17-9.16-4.86-14.45-4.86-4.83 0-8.26 2.19-11.29 4.12-2.34 1.49-4.37 2.78-6.75 2.86-2.68-.07-4.63-1.34-7.1-2.94-2.92-1.89-6.23-4.04-11.01-4.04-5.29 0-10.39 2.69-14.49 4.86-1.59.84-3.76 1.99-4.56 2.12-.27-.03-.72-.16-1.09-.32.56-2.77 2.24-11.2 3.64-19.65 3.6-21.61 2.55-24.33-.89-25.73-4.46-1.82-9.92-6.58-14.25-12.42-4.45-6-7.04-12.21-6.92-16.61.02-.6.1-1.12.22-1.53.58.73 1.37 1.69 2.47 2.74 5.45 5.27 9.9 7.62 17.03 8.98.25.05.5.07.75.07.92 0 1.83-.32 2.55-.92.92-.76 1.45-1.89 1.45-3.08V38.6c0-7.76 3.24-15.48 8.9-21.19C46.76 11.34 54.97 8 63.87 8m0-4c-21.2 0-36.01 16.72-36.01 34.6v13.71c-6.58-1.26-10.31-3.39-15-7.93-2.83-2.72-3.15-4.6-5.27-4.6-.14 0-.29.01-.45.03-2.61.27-3.67 3.51-3.74 6.13-.32 11.52 12.98 28.46 23.65 32.83 3.02 1.23-5.35 41.81-5.35 41.81-.83 2.61 3.43 4.19 5.23 4.19 3.62 0 11.7-6.99 19.02-6.99 7.24 0 10.43 6.83 18.11 6.98 7.16-.14 10.79-6.98 18.04-6.98 7.32 0 15.32 6.99 18.94 6.99 1.81 0 6.07-1.58 5.24-4.19 0 0-8.36-40.58-5.35-41.81 10.67-4.37 23.98-21.31 23.67-32.83-.07-2.62-1.12-5.86-3.72-6.13-.16-.02-.31-.03-.46-.03-2.13 0-2.42 1.88-5.24 4.6-4.71 4.54-9.45 6.67-14.93 7.93V38.6c0-18.18-15.9-34.6-36.38-34.6z"/><g><defs><path id="b" d="M63.99 61.7c-9.51 0-18.34-.8-25.72-2.16-1.83-.34-3.45 1.27-3.07 3.09 2.45 11.99 14.25 21.84 28.78 21.84 15.9 0 26.6-10.17 28.82-21.88.34-1.81-1.27-3.39-3.08-3.05-7.37 1.36-16.21 2.16-25.73 2.16z"/></defs><clipPath id="c"><use overflow="visible" xlink:href="#b"/></clipPath><path fill="#242424" d="M63.99 61.7c-9.51 0-18.34-.8-25.72-2.16-1.83-.34-3.45 1.27-3.07 3.09 2.45 11.99 14.25 21.84 28.78 21.84 15.9 0 26.6-10.17 28.82-21.88.34-1.81-1.27-3.39-3.08-3.05-7.37 1.36-16.21 2.16-25.73 2.16z" clip-path="url(#c)"/><g clip-path="url(#c)" opacity=".2"><path d="M89.74 62.58c-1.09 5.04-3.96 9.64-8.11 13-4.74 3.85-10.84 5.88-17.65 5.88-12.26 0-23.21-8.08-25.72-18.88 7.69 1.38 16.57 2.11 25.73 2.11 9.17.01 18.06-.72 25.75-2.11m.47-3.09c-.16 0-.32.01-.49.05-7.37 1.37-16.22 2.16-25.73 2.16-9.51 0-18.34-.8-25.72-2.16-.17-.03-.33-.05-.49-.05-1.61 0-2.92 1.48-2.58 3.14 2.45 11.99 14.25 21.84 28.78 21.84 15.9 0 26.6-10.17 28.82-21.88.31-1.65-.99-3.1-2.59-3.1z"/></g><path fill="none" d="M63.99 61.7c-9.51 0-18.34-.8-25.72-2.16-1.83-.34-3.45 1.27-3.07 3.09 2.45 11.99 14.25 21.84 28.78 21.84 15.9 0 26.6-10.17 28.82-21.88.34-1.81-1.27-3.39-3.08-3.05-7.37 1.36-16.21 2.16-25.73 2.16z"/><g><defs><path id="d" d="M38.28 63.14v33.01h50.87V63.14c-7.57 1.31-16.23 2.01-25.16 2.01-8.91 0-17.57-.69-25.13-2"/></defs><clipPath id="e"><use overflow="visible" xlink:href="#d"/></clipPath><path fill="#e04c74" d="M66.99 95.88h-4.91c-6.43 0-11.64-5.21-11.64-11.64v-30.2h28.19v30.2c0 6.43-5.21 11.64-11.64 11.64z" clip-path="url(#e)"/><g clip-path="url(#e)" opacity=".3"><path fill="#ab3f2e" d="M75.78 56.88v27.36c0 4.85-3.94 8.79-8.79 8.79h-4.91c-4.85 0-8.79-3.94-8.79-8.79V56.88h22.49m2.85-2.84H50.44v30.2c0 6.43 5.21 11.64 11.64 11.64h4.91c6.43 0 11.64-5.21 11.64-11.64v-30.2z"/></g><line x1="64.54" x2="64.54" y1="54.04" y2="79.56" fill="none" stroke="#ab3f2e" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" clip-path="url(#e)" opacity=".3"/></g></g><g><circle cx="76.36" cy="41.86" r="15.81" fill="#fff"/><path fill="#a1a1a1" d="M76.36 30.06c6.51 0 11.81 5.3 11.81 11.81s-5.3 11.81-11.81 11.81c-6.51 0-11.81-5.3-11.81-11.81s5.3-11.81 11.81-11.81m0-4c-8.73 0-15.81 7.08-15.81 15.81s7.08 15.81 15.81 15.81 15.81-7.08 15.81-15.81-7.08-15.81-15.81-15.81z"/><path fill="#242424" d="M76.36 36.24c-3.06 0-5.53 1.81-5.53 5.62s2.48 5.62 5.53 5.62c3.06 0 5.53-1.81 5.53-5.62s-2.47-5.62-5.53-5.62z"/><g fill="#242424"><path d="M54.09 48.24s-.07-.03-.2-.09c-.06-.03-.14-.06-.23-.1-.06-.02-.14-.04-.22-.06-.15-.05-.41-.13-.69-.2-.27-.08-.6-.14-.96-.21-.72-.13-1.59-.21-2.54-.23-.95-.01-1.97.05-2.99.2-.19.03-.6.08-.79.12-.23.04-.46.08-.72.14-.49.11-.97.22-1.42.36-.91.28-1.72.59-2.38.91-.65.32-1.15.63-1.48.85-.16.11-.29.2-.37.27-.08.06-.13.1-.13.1l-.21.15c-.82.61-1.97.44-2.58-.38-.5-.67-.47-1.56 0-2.19 0 0 .05-.07.16-.21.1-.14.25-.35.47-.58.21-.24.48-.52.8-.8.32-.29.7-.59 1.13-.88.85-.6 1.91-1.15 3.09-1.6.59-.22 1.2-.43 1.84-.58.31-.08.65-.15.99-.22.38-.08.56-.1.95-.17 1.31-.17 2.64-.22 3.9-.11 1.25.11 2.42.35 3.41.69.49.16.94.35 1.33.54.4.18.7.37 1.01.56.15.09.28.18.39.26.08.06.15.12.2.16.11.09.17.13.17.13.8.65.93 1.82.28 2.62-.56.68-1.46.88-2.21.55z"/><path d="M53.59 47.57s-.06-.05-.16-.15c-.11-.12-.24-.21-.39-.34-.34-.28-.86-.7-1.52-1.19-.67-.48-1.47-1.04-2.36-1.61-.45-.28-.92-.57-1.39-.86-.47-.29-.99-.59-1.45-.84-.54-.31-1.01-.57-1.5-.83s-.98-.51-1.45-.75c-.95-.47-1.84-.88-2.59-1.2-.76-.32-1.38-.55-1.81-.7-.42-.13-.65-.21-.65-.21l-.19-.06c-.97-.31-1.5-1.36-1.19-2.33.26-.8 1.01-1.3 1.81-1.28 0 0 .09 0 .26.01.17 0 .42.01.72.04.61.06 1.45.19 2.41.45.96.25 2.04.61 3.15 1.07.55.24 1.13.48 1.68.76.57.28 1.16.6 1.67.87.59.34 1.11.66 1.64 1 .53.33 1.03.7 1.52 1.05.97.72 1.83 1.46 2.53 2.15.71.69 1.25 1.34 1.62 1.84.21.27.35.49.41.6.07.12.11.19.11.19.53.88.26 2.02-.62 2.56-.74.45-1.67.32-2.26-.24z"/></g></g></svg>
+</span> IRPA<a class="headerlink" href="#irpa" title="Permanent link">link</a></h3>
+<p>The IREE Parameter Archive (IRPA)
+<a href="https://github.com/openxla/iree/blob/main/runtime/src/iree/schemas/parameter_archive.h">file format</a>
+is IREE's own format optimized for deployment.</p>
+<div class="admonition todo">
+<p class="admonition-title">TODO - fill in details</p>
 <ul>
-<li>On the macOS host, build the IREE compiler.  We can run it to create
-  IREE modules.</li>
-<li>Build the IREE runtime on the macOS host for iOS devices and the
-  simulator.  We can then run the IREE module on the simulator.</li>
+<li>explain properties / tradeoffs</li>
+<li>add usage samples</li>
 </ul>
-<h2 id="prerequisites"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/><path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/></svg></span> Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">link</a></h2>
-<h3 id="install-xcode-and-ios-sdk">Install Xcode and iOS SDK<a class="headerlink" href="#install-xcode-and-ios-sdk" title="Permanent link">link</a></h3>
-<p>For cross-compilation, you need
-<a href="https://developer.apple.com/xcode/">Xcode</a>. It comes with the SDKs
-for iOS devices and the simulator, as well as the <code>simctl</code> tool for
-controlling the simulator from the command line.</p>
-<h3 id="host-environment-setup">Host environment setup<a class="headerlink" href="#host-environment-setup" title="Permanent link">link</a></h3>
-<p>On your host platform, you should already be able to build IREE from
-source.  Please make sure you've gone through the steps in <a href="../getting-started/">getting
-started</a>.</p>
-<h2 id="configure-and-build"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M15 2.75a.75.75 0 0 1-.75.75h-4a.75.75 0 0 1 0-1.5h4a.75.75 0 0 1 .75.75Zm-8.5.75v1.25a.75.75 0 0 0 1.5 0v-4a.75.75 0 0 0-1.5 0V2H1.75a.75.75 0 0 0 0 1.5H6.5Zm1.25 5.25a.75.75 0 0 0 0-1.5h-6a.75.75 0 0 0 0 1.5h6ZM15 8a.75.75 0 0 1-.75.75H11.5V10a.75.75 0 1 1-1.5 0V6a.75.75 0 0 1 1.5 0v1.25h2.75A.75.75 0 0 1 15 8Zm-9 5.25v-2a.75.75 0 0 0-1.5 0v1.25H1.75a.75.75 0 0 0 0 1.5H4.5v1.25a.75.75 0 0 0 1.5 0v-2Zm9 0a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1 0-1.5h6a.75.75 0 0 1 .75.75Z"/></svg></span> Configure and build<a class="headerlink" href="#configure-and-build" title="Permanent link">link</a></h2>
-<h3 id="build-the-iree-compiler-for-the-host">Build the IREE compiler for the Host<a class="headerlink" href="#build-the-iree-compiler-for-the-host" title="Permanent link">link</a></h3>
-<p>Build and install on your macOS host:</p>
-<div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>../iree-build/<span class="w"> </span>-GNinja<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>RelWithDebInfo<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>../iree-build/install
+</div>
+<h4 id="splatted-values">Splatted values<a class="headerlink" href="#splatted-values" title="Permanent link">link</a></h4>
+<p>For testing and benchmarking workflows, IRPA files may include a mix of real
+data and splatted values.</p>
+<h3 id="gguf">GGUF<a class="headerlink" href="#gguf" title="Permanent link">link</a></h3>
+<p>The <a href="https://github.com/ggerganov/ggml/blob/master/docs/gguf.md">GGUF format</a>
+is used by the <a href="https://github.com/ggerganov/ggml">GGML project</a> and other
+projects in that ecosystem like
+<a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a>.</p>
+<div class="admonition todo">
+<p class="admonition-title">TODO - fill in details</p>
+<ul>
+<li>explain properties / tradeoffs</li>
+<li>add usage samples</li>
+</ul>
+</div>
+<h3 id="safetensors"><img alt="🤗" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f917.svg" title=":hugging:" /> Safetensors<a class="headerlink" href="#safetensors" title="Permanent link">link</a></h3>
+<p>The <a href="https://huggingface.co/docs/safetensors/index">safetensors format</a> is used
+by the Hugging Face community.</p>
+<div class="admonition todo">
+<p class="admonition-title">TODO - fill in details</p>
+<ul>
+<li>explain properties / tradeoffs</li>
+<li>add usage samples</li>
+</ul>
+</div>
+<h2 id="working-with-parameter-files"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.78 15.3 6 6 2.11-2.16-6-6-2.11 2.16m3.72-5.2c-.39 0-.81-.05-1.14-.19L4.97 21.25l-2.11-2.11 7.41-7.4L8.5 9.96l-.72.7-1.45-1.41v2.86l-.7.7-3.52-3.56.7-.7h2.81l-1.4-1.41 3.56-3.56a2.976 2.976 0 0 1 4.22 0L9.89 5.74l1.41 1.4-.71.71 1.79 1.78 1.82-1.88c-.14-.33-.2-.75-.2-1.12a3.49 3.49 0 0 1 3.5-3.52c.59 0 1.11.14 1.58.42L16.41 6.2l1.5 1.5 2.67-2.67c.28.47.42.97.42 1.6 0 1.92-1.55 3.47-3.5 3.47Z"/></svg></span> Working with parameter files<a class="headerlink" href="#working-with-parameter-files" title="Permanent link">link</a></h2>
+<h3 id="converting-to-the-irpa-format">Converting to the IRPA format<a class="headerlink" href="#converting-to-the-irpa-format" title="Permanent link">link</a></h3>
+<p>The <code>iree-convert-parameters</code> tool converts supported parameter file formats
+into IREE Parameter Archives (.irpa) files.</p>
+<p>Example converting from safetensors to IRPA:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-convert-parameters<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--parameters<span class="o">=</span>input.safetensors<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output<span class="o">=</span>output.irpa
+</code></pre></div>
+<p>Example mutating parameters:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-convert-parameters<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--parameters<span class="o">=</span>a.gguf<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--parameters<span class="o">=</span>b.safetensors<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--exclude<span class="o">=</span>unneeded_param<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--rename<span class="o">=</span><span class="nv">old_name</span><span class="o">=</span>new_name<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--splat<span class="o">=</span><span class="nv">some_name</span><span class="o">=</span><span class="nv">f32</span><span class="o">=</span><span class="m">4</span>.2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output<span class="o">=</span>ab.irpa
+</code></pre></div>
+<p>Example stripping all parameters and replacing them with zeros except
+for one that needs special handling:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-convert-parameters<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--parameters<span class="o">=</span>input.irpa<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--strip<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--splat<span class="o">=</span><span class="nv">special_param</span><span class="o">=</span><span class="nv">f32</span><span class="o">=</span><span class="m">1</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output<span class="o">=</span>output.irpa
+</code></pre></div>
+<h3 id="creating-parameter-files">Creating parameter files<a class="headerlink" href="#creating-parameter-files" title="Permanent link">link</a></h3>
+<p>The <code>iree-create-parameters</code> tool can create IREE Parameter Archive (.irpa)
+files. Each parameter in the archive can be created with either a real data
+value (taking up storage space in the final archive) or a splatted value
+(zeroed contents or a repeated value, taking up no storage space on disk).</p>
+<p>Run <code>iree-create-parameters --help</code> for a detailed list of options.</p>
+<p>Example creating a file with two embedded data parameters that have
+zeroed contents and one with a repeating pattern:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-create-parameters<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--data<span class="o">=</span>my.zeroed_param_1<span class="o">=</span>4096xf32<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--data<span class="o">=</span>my.zeroed_param_2<span class="o">=</span>2x4096xi16<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--data<span class="o">=</span>my.pattern_param_2<span class="o">=</span><span class="nv">8x2xf32</span><span class="o">=</span><span class="m">2</span>.1<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output<span class="o">=</span>output_with_storage.irpa
+</code></pre></div>
+<p>Example creating a file with splatted values (no storage on disk):</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-create-parameters<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--splat<span class="o">=</span>my.splat_param_1<span class="o">=</span><span class="nv">4096xf32</span><span class="o">=</span><span class="m">4</span>.1<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--splat<span class="o">=</span>my.splat_param_2<span class="o">=</span><span class="nv">2x4096xi16</span><span class="o">=</span><span class="m">123</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output<span class="o">=</span>output_without_storage.irpa
+</code></pre></div>
+<p>Parameter archives can also be created using IREE's
+<a href="../../reference/bindings/python/">Python bindings</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">iree.runtime</span> <span class="k">as</span> <span class="nn">rt</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
 
-cmake<span class="w"> </span>--build<span class="w"> </span>../iree-build/<span class="w"> </span>--target<span class="w"> </span>install
-</code></pre></div>
-<h3 id="cross-compile-the-iree-runtime-for-ios">Cross-compile the IREE runtime for iOS<a class="headerlink" href="#cross-compile-the-iree-runtime-for-ios" title="Permanent link">link</a></h3>
-<p>Build the runtime for the iOS Simulator.</p>
-<div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>../build-ios-sim<span class="w"> </span>-GNinja<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DCMAKE_SYSTEM_NAME<span class="o">=</span>iOS<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DCMAKE_OSX_SYSROOT<span class="o">=</span><span class="k">$(</span>xcodebuild<span class="w"> </span>-version<span class="w"> </span>-sdk<span class="w"> </span>iphonesimulator<span class="w"> </span>Path<span class="k">)</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DCMAKE_OSX_ARCHITECTURES<span class="o">=</span>arm64<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DCMAKE_SYSTEM_PROCESSOR<span class="o">=</span>arm64<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DCMAKE_OSX_DEPLOYMENT_TARGET<span class="o">=</span><span class="m">11</span>.0<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DCMAKE_IOS_INSTALL_COMBINED<span class="o">=</span>YES<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DIREE_HOST_BIN_DIR<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/../iree-build/install/bin&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>../build-ios-sim/install<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-DIREE_BUILD_COMPILER<span class="o">=</span>OFF
+<span class="k">def</span> <span class="nf">_float_constant</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">val</span><span class="p">])</span>
 
-cmake<span class="w"> </span>--build<span class="w"> </span>../build-ios-sim<span class="w"> </span>--config<span class="w"> </span>Release<span class="w"> </span>--target<span class="w"> </span>install
+<span class="c1"># Create an archive file with splats.</span>
+<span class="n">splat_index</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="n">ParameterIndex</span><span class="p">()</span>
+<span class="n">splat_index</span><span class="o">.</span><span class="n">add_splat</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">,</span> <span class="n">_float_constant</span><span class="p">(</span><span class="mf">2.0</span><span class="p">),</span> <span class="mi">30</span> <span class="o">*</span> <span class="mi">20</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">splat_index</span><span class="o">.</span><span class="n">add_splat</span><span class="p">(</span><span class="s2">&quot;bias&quot;</span><span class="p">,</span> <span class="n">_float_constant</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="mi">30</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">td</span><span class="p">:</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">td</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;archive.irpa&quot;</span>
+    <span class="n">target_index</span> <span class="o">=</span> <span class="n">splat_index</span><span class="o">.</span><span class="n">create_archive_file</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">target_index</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_size</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div>
-<p>Or, we can build the runtime for iOS devices it by changing the value
-of the <code>-DCMAKE OSX SYSROOT</code> option to:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span>-DCMAKE_OSX_SYSROOT<span class="o">=</span><span class="k">$(</span>xcodebuild<span class="w"> </span>-version<span class="w"> </span>-sdk<span class="w"> </span>iphoneos<span class="w"> </span>Path<span class="k">)</span>
+<p>See the
+<a href="https://github.com/openxla/iree/blob/main/runtime/bindings/python/tests/io_test.py"><code>runtime/bindings/python/tests/io_test.py</code></a>
+file for more usage examples.</p>
+<h3 id="inspecting-parameter-files">Inspecting parameter files<a class="headerlink" href="#inspecting-parameter-files" title="Permanent link">link</a></h3>
+<p>The <code>iree-dump-parameters</code> tool outputs information about parsed parameter
+files.</p>
+<p>Example listing all available parameters and their index information:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-dump-parameters<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--parameters<span class="o">=</span><span class="nv">my_scope</span><span class="o">=</span>my_file.gguf<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--parameters<span class="o">=</span>...<span class="o">]</span>
 </code></pre></div>
-<h2 id="running-iree-modules-on-the-ios-simulator"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06Z"/></svg></span> Running IREE modules on the iOS Simulator<a class="headerlink" href="#running-iree-modules-on-the-ios-simulator" title="Permanent link">link</a></h2>
-<p>Run the IREE compiler on the host to generate a module.</p>
-<div class="highlight"><pre><span></span><code>../iree-build/install/bin/iree-compile<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--iree-hal-target-backends<span class="o">=</span>vmvx<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>samples/models/simple_abs.mlir<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-o<span class="w"> </span>/tmp/simple_abs_vmvx.vmfb
+<p>Example extracting parameter binary contents from a file:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-dump-parameters<span class="w"> </span>...<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--extract<span class="o">=</span>scope::key0<span class="o">=</span>file0.bin<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--extract<span class="o">=</span>...<span class="o">]</span>
 </code></pre></div>
-<p>We could test the generated module by running the macOS version of
-<code>iree-run-module</code> on the host.</p>
-<div class="highlight"><pre><span></span><code>../iree-build/install/bin/iree-run-module<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--module<span class="o">=</span>/tmp/simple_abs_vmvx.vmfb<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--device<span class="o">=</span>local-task<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--function<span class="o">=</span>abs<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--input<span class="o">=</span><span class="s2">&quot;f32=-5&quot;</span>
+<!-- ///////////////////////////////////////////////////////////////////// -->
+<!-- ///////////////////////////////////////////////////////////////////// -->
+<!-- ///////////////////////////////////////////////////////////////////// -->
+<!-- ///////////////////////////////////////////////////////////////////// -->
+
+<hr />
+<hr />
+<hr />
+<h2 id="planning">PLANNING<a class="headerlink" href="#planning" title="Permanent link">link</a></h2>
+<ul>
+<li>When external, can compress/encode/quantize/pack/etc.</li>
+<li>Properties on the data: alignment, GPU-friendly, etc.</li>
+</ul>
+<h2 id="random-notes">RANDOM NOTES<a class="headerlink" href="#random-notes" title="Permanent link">link</a></h2>
+<div class="highlight"><pre><span></span><code>λ ..\iree-build\tools\iree-dump-parameters.exe --parameters=./tools/test/parameters_a.safetensors
+//===--------------------------------------------------------------------------------------------------------------===//
+// Parameter scope &lt;global&gt; (2 entries, 64 total bytes)
+//===------------+------------------+------------------+-----------------------------------------------------------===//
+//         Start |              End |           Length | Key
+//---------------+------------------+------------------+--------------------------------------------------------------//
+             120 |              152 |               32 | `a0`
+             152 |              184 |               32 | `a1`
 </code></pre></div>
-<p>To run it on the iOS simulator, we need to copy the vmfb file into the
-<code>iree-run-module</code> iOS app bundle.</p>
-<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/tmp/simple_abs_vmvx.vmfb<span class="w"> </span><span class="se">\</span>
-<span class="w">   </span>../build-ios-sim/install/bin/iree-run-module.app/
-</code></pre></div>
-<p>Open the iOS Simulator Manager on the host.</p>
-<div class="highlight"><pre><span></span><code>open<span class="w"> </span>-a<span class="w"> </span>Simulator
-</code></pre></div>
-<p>After creating and booting a simulator in this app, you can list it
-from the command-line.</p>
-<div class="highlight"><pre><span></span><code>xcrun<span class="w"> </span>simctl<span class="w"> </span>list<span class="w"> </span>devices<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Booted
-</code></pre></div>
-<p>This is what should come out of the command:</p>
-<div class="highlight"><pre><span></span><code>    iPhone 14 Pro (12341234-ABCD-ABCD-ABCD-123412341234) (Booted)
-</code></pre></div>
-<p>where <code>iPhone 14 Pro</code> is the device being simulated and
-<code>12341234-ABCD-ABCD-ABCD-123412341234</code> is the simulator's <em>unique
-device ID</em> (UDID).</p>
-<p>Install the app <code>iree-run-module</code> on the simulator, given its UDID.</p>
-<div class="highlight"><pre><span></span><code>xcrun<span class="w"> </span>simctl<span class="w"> </span>install<span class="w"> </span>&lt;UDID&gt;<span class="w"> </span>../build-ios-sim/install/bin/iree-run-module.app
-</code></pre></div>
-<p>Check the path to the installed bundle, where the
-<code>simple_abs_vmvx.vmfb</code> module should be found.</p>
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span><span class="k">$(</span>xcrun<span class="w"> </span>simctl<span class="w"> </span>get_app_container<span class="w"> </span>&lt;UDID&gt;<span class="w"> </span>dev.iree.iree-run-module<span class="k">)</span>
-</code></pre></div>
-<p>The string <code>dev.iree.iree-run-module</code> is the <em>bundle identifier</em> of
-the iOS app.  The CMake building process generates it and saves it in
-the <em>property list</em> (plist) file
-<code>../build-ios-sim/install/bin/iree-run-module.app/Info.plist</code>.</p>
-<p>Launch the <code>iree-run-module</code> app on the simulator to run the IREE
-module <code>simple_abs_vmvx.vmfb</code>.</p>
-<div class="highlight"><pre><span></span><code>xcrun<span class="w"> </span>simctl<span class="w"> </span>launch<span class="w"> </span>--console<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>&lt;UDID&gt;<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>dev.iree.runmodule<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--device<span class="o">=</span>local-task<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--function<span class="o">=</span>abs<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--input<span class="o">=</span><span class="s2">&quot;f32=-5&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--module<span class="o">=</span><span class="k">$(</span>xcrun<span class="w"> </span>simctl<span class="w"> </span>get_app_container<span class="w"> </span>&lt;UDID&gt;<span class="w"> </span>dev.iree.iree-run-module<span class="k">)</span>/simple_abs_vmvx.vmfb
-</code></pre></div>
+<ul>
+<li><a href="https://github.com/openxla/iree/pull/15670">https://github.com/openxla/iree/pull/15670</a></li>
+<li><a href="https://github.com/openxla/iree/issues/15521">https://github.com/openxla/iree/issues/15521</a></li>
+<li><a href="https://github.com/openxla/iree/pull/15104">https://github.com/openxla/iree/pull/15104</a></li>
+</ul>
+<p><code>runtime/bindings/python/tests/io_test.py</code></p>
+<ul>
+<li>How to define a program that uses parameters from Python?</li>
+</ul>
+<p>have parameters in-memory already</p>
+<ul>
+<li>ndarray in memory, what could be parameters</li>
+<li>as its compiled, get them tagged properly</li>
+</ul>
+<p>have safetensors (parameters file) already</p>
+<ul>
+<li>pretrained gguf llama.cpp</li>
+<li>huggingface</li>
+</ul>
+<p>have an input baked out file (mlir, tflite) with embedded data already</p>
+<ul>
+<li>want compile time savings</li>
+<li>not usually going to substitute a different set of parameters (optimizations have already been performed)</li>
+<li>recompile without 12GB .mlirbc</li>
+<li>splat files (structure of program without contents)</li>
+</ul>
+<p>emitc embed program into binary but keep weights separate (OTA update with parameters)</p>
+<p>all roads to high performance deployment go through our format (.irpa)
+gguf is aligned but is tied to llama.cpp compilation options
+quinn has a pass that dumps a parameters file
+<code>--iree-io-export-parameters</code></p>
+<ul>
+<li><code>--iree-opt-parameter-archive-export-file</code></li>
+<li><code>--iree-opt-parameter-archive-export-scope</code></li>
+<li><code>--iree-opt-minimum-parameter-export-size</code></li>
+<li>see how this can be used from Python (is iree-opt included?)</li>
+</ul>
+<p>don't yet have <code>--iree-io-import-parameters</code></p>
+<ul>
+<li>consteval, dce, etc.</li>
+<li>one optimization version of program, one user-substitutable version</li>
+<li>someone should write this pass</li>
+<li>compile all 1000 parameters in except for 2 (user defined)</li>
+</ul>
+<p>convert is gguf/safetensors -&gt; irpa</p>
+<p>scopes</p>
+<ul>
+<li>like namespaces</li>
+<li>scope is not embedded in the file</li>
+<li>can load the same parameter file into different scopes</li>
+<li>e.g. encoder, decoder with different scopes encoder.irpa, decoder.irpa</li>
+<li>sharding ("0 of 2", "1 of 2"), encoder_1.irpa, encoder_2.irpa</li>
+</ul>
+<p>overlays (latest setting overrides previous)</p>
+<p>IRPA</p>
+<ul>
+<li>no frontend metadata (bitmap vs psd)</li>
+<li>pytorch pickled data would have all the python dict metadata</li>
+<li>no element types, no shapes (no extra work for supporting sub-byte "types")</li>
+<li>just name, size in bytes, bytes</li>
+<li>not self-descriptive</li>
+</ul>
+<p>pass into runtime via tooling - only ever read them</p>
+<ul>
+<li>python API can write them (training loop update params)</li>
+<li>--parameter=foo.irpa</li>
+<li>could use &amp; to open as writable</li>
+</ul>
+<p>C API</p>
+<ul>
+<li>create context, load HAL, load parameters module with parameters index</li>
+<li>could have base parameters with optional refinements</li>
+<li>could have default value that is a splat</li>
+</ul>
+<p>parameter external file link</p>
+<ul>
+<li>byte range on disk (not compressed)</li>
+</ul>
+<p>all just bytes, no compression (not even GPU formats)</p>
+<p>parameter indices are just vtables</p>
+<ul>
+<li>users could have "python parameter indices"</li>
+<li>could have a distributed/network index that doesn't hit files on disk</li>
+<li>cufile, directstorage, etc. implementations possible</li>
+</ul>
 
 
-
-  
 
 
 
