@@ -22,21 +22,73 @@ def find_tests():
     #     print(root, dirs, files)
 
     root_dir_path = Path(GENERATED_TESTS_ROOT_DIR)
-    test_dirs = [p for p in root_dir_path.iterdir() if p.is_dir()]
-    print("test_dirs.length:", len(test_dirs))
+    test_dir_paths = [p for p in root_dir_path.iterdir() if p.is_dir()]
+    print("test_dir_paths.length:", len(test_dir_paths))
 
     # for dir in root_dir_path.iterdir():
     #     if not dir.is_dir():
     #         continue
     #     print("Discovered directory:", dir.name)
 
-    return test_dirs
+    return test_dir_paths
+
+
+def convert_onnx_files(test_dir_path):
+    # This converts one 'test_[name]' subfolder from this:
+    #
+    #   onnx/backend/test/data/node/...  (GENERATED_TESTS_ROOT_DIR)
+    #     test_[name]/
+    #       model.onnx
+    #       test_data_set_0/
+    #         input_0.pb
+    #         output_0.pb
+    #
+    # to this:
+    #
+    #   OUTPUT_ROOT_DIR/...
+    #     test_[name]/
+    #       model.mlir  (torch-mlir)
+    #       input_0.npy
+    #       output_0.npy
+    #       test_data_flags.txt  (flagfile with --input=, --expected_output=)
+
+    converted_dir_path = Path(OUTPUT_ROOT_DIR) / test_dir_path.name
+    converted_dir_path.mkdir(parents=True, exist_ok=True)
+    print(f"Converting files from '{test_dir_path}' to '{converted_dir_path}")
+
+    model_path = test_dir_path / "model.onnx"
+    # TODO(scotttodd): iree-import-onnx {model_path} -o {torch_mlir_path}
+
+    test_data_dirs = sorted(test_dir_path.glob("test_data_set*"))
+    print(f"test_data_dirs: {test_data_dirs}")
+    if len(test_data_dirs) != 1:
+        print("WARNING: unhandled 'len(test_data_dirs) != 1'")
+        return
+
+    test_data_dir = test_data_dirs[0]
+    test_inputs = list(test_data_dir.glob("input_*.pb"))
+    test_outputs = list(test_data_dir.glob("output_*.pb"))
+
+    model = onnx.load(model_path)
+    for i in range(len(test_inputs)):
+        test_input = test_inputs[i]
+        t = convert_io_proto(test_input, model.graph.input[i].type)
+        converted_test_input_path = converted_dir_path / test_input.stem
+        np.save(converted_test_input_path, t, allow_pickle=False)
+    for i in range(len(test_outputs)):
+        test_output = test_outputs[i]
+        t = convert_io_proto(test_output, model.graph.output[i].type)
+        converted_test_output_path = converted_dir_path / test_output.stem
+        np.save(converted_test_output_path, t, allow_pickle=False)
+
+    # TODO(scotttodd): generate a flagfile with `--input= --expected_output=`
 
 
 def convert_io_proto(proto_filename, type_proto):
-    output_dir_path = Path(OUTPUT_ROOT_DIR)
-    output_file_path = output_dir_path / proto_filename.stem
-    print(f"Converting proto file '{proto_filename}' to '{output_file_path}'")
+
+    # output_dir_path = Path(OUTPUT_ROOT_DIR)
+    # output_file_path = output_dir_path / proto_filename.stem
+    # print(f"Converting proto file '{proto_filename}' to '{output_file_path}'")
 
     with open(proto_filename, "rb") as f:
         protobuf_content = f.read()
@@ -47,37 +99,41 @@ def convert_io_proto(proto_filename, type_proto):
             t = numpy_helper.to_array(tensor)
             # assert isinstance(t, np.ndarray)
             # target_list.append(t)
-            print("  tensor_type -> TensorProto")
+            # print("  tensor_type -> TensorProto")
             # print(f"   tensor: {t}")
 
-            np.save(output_file_path, t, allow_pickle=False)
-            print(f"    Saved to {output_file_path}")
+            # np.save(output_file_path, t, allow_pickle=False)
+            # print(f"    Saved to {output_file_path}")
+            return t
         else:
             print(f"Unsupported proto type: {type_proto}")
+            return None
 
 
-def run_test(test_dir):
-    print(f"Running test for dir: '{test_dir.name}'")
+def run_test(test_dir_path):
+    print(f"Running test for dir: '{test_dir_path.name}'")
 
     # /model.onnx
     # /test_data_set_0/
     # /test_data_set_0/input_0.pb  (usually only one)
     # /test_data_set_0/input_1.pb
 
-    model_path = test_dir / "model.onnx"
+    convert_onnx_files(test_dir_path)
 
-    # TODO(scotttodd): glob for test_data_set*
-    test_data_dir = test_dir / "test_data_set_0"
-    inputs = list(test_data_dir.glob("input_*.pb"))
-    outputs = list(test_data_dir.glob("output_*.pb"))
+    # model_path = test_dir_path / "model.onnx"
 
-    print(
-        f"Testing model {model_path.name} with {inputs[0].name} and {outputs[0].name}"
-    )
+    # # TODO(scotttodd): glob for test_data_set*
+    # test_data_dir = test_dir_path / "test_data_set_0"
+    # inputs = list(test_data_dir.glob("input_*.pb"))
+    # outputs = list(test_data_dir.glob("output_*.pb"))
 
-    model = onnx.load(model_path)
-    convert_io_proto(inputs[0], model.graph.input[0].type)
-    convert_io_proto(outputs[0], model.graph.output[0].type)
+    # print(
+    #     f"Testing model {model_path.name} with {inputs[0].name} and {outputs[0].name}"
+    # )
+
+    # model = onnx.load(model_path)
+    # convert_io_proto(inputs[0], model.graph.input[0].type)
+    # convert_io_proto(outputs[0], model.graph.output[0].type)
 
     # iree-import-onnx model.onnx -o model_torch.mlir
     # iree-compile model_torch.mlir --iree-hal-target-backends=... -o model_*.vmfb
@@ -116,6 +172,6 @@ def run_test(test_dir):
 
 
 if __name__ == "__main__":
-    test_dirs = find_tests()
+    test_dir_paths = find_tests()
 
-    run_test(test_dirs[0])
+    run_test(test_dir_paths[0])
