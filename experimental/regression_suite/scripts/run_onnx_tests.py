@@ -192,14 +192,18 @@ if __name__ == "__main__":
     print("******************************************************************")
     pass_count = 0
     fail_count = 0
+    # Toggle comment to limit how many tests run
     # for i in range(10):
     for i in range(len(test_dir_paths)):
+        current_number = str(i).rjust(4, "0")
+        number_str = f"[{current_number}/{len(test_dir_paths)}]"
+
         result = run_test(test_dir_paths[i])
         if result:
-            print(f"{test_dir_paths[i].name} PASS")
+            print(f"{number_str}: {test_dir_paths[i].name} PASS")
             pass_count += 1
         else:
-            print(f"{test_dir_paths[i].name} FAIL")
+            print(f"{number_str}: {test_dir_paths[i].name} FAIL")
             fail_count += 1
     print("******************************************************************")
     print(f"Pass count: {pass_count}")
