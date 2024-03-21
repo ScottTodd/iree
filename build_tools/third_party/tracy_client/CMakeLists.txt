@@ -11,6 +11,14 @@ set(IREE_HDRS_ROOT_PATH "${IREE_ROOT_DIR}/third_party/tracy/public")
 set(IREE_INSTALL_LIBRARY_TARGETS_DEFAULT_COMPONENT IREEBundledLibraries)
 set(IREE_INSTALL_LIBRARY_TARGETS_DEFAULT_EXPORT_SET "Runtime")
 
+# TODO(scotttodd): make this work and make it optional
+#   for now just hardcode /opt/rocm/include and /opt/rocm/lib/*.so
+#   see https://rocm.docs.amd.com/en/latest/conceptual/cmake-packages.html
+
+# set(ROCM_ROOT "/opt/rocm")
+# set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH} ${ROCM_ROOT}/lib/cmake")
+# find_package(rocm_smi REQUIRED)
+
 external_cc_library(
   PACKAGE
     tracy_client
@@ -23,6 +31,8 @@ external_cc_library(
     "tracy/TracyC.h"
   SYSTEM_INCLUDES
     "${IREE_ROOT_DIR}/third_party/tracy/public"
+    "/opt/rocm/include"
   DEPS
     ${CMAKE_DL_LIBS}
+    "/opt/rocm/lib/librocm_smi64.so"
 )
