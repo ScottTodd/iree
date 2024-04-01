@@ -1319,6 +1319,8 @@
       
         
       
+        
+      
     
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
@@ -1459,11 +1461,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#operation-definition" class="md-nav__link">
-    Operation definition
+  <a href="#operations" class="md-nav__link">
+    Operations
   </a>
   
-    <nav class="md-nav" aria-label="Operation definition">
+    <nav class="md-nav" aria-label="Operations">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1670,6 +1672,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../LinalgExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LinalgExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Stream/" class="md-nav__link">
         
   
@@ -1764,8 +1786,6 @@
       
         
       
-        
-      
     
     
     <li class="md-nav__item md-nav__item--nested">
@@ -1807,26 +1827,6 @@
   
   <span class="md-ellipsis">
     IREEInput
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../IREELinalgExt/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IREELinalgExt
   </span>
   
 
@@ -3380,11 +3380,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#operation-definition" class="md-nav__link">
-    Operation definition
+  <a href="#operations" class="md-nav__link">
+    Operations
   </a>
   
-    <nav class="md-nav" aria-label="Operation definition">
+    <nav class="md-nav" aria-label="Operations">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3572,7 +3572,7 @@ carries the same usage restrictions.</p>
 <div class="toc">
 <ul>
 <li><a href="#hal_inline-dialect">'hal_inline' Dialect</a><ul>
-<li><a href="#operation-definition">Operation definition</a><ul>
+<li><a href="#operations">Operations</a><ul>
 <li><a href="#buffer-ops">Buffer ops</a><ul>
 <li><a href="#hal_inlinebufferallocateinitialized-halinlinebufferallocateinitializedop">hal_inline.buffer.allocate.initialized (HAL::Inline::BufferAllocateInitializedOp)</a></li>
 <li><a href="#hal_inlinebufferallocate-halinlinebufferallocateop">hal_inline.buffer.allocate (HAL::Inline::BufferAllocateOp)</a></li>
@@ -3603,7 +3603,7 @@ carries the same usage restrictions.</p>
 </li>
 </ul>
 </div>
-<h2 id="operation-definition">Operation definition<a class="headerlink" href="#operation-definition" title="Permanent link">link</a></h2>
+<h2 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">link</a></h2>
 <h3 id="buffer-ops">Buffer ops<a class="headerlink" href="#buffer-ops" title="Permanent link">link</a></h3>
 <p>Ops for <code>!hal.buffer</code> / <code>iree_hal_buffer_t</code>.</p>
 <h4 id="hal_inlinebufferallocateinitialized-halinlinebufferallocateinitializedop"><code>hal_inline.buffer.allocate.initialized</code> (HAL::Inline::BufferAllocateInitializedOp)<a class="headerlink" href="#hal_inlinebufferallocateinitialized-halinlinebufferallocateinitializedop" title="Permanent link">link</a></h4>
@@ -3615,7 +3615,7 @@ carries the same usage restrictions.</p>
               attr-dict-with-keyword
 </code></pre></div>
 <p>Allocates a buffer with a copy of the provided contents.</p>
-<p>Interfaces: OpAsmOpInterface, SizeAwareOpInterface</p>
+<p>Interfaces: <code>OpAsmOpInterface</code>, <code>SizeAwareOpInterface</code></p>
 <h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -3672,7 +3672,7 @@ carries the same usage restrictions.</p>
 <p>Allocates a buffer of the given size.
 The size of the buffer returned may be larger than the requested size if the
 allocator has specific alignment requirements or minimum allocation sizes.</p>
-<p>Interfaces: OpAsmOpInterface, SizeAwareOpInterface</p>
+<p>Interfaces: <code>OpAsmOpInterface</code>, <code>SizeAwareOpInterface</code></p>
 <h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -3721,9 +3721,9 @@ allocator has specific alignment requirements or minimum allocation sizes.</p>
 <p>Returns the allocated size of a buffer in bytes.
 May be less than the underlying buffer allocation if this is a subspan or
 view into another buffer.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -3764,9 +3764,9 @@ view into another buffer.</p>
 <p>Returns the host backing storage of the HAL buffer as a subspan limited to
 to the buffer's logical range (meaning that byte 0 of the returned buffer is
 byte 0 of the HAL buffer).</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -3806,9 +3806,9 @@ byte 0 of the HAL buffer).</p>
               attr-dict-with-keyword
 </code></pre></div>
 <p>Returns a reference to a subspan of the buffer.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface, SizeAwareOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code>, <code>SizeAwareOpInterface</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -3856,7 +3856,7 @@ byte 0 of the HAL buffer).</p>
 </code></pre></div>
 <p>Tries wrapping a !hal.buffer around host memory backed by the given byte
 buffer.</p>
-<p>Interfaces: OpAsmOpInterface, SizeAwareOpInterface</p>
+<p>Interfaces: <code>OpAsmOpInterface</code>, <code>SizeAwareOpInterface</code></p>
 <h5 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -3951,9 +3951,9 @@ used.</p>
               attr-dict-with-keyword
 </code></pre></div>
 <p>Returns the buffer backing this view's contents.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_7">Operands:<a class="headerlink" href="#operands_7" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -3999,9 +3999,9 @@ used.</p>
 The buffer is not copied and both the original and view references must be
 synchronized. This makes it easier to associate commonly-carried metadata
 along with the contents.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), OpAsmOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_8">Operands:<a class="headerlink" href="#operands_8" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -4061,9 +4061,9 @@ along with the contents.</p>
               attr-dict-with-keyword
 </code></pre></div>
 <p>Returns the value of the given dimension.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
@@ -4108,9 +4108,9 @@ along with the contents.</p>
               attr-dict-with-keyword
 </code></pre></div>
 <p>Returns the element type of the buffer view.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_10">Operands:<a class="headerlink" href="#operands_10" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -4149,9 +4149,9 @@ along with the contents.</p>
               attr-dict-with-keyword
 </code></pre></div>
 <p>Returns the encoding type of the buffer view.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -4190,9 +4190,9 @@ along with the contents.</p>
               attr-dict-with-keyword
 </code></pre></div>
 <p>Returns the rank of the buffer view.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -4270,11 +4270,7 @@ it was the value converted to the specified type. Queries must return the
 same value for the lifetime of the module though may vary from run to run.</p>
 <p>This is roughly equivalent to the <code>sysconf</code> linux syscall
 (https://man7.org/linux/man-pages/man3/sysconf.3.html) in that the exact
-set of keys available and their interpretation is target-dependent. If there
-is a HAL match attribute (<code>#hal.device.match.*</code>) or op
-(<code>hal.device.match.*</code>) prefer to use that in order to get compile-time
-propagation when the target is specified and elide the runtime query and
-get compile-time verification when a runtime query is required.</p>
+set of keys available and their interpretation is target-dependent.</p>
 <p>Users of the op must check the <code>ok</code> result before using the value as what
 set of keys is available may change over time. If in doubt: don't use this.
 Each key used adds additional versioning and testing complexity as runtime
@@ -4283,9 +4279,9 @@ much care as a binary file format change. Keys should be prefixed with <code>ex.
 when experimental indicating that they are not expected to be present
 forever; all non-experimental keys should be vetted.</p>
 <p>Well-known keys: (none yet)</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>

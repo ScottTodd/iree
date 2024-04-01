@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/IREELinalgExt/">
+        <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/LinalgExt/">
       
       
-        <link rel="prev" href="../IREEInput/">
+        <link rel="prev" href="../IOParameters/">
       
       
-        <link rel="next" href="../IREEVectorExt/">
+        <link rel="next" href="../Stream/">
       
       
       <link rel="icon" href="../../../assets/images/ghost.svg">
@@ -22,7 +22,7 @@
     
     
       
-        <title>IREELinalgExt - IREE</title>
+        <title>LinalgExt - IREE</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              IREELinalgExt
+              LinalgExt
             
           </span>
         </div>
@@ -1293,6 +1293,8 @@
                 
   
   
+    
+  
   
     
     
@@ -1317,17 +1319,17 @@
       
         
       
+        
+      
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" checked>
         
           <label class="md-nav__link" for="__nav_4_3_2" id="__nav_4_3_2_label" tabindex="0">
             
@@ -1340,7 +1342,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_3_2">
             <span class="md-nav__icon md-icon"></span>
             Internal dialects
@@ -1471,158 +1473,6 @@
                 
   
   
-  
-    <li class="md-nav__item">
-      <a href="../Stream/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Stream
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Util/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Util
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../VM/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    VM
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../VMVX/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    VMVX
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_3" checked>
-        
-          <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Public dialects
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_3_3">
-            <span class="md-nav__icon md-icon"></span>
-            Public dialects
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../IREEInput/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IREEInput
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -1638,7 +1488,7 @@
           
   
   <span class="md-ellipsis">
-    IREELinalgExt
+    LinalgExt
   </span>
   
 
@@ -1649,7 +1499,7 @@
         
   
   <span class="md-ellipsis">
-    IREELinalgExt
+    LinalgExt
   </span>
   
 
@@ -1671,11 +1521,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#operation-definition" class="md-nav__link">
-    Operation definition
+  <a href="#operations" class="md-nav__link">
+    Operations
   </a>
   
-    <nav class="md-nav" aria-label="Operation definition">
+    <nav class="md-nav" aria-label="Operations">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1797,13 +1647,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#iree_linalg_exttransformdo_not_dce_operands-linalgextdonotdceoperandsop" class="md-nav__link">
-    iree_linalg_ext.transform.do_not_dce_operands (LinalgExt::DoNotDCEOperandsOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#iree_linalg_extyield-linalgextyieldop" class="md-nav__link">
     iree_linalg_ext.yield (LinalgExt::YieldOp)
   </a>
@@ -1848,11 +1691,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#attribute-definition" class="md-nav__link">
-    Attribute definition
+  <a href="#attributes_11" class="md-nav__link">
+    Attributes
   </a>
   
-    <nav class="md-nav" aria-label="Attribute definition">
+    <nav class="md-nav" aria-label="Attributes">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1869,13 +1712,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#encodinguserattr" class="md-nav__link">
-    EncodingUserAttr
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1885,6 +1721,156 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Stream/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Stream
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Util/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Util
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VMVX/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMVX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_3" >
+        
+          <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Public dialects
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Public dialects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IREEInput/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREEInput
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -3434,11 +3420,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#operation-definition" class="md-nav__link">
-    Operation definition
+  <a href="#operations" class="md-nav__link">
+    Operations
   </a>
   
-    <nav class="md-nav" aria-label="Operation definition">
+    <nav class="md-nav" aria-label="Operations">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3560,13 +3546,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#iree_linalg_exttransformdo_not_dce_operands-linalgextdonotdceoperandsop" class="md-nav__link">
-    iree_linalg_ext.transform.do_not_dce_operands (LinalgExt::DoNotDCEOperandsOp)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#iree_linalg_extyield-linalgextyieldop" class="md-nav__link">
     iree_linalg_ext.yield (LinalgExt::YieldOp)
   </a>
@@ -3611,11 +3590,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#attribute-definition" class="md-nav__link">
-    Attribute definition
+  <a href="#attributes_11" class="md-nav__link">
+    Attributes
   </a>
   
-    <nav class="md-nav" aria-label="Attribute definition">
+    <nav class="md-nav" aria-label="Attributes">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3628,13 +3607,6 @@
           <li class="md-nav__item">
   <a href="#encodingroleattr" class="md-nav__link">
     EncodingRoleAttr
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#encodinguserattr" class="md-nav__link">
-    EncodingUserAttr
   </a>
   
 </li>
@@ -3659,7 +3631,7 @@
                   
 
   
-    <a href="https://github.com/openxla/iree/tree/main/llvm-external-projects/iree-dialects/include/iree-dialects/Dialect/LinalgExt/IR" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/openxla/iree/tree/main/compiler/src/iree/compiler/Dialect/LinalgExt/IR" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
@@ -3675,7 +3647,7 @@ cannot be represented efficiently/directly by the Linalg dialect.</p>
 <div class="toc">
 <ul>
 <li><a href="#iree_linalg_ext-dialect">'iree_linalg_ext' Dialect</a><ul>
-<li><a href="#operation-definition">Operation definition</a><ul>
+<li><a href="#operations">Operations</a><ul>
 <li><a href="#data-tiling-ops">Data tiling ops</a><ul>
 <li><a href="#iree_linalg_extpack-linalgextpackop">iree_linalg_ext.pack (LinalgExt::PackOp)</a></li>
 <li><a href="#iree_linalg_extset_encoding-linalgextsetencodingop">iree_linalg_ext.set_encoding (LinalgExt::SetEncodingOp)</a></li>
@@ -3695,7 +3667,6 @@ cannot be represented efficiently/directly by the Linalg dialect.</p>
 </ul>
 </li>
 <li><a href="#utility-ops">Utility ops</a><ul>
-<li><a href="#iree_linalg_exttransformdo_not_dce_operands-linalgextdonotdceoperandsop">iree_linalg_ext.transform.do_not_dce_operands (LinalgExt::DoNotDCEOperandsOp)</a></li>
 <li><a href="#iree_linalg_extyield-linalgextyieldop">iree_linalg_ext.yield (LinalgExt::YieldOp)</a></li>
 </ul>
 </li>
@@ -3706,17 +3677,16 @@ cannot be represented efficiently/directly by the Linalg dialect.</p>
 </li>
 </ul>
 </li>
-<li><a href="#attribute-definition">Attribute definition</a><ul>
+<li><a href="#attributes_11">Attributes</a><ul>
 <li><a href="#encodingattr">EncodingAttr</a></li>
 <li><a href="#encodingroleattr">EncodingRoleAttr</a></li>
-<li><a href="#encodinguserattr">EncodingUserAttr</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </div>
-<h2 id="operation-definition">Operation definition<a class="headerlink" href="#operation-definition" title="Permanent link">link</a></h2>
+<h2 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">link</a></h2>
 <h3 id="data-tiling-ops">Data tiling ops<a class="headerlink" href="#data-tiling-ops" title="Permanent link">link</a></h3>
 <p>Operations for working with data layouts, padding, encodings, and other
 properties useful for tiling computations across iteration space dimensions.</p>
@@ -3763,8 +3733,8 @@ KC_to_CKkc example the tiled loops.</p>
 <div class="highlight"><pre><span></span><code>iree_linalg_ext.pack %arg padding_value(%pad : f32) inner_dims_pos = [0, 1]
   inner_tiles = [8, 2] into %arg1 : (memref&lt;13x15xf32&gt; memref&lt;2x8x8x2xf32&gt;)
 </code></pre></div>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, LinalgExtOp, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgExtOp</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
 <h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
@@ -3824,9 +3794,9 @@ KC_to_CKkc example the tiled loops.</p>
 does not change the rank or extent of a tensor. Instead it
 adds an encoding attribute to the tensor type to represent
 a change in layout.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), ReifyRankedShapedTypeOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>ReifyRankedShapedTypeOpInterface</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -3885,8 +3855,8 @@ also supports permuting the tiled loops.</p>
 <div class="highlight"><pre><span></span><code>iree_linalg_ext.unpack %arg1 outer_dims_perm = [1, 0] inner_dims_pos = [0, 1]
   inner_tiles = [32, 8] into %arg0 : (memref&lt;32x4x32x8xf32&gt; memref&lt;128x256xf32&gt;)
 </code></pre></div>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, LinalgExtOp, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgExtOp</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
 <h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
@@ -3941,9 +3911,9 @@ also supports permuting the tiled loops.</p>
 <p>Operation to convert an tensor with encoding that represents
 its data layout into a tensor with default layout (i.e. no encoding).
 For now in IREE the default layout is row-major.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), ReifyRankedShapedTypeOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>ReifyRankedShapedTypeOpInterface</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -3984,9 +3954,9 @@ of the given encoding. This can be used outside of target-specific code, so
 there may be multiple targets, and this will return the maximum tile size
 from iterating over all of them. The evaluation happens in the
 MaterializeUpperBoundTileSize pass.</p>
-<p>Traits: AlwaysSpeculatableImplTrait</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface)</p>
-<p>Effects: MemoryEffects::Effect{}</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
@@ -4028,8 +3998,14 @@ have the same shape (BxNxd), while the key and value differ in sequence length
 (they have shape BxLxd, where L != N).
 This operator after tiling results in a tiled result as per flash attention and results
 in the current <code>max</code> and <code>sum</code> statistics while processing the current tile.</p>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>transpose_v</code></td><td>::mlir::BoolAttr</td><td>bool attribute</td></tr>
+</table>
+
 <h5 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -4080,8 +4056,8 @@ https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm</p>
 <p>The size of innermost dim is expected to be a power of 2.</p>
 <p>It is optional to carry coefficient tensors/buffers as inputs. In this
 context, they will be the second and third inputs.</p>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
 <h5 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -4127,9 +4103,9 @@ context, they will be the second and third inputs.</p>
 <p>A temporary solution for lowering reverse ops into IREE, allowing IREE to
 tile and distribute them.
 }</p>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, LinalgExtOp, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
-<h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgExtOp</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimensions</code></td><td>::mlir::DenseIntElementsAttr</td><td>64-bit signless integer elements attribute</td></tr>
@@ -4180,9 +4156,9 @@ tile and distribute them.
               $region (`-&gt;` type($results)^)?
 </code></pre></div>
 <p>Computes the inclusive/exclusive scan along a given dimension.</p>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
-<h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -4261,9 +4237,9 @@ marked as reduction.</p>
 <p>The shapes definition follows tensorflow operations execept that it force
 batch dims to be 1D. See more information in
   https://www.tensorflow.org/api_docs/python/tf/tensor_scatter_nd_update</p>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
-<h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_6">Attributes:<a class="headerlink" href="#attributes_6" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension_map</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
@@ -4316,9 +4292,9 @@ batch dims to be 1D. See more information in
 <p>Based on XLA operation semantics, sorts the given <code>operands</code> at the given
 <code>dimension</code> with the given <code>comparator</code>.</p>
 <p>See https://www.tensorflow.org/xla/operation_semantics#sort.</p>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
-<h5 id="attributes_6">Attributes:<a class="headerlink" href="#attributes_6" title="Permanent link">link</a></h5>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_7">Attributes:<a class="headerlink" href="#attributes_7" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -4381,9 +4357,9 @@ i1. If true, the two values are swapped:
   - For Top-K compoarision: &gt;
   - For Min-K comparision: &lt;
 Note: when the two values are equal, the first occurence is always selected.</p>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, LinalgExtOp, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
-<h5 id="attributes_7">Attributes:<a class="headerlink" href="#attributes_7" title="Permanent link">link</a></h5>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgExtOp</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_8">Attributes:<a class="headerlink" href="#attributes_8" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -4424,32 +4400,6 @@ Note: when the two values are equal, the first occurence is always selected.</p>
 </tbody>
 </table>
 <h3 id="utility-ops">Utility ops<a class="headerlink" href="#utility-ops" title="Permanent link">link</a></h3>
-<h4 id="iree_linalg_exttransformdo_not_dce_operands-linalgextdonotdceoperandsop"><code>iree_linalg_ext.transform.do_not_dce_operands</code> (LinalgExt::DoNotDCEOperandsOp)<a class="headerlink" href="#iree_linalg_exttransformdo_not_dce_operands-linalgextdonotdceoperandsop" title="Permanent link">link</a></h4>
-<p><em>Unfoldable op that just keeps its operands live</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.transform.do_not_dce_operands` attr-dict $operands `:` type($operands)
-</code></pre></div>
-<p>Unfoldable op that just keeps its operands live. This is to use with the
-transform dialect in case where transforms introduce IR that would be
-otherwise DCE'd by canonicalizations.</p>
-<p>This op should be added to the transform dialect in the fullness of time but
-it can't be registered dynamically on the IREE side as that triggers errors
-since the op does not implement any transform interface.</p>
-<h5 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>operands</code></td>
-<td>variadic of any type</td>
-</tr>
-</tbody>
-</table>
 <h4 id="iree_linalg_extyield-linalgextyieldop"><code>iree_linalg_ext.yield</code> (LinalgExt::YieldOp)<a class="headerlink" href="#iree_linalg_extyield-linalgextyieldop" title="Permanent link">link</a></h4>
 <p><em>LinalgExt yield op</em></p>
 <p>Syntax:</p>
@@ -4457,10 +4407,10 @@ since the op does not implement any transform interface.</p>
 </code></pre></div>
 <p><code>iree_linalg_ext.yield</code> is a special terminator operation for blocks inside
 regions in <code>iree_linalg_ext</code> ops.</p>
-<p>Traits: AlwaysSpeculatableImplTrait, ReturnLike, Terminator</p>
-<p>Interfaces: ConditionallySpeculatable, NoMemoryEffect (MemoryEffectOpInterface), RegionBranchTerminatorOpInterface</p>
-<p>Effects: MemoryEffects::Effect{}</p>
-<h5 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h5>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>ReturnLike</code>, <code>Terminator</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>RegionBranchTerminatorOpInterface</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
+<h5 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4497,9 +4447,9 @@ The input to the operator is an image of shape (N, H, W, C) or (N, C, H, W)
 and the output is an operator of shape (m + r - 1, m + r - 1, N, H', W', C)
 where H' = ceil((H - m + 1)/r) and W' = ceil((W - m + 1)/r). The result
 of this operator is first collapsed and then fed to a batch matmul op.</p>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
-<h5 id="attributes_8">Attributes:<a class="headerlink" href="#attributes_8" title="Permanent link">link</a></h5>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>output_tile_size</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -4507,7 +4457,7 @@ of this operator is first collapsed and then fed to a batch matmul op.</p>
 <tr><td><code>image_dimensions</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
+<h5 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4566,9 +4516,9 @@ shape (m + r - 1, m + r - 1, N, H', W', C) and the output is a
 tensor of shape (N, H, W, C) or (N, C, H, W) where H = r H' and W = r W'.
 This operator is followed by a tensor.extract_slice which extracts
 only the non-padded part of the output.</p>
-<p>Traits: AttrSizedOperandSegments, SingleBlock, SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</p>
-<p>Interfaces: DestinationStyleOpInterface, LinalgExtInterface, MemoryEffectOpInterface, ReifyRankedShapedTypeOpInterface, TilingInterface</p>
-<h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>output_tile_size</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -4576,7 +4526,7 @@ only the non-padded part of the output.</p>
 <tr><td><code>image_dimensions</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands_14">Operands:<a class="headerlink" href="#operands_14" title="Permanent link">link</a></h5>
+<h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4610,17 +4560,17 @@ only the non-padded part of the output.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="attribute-definition">Attribute definition<a class="headerlink" href="#attribute-definition" title="Permanent link">link</a></h2>
+<h2 id="attributes_11">Attributes<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h2>
 <h3 id="encodingattr">EncodingAttr<a class="headerlink" href="#encodingattr" title="Permanent link">link</a></h3>
 <p>information to decide how to data-tile a tensor</p>
 <p>Syntax:</p>
 <div class="highlight"><pre><span></span><code>#iree_linalg_ext.encoding&lt;
-  EncodingUserAttr,   # user
   EncodingRoleAttr,   # role
   ArrayAttr,   # element_types
   TypeAttr,   # original_type
   IntegerAttr,   # matmul_narrow_M
-  IntegerAttr   # matmul_narrow_N
+  IntegerAttr,   # matmul_narrow_N
+  ArrayAttr   # user_indexing_maps
 &gt;
 </code></pre></div>
 <p>This attribute describes the change in the layout for
@@ -4642,11 +4592,6 @@ through operations like pack/unpack.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">user</td>
-<td style="text-align: center;"><code>EncodingUserAttr</code></td>
-<td>kind of operation using this tensor</td>
-</tr>
-<tr>
 <td style="text-align: center;">role</td>
 <td style="text-align: center;"><code>EncodingRoleAttr</code></td>
 <td>role of this tensor as an operand</td>
@@ -4664,12 +4609,17 @@ through operations like pack/unpack.</p>
 <tr>
 <td style="text-align: center;">matmul_narrow_M</td>
 <td style="text-align: center;"><code>IntegerAttr</code></td>
-<td>optional M narrow dimension size (only for MATMUL and BATCH_MATMUL users)</td>
+<td>optional M narrow dimension size (only for contraction op user_indexing_maps)</td>
 </tr>
 <tr>
 <td style="text-align: center;">matmul_narrow_N</td>
 <td style="text-align: center;"><code>IntegerAttr</code></td>
-<td>optional N narrow dimension size (only for MATMUL and BATCH_MATMUL users)</td>
+<td>optional N narrow dimension size (only for contraction op user_indexing_maps)</td>
+</tr>
+<tr>
+<td style="text-align: center;">user_indexing_maps</td>
+<td style="text-align: center;"><code>ArrayAttr</code></td>
+<td>Indexing maps of the operation using this tensor</td>
 </tr>
 </tbody>
 </table>
@@ -4698,33 +4648,6 @@ through operations like pack/unpack.</p>
 <td style="text-align: center;">value</td>
 <td style="text-align: center;"><code>::mlir::iree_compiler::IREE::LinalgExt::EncodingRole</code></td>
 <td>an enum of type EncodingRole</td>
-</tr>
-</tbody>
-</table>
-<h3 id="encodinguserattr">EncodingUserAttr<a class="headerlink" href="#encodinguserattr" title="Permanent link">link</a></h3>
-<p>Describes the operation that a tensor is an operand or a result of.</p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>#iree_linalg_ext.user&lt;
-  ::mlir::iree_compiler::IREE::LinalgExt::EncodingUser   # value
-&gt;
-</code></pre></div>
-<p>Enum cases:
-* MATMUL (<code>MATMUL</code>)
-* BATCH_MATMUL (<code>BATCH_MATMUL</code>)</p>
-<h5 id="parameters_2">Parameters:<a class="headerlink" href="#parameters_2" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Parameter</th>
-<th style="text-align: center;">C++ type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">value</td>
-<td style="text-align: center;"><code>::mlir::iree_compiler::IREE::LinalgExt::EncodingUser</code></td>
-<td>an enum of type EncodingUser</td>
 </tr>
 </tbody>
 </table>

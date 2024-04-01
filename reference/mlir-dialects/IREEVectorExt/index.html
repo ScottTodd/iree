@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/IREEVectorExt/">
       
       
-        <link rel="prev" href="../IREELinalgExt/">
+        <link rel="prev" href="../IREEInput/">
       
       
         <link rel="next" href="../../glossary/">
@@ -1317,6 +1317,8 @@
       
         
       
+        
+      
     
     
     <li class="md-nav__item md-nav__item--nested">
@@ -1473,6 +1475,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../LinalgExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LinalgExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Stream/" class="md-nav__link">
         
   
@@ -1569,8 +1591,6 @@
       
         
       
-        
-      
     
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
@@ -1610,26 +1630,6 @@
   
   <span class="md-ellipsis">
     IREEInput
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../IREELinalgExt/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IREELinalgExt
   </span>
   
 
@@ -1691,11 +1691,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#operation-definition" class="md-nav__link">
-    Operation definition
+  <a href="#operations" class="md-nav__link">
+    Operations
   </a>
   
-    <nav class="md-nav" aria-label="Operation definition">
+    <nav class="md-nav" aria-label="Operations">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1705,29 +1705,16 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#attribute-definition" class="md-nav__link">
-    Attribute definition
-  </a>
-  
-    <nav class="md-nav" aria-label="Attribute definition">
-      <ul class="md-nav__list">
-        
           <li class="md-nav__item">
-  <a href="#layoutattr" class="md-nav__link">
-    LayoutAttr
+  <a href="#iree_vector_extto_simd-vectorexttosimdop" class="md-nav__link">
+    iree_vector_ext.to_simd (VectorExt::ToSIMDOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#perdimlayoutattr" class="md-nav__link">
-    PerDimLayoutAttr
+  <a href="#iree_vector_extto_simt-vectorexttosimtop" class="md-nav__link">
+    iree_vector_ext.to_simt (VectorExt::ToSIMTOp)
   </a>
   
 </li>
@@ -3270,11 +3257,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#operation-definition" class="md-nav__link">
-    Operation definition
+  <a href="#operations" class="md-nav__link">
+    Operations
   </a>
   
-    <nav class="md-nav" aria-label="Operation definition">
+    <nav class="md-nav" aria-label="Operations">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3284,29 +3271,16 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#attribute-definition" class="md-nav__link">
-    Attribute definition
-  </a>
-  
-    <nav class="md-nav" aria-label="Attribute definition">
-      <ul class="md-nav__list">
-        
           <li class="md-nav__item">
-  <a href="#layoutattr" class="md-nav__link">
-    LayoutAttr
+  <a href="#iree_vector_extto_simd-vectorexttosimdop" class="md-nav__link">
+    iree_vector_ext.to_simd (VectorExt::ToSIMDOp)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#perdimlayoutattr" class="md-nav__link">
-    PerDimLayoutAttr
+  <a href="#iree_vector_extto_simt-vectorexttosimtop" class="md-nav__link">
+    iree_vector_ext.to_simt (VectorExt::ToSIMTOp)
   </a>
   
 </li>
@@ -3347,20 +3321,17 @@ beyond what is currently available in the Vector Dialect.</p>
 <div class="toc">
 <ul>
 <li><a href="#iree_vector_ext-dialect">'iree_vector_ext' Dialect</a><ul>
-<li><a href="#operation-definition">Operation definition</a><ul>
+<li><a href="#operations">Operations</a><ul>
 <li><a href="#iree_vector_extlayout_conflict_resolution-vectorextlayoutconflictresolutionop">iree_vector_ext.layout_conflict_resolution (VectorExt::LayoutConflictResolutionOp)</a></li>
-</ul>
-</li>
-<li><a href="#attribute-definition">Attribute definition</a><ul>
-<li><a href="#layoutattr">LayoutAttr</a></li>
-<li><a href="#perdimlayoutattr">PerDimLayoutAttr</a></li>
+<li><a href="#iree_vector_extto_simd-vectorexttosimdop">iree_vector_ext.to_simd (VectorExt::ToSIMDOp)</a></li>
+<li><a href="#iree_vector_extto_simt-vectorexttosimtop">iree_vector_ext.to_simt (VectorExt::ToSIMTOp)</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </div>
-<h2 id="operation-definition">Operation definition<a class="headerlink" href="#operation-definition" title="Permanent link">link</a></h2>
+<h2 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">link</a></h2>
 <h3 id="iree_vector_extlayout_conflict_resolution-vectorextlayoutconflictresolutionop"><code>iree_vector_ext.layout_conflict_resolution</code> (VectorExt::LayoutConflictResolutionOp)<a class="headerlink" href="#iree_vector_extlayout_conflict_resolution-vectorextlayoutconflictresolutionop" title="Permanent link">link</a></h3>
 <p><em>Layout Conflict Resolution operator</em></p>
 <p>Syntax:</p>
@@ -3372,8 +3343,8 @@ desired layout.</p>
 <h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
-<tr><td><code>sourceLayout</code></td><td>::mlir::iree_compiler::IREE::VectorExt::LayoutAttr</td><td>high-dimensional vector register layout for a given vector</td></tr>
-<tr><td><code>desiredLayout</code></td><td>::mlir::iree_compiler::IREE::VectorExt::LayoutAttr</td><td>high-dimensional vector register layout for a given vector</td></tr>
+<tr><td><code>sourceLayout</code></td><td>::mlir::iree_compiler::IREE::VectorExt::VectorLayoutInterface</td><td>VectorLayoutInterface instance</td></tr>
+<tr><td><code>desiredLayout</code></td><td>::mlir::iree_compiler::IREE::VectorExt::VectorLayoutInterface</td><td>VectorLayoutInterface instance</td></tr>
 </table>
 
 <h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
@@ -3406,54 +3377,85 @@ desired layout.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="attribute-definition">Attribute definition<a class="headerlink" href="#attribute-definition" title="Permanent link">link</a></h2>
-<h3 id="layoutattr">LayoutAttr<a class="headerlink" href="#layoutattr" title="Permanent link">link</a></h3>
-<p>high-dimensional vector register layout for a given vector</p>
-<p>This contains a complete specification of the layout for a given vector,
-whereas the attribute above only specifies the per dimension layout.</p>
-<h5 id="parameters">Parameters:<a class="headerlink" href="#parameters" title="Permanent link">link</a></h5>
+<h3 id="iree_vector_extto_simd-vectorexttosimdop"><code>iree_vector_ext.to_simd</code> (VectorExt::ToSIMDOp)<a class="headerlink" href="#iree_vector_extto_simd-vectorexttosimdop" title="Permanent link">link</a></h3>
+<p><em>SIMT to SIMD conversion operation</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_vector_ext.to_simd` $input attr-dict `:` type($input) `-&gt;` type($output)
+</code></pre></div>
+<p>This operation is a temporary operation useful for source/target
+materializations when doing type conversions between distributed and not
+distributed vectors.</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>SameOperandsAndResultElementType</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
+<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Parameter</th>
-<th style="text-align: center;">C++ type</th>
+<th style="text-align: center;">Operand</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">layouts</td>
-<td style="text-align: center;"><code>::llvm::ArrayRef&lt;PerDimLayoutAttr&gt;</code></td>
-<td>layout for each dimension of the vector</td>
+<td style="text-align: center;"><code>input</code></td>
+<td>vector of any type values</td>
 </tr>
 </tbody>
 </table>
-<h3 id="perdimlayoutattr">PerDimLayoutAttr<a class="headerlink" href="#perdimlayoutattr" title="Permanent link">link</a></h3>
-<p>high-dimensional vector register layout for a given vector dimension</p>
-<p>This attribute describes the per dimension register layout for a given vector
-that could be prescribed by an operator such as matrix multiplication.
-This is a way to explicitly represent the layout in the IR
-when it is in the SIMD form prior to converting to the SIMT form so that
-we can reason about layouts, propagating layouts and layout conflicts.</p>
-<h5 id="parameters_1">Parameters:<a class="headerlink" href="#parameters_1" title="Permanent link">link</a></h5>
+<h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Parameter</th>
-<th style="text-align: center;">C++ type</th>
+<th style="text-align: center;">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">labels</td>
-<td style="text-align: center;"><code>::llvm::ArrayRef&lt;std::string&gt;</code></td>
-<td>labels for the high dimensional layout dims</td>
+<td style="text-align: center;"><code>output</code></td>
+<td>vector of any type values</td>
 </tr>
+</tbody>
+</table>
+<h3 id="iree_vector_extto_simt-vectorexttosimtop"><code>iree_vector_ext.to_simt</code> (VectorExt::ToSIMTOp)<a class="headerlink" href="#iree_vector_extto_simt-vectorexttosimtop" title="Permanent link">link</a></h3>
+<p><em>SIMD to SIMT conversion operation</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_vector_ext.to_simt` $input attr-dict `:` type($input) `-&gt;` type($output)
+</code></pre></div>
+<p>This operation is a temporary operation useful for source/target
+materializations when doing type conversions between distributed and not
+distributed vectors.</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>SameOperandsAndResultElementType</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
+<h5 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h5>
+<table>
+<thead>
 <tr>
-<td style="text-align: center;">shapes</td>
-<td style="text-align: center;"><code>::llvm::ArrayRef&lt;int64_t&gt;</code></td>
-<td>shapes for the high dimensional layout dims</td>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>input</code></td>
+<td>vector of any type values</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results_2">Results:<a class="headerlink" href="#results_2" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>output</code></td>
+<td>vector of any type values</td>
 </tr>
 </tbody>
 </table>

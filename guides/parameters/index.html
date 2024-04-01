@@ -1477,6 +1477,8 @@
       
         
       
+        
+      
     
     
     <li class="md-nav__item md-nav__item--nested">
@@ -1633,6 +1635,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../../reference/mlir-dialects/LinalgExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LinalgExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../reference/mlir-dialects/Stream/" class="md-nav__link">
         
   
@@ -1727,8 +1749,6 @@
       
         
       
-        
-      
     
     
     <li class="md-nav__item md-nav__item--nested">
@@ -1770,26 +1790,6 @@
   
   <span class="md-ellipsis">
     IREEInput
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/mlir-dialects/IREELinalgExt/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IREELinalgExt
   </span>
   
 
@@ -3718,7 +3718,7 @@ files.</p>
 <h3 id="loading-parameters-from-files">Loading parameters from files<a class="headerlink" href="#loading-parameters-from-files" title="Permanent link">link</a></h3>
 <h4 id="on-the-command-line"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19V7H4v12h16m0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16m-7 14v-2h5v2h-5m-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59l3.99-4Z"/></svg></span> On the command line<a class="headerlink" href="#on-the-command-line" title="Permanent link">link</a></h4>
 <p>IREE command line tooling can load parameter files alongside module files:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-run-module<span class="w"> </span>--module<span class="o">=</span>program.vmfb<span class="w"> </span>--parameters<span class="o">=</span>data.irpa<span class="w"> </span>...
+<div class="highlight"><pre><span></span><code><span class="go">iree-run-module --module=program.vmfb --parameters=data.irpa ...</span>
 </code></pre></div>
 <p>For concrete examples, see these test files:</p>
 <ul>
