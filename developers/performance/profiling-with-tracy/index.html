@@ -2656,13 +2656,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#tracing-iree-compile" class="md-nav__link">
-    Tracing iree-compile
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2671,6 +2664,13 @@
         <li class="md-nav__item">
   <a href="#touring-the-tracy-profiler-ui" class="md-nav__link">
      Touring the Tracy profiler UI
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tracing-iree-compile" class="md-nav__link">
+    Tracing iree-compile
   </a>
   
 </li>
@@ -3470,13 +3470,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#tracing-iree-compile" class="md-nav__link">
-    Tracing iree-compile
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -3485,6 +3478,13 @@
         <li class="md-nav__item">
   <a href="#touring-the-tracy-profiler-ui" class="md-nav__link">
      Touring the Tracy profiler UI
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tracing-iree-compile" class="md-nav__link">
+    Tracing iree-compile
   </a>
   
 </li>
@@ -3644,12 +3644,18 @@ be built from source by using either the upstream CMake build or IREE's
 <p>Build <code>iree-run-module</code> (or other tools like <code>iree-benchmark-module</code>) with
     tracing support:</p>
 <div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>-G<span class="w"> </span>Ninja<span class="w"> </span>-B<span class="w"> </span>../iree-build/<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>RelWithDebInfo<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-DIREE_ENABLE_RUNTIME_TRACING<span class="o">=</span>ON
-cmake<span class="w"> </span>--build<span class="w"> </span>../iree-build/<span class="w"> </span>--target<span class="w"> </span>iree-run-module
+<span class="hll"><span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>RelWithDebInfo<span class="w"> </span><span class="se">\ </span><span class="c1"># (1)!</span>
+</span><span class="hll"><span class="w">    </span>-DIREE_ENABLE_RUNTIME_TRACING<span class="o">=</span>ON
+</span>cmake<span class="w"> </span>--build<span class="w"> </span>../iree-build/<span class="w"> </span>--target<span class="w"> </span>iree-run-module
 </code></pre></div>
+<ol>
+<li>Sampling needs debug info from <code>CMAKE_BUILD_TYPE</code> set to either
+    <code>RelWithDebInfo</code> or <code>Debug</code></li>
+</ol>
+<p>For more information about building from source, follow the
+<a href="../../../building-from-source/getting-started/">Getting started</a> page.</p>
 <details class="tip -">
-<summary>Tip - Instrumented Python bindings</summary>
+<summary>Tip - Instrumented Python packages</summary>
 <p>The <code>iree-runtime</code> Python package includes prebuilt instrumented tools.
 Set the <code>IREE_PY_RUNTIME=tracy</code> environment variable to use them:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>iree-runtime
@@ -3667,9 +3673,16 @@ Python bindings documentation for more details.</p>
 <p>Compile a program to profile:</p>
 <div class="highlight"><pre><span></span><code>iree-compile<span class="w"> </span>program_input.mlir<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--iree-hal-target-backends<span class="o">={</span>target<span class="o">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--iree-hal-executable-debug-level<span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-o<span class="w"> </span>program.vmfb
+<span class="hll"><span class="w">  </span>--iree-hal-executable-debug-level<span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="se">\ </span><span class="c1"># (1)!</span>
+</span><span class="w">  </span>-o<span class="w"> </span>program.vmfb
 </code></pre></div>
+<ol>
+<li>The <code>--iree-hal-executable-debug-level=3</code> flag embeds source information
+    about each executable into the <code>.vmfb</code> file for the runtime to pass to
+    Tracy. Without this flag, source locations are included on a best-effort
+    basis, typically coming from either the input .mlir file or an input
+    Python file.</li>
+</ol>
 </li>
 <li>
 <p>Run the program using the instrumented <code>iree-run-module</code></p>
@@ -3678,15 +3691,20 @@ Python bindings documentation for more details.</p>
 <p>Set the <code>TRACY_NO_EXIT=1</code> environment variable to keep short-running
 programs from exiting before connecting.</p>
 </div>
-<div class="highlight"><pre><span></span><code>iree-run-module<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--module<span class="o">=</span>program.vmfb<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--device<span class="o">=</span>local-task<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code><span class="hll">sudo<span class="w"> </span>iree-run-module<span class="w"> </span><span class="se">\ </span><span class="c1"># (1)!</span>
+</span><span class="w">  </span>--module<span class="o">=</span>program.vmfb<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--device<span class="o">={</span>device<span class="o">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--entry_function<span class="o">={</span>entry<span class="o">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--parameters<span class="o">={</span>parameters<span class="o">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--input<span class="o">={</span>arg0<span class="o">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--input<span class="o">={</span>arg1<span class="o">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>...
 </code></pre></div>
+<ol>
+<li>Some platforms require elevated permissions (sudo / administrator)
+    to collect sampling data. Refer to the
+    <a href="#the-tracy-manual">Tracy PDF manual</a> for full details.</li>
+</ol>
 </li>
 <li>
 <p>While the program is running, connect using the Tracy profiler UI or capture
@@ -3715,31 +3733,24 @@ next instrumented process:</p>
 </li>
 </ol>
 <h3 id="including-more-information-in-traces">Including more information in traces<a class="headerlink" href="#including-more-information-in-traces" title="Permanent link">link</a></h3>
-<ul>
-<li>Debug information is needed for sampling data. Build with <code>CMAKE_BUILD_TYPE</code>
-    set to either <code>RelWithDebInfo</code> or <code>Debug</code>.</li>
-<li>Some platforms require elevated permissions (root / sudo / administrator) to
-    collect sampling data. Refer to the Tracy manual for full details.</li>
-<li>All backends can compile using the <code>--iree-hal-executable-debug-level=3</code>
-    flag on <code>iree-compile</code>. This embeds source information about each executable
-    into the <code>.vmfb</code> file for the runtime to pass to Tracy. Without this flag,
-    source locations are included on a best-effort basis, typically coming from
-    either the input .mlir file or an input Python file.</li>
-</ul>
 <h4 id="changing-iree_tracing_mode">Changing <code>IREE_TRACING_MODE</code><a class="headerlink" href="#changing-iree_tracing_mode" title="Permanent link">link</a></h4>
 <p>Set IREE's <code>IREE_TRACING_MODE</code> value (defined in
 <a href="https://github.com/openxla/iree/blob/main/runtime/src/iree/base/tracing.h">iree/base/tracing.h</a>)
-to adjust which tracing features, such as allocation tracking and
-callstacks, are enabled.</p>
+to adjust which tracing features are enabled. Each feature adds tracing overhead
+and increases the size of trace files, so adjust this setting with care.</p>
 <p>For example, to track memory allocations with callstacks:</p>
 <div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>-G<span class="w"> </span>Ninja<span class="w"> </span>-B<span class="w"> </span>../iree-build/<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>RelWithDebInfo<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-DIREE_ENABLE_RUNTIME_TRACING<span class="o">=</span>ON<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-DIREE_TRACING_MODE<span class="o">=</span><span class="m">4</span>
-cmake<span class="w"> </span>--build<span class="w"> </span>../iree-build/<span class="w"> </span>--target<span class="w"> </span>iree-run-module
+<span class="hll"><span class="w">    </span>-DIREE_ENABLE_RUNTIME_TRACING<span class="o">=</span>ON<span class="w"> </span><span class="se">\</span>
+</span><span class="hll"><span class="w">    </span>-DIREE_TRACING_MODE<span class="o">=</span><span class="m">4</span>
+</span>cmake<span class="w"> </span>--build<span class="w"> </span>../iree-build/<span class="w"> </span>--target<span class="w"> </span>iree-run-module
 </code></pre></div>
+<p>The Memory window in the Tracy profiler should then show callstacks for each
+allocation:</p>
 <p><a href="https://github.com/openxla/iree/assets/4010439/c0732eec-3fc5-476b-8e6a-fa8c8631eaac"><img alt="Tracy memory callstacks" src="https://github.com/openxla/iree/assets/4010439/c0732eec-3fc5-476b-8e6a-fa8c8631eaac" /></a></p>
 <h4 id="options-for-the-llvm-cpu-backend">Options for the <code>llvm-cpu</code> backend<a class="headerlink" href="#options-for-the-llvm-cpu-backend" title="Permanent link">link</a></h4>
+<p>When using the <code>llvm-cpu</code> backend (<code>--iree-hal-target-backends=llvm-cpu</code> with
+<code>--device=local-task</code> or <code>--device=local-sync</code>), these options are available:</p>
 <ul>
 <li>
 <p>The <code>--iree-llvmcpu-link-embedded=false</code> flag uses the "system" linker
@@ -3755,15 +3766,16 @@ cmake<span class="w"> </span>--build<span class="w"> </span>../iree-build/<span 
 <p>Ensure that <code>--iree-llvmcpu-debug-symbols=true</code> is set (it is by default).</p>
 </li>
 </ul>
-<p>Putting those flags together in an example:</p>
+<p>Putting those flags and environment variables together in an example:</p>
 <div class="highlight"><pre><span></span><code>iree-compile<span class="w"> </span>program_input.mlir<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--iree-hal-target-backends<span class="o">=</span>llvm-cpu<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--iree-hal-executable-debug-level<span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--iree-llvmcpu-link-embedded<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--iree-llvmcpu-debug-symbols<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-o<span class="w"> </span>program_full_info.vmfb
+<span class="hll"><span class="w">  </span>--iree-hal-target-backends<span class="o">=</span>llvm-cpu<span class="w"> </span><span class="se">\</span>
+</span><span class="hll"><span class="w">  </span>--iree-hal-executable-debug-level<span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+</span><span class="hll"><span class="w">  </span>--iree-llvmcpu-link-embedded<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span class="hll"><span class="w">  </span>--iree-llvmcpu-debug-symbols<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span class="w">  </span>-o<span class="w"> </span>program_full_info.vmfb
 
-<span class="nv">TRACY_NO_EXIT</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">IREE_PRESERVE_DYLIB_TEMP_FILES</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>iree-run-module<span class="w"> </span><span class="se">\</span>
+<span class="hll"><span class="nv">TRACY_NO_EXIT</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">IREE_PRESERVE_DYLIB_TEMP_FILES</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>sudo<span class="w"> </span>iree-run-module<span class="w"> </span><span class="se">\</span>
+</span><span class="w">  </span>--device<span class="o">=</span>local-task<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--module<span class="o">=</span>program_full_info.vmfb<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>...
 </code></pre></div>
@@ -3771,15 +3783,11 @@ cmake<span class="w"> </span>--build<span class="w"> </span>../iree-build/<span 
 <p>Tracy's client/server connection uses TCP port 8086 by default. If the
 Tracy-instrumented program is running on a separate machine, this port needs to
 be forwarded.</p>
-<p>In particular, when benchmarking on Android, this is needed:</p>
+<p>In particular, when profiling on Android, this is needed:</p>
 <div class="highlight"><pre><span></span><code>adb<span class="w"> </span>forward<span class="w"> </span>tcp:8086<span class="w"> </span>tcp:8086
 </code></pre></div>
 <p>You can also pass <code>-p &lt;port&gt;</code> to the capture tool to override the default port
 to connect to, or use the Tracy GUI which scans other ports too.</p>
-<h3 id="tracing-iree-compile">Tracing <code>iree-compile</code><a class="headerlink" href="#tracing-iree-compile" title="Permanent link">link</a></h3>
-<p>Tracing <code>iree-compile</code> is much like tracing the runtime tools, except that
-both of these options need to be set with CMake:
-<code>-DIREE_ENABLE_RUNTIME_TRACING=ON -DIREE_ENABLE_COMPILER_TRACING=ON</code>.</p>
 <h2 id="touring-the-tracy-profiler-ui"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0Zm14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 7.06 4.28 9.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 7.94l4.72-4.72a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"/></svg></span> Touring the Tracy profiler UI<a class="headerlink" href="#touring-the-tracy-profiler-ui" title="Permanent link">link</a></h2>
 <p>The initial view should look like this:</p>
 <p><img alt="Tracy initial view, normal case" src="https://gist.githubusercontent.com/bjacob/ff7dec20c1dfc7d0fc556cc7275bca9a/raw/fe4e22ca0301ebbfd537c47332a4a2c300a417b3/tracy_initial_view.jpeg" /></p>
@@ -3827,9 +3835,44 @@ had explicit Tracy information, so here we see a file under <code>iree/hal</code
 the Ghost zone saw into the IREE compiled module that that calls into, with the
 source view pointing to the <code>.mlir</code> file.</p>
 <!-- TODO: more on using statistics -->
-<!-- TODO: discuss memory profiling -->
 <!-- TODO: discuss comparing trace files -->
 
+<h2 id="tracing-iree-compile">Tracing <code>iree-compile</code><a class="headerlink" href="#tracing-iree-compile" title="Permanent link">link</a></h2>
+<p>Tracing <code>iree-compile</code> is much like tracing the runtime tools, except that
+<em>both</em> of these options need to be set with CMake:
+<code>-DIREE_ENABLE_RUNTIME_TRACING=ON -DIREE_ENABLE_COMPILER_TRACING=ON</code>:</p>
+<div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>-G<span class="w"> </span>Ninja<span class="w"> </span>-B<span class="w"> </span>../iree-build/<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>RelWithDebInfo<span class="w"> </span><span class="se">\</span>
+<span class="hll"><span class="w">    </span>-DIREE_ENABLE_RUNTIME_TRACING<span class="o">=</span>ON<span class="w"> </span><span class="se">\</span>
+</span><span class="hll"><span class="w">    </span>-DIREE_ENABLE_COMPILER_TRACING<span class="o">=</span>ON
+</span>cmake<span class="w"> </span>--build<span class="w"> </span>../iree-build/<span class="w"> </span>--target<span class="w"> </span>iree-compile
+</code></pre></div>
+<p>The steps for collecting traces are the same: run the instrumented program and
+connect using the Tracy profiler UI or capture tool.</p>
+<p><a href="https://github.com/openxla/iree/assets/4010439/bf5c0502-6b1b-4caa-bdd9-132281245421"><img alt="Tracing iree-compile" src="https://github.com/openxla/iree/assets/4010439/bf5c0502-6b1b-4caa-bdd9-132281245421" /></a></p>
+<ul>
+<li>MLIR passes are instrumented using
+  <a href="https://mlir.llvm.org/docs/PassManagement/#pass-instrumentation">Pass Instrumentation</a>,
+  (see
+  <a href="https://github.com/openxla/iree/blob/main/compiler/src/iree/compiler/Utils/TracingUtils.h"><code>TracingUtils.h</code></a>)</li>
+<li>Zones are annotated with op breadcrumbs indicating which root op was processed</li>
+<li>Each compilation phase (e.g. Flow, Stream, HAL) is tagged as a "frame", so
+  you can jump between them, limit statistics to them, and see how much time
+  each took</li>
+</ul>
+<details class="caution">
+<summary>Caution - Tracy sampling with <code>iree-compile</code></summary>
+<p>When tracing the compiler, the LLVM/MLIR code can easily generate millions
+of trace events. Traces captured with sampling can thus take hours to
+collect, require 40GB+ of RAM to view, and take 1GB+ on disk to store.</p>
+<p><img alt="image" src="https://github.com/openxla/iree/assets/4010439/39c42225-0309-4067-91cf-e6ac1c0aae0e" /></p>
+<p>However, sampling is especially useful in diagnosing long compile times,
+since only the MLIR passes are instrumentated, unlike in IREE's runtime
+where most functions are covered.</p>
+</details>
+<p>For more tips on profiling the compiler, see the
+<a href="../../debugging/compile-time-regressions/">Compile time regression debugging</a>
+page.</p>
 <h2 id="troubleshooting"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg></span> Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">link</a></h2>
 <h3 id="resource_exhausted-failed-to-open-file-issue">"RESOURCE_EXHAUSTED; failed to open file" issue<a class="headerlink" href="#resource_exhausted-failed-to-open-file-issue" title="Permanent link">link</a></h3>
 <p>This is a
