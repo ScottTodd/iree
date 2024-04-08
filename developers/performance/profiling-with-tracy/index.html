@@ -2596,6 +2596,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#instrumentation-and-sampling" class="md-nav__link">
+     Instrumentation and sampling
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-or-embedded-telemetry" class="md-nav__link">
+     Remote or embedded telemetry
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#the-tracy-manual" class="md-nav__link">
      The Tracy manual
   </a>
@@ -3410,6 +3424,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#instrumentation-and-sampling" class="md-nav__link">
+     Instrumentation and sampling
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-or-embedded-telemetry" class="md-nav__link">
+     Remote or embedded telemetry
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#the-tracy-manual" class="md-nav__link">
      The Tracy manual
   </a>
@@ -3584,19 +3612,38 @@
 <p><a href="https://github.com/wolfpld/tracy">Tracy</a> is a hybrid instrumentation and
 sampling profiler that IREE uses for performance analysis.</p>
 <p><a href="https://github.com/openxla/iree/assets/4010439/3df4f682-9215-4f55-b7b0-5fe2dce860b0"><img alt="Tracy overview" src="https://github.com/openxla/iree/assets/4010439/3df4f682-9215-4f55-b7b0-5fe2dce860b0" /></a></p>
+<h3 id="instrumentation-and-sampling"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.35 11.72-2.13 2.13-1.41-1.42-7.71 7.71L3.5 22 2 20.5l1.86-4.6 7.71-7.71-1.42-1.41 2.13-2.13 7.07 7.07M16.76 3A3 3 0 0 1 21 3a3 3 0 0 1 0 4.24l-1.92 1.92-4.24-4.24L16.76 3M5.56 17.03 4.5 19.5l2.47-1.06L14.4 11 13 9.6l-7.44 7.43Z"/></svg></span> Instrumentation and sampling<a class="headerlink" href="#instrumentation-and-sampling" title="Permanent link">link</a></h3>
 <ul>
 <li>
 <p><em>Instrumentation</em> is generic code built into the program being profiled,
     recording zone start and end timestamps where a developer requests them:</p>
 <p><a href="https://github.com/openxla/iree/assets/4010439/70706e6d-d253-4ca3-85bf-165f23d24635"><img alt="Tracy instrumentation" src="https://github.com/openxla/iree/assets/4010439/70706e6d-d253-4ca3-85bf-165f23d24635" /></a></p>
+<p>Most of IREE's runtime code is instrumented using the macros defined in
+<a href="https://github.com/openxla/iree/blob/main/runtime/src/iree/base/tracing.h">iree/base/tracing.h</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">iree_sample_function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">IREE_TRACE_ZONE_BEGIN</span><span class="p">(</span><span class="n">z0</span><span class="p">);</span>
+<span class="w">  </span><span class="c1">// All code here will be included in the zone for `iree_sample_function`.</span>
+<span class="w">  </span><span class="n">IREE_TRACE_ZONE_END</span><span class="p">(</span><span class="n">z0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
 </li>
 <li>
 <p><em>Sampling</em> collects program state and information about the machine using
     platform-specific APIs at a regular sampling frequency. Sampled data
     includes callstacks, hardware counters, and more:</p>
 <p><a href="https://github.com/openxla/iree/assets/4010439/d637a692-8bfa-42c4-bd0d-75ea3dce2e69"><img alt="Tracy sampling" src="https://github.com/openxla/iree/assets/4010439/d637a692-8bfa-42c4-bd0d-75ea3dce2e69" /></a></p>
+<p>While recording instrumentation data requires no special setup, recording
+sampling data will need some configuration depending on your operating
+system. Refer to the "Automated data collection" section in the
+<a href="#the-tracy-manual">Tracy PDF manual</a> for full details. Generally, sampling
+needs:</p>
+<ul>
+<li>Debug information from <code>-DCMAKE_BUILD_TYPE=RelWithDebInfo</code> or <code>Debug</code></li>
+<li>Privilege elevation from <code>sudo</code> on Unix or adminstrator on Windows</li>
+</ul>
 </li>
 </ul>
+<h3 id="remote-or-embedded-telemetry"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.4 7.5c.8.8.8 2.1 0 2.8l-2.8 2.8-7.8-7.8 2.8-2.8c.8-.8 2.1-.8 2.8 0l1.8 1.8 3-3 1.4 1.4-3 3 1.8 1.8m-5.8 5.8-1.4-1.4-2.8 2.8-2.1-2.1 2.8-2.8-1.4-1.4-2.8 2.8-1.5-1.4-2.8 2.8c-.8.8-.8 2.1 0 2.8l1.8 1.8-4 4 1.4 1.4 4-4 1.8 1.8c.8.8 2.1.8 2.8 0l2.8-2.8-1.4-1.4 2.8-2.9Z"/></svg></span> Remote or embedded telemetry<a class="headerlink" href="#remote-or-embedded-telemetry" title="Permanent link">link</a></h3>
 <p>Tracy uses a client-server model with communication over a TCP socket:</p>
 <ul>
 <li>The "client" is the program being profiled.</li>
@@ -3618,14 +3665,13 @@ sampling profiler that IREE uses for performance analysis.</p>
 
   tracyserver --&gt; display["Display"]
   tracyserver --&gt; storage["Storage"]</code></pre>
+<p>This allows for <a href="#remote-capture-eg-ssh-android">remote capture</a>, such as over
+SSH, as well as sharing of saved traces across machines.</p>
 <h3 id="the-tracy-manual"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg></span> The Tracy manual<a class="headerlink" href="#the-tracy-manual" title="Permanent link">link</a></h3>
-<div class="admonition info">
-<p class="admonition-title">The Tracy manual</p>
-<p>The primary source of Tracy documentation, including how to build the
-capture tool and profiler UI, is a PDF manual:</p>
+<p>The primary source of Tracy documentation, including how to build the profiler
+UI and CLI capture tool, is a PDF manual:</p>
 <p><a class="md-button md-button--primary" href="https://github.com/wolfpld/tracy/releases/latest/download/tracy.pdf">Download tracy.pdf <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/><path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/></svg></span></a>
 <a class="md-button md-button--primary" href="https://docs.google.com/viewer?url=https://github.com/wolfpld/tracy/releases/latest/download/tracy.pdf">View tracy.pdf in browser <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg></span></a></p>
-</div>
 <h2 id="capturing-a-trace"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M14.184 1.143v-.001l1.422 2.464a1.75 1.75 0 0 1-.757 2.451L3.104 11.713a1.75 1.75 0 0 1-2.275-.702l-.447-.775a1.75 1.75 0 0 1 .53-2.32L11.682.573a1.748 1.748 0 0 1 2.502.57Zm-4.709 9.32h-.001l2.644 3.863a.75.75 0 1 1-1.238.848l-1.881-2.75v2.826a.75.75 0 0 1-1.5 0v-2.826l-1.881 2.75a.75.75 0 1 1-1.238-.848l2.049-2.992a.746.746 0 0 1 .293-.253l1.809-.87a.749.749 0 0 1 .944.252ZM9.436 3.92h-.001l-4.97 3.39.942 1.63 5.42-2.61Zm3.091-2.108h.001l-1.85 1.26 1.505 2.605 2.016-.97a.247.247 0 0 0 .13-.151.247.247 0 0 0-.022-.199l-1.422-2.464a.253.253 0 0 0-.161-.119.254.254 0 0 0-.197.038ZM1.756 9.157a.25.25 0 0 0-.075.33l.447.775a.25.25 0 0 0 .325.1l1.598-.769-.83-1.436-1.465 1Z"/></svg></span> Capturing a trace<a class="headerlink" href="#capturing-a-trace" title="Permanent link">link</a></h2>
 <p>You will need three things to capture a trace:</p>
 <ol>
@@ -3650,7 +3696,7 @@ be built from source by using either the upstream CMake build or IREE's
 </code></pre></div>
 <ol>
 <li>Sampling needs debug info from <code>CMAKE_BUILD_TYPE</code> set to either
-    <code>RelWithDebInfo</code> or <code>Debug</code></li>
+   <code>RelWithDebInfo</code> or <code>Debug</code></li>
 </ol>
 <p>For more information about building from source, follow the
 <a href="../../../building-from-source/getting-started/">Getting started</a> page.</p>
@@ -3678,10 +3724,10 @@ Python bindings documentation for more details.</p>
 </code></pre></div>
 <ol>
 <li>The <code>--iree-hal-executable-debug-level=3</code> flag embeds source information
-    about each executable into the <code>.vmfb</code> file for the runtime to pass to
-    Tracy. Without this flag, source locations are included on a best-effort
-    basis, typically coming from either the input .mlir file or an input
-    Python file.</li>
+   about each executable into the <code>.vmfb</code> file for the runtime to pass to
+   Tracy. Without this flag, source locations are included on a best-effort
+   basis, typically coming from either the input .mlir file or an input
+   Python file.</li>
 </ol>
 </li>
 <li>
@@ -3702,8 +3748,8 @@ programs from exiting before connecting.</p>
 </code></pre></div>
 <ol>
 <li>Some platforms require elevated permissions (sudo / administrator)
-    to collect sampling data. Refer to the
-    <a href="#the-tracy-manual">Tracy PDF manual</a> for full details.</li>
+   to collect sampling data. Refer to the
+   <a href="#the-tracy-manual">Tracy PDF manual</a> for full details.</li>
 </ol>
 </li>
 <li>
