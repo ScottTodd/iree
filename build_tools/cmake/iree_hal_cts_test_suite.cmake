@@ -142,6 +142,40 @@ function(iree_hal_cts_test_suite)
     set(_INCLUDED_TESTS ${IREE_ALL_CTS_TESTS})
   endif()
 
+  # Note: driver names may contain dashes and other special characters. We
+  # could sanitize for file and target names, but passing through directly
+  # may be more intuitive.
+  if(DEFINED _RULE_VARIANT_SUFFIX)
+    set(_DRIVER_VARIANT_NAME "${_RULE_DRIVER_NAME}_${_RULE_VARIANT_SUFFIX}")
+  else()
+    set(_DRIVER_VARIANT_NAME "${_RULE_DRIVER_NAME}")
+  endif()
+
+  # Generate a source file and library for this driver [variant].
+  # The template file implements functions defined in cts_test_base.h.
+  set(IREE_CTS_DRIVER_REGISTRATION_HDR "${_RULE_DRIVER_REGISTRATION_HDR}")
+  set(IREE_CTS_DRIVER_REGISTRATION_FN "${_RULE_DRIVER_REGISTRATION_FN}")
+  set(IREE_CTS_DRIVER_NAME "${_RULE_DRIVER_NAME}")
+  set(IREE_CTS_TARGET_BACKEND "${_RULE_COMPILER_TARGET_BACKEND}")
+  set(_DRIVER_TARGET_NAME "${_DRIVER_VARIANT_NAME}_driver")
+  set(_DRIVER_SOURCE_NAME "${_DRIVER_TARGET_NAME}.cc")
+  configure_file(
+    "${IREE_ROOT_DIR}/runtime/src/iree/hal/cts/cts_driver_template.cc.in"
+    ${_DRIVER_SOURCE_NAME}
+  )
+  iree_cc_library(
+    NAME
+      ${_DRIVER_TARGET_NAME}
+    SRCS
+      "${CMAKE_CURRENT_BINARY_DIR}/${_DRIVER_SOURCE_NAME}"
+    DEPS
+      ${_TEST_DEPS}
+      iree::hal::cts::cts_test_base
+      iree::testing::gtest_main
+    TESTONLY
+  )
+
+  # Create each individual test case.
   foreach(_TEST_NAME ${_INCLUDED_TESTS})
     if("${_TEST_NAME}" IN_LIST _RULE_EXCLUDED_TESTS)
       continue()
@@ -165,26 +199,11 @@ function(iree_hal_cts_test_suite)
       set(IREE_CTS_EXECUTABLES_TESTDATA_HDR "")
     endif()
 
-    # Note: driver names may contain dashes and other special characters. We
-    # could sanitize for file and target names, but passing through directly
-    # may be more intuitive.
-    if(DEFINED _RULE_VARIANT_SUFFIX)
-      set(_TEST_TARGET_NAME "${_RULE_DRIVER_NAME}_${_RULE_VARIANT_SUFFIX}_${_TEST_NAME}_test")
-    else()
-      set(_TEST_TARGET_NAME "${_RULE_DRIVER_NAME}_${_TEST_NAME}_test")
-    endif()
-    set(_TEST_SOURCE_NAME "${_TEST_TARGET_NAME}.cc")
-    set(_TEST_LIBRARY_DEP "iree::hal::cts::${_TEST_NAME}_test_library")
-
-    # Generate the source file for this [test x driver] pair.
-    # TODO(scotttodd): Move to build time instead of configure time?
+    # Generate a source file for this test.
     set(IREE_CTS_TEST_FILE_PATH "runtime/src/iree/hal/cts/${_TEST_NAME}_test.h")
-    set(IREE_CTS_DRIVER_REGISTRATION_HDR "${_RULE_DRIVER_REGISTRATION_HDR}")
-    set(IREE_CTS_DRIVER_REGISTRATION_FN "${_RULE_DRIVER_REGISTRATION_FN}")
     set(IREE_CTS_TEST_CLASS_NAME "${_TEST_NAME}_test")
-    set(IREE_CTS_DRIVER_NAME "${_RULE_DRIVER_NAME}")
-    set(IREE_CTS_TARGET_BACKEND "${_RULE_COMPILER_TARGET_BACKEND}")
-
+    set(_TEST_TARGET_NAME "${_DRIVER_VARIANT_NAME}_${_TEST_NAME}_test")
+    set(_TEST_SOURCE_NAME "${_TEST_TARGET_NAME}.cc")
     configure_file(
       "${IREE_ROOT_DIR}/runtime/src/iree/hal/cts/cts_test_template.cc.in"
       ${_TEST_SOURCE_NAME}
@@ -199,10 +218,8 @@ function(iree_hal_cts_test_suite)
         "${CMAKE_CURRENT_BINARY_DIR}/${_TEST_SOURCE_NAME}"
       DEPS
         ${_TEST_DEPS}
-        ${_TEST_LIBRARY_DEP}
-        iree::base
-        iree::hal
-        iree::hal::cts::cts_test_base
+        "::${_DRIVER_TARGET_NAME}"
+        "iree::hal::cts::${_TEST_NAME}_test_library"
         iree::testing::gtest_main
       LABELS
         ${_RULE_LABELS}
