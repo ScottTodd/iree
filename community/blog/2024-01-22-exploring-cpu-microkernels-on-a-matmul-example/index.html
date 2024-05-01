@@ -3551,8 +3551,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="IR Dump After IREEComprehensiveBufferize">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#ir-dump-after-lowerukernelopstocalls" class="md-nav__link">
@@ -3560,11 +3559,6 @@
       IR Dump After LowerUKernelOpsToCalls
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -3602,8 +3596,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Ukernel bitcode: tile function">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#intermediate-file-optimizedbc-disassembled-to-optimizedll" class="md-nav__link">
@@ -3611,11 +3604,6 @@
       Intermediate file: ...optimized.bc, disassembled to ...optimized.ll
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -4253,7 +4241,7 @@ func.func @matmul_dynamic_dispatch_3_mmt4d_DxDxDx16x16x1_f32() {
   return
 }
 </code></pre></div>
-<h4 id="ir-dump-after-lowerukernelopstocalls">IR Dump After LowerUKernelOpsToCalls<a class="headerlink" href="#ir-dump-after-lowerukernelopstocalls" title="Permanent link">link</a></h4>
+<h3 id="ir-dump-after-lowerukernelopstocalls">IR Dump After LowerUKernelOpsToCalls<a class="headerlink" href="#ir-dump-after-lowerukernelopstocalls" title="Permanent link">link</a></h3>
 <div class="highlight"><pre><span></span><code>// -----// IR Dump After LowerUKernelOpsToCalls (iree-codegen-lower-ukernel-ops-to-calls) //----- //
 module {
   func.func private @iree_uk_mmt4d(memref&lt;f32&gt;, index, index, memref&lt;f32&gt;, index, index, memref&lt;f32&gt;, index, index, index, index, index, i32, i32, i32, i32) attributes {hal.import.bitcode = true, hal.import.cconv = 1 : i32, hal.import.fields = [&quot;processor_data&quot;], llvm.bareptr = true}
@@ -5152,7 +5140,7 @@ module attributes {llvm.data_layout = &quot;e-m:e-p270:32:32-p271:32:32-p272:64:
 <span class="w">  </span><span class="k">ret</span><span class="w"> </span><span class="k">void</span>
 <span class="p">}</span>
 </code></pre></div>
-<h4 id="intermediate-file-optimizedbc-disassembled-to-optimizedll">Intermediate file: <code>...optimized.bc</code>, disassembled to <code>...optimized.ll</code><a class="headerlink" href="#intermediate-file-optimizedbc-disassembled-to-optimizedll" title="Permanent link">link</a></h4>
+<h3 id="intermediate-file-optimizedbc-disassembled-to-optimizedll">Intermediate file: <code>...optimized.bc</code>, disassembled to <code>...optimized.ll</code><a class="headerlink" href="#intermediate-file-optimizedbc-disassembled-to-optimizedll" title="Permanent link">link</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c">; Function Attrs: nofree norecurse nosync nounwind</span>
 <span class="k">define</span><span class="w"> </span><span class="k">internal</span><span class="w"> </span><span class="k">noundef</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="vg">@matmul_dynamic_dispatch_3_mmt4d_DxDxDx16x16x1_f32</span><span class="p">(</span><span class="kt">ptr</span><span class="w"> </span><span class="k">noalias</span><span class="w"> </span><span class="k">nocapture</span><span class="w"> </span><span class="k">nonnull</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="k">align</span><span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="nv nv-Anonymous">%0</span><span class="p">,</span><span class="w"> </span><span class="kt">ptr</span><span class="w"> </span><span class="k">noalias</span><span class="w"> </span><span class="k">nocapture</span><span class="w"> </span><span class="k">nonnull</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="k">align</span><span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="nv nv-Anonymous">%1</span><span class="p">,</span><span class="w"> </span><span class="kt">ptr</span><span class="w"> </span><span class="k">noalias</span><span class="w"> </span><span class="k">nocapture</span><span class="w"> </span><span class="k">nonnull</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="k">align</span><span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="nv nv-Anonymous">%2</span><span class="p">)</span><span class="w"> </span><span class="vg">#1</span><span class="w"> </span><span class="nv">!dbg</span><span class="w"> </span><span class="nv nv-Anonymous">!90</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="nv">%.elt7</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">getelementptr</span><span class="w"> </span><span class="k">inbounds</span><span class="w"> </span><span class="nv">%iree_hal_executable_dispatch_state_v0_t.19</span><span class="p">,</span><span class="w"> </span><span class="kt">ptr</span><span class="w"> </span><span class="nv nv-Anonymous">%1</span><span class="p">,</span><span class="w"> </span><span class="kt">i64</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="nv">!dbg</span><span class="w"> </span><span class="nv nv-Anonymous">!91</span>
