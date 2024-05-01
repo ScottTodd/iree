@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/ghost.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
     
     
       
@@ -3479,6 +3479,8 @@
       
         
       
+        
+      
     
     
       
@@ -3513,6 +3515,29 @@
             Archive
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../community/blog/archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -4204,7 +4229,7 @@ whatever. This is meant to be used together with common allocator layers like th
 caching allocator.</p>
 <h3 id="buffer">Buffer<a class="headerlink" href="#buffer" title="Permanent link">link</a></h3>
 <p>IREE <a href="https://github.com/iree-org/iree/blob/main/runtime/src/iree/hal/buffer.h"><code>iree_hal_buffer_t</code></a> maps Metal <code>MTLBuffer</code>. See
-<a href="#memory-management">Memory Management</a> for more details.</p>
+<a href="#object-lifetime-management">Object Lifetime Management</a> for more details.</p>
 <h3 id="executable">Executable<a class="headerlink" href="#executable" title="Permanent link">link</a></h3>
 <p>IREE <a href="https://github.com/iree-org/iree/blob/main/runtime/src/iree/hal/executable.h"><code>iree_hal_executable_t</code></a> represents a GPU program archive with
 a driver-defined format. It maps naturally to Metal <a href="https://developer.apple.com/documentation/metal/mtllibrary?language=objc"><code>MTLLibrary</code></a>.
@@ -4260,7 +4285,7 @@ different places: the former is given when invoking
 <a href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatch.html"><code>vkCmdDispatch()</code></a>, while the later is encoded in the
 dispatched SPIR-V code. This split does not match the Metal model, where we
 specify both in the API with <code>dispatchThreads:threadsPerThreadgroup:</code>.</p>
-<p>As said in <a href="#shader-kernel-compilation">shader/kernel compilation</a>, MSL kernels
+<p>As said in <a href="#shaderkernel-compilation">shader/kernel compilation</a>, MSL kernels
 are cross compiled from SPIR-V code and then embeded in the module FlatBuffer.
 The module FlatBuffer provides us a way to convey the threadgroup/workgroup size
 information extracted from the SPIR-V code. We encode an additional 3-D vector
@@ -4400,7 +4425,7 @@ with the current active <code>MTLComputeCommandEncoder</code>:</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.action.edit", "content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.3220b9d7.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
     
   </body>

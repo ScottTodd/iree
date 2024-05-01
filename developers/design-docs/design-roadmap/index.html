@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/ghost.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
     
     
       
@@ -3504,6 +3504,8 @@
       
         
       
+        
+      
     
     
       
@@ -3538,6 +3540,29 @@
             Archive
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../community/blog/archive/2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -4136,8 +4161,7 @@ IREE can offer are determined first here and all following lowerings benefit.
 the allocation you don't make</em> ;)</p>
 <h3 id="avoiding-readbacks-with-flowstream">Avoiding Readbacks with <code>flow.stream</code><a class="headerlink" href="#avoiding-readbacks-with-flowstream" title="Permanent link">link</a></h3>
 <p>A majority of the readbacks we have today (manifested as <code>flow.tensor.load.*</code>
-ops) will be removed when we have an
-<a href="#xla-hlo-tensor-to-primitive-conversion">HLO tensor-&gt;primitive conversion</a>.
+ops) will be removed when we have an HLO tensor-&gt;primitive conversion.
 There will still be cases when readbacks are required for correctness but they
 usually fall into a small set of usage patterns. For those that don't this is
 one place where IREE will warn about performance issues, allowing programs that
@@ -4788,7 +4812,7 @@ be limited.</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.action.edit", "content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.indexes", "toc.follow"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.3220b9d7.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
     
   </body>
