@@ -17,7 +17,7 @@
         <link rel="next" href="../developer-overview/">
       
       
-      <link rel="icon" href="../../../assets/images/ghost.svg">
+      <link rel="icon" href="../../../assets/images/IREE_Logo_Icon_Color.svg">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
     
     
@@ -96,7 +96,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="https://iree.dev/" title="IREE" class="md-header__button md-logo" aria-label="IREE" data-md-component="logo">
       
-  <img src="../../../assets/images/ghost.svg" alt="logo">
+  <img src="../../../assets/images/IREE_Logo_Icon_Color.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -358,7 +358,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="https://iree.dev/" title="IREE" class="md-nav__button md-logo" aria-label="IREE" data-md-component="logo">
       
-  <img src="../../../assets/images/ghost.svg" alt="logo">
+  <img src="../../../assets/images/IREE_Logo_Icon_Color.svg" alt="logo">
 
     </a>
     IREE
@@ -4065,17 +4065,38 @@ signed do not require the <code>Signed-off-by</code> text. See these references:
 <ul>
 <li><a href="https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits">Signing commits</a>
     (generate key, add to <a href="https://github.com/settings/keys">https://github.com/settings/keys</a>, <code>git commit -S</code>)</li>
-<li><a href="https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#ssh-commit-signature-verification">SSH commit signature verification</a>
-    (recommended if you already use SSH keys with GitHub)</li>
-<li><a href="https://blog.dbrgn.ch/2021/11/16/git-ssh-signatures/">Signing Git Commits with SSH Keys</a>
-    (streamlined version of the previous page)</li>
-<li><a href="https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key">Generating GPG keys</a>
-    (alternative to using SSH keys)</li>
-</ul>
-<p>Once you have a key registered, set your local or global <code>git config</code> to sign
-automatically:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>commit.gpgsign<span class="w"> </span><span class="nb">true</span>
+<li>
+<p><a href="https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#ssh-commit-signature-verification">SSH commit signature verification</a>
+    (recommended if you already use SSH keys with GitHub) and
+    <a href="https://blog.dbrgn.ch/2021/11/16/git-ssh-signatures/">Signing Git Commits with SSH Keys</a>
+    (streamlined version of the previous page).</p>
+<p>SSH keys can be added at <a href="https://github.com/settings/ssh/new">https://github.com/settings/ssh/new</a>
+(Note that even if you have added your SSH key as an authorized key, you
+need to add it again as a signing key).</p>
+<p>Then,</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Sign commits automatically</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>commit.gpgsign<span class="w"> </span><span class="nb">true</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>tag.gpgsign<span class="w"> </span><span class="nb">true</span>
+
+<span class="c1"># Sign using SSH, not GPG</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.signingkey<span class="w"> </span>~/.ssh/id_rsa.pub
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>gpg.format<span class="w"> </span>ssh
+
+<span class="c1"># Create an &quot;allowed_signers&quot; file</span>
+<span class="nb">echo</span><span class="w"> </span>your@email<span class="w"> </span><span class="sb">`</span>cat<span class="w"> </span>~/.ssh/id_rsa.pub<span class="sb">`</span><span class="w"> </span>&gt;<span class="w"> </span>~/.ssh/allowed_signers
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>gpg.ssh.allowedSignersFile<span class="w"> </span>~/.ssh/allowed_signers
 </code></pre></div>
+</li>
+<li>
+<p><a href="https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key">Generating GPG keys</a>
+    (alternative to using SSH keys)</p>
+<p>GPG keys can be added at <a href="https://github.com/settings/gpg/new">https://github.com/settings/gpg/new</a>, then:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Sign commits automatically</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>commit.gpgsign<span class="w"> </span><span class="nb">true</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>tag.gpgsign<span class="w"> </span><span class="nb">true</span>
+</code></pre></div>
+</li>
+</ul>
 <h4 id="adding-signed-off-by-to-commits">Adding <code>Signed-off-by</code> to commits<a class="headerlink" href="#adding-signed-off-by-to-commits" title="Permanent link">link</a></h4>
 <p><em>This requires less setup and is suitable for first time contributors.</em></p>
 <p>Contributors <em>sign-off</em> their agreement by adding a <code>Signed-off-by</code> line to
