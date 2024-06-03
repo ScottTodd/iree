@@ -32,6 +32,11 @@ repos:
     -   id: black
         name: Run Black to format Python files
 
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.0
+    hooks:
+    -   id: mypy
+
 -   repo: https://github.com/pre-commit/mirrors-clang-format
     # Loosely track the most recent versions in
     #   * Runner images: https://github.com/actions/runner-images/
