@@ -30,6 +30,7 @@ __all__ = [
 import logging
 import os
 import sys
+import weakref
 
 from typing import Any, List, Mapping, Optional, Sequence, Tuple, Union
 
@@ -158,8 +159,8 @@ class BoundModule:
         # layering and will need to be fixed in some fashion if/when doing
         # heterogenous dispatch.
         return FunctionInvoker(
-            self._context.vm_context,
-            self._context.config.device,
+            self._context().vm_context,
+            self._context().config.device,
             vm_function,
         )
 
@@ -181,11 +182,14 @@ class SystemContext:
     """Global system."""
 
     def __init__(self, vm_modules=None, config: Optional[Config] = None):
+        print("system_api.py: SystemContext::__init__")
         self._config = config if config is not None else Config()
         self._is_dynamic = vm_modules is None
         if self._is_dynamic:
+            print("system_api.py: SystemContext::__init__ is dynamic")
             init_vm_modules = None
         else:
+            print("system_api.py: SystemContext::__init__ is *not* dynamic")
             init_vm_modules = self._config.default_vm_modules + tuple(vm_modules)
 
         self._vm_context = _binding.VmContext(
@@ -201,8 +205,10 @@ class SystemContext:
                 ]
             )
         else:
+            # ASan complains here
+            print("system_api.py: SystemContext::__init__ setup self._bound_modules")
             self._bound_modules = BoundModules(
-                [(m.name, BoundModule(self, m)) for m in init_vm_modules]
+                [(m.name, BoundModule(weakref.ref(self), m)) for m in init_vm_modules]
             )
 
     @property
@@ -246,13 +252,18 @@ class SystemContext:
 
 def load_vm_modules(*vm_modules, config: Optional[Config] = None):
     """Loads VmModules into a new SystemContext and returns them."""
+    # This triggers ASan
+    print("system_api.py load_vm_modules")
     context = SystemContext(vm_modules=vm_modules, config=config)
     bound_modules = [context.modules[m.name] for m in vm_modules]
     return bound_modules
+    # return ""
 
 
 def load_vm_module(vm_module, config: Optional[Config] = None):
     """Loads a VmModule into a new SystemContext and returns it."""
+    print("system_api.py load_vm_module --> load_vm_modules")
+    # return load_vm_modules(vm_module, config=config)
     return load_vm_modules(vm_module, config=config)[0]
 
 

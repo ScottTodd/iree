@@ -271,6 +271,7 @@ class Output:
         )
 
     def map_memory(self) -> memoryview:
+        print("ctypes_dl.py :: Output::map_memory")
         contents = c_void_p()
         size = c_uint64()
         _handle_error(
@@ -279,6 +280,9 @@ class Output:
             )
         )
         size = size.value
+
+        # return memoryview((c_char * size).from_address(contents.value))
+
         pointer = (c_char * size).from_address(contents.value)
         # When the pointer is free'd, the no-op callback is invoked with
         # the argument `self`. This implicitly keeps `self` alive until

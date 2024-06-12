@@ -249,6 +249,8 @@ VmModule VmModule::ResolveModuleDependency(VmInstance* instance,
 
 VmModule VmModule::MMap(VmInstance* instance, std::string filepath,
                         py::object destroy_callback) {
+  fprintf(stderr, "--- vm.cc: VmModule::MMap ---\n");
+
   IREE_TRACE_SCOPE_NAMED("VmModule::MMap");
   auto mmap_module = py::module_::import_("mmap");
   auto open_func = py::module_::import_("io").attr("open");
@@ -289,6 +291,10 @@ VmModule VmModule::MMap(VmInstance* instance, std::string filepath,
 VmModule VmModule::WrapBuffer(VmInstance* instance, py::object buffer_obj,
                               py::object destroy_callback, bool close_buffer) {
   IREE_TRACE_SCOPE_NAMED("VmModule::FromAlignedMemory");
+
+  fprintf(stderr, "--- vm.cc: VmModule::WrapBuffer, close_buffer: %d ---\n",
+          (int)close_buffer);
+
   // State object that is retained for the life of the module.
   // It is responsible for keeping the backing resources alive and
   // holding the user-level destroy callback.
@@ -323,9 +329,11 @@ VmModule VmModule::WrapBuffer(VmInstance* instance, py::object buffer_obj,
   iree_vm_module_t* module = nullptr;
   auto ctl_fn = +([](void* self, iree_allocator_command_t command,
                      const void* params, void** inout_ptr) {
+    fprintf(stderr, "* vm.cc :: WrapBuffer :: deallocator ctl_fn enter\n");
     py::gil_scoped_acquire gil;
     assert(command == IREE_ALLOCATOR_COMMAND_FREE);
     try {
+      fprintf(stderr, "* vm.cc :: WrapBuffer :: try { ... }\n");
       // Destruction sequencing is tricky. We must have released the
       // PyBufferRequest before calling close, so we first get what we
       // need out of the state into local variables, then delete the state
@@ -333,19 +341,25 @@ VmModule VmModule::WrapBuffer(VmInstance* instance, py::object buffer_obj,
       // destroy callback. Getting the order wrong will result in an
       // unrecoverable exception indicating the the buffer cannot be closed
       // with outstanding mappings.
+      fprintf(stderr, "* vm.cc :: WrapBuffer :: BufferState* state\n");
       BufferState* state = static_cast<BufferState*>(self);
+      fprintf(stderr, "* vm.cc :: WrapBuffer :: std::move\n");
       py::object destroy_callback = std::move(state->destroy_callback);
+      // py::object destroy_callback;
       py::object buffer_to_close;
       if (state->close_buffer) {
+        fprintf(stderr, "* vm.cc :: WrapBuffer :: py::borrow\n");
         buffer_to_close = py::borrow(state->get_buffer());
       }
       delete state;
 
       if (buffer_to_close) {
+        fprintf(stderr, "* vm.cc :: WrapBuffer :: attr(\"close\")\n");
         buffer_to_close.attr("close")();
       }
 
       if (!destroy_callback.is_none()) {
+        fprintf(stderr, "* vm.cc :: WrapBuffer :: destroy_callback\n");
         destroy_callback();
       }
     } catch (std::exception& e) {
@@ -365,10 +379,13 @@ VmModule VmModule::WrapBuffer(VmInstance* instance, py::object buffer_obj,
           "serious problem, minimally resulting in memory leaks: %s",
           e.what());
     }
+    fprintf(stderr, "* vm.cc :: WrapBuffer :: deallocator ctl_fn exit\n");
     return iree_ok_status();
   });
   iree_allocator_t deallocator{/*self=*/state, /*ctl=*/ctl_fn};
 
+  fprintf(stderr,
+          "--- vm.cc: VmModule::WrapBuffer, iree_vm_bytecode_module_create\n");
   auto status = iree_vm_bytecode_module_create(
       instance->raw_ptr(),
       {static_cast<const uint8_t*>(buffer_info.view().buf),
@@ -388,6 +405,7 @@ VmModule VmModule::WrapBuffer(VmInstance* instance, py::object buffer_obj,
 
 VmModule VmModule::CopyBuffer(VmInstance* instance, py::object buffer_obj) {
   IREE_TRACE_SCOPE_NAMED("VmModule::CopyBuffer");
+  fprintf(stderr, "--- vm.cc: VmModule::CopyBuffer ---\n");
   auto alignment =
       py::cast<uintptr_t>(py::module_::import_("mmap").attr("PAGESIZE"));
   auto bytearray_ctor = py::module_::import_("builtins").attr("bytearray");
@@ -424,6 +442,7 @@ VmModule VmModule::CopyBuffer(VmInstance* instance, py::object buffer_obj) {
 VmModule VmModule::FromBuffer(VmInstance* instance, py::object buffer_obj,
                               bool warn_if_copy) {
   IREE_TRACE_SCOPE_NAMED("VmModule::FromBuffer");
+  fprintf(stderr, "--- vm.cc: VmModule::FromBuffer ---\n");
   PyBufferRequest buffer_info(buffer_obj, PyBUF_SIMPLE);
 
   if (iree_host_size_has_alignment((uintptr_t)buffer_info.view().buf,

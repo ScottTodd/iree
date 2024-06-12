@@ -1436,7 +1436,11 @@ bool ireeCompilerInvocationRunPassPipeline(iree_compiler_invocation_t *inv,
 }
 
 void ireeCompilerSourceDestroy(iree_compiler_source_t *source) {
+  fprintf(stderr,
+          "--- CompilerDriver.cpp: ireeCompilerSourceDestroy start ---\n");
   delete unwrap(source);
+  fprintf(stderr,
+          "--- CompilerDriver.cpp: ireeCompilerSourceDestroy finish ---\n");
 }
 
 iree_compiler_error_t *
@@ -1453,6 +1457,11 @@ ireeCompilerSourceWrapBuffer(iree_compiler_session_t *session,
                              const char *bufferName, const char *buffer,
                              size_t length, bool isNullTerminated,
                              iree_compiler_source_t **out_source) {
+  fprintf(stderr,
+          "--- CompilerDriver.cpp: ireeCompilerSourceWrapBuffer, length: %d, "
+          "isNullTerminated: %d "
+          "---\n",
+          (int)length, (int)isNullTerminated);
   auto source = new Source(*unwrap(session));
   *out_source = wrap(source);
   return wrap(source->wrapBuffer(bufferName, buffer, length, isNullTerminated));
@@ -1486,6 +1495,8 @@ ireeCompilerOutputOpenFD(int fd, iree_compiler_output_t **out_output) {
 
 iree_compiler_error_t *
 ireeCompilerOutputOpenMembuffer(iree_compiler_output_t **out_output) {
+  fprintf(stderr,
+          "--- CompilerDriver.cpp: ireeCompilerOutputOpenMembuffer ---\n");
   auto output = new Output();
   *out_output = wrap(output);
   return wrap(output->openMembuffer());
@@ -1494,16 +1505,19 @@ ireeCompilerOutputOpenMembuffer(iree_compiler_output_t **out_output) {
 iree_compiler_error_t *
 ireeCompilerOutputMapMemory(iree_compiler_output_t *output, void **contents,
                             uint64_t *size) {
+  fprintf(stderr, "--- CompilerDriver.cpp: ireeCompilerOutputMapMemory ---\n");
   return wrap(unwrap(output)->mapMemory(contents, size));
 }
 
 void ireeCompilerOutputKeep(iree_compiler_output_t *output) {
+  fprintf(stderr, "--- CompilerDriver.cpp: ireeCompilerOutputKeep ---\n");
   unwrap(output)->keep();
 }
 
 iree_compiler_error_t *ireeCompilerOutputWrite(iree_compiler_output_t *output,
                                                const void *data,
                                                size_t length) {
+  fprintf(stderr, "--- CompilerDriver.cpp: ireeCompilerOutputWrite ---\n");
   llvm::raw_ostream *os = unwrap(output)->outputStream;
   if (!os) {
     return wrap(new Error("output not open for streaming"));
@@ -1528,6 +1542,9 @@ ireeCompilerInvocationOutputIRBytecode(iree_compiler_invocation_t *inv,
 iree_compiler_error_t *
 ireeCompilerInvocationOutputVMBytecode(iree_compiler_invocation_t *inv,
                                        iree_compiler_output_t *output) {
+  fprintf(
+      stderr,
+      "--- CompilerDriver.cpp: ireeCompilerInvocationOutputVMBytecode ---\n");
   return wrap(unwrap(inv)->outputVMBytecode(*unwrap(output)));
 }
 
