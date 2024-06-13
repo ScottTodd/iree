@@ -143,6 +143,7 @@ static iree_status_t iree_vm_bytecode_map_internal_ordinal(
 }
 
 static void iree_vm_bytecode_module_destroy(void* self) {
+  fprintf(stderr, "iree_vm_bytecode_module_destroy\n");
   iree_vm_bytecode_module_t* module = (iree_vm_bytecode_module_t*)self;
   IREE_TRACE_ZONE_BEGIN(z0);
 
@@ -255,6 +256,8 @@ static iree_status_t iree_vm_bytecode_module_lookup_function(
     void* self, iree_vm_function_linkage_t linkage, iree_string_view_t name,
     const iree_vm_function_signature_t* expected_signature,
     iree_vm_function_t* out_function) {
+  fprintf(stderr, "iree_vm_bytecode_module_lookup_function, name: '%.*s'\n",
+          (int)name.size, name.data);
   IREE_ASSERT_ARGUMENT(out_function);
   memset(out_function, 0, sizeof(iree_vm_function_t));
 

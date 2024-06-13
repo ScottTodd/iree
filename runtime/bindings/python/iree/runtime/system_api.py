@@ -159,8 +159,10 @@ class BoundModule:
         # layering and will need to be fixed in some fashion if/when doing
         # heterogenous dispatch.
         return FunctionInvoker(
-            self._context().vm_context,
-            self._context().config.device,
+            # self._context().vm_context,
+            # self._context().config.device,
+            self._context.vm_context,
+            self._context.config.device,
             vm_function,
         )
 
@@ -208,7 +210,8 @@ class SystemContext:
             # ASan complains here
             print("system_api.py: SystemContext::__init__ setup self._bound_modules")
             self._bound_modules = BoundModules(
-                [(m.name, BoundModule(weakref.ref(self), m)) for m in init_vm_modules]
+                [(m.name, BoundModule(self, m)) for m in init_vm_modules]
+                # [(m.name, BoundModule(weakref.ref(self), m)) for m in init_vm_modules]
             )
 
     @property

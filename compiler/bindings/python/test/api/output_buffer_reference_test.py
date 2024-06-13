@@ -22,7 +22,7 @@ from iree.runtime import VmContext, VmInstance, VmModule, load_vm_module
 
 def compile_simple_mul_binary() -> Output:
     asm = b"""
-    module @arithmetic {
+    module @output_buffer_reference_test {
     func.func @simple_mul(%arg0: f32, %arg1: f32) -> f32 {
         %0 = arith.mulf %arg0, %arg1 : f32
         return %0 : f32
@@ -43,20 +43,33 @@ def compile_simple_mul_binary() -> Output:
     return output
 
 
-vmfb_contents = bytes(compile_simple_mul_binary().map_memory())
+vmfb_memory = compile_simple_mul_binary()
+vmfb_contents = bytes(vmfb_memory.map_memory())
 # This print is a load bearing part of the test. It ensures that the memory
 # is readable.
 print("VMFB Length =", len(vmfb_contents), vmfb_contents)
 
 
 def run_mmap_free_before_context_test():
+    gc.set_debug(gc.DEBUG_STATS | gc.DEBUG_COLLECTABLE | gc.DEBUG_UNCOLLECTABLE)
+
     instance = VmInstance()
     output = Output.open_membuffer()
     output.write(vmfb_contents)
+    print("mapped_memory = output.map_memory()")
     mapped_memory = output.map_memory()
-    module = VmModule.wrap_buffer(instance, mapped_memory)
+
+    def on_destroy():
+        print("on_destroy callback")
+
+    print("module = VmModule.wrap_buffer")
+    # module = VmModule.wrap_buffer(instance, vmfb_contents, destroy_callback=on_destroy)
+    module = VmModule.wrap_buffer(instance, mapped_memory, destroy_callback=on_destroy)
     # context = VmContext(instance, modules=[module])
     loaded_module = load_vm_module(module)
+
+    # print("`loaded_module = None`")
+    # loaded_module = None
     # Shutdown in the most egregious way possible.
     # Note that during context destruction, the context needs some final
     # access to the mapped memory to run destructors. It is easy for the

@@ -213,7 +213,12 @@ IREE_API_EXPORT void iree_vm_module_retain(iree_vm_module_t* module) {
 }
 
 IREE_API_EXPORT void iree_vm_module_release(iree_vm_module_t* module) {
+  int ref_count = (int)iree_atomic_ref_count_load(&module->ref_count);
+  iree_string_view_t name = iree_vm_module_name(module);
+  fprintf(stderr, "iree_vm_module_release ('%.*s') ref_count: %d --> %d\n",
+          (int)name.size, name.data, ref_count, ref_count - 1);
   if (module && iree_atomic_ref_count_dec(&module->ref_count) == 1) {
+    fprintf(stderr, "  iree_vm_module_release, destroying self\n");
     module->destroy(module->self);
   }
 }

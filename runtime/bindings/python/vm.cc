@@ -184,6 +184,8 @@ VmContext VmContext::Create(VmInstance* instance,
                                iree_allocator_system(), &context);
     CheckApiStatus(status, "Error creating vm context");
   } else {
+    fprintf(stderr, "--- vm.cc: VmContext::Create with %d modules\n",
+            (int)modules->size());
     // Closed set of modules.
     std::vector<iree_vm_module_t*> module_handles;
     module_handles.resize(modules->size());
@@ -305,9 +307,16 @@ VmModule VmModule::WrapBuffer(VmInstance* instance, py::object buffer_obj,
   struct BufferState {
     BufferState(py::object buffer_obj, py::object destroy_callback,
                 bool close_buffer)
-        : buffer_info(buffer_obj, PyBUF_SIMPLE),
+        : buffer_obj(buffer_obj),
+          buffer_info(buffer_obj, PyBUF_SIMPLE),
           destroy_callback(std::move(destroy_callback)),
-          close_buffer(close_buffer) {}
+          close_buffer(close_buffer) {
+      fprintf(stderr, "--- vm.cc: created BufferState object\n");
+    }
+
+    ~BufferState() { fprintf(stderr, "--- vm.cc: ~BufferState\n"); }
+
+    py::object buffer_obj;
     PyBufferRequest buffer_info;
     py::object destroy_callback;
     bool close_buffer;
@@ -329,11 +338,11 @@ VmModule VmModule::WrapBuffer(VmInstance* instance, py::object buffer_obj,
   iree_vm_module_t* module = nullptr;
   auto ctl_fn = +([](void* self, iree_allocator_command_t command,
                      const void* params, void** inout_ptr) {
-    fprintf(stderr, "* vm.cc :: WrapBuffer :: deallocator ctl_fn enter\n");
+    fprintf(stderr, "--- vm.cc :: WrapBuffer :: deallocator ctl_fn enter\n");
     py::gil_scoped_acquire gil;
     assert(command == IREE_ALLOCATOR_COMMAND_FREE);
     try {
-      fprintf(stderr, "* vm.cc :: WrapBuffer :: try { ... }\n");
+      fprintf(stderr, "--- vm.cc :: WrapBuffer :: try { ... }\n");
       // Destruction sequencing is tricky. We must have released the
       // PyBufferRequest before calling close, so we first get what we
       // need out of the state into local variables, then delete the state
@@ -341,25 +350,25 @@ VmModule VmModule::WrapBuffer(VmInstance* instance, py::object buffer_obj,
       // destroy callback. Getting the order wrong will result in an
       // unrecoverable exception indicating the the buffer cannot be closed
       // with outstanding mappings.
-      fprintf(stderr, "* vm.cc :: WrapBuffer :: BufferState* state\n");
+      fprintf(stderr, "--- vm.cc :: WrapBuffer :: BufferState* state\n");
       BufferState* state = static_cast<BufferState*>(self);
-      fprintf(stderr, "* vm.cc :: WrapBuffer :: std::move\n");
+      fprintf(stderr, "--- vm.cc :: WrapBuffer :: std::move\n");
       py::object destroy_callback = std::move(state->destroy_callback);
       // py::object destroy_callback;
       py::object buffer_to_close;
       if (state->close_buffer) {
-        fprintf(stderr, "* vm.cc :: WrapBuffer :: py::borrow\n");
+        fprintf(stderr, "--- vm.cc :: WrapBuffer :: py::borrow\n");
         buffer_to_close = py::borrow(state->get_buffer());
       }
       delete state;
 
       if (buffer_to_close) {
-        fprintf(stderr, "* vm.cc :: WrapBuffer :: attr(\"close\")\n");
+        fprintf(stderr, "--- vm.cc :: WrapBuffer :: attr(\"close\")\n");
         buffer_to_close.attr("close")();
       }
 
       if (!destroy_callback.is_none()) {
-        fprintf(stderr, "* vm.cc :: WrapBuffer :: destroy_callback\n");
+        fprintf(stderr, "--- vm.cc :: WrapBuffer :: destroy_callback\n");
         destroy_callback();
       }
     } catch (std::exception& e) {
@@ -379,27 +388,34 @@ VmModule VmModule::WrapBuffer(VmInstance* instance, py::object buffer_obj,
           "serious problem, minimally resulting in memory leaks: %s",
           e.what());
     }
-    fprintf(stderr, "* vm.cc :: WrapBuffer :: deallocator ctl_fn exit\n");
+    fprintf(stderr, "--- vm.cc :: WrapBuffer :: deallocator ctl_fn exit\n");
     return iree_ok_status();
   });
   iree_allocator_t deallocator{/*self=*/state, /*ctl=*/ctl_fn};
 
   fprintf(stderr,
-          "--- vm.cc: VmModule::WrapBuffer, iree_vm_bytecode_module_create\n");
+          "--- vm.cc: VmModule::WrapBuffer, iree_vm_bytecode_module_create "
+          "start\n");
   auto status = iree_vm_bytecode_module_create(
       instance->raw_ptr(),
       {static_cast<const uint8_t*>(buffer_info.view().buf),
        static_cast<iree_host_size_t>(buffer_info.view().len)},
       deallocator, iree_allocator_system(), &module);
+  fprintf(stderr,
+          "--- vm.cc: VmModule::WrapBuffer, iree_vm_bytecode_module_create end "
+          "(returned '%p')\n",
+          &module);
   if (!iree_status_is_ok(status)) {
     delete state;
   }
 
   CheckApiStatus(status, "Error creating vm module from aligned memory");
+  fprintf(stderr, "--- vm.cc: VmModule::StealFromRawPtr('%p') ---\n", &module);
   auto py_module = VmModule::StealFromRawPtr(module);
   // Stash a reference to the flatbuffer at the Python instance level. This
   // is exposed to the tracing API, allowing it to get at the backing contents.
   py_module.stashed_flatbuffer_blob = buffer_obj;
+  fprintf(stderr, "--- vm.cc: VmModule created: '%p' ---\n", &py_module);
   return py_module;
 }
 

@@ -44,9 +44,15 @@ template <typename Self, typename T>
 class ApiRefCounted {
  public:
   using RawPtrType = T*;
-  ApiRefCounted() : instance_(nullptr) {}
-  ApiRefCounted(ApiRefCounted& other) : instance_(other.instance_) { Retain(); }
+  ApiRefCounted() : instance_(nullptr) {
+    fprintf(stderr, "ApiRefCounted constructed: '%p'\n", this);
+  }
+  ApiRefCounted(ApiRefCounted& other) : instance_(other.instance_) {
+    fprintf(stderr, "ApiRefCounted copy: '%p'\n", this);
+    Retain();
+  }
   ApiRefCounted(ApiRefCounted&& other) : instance_(other.instance_) {
+    fprintf(stderr, "ApiRefCounted move: '%p' --> '%p'\n", &other, this);
     other.instance_ = nullptr;
   }
   ApiRefCounted& operator=(ApiRefCounted&& other) {
@@ -56,7 +62,10 @@ class ApiRefCounted {
   }
   void operator=(const ApiRefCounted&) = delete;
 
-  ~ApiRefCounted() { Release(); }
+  ~ApiRefCounted() {
+    fprintf(stderr, "~ApiRefCounted delete: '%p'\n", this);
+    Release();
+  }
 
   // Steals the reference to the object referenced by the given raw pointer and
   // returns a wrapper (transfers ownership).

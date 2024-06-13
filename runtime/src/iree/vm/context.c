@@ -252,6 +252,8 @@ static void iree_vm_context_release_modules(iree_vm_context_t* context,
                                             iree_host_size_t end) {
   IREE_TRACE_ZONE_BEGIN(z0);
 
+  fprintf(stderr, "iree_vm_context_release_modules\n");
+
   // Run module __deinit functions, if present (in reverse init order).
   IREE_VM_INLINE_STACK_INITIALIZE(
       stack,
