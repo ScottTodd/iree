@@ -56,17 +56,25 @@ def run_mmap_free_before_context_test():
     instance = VmInstance()
     output = Output.open_membuffer()
     output.write(vmfb_contents)
-    print("mapped_memory = output.map_memory()")
+    print("Calling mapped_memory = output.map_memory()")
     mapped_memory = output.map_memory()
+
+    print("mapped_memory._objects:", mapped_memory._objects)
 
     def on_destroy():
         print("on_destroy callback")
 
-    print("module = VmModule.wrap_buffer")
+    print("Calling module = VmModule.wrap_buffer")
     # module = VmModule.wrap_buffer(instance, vmfb_contents, destroy_callback=on_destroy)
     module = VmModule.wrap_buffer(instance, mapped_memory, destroy_callback=on_destroy)
     # context = VmContext(instance, modules=[module])
+    print("Calling loaded_module = load_vm_module(module)")
     loaded_module = load_vm_module(module)
+
+    print("gc.get_referrers(instance):", gc.get_referrers(instance))
+    print("gc.get_referrers(output):", gc.get_referrers(output))
+    print("gc.get_referrers(mapped_memory):", gc.get_referrers(mapped_memory))
+    print("gc.get_referrers(module):", gc.get_referrers(module))
 
     # print("`loaded_module = None`")
     # loaded_module = None

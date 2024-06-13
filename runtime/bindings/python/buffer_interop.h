@@ -22,12 +22,16 @@ namespace iree::python {
 class PyBufferRequest {
  public:
   PyBufferRequest(py::object &exporter, int flags) {
+    fprintf(stderr, "--- buffer_interop.h: PyBufferRequest constructor\n");
     int rc = PyObject_GetBuffer(exporter.ptr(), &view_, flags);
     if (rc != 0) {
       throw py::python_error();
     }
   }
-  ~PyBufferRequest() { PyBuffer_Release(&view_); }
+  ~PyBufferRequest() {
+    fprintf(stderr, "--- buffer_interop.h: ~PyBufferRequest\n");
+    PyBuffer_Release(&view_);
+  }
   PyBufferRequest(const PyBufferRequest &) = delete;
   void operator=(const PyBufferRequest &) = delete;
 

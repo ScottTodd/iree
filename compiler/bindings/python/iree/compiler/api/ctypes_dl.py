@@ -283,7 +283,16 @@ class Output:
         )
         size = size.value
 
+        # ---------------------------------
+        # Note: this does not retain a reference:
+        # gc.get_referrers(output): []
+
         # return memoryview((c_char * size).from_address(contents.value))
+        # ---------------------------------
+
+        # ---------------------------------
+        # Note: this _does_ not retain a reference:
+        # gc.get_referrers(output): [(<iree.compiler.api.ctypes_dl.Output object at 0x7f52441ab950>,)]
 
         pointer = (c_char * size).from_address(contents.value)
 
@@ -299,6 +308,8 @@ class Output:
         # weakref.finalize(pointer, lambda x: ..., self)
         weakref.finalize(pointer, on_finalize, self)
         return pointer
+
+        # ---------------------------------
 
 
 class Source:

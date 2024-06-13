@@ -979,7 +979,8 @@ void SetupVmBindings(nanobind::module_ m) {
                   py::arg("buffer"), kCopyBufferDocstring)
       .def_static("wrap_buffer", &VmModule::WrapBuffer, py::arg("instance"),
                   py::arg("buffer"), py::arg("destroy_callback") = py::none(),
-                  py::arg("close_buffer") = false, kWrapBufferDocstring)
+                  py::arg("close_buffer") = false, kWrapBufferDocstring,
+                  py::keep_alive<0, 3>())
       .def_static("mmap", &VmModule::MMap, py::arg("instance"),
                   py::arg("filepath"), py::arg("destroy_callback") = py::none(),
                   kMMapDocstring)
