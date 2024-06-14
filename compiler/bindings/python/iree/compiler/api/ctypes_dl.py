@@ -240,11 +240,11 @@ class Output:
         self._local_dylib = _dylib
 
     def __del__(self):
-        print("compiler Output __del__")
+        print("ctypes_dl.py :: compiler Output __del__")
         self.close()
 
     def close(self):
-        print("compiler Output close()")
+        print("ctypes_dl.py :: compiler Output close()")
         if self._output_p:
             self._local_dylib.ireeCompilerOutputDestroy(self._output_p)
             self._output_p = None

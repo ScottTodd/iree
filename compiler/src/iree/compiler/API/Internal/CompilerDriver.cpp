@@ -525,6 +525,7 @@ struct Output {
   };
 
   ~Output();
+
   Error *openFile(const char *filePath);
   Error *openFD(int fd);
   Error *openMembuffer();
@@ -538,6 +539,7 @@ struct Output {
   }
 
   Error *mapMemory(void **data, uint64_t *size) {
+    fprintf(stderr, "CompilerDriver.cpp Output::mapMemory()\n");
     if (type == Type::Membuffer) {
       stringOutputStream->flush();
       *data = static_cast<void *>(&outputString[0]);
@@ -609,6 +611,7 @@ private:
 };
 
 Output::~Output() {
+  fprintf(stderr, "CompilerDriver.cpp ~Output\n");
 #if IREE_COMPILER_USE_MMAP
   if (mapped_data) {
     munmap(mapped_data, static_cast<size_t>(mapped_size));
@@ -1481,6 +1484,7 @@ void ireeCompilerOutputDestroy(iree_compiler_output_t *output) {
 iree_compiler_error_t *
 ireeCompilerOutputOpenFile(const char *filePath,
                            iree_compiler_output_t **out_output) {
+  fprintf(stderr, "CompilerDriver.cpp ireeCompilerOutputOpenFile()\n");
   auto output = new Output();
   *out_output = wrap(output);
   return wrap(output->openFile(filePath));

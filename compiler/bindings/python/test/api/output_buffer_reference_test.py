@@ -51,7 +51,7 @@ print("VMFB Length =", len(vmfb_contents), vmfb_contents)
 
 
 def run_mmap_free_before_context_test():
-    gc.set_debug(gc.DEBUG_STATS | gc.DEBUG_COLLECTABLE | gc.DEBUG_UNCOLLECTABLE)
+    # gc.set_debug(gc.DEBUG_STATS | gc.DEBUG_COLLECTABLE | gc.DEBUG_UNCOLLECTABLE)
 
     instance = VmInstance()
     output = Output.open_membuffer()
@@ -83,20 +83,20 @@ def run_mmap_free_before_context_test():
     # access to the mapped memory to run destructors. It is easy for the
     # reference to the backing memory to be invalid at this point, thus
     # this test.
-    print("gc.collect() then `output = None`")
-    gc.collect()
-    output = None
-    print("gc.collect() then `mapped_memory = None`")
-    gc.collect()
-    mapped_memory = None
-    print("gc.collect() then `module = None`")
-    gc.collect()
-    module = None
-    print("gc.collect() then `context = None`")
-    gc.collect()
-    context = None
-    gc.collect()
-    print("run_mmap_free_before_context_test end")
+    # print("gc.collect() then `output = None`")
+    # gc.collect()
+    # output = None
+    # print("gc.collect() then `mapped_memory = None`")
+    # gc.collect()
+    # mapped_memory = None
+    # print("gc.collect() then `module = None`")
+    # gc.collect()
+    # module = None
+    # print("gc.collect() then `context = None`")
+    # gc.collect()
+    # context = None
+    # gc.collect()
+    print("=== run_mmap_free_before_context_test end ===")
 
 
 # for i in range(10):
