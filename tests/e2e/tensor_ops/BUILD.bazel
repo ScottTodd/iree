@@ -17,6 +17,7 @@ iree_check_single_backend_test_suite(
     srcs = enforce_glob(
         # keep sorted
         [
+            "concat.mlir",
             "extract_slice.mlir",
             "pack.mlir",
             "pack_dynamic_inner_tiles.mlir",
@@ -37,6 +38,7 @@ iree_check_single_backend_test_suite(
     srcs = enforce_glob(
         # keep sorted
         [
+            "concat.mlir",
             "extract_slice.mlir",
             "pack.mlir",
             "pack_dynamic_inner_tiles.mlir",
@@ -78,6 +80,7 @@ iree_check_single_backend_test_suite(
     srcs = enforce_glob(
         # keep sorted
         [
+            "concat.mlir",
             "extract_slice.mlir",
             "pack.mlir",
             "tensor_insert_slice.mlir",
@@ -106,6 +109,7 @@ iree_check_single_backend_test_suite(
     srcs = enforce_glob(
         # keep sorted
         [
+            "concat.mlir",
             "extract_slice.mlir",
             "tensor_cast.mlir",
             "tensor_insert_slice.mlir",
