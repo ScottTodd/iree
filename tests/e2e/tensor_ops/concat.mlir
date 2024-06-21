@@ -1,50 +1,39 @@
-// func.func public @concat_i64() {
-//   %cst_1 = arith.constant dense<1> : tensor<1xi64>
-//   %cst_2 = arith.constant dense<2> : tensor<1x1xi64>
-//   %cst_3 = arith.constant dense<3> : tensor<1x1xi64>
-//   %cst_4 = arith.constant dense<4> : tensor<1x1xi64>
-//   %1 = util.optimization_barrier %cst_1 : tensor<1xi64>
-//   %2 = util.optimization_barrier %cst_2 : tensor<1x1xi64>
-//   %3 = util.optimization_barrier %cst_3 : tensor<1x1xi64>
-//   %4 = util.optimization_barrier %cst_4 : tensor<1x1xi64>
-//   //
-//   %expanded_1 = tensor.expand_shape %1 [[0, 1]] output_shape [1, 1] : tensor<1xi64> into tensor<1x1xi64>
+func.func public @concat_i32_static_dim0() {
+  %cst_1 = arith.constant dense<1> : tensor<1xi32>
+  %cst_2 = arith.constant dense<2> : tensor<1xi32>
+  %1 = util.optimization_barrier %cst_1 : tensor<1xi32>
+  %2 = util.optimization_barrier %cst_2 : tensor<1xi32>
+  %concat = tensor.concat dim(0) %1, %2 : (tensor<1xi32>, tensor<1xi32>) -> tensor<2xi32>
+  check.expect_eq_const(%concat, dense<[1,2]> : tensor<2xi32>) : tensor<2xi32>
+  return
+}
 
-//   // DO NOT SUBMIT
-//   // This exercises __builtin_splat_i64
-//   // Need a different test to exercise __builtin_fill_i64
-//   // Should also add tests for
-//   //   * other data types
-//   //   * builtins directly (starting from stream)
-//   %concat = tensor.concat dim(1) %expanded_1, %2, %3, %4 : (tensor<1x1xi64>, tensor<1x1xi64>, tensor<1x1xi64>, tensor<1x1xi64>) -> tensor<1x4xi64>
-//   check.expect_eq_const(%concat, dense<[[1,2,3,4]]> : tensor<1x4xi64>) : tensor<1x4xi64>
-//   return
-// }
-
-
-// func.func public @expand_to_concat_i64() {
-//   %cst_1 = arith.constant dense<1> : tensor<1xi64>
-//   %cst_2 = arith.constant dense<2> : tensor<1x1xi64>
-//   %cst_3 = arith.constant dense<3> : tensor<1x1xi64>
-//   %cst_4 = arith.constant dense<4> : tensor<1x1xi64>
-//   %1 = util.optimization_barrier %cst_1 : tensor<1xi64>
-//   %2 = util.optimization_barrier %cst_2 : tensor<1x1xi64>
-//   %3 = util.optimization_barrier %cst_3 : tensor<1x1xi64>
-//   %4 = util.optimization_barrier %cst_4 : tensor<1x1xi64>
-//   %expanded_1 = tensor.expand_shape %1 [[0, 1]] output_shape [1, 1] : tensor<1xi64> into tensor<1x1xi64>
-//   // This exercises __builtin_splat_i64
-//   %concat = tensor.concat dim(1) %expanded_1, %2, %3, %4 : (tensor<1x1xi64>, tensor<1x1xi64>, tensor<1x1xi64>, tensor<1x1xi64>) -> tensor<1x4xi64>
-//   check.expect_eq_const(%concat, dense<[[1,2,3,4]]> : tensor<1x4xi64>) : tensor<1x4xi64>
-//   return
-// }
-
-
-func.func public @expand_to_concat_i64() {
+func.func public @concat_i64_static_dim0() {
   %cst_1 = arith.constant dense<1> : tensor<1xi64>
   %cst_2 = arith.constant dense<2> : tensor<1xi64>
   %1 = util.optimization_barrier %cst_1 : tensor<1xi64>
   %2 = util.optimization_barrier %cst_2 : tensor<1xi64>
   %concat = tensor.concat dim(0) %1, %2 : (tensor<1xi64>, tensor<1xi64>) -> tensor<2xi64>
   check.expect_eq_const(%concat, dense<[1,2]> : tensor<2xi64>) : tensor<2xi64>
+  return
+}
+
+func.func public @concat_f32_static_dim0() {
+  %cst_1 = arith.constant dense<1.0> : tensor<1xf32>
+  %cst_2 = arith.constant dense<2.0> : tensor<1xf32>
+  %1 = util.optimization_barrier %cst_1 : tensor<1xf32>
+  %2 = util.optimization_barrier %cst_2 : tensor<1xf32>
+  %concat = tensor.concat dim(0) %1, %2 : (tensor<1xf32>, tensor<1xf32>) -> tensor<2xf32>
+  check.expect_almost_eq_const(%concat, dense<[1.0,2.0]> : tensor<2xf32>) : tensor<2xf32>
+  return
+}
+
+func.func public @concat_i32_dim1() {
+  %lhs = arith.constant dense<[[1,2,3],[-1,-2,-3]]> : tensor<2x3xi32>
+  %rhs = arith.constant dense<[[4,5,6,7,8],[-4,-5,-6,-7,-8]]> : tensor<2x5xi32>
+  %lhs_barrier = util.optimization_barrier %lhs : tensor<2x3xi32>
+  %rhs_barrier = util.optimization_barrier %rhs : tensor<2x5xi32>
+  %concat = tensor.concat dim(1) %lhs_barrier, %rhs_barrier : (tensor<2x3xi32>, tensor<2x5xi32>) -> tensor<2x8xi32>
+  check.expect_eq_const(%concat, dense<[[1,2,3,4,5,6,7,8],[-1,-2,-3,-4,-5,-6,-7,-8]]> : tensor<2x8xi32>) : tensor<2x8xi32>
   return
 }
