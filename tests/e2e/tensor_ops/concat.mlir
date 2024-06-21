@@ -1,4 +1,4 @@
-func.func public @concat_i32_static_dim0() {
+func.func @concat_i32_static_dim0() {
   %cst_1 = arith.constant dense<1> : tensor<1xi32>
   %cst_2 = arith.constant dense<2> : tensor<1xi32>
   %1 = util.optimization_barrier %cst_1 : tensor<1xi32>
@@ -8,7 +8,7 @@ func.func public @concat_i32_static_dim0() {
   return
 }
 
-func.func public @concat_i64_static_dim0() {
+func.func @concat_i64_static_dim0() {
   %cst_1 = arith.constant dense<1> : tensor<1xi64>
   %cst_2 = arith.constant dense<2> : tensor<1xi64>
   %1 = util.optimization_barrier %cst_1 : tensor<1xi64>
@@ -18,7 +18,7 @@ func.func public @concat_i64_static_dim0() {
   return
 }
 
-func.func public @concat_f32_static_dim0() {
+func.func @concat_f32_static_dim0() {
   %cst_1 = arith.constant dense<1.0> : tensor<1xf32>
   %cst_2 = arith.constant dense<2.0> : tensor<1xf32>
   %1 = util.optimization_barrier %cst_1 : tensor<1xf32>
@@ -28,7 +28,7 @@ func.func public @concat_f32_static_dim0() {
   return
 }
 
-func.func public @concat_i32_dim1() {
+func.func @concat_i32_dim1() {
   %lhs = arith.constant dense<[[1,2,3],[-1,-2,-3]]> : tensor<2x3xi32>
   %rhs = arith.constant dense<[[4,5,6,7,8],[-4,-5,-6,-7,-8]]> : tensor<2x5xi32>
   %lhs_barrier = util.optimization_barrier %lhs : tensor<2x3xi32>
