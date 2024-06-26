@@ -1428,6 +1428,12 @@
       
         
       
+        
+      
+        
+      
+        
+      
     
     
       
@@ -1473,6 +1479,27 @@
   
   <span class="md-ellipsis">
     Check
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Encoding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Encoding
   </span>
   
 
@@ -1627,9 +1654,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_loaderexecutabledispatchsymbol-halloaderexecutabledispatchsymbolop" class="md-nav__link">
+  <a href="#hal_loaderexecutableexportordinal-halloaderexecutableexportordinalop" class="md-nav__link">
     <span class="md-ellipsis">
-      hal_loader.executable.dispatch.symbol (HAL::Loader::ExecutableDispatchSymbolOp)
+      hal_loader.executable.export.ordinal (HAL::Loader::ExecutableExportOrdinalOp)
     </span>
   </a>
   
@@ -1693,6 +1720,48 @@
   
   <span class="md-ellipsis">
     IO/Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IREECodegen/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREECodegen
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IREEGPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREEGPU
   </span>
   
 
@@ -3657,9 +3726,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#hal_loaderexecutabledispatchsymbol-halloaderexecutabledispatchsymbolop" class="md-nav__link">
+  <a href="#hal_loaderexecutableexportordinal-halloaderexecutableexportordinalop" class="md-nav__link">
     <span class="md-ellipsis">
-      hal_loader.executable.dispatch.symbol (HAL::Loader::ExecutableDispatchSymbolOp)
+      hal_loader.executable.export.ordinal (HAL::Loader::ExecutableExportOrdinalOp)
     </span>
   </a>
   
@@ -3717,7 +3786,7 @@
                   
 
   
-    <a href="https://github.com/openxla/iree/tree/main/compiler/src/iree/compiler/Modules/HAL/Loader/IR" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/iree-org/iree/tree/main/compiler/src/iree/compiler/Modules/HAL/Loader/IR" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
@@ -3741,7 +3810,7 @@ restrictions.</p>
 <li><a href="#operations">Operations</a><ul>
 <li><a href="#executable-ops">Executable ops</a><ul>
 <li><a href="#hal_loaderexecutabledispatch-halloaderexecutabledispatchop">hal_loader.executable.dispatch (HAL::Loader::ExecutableDispatchOp)</a></li>
-<li><a href="#hal_loaderexecutabledispatchsymbol-halloaderexecutabledispatchsymbolop">hal_loader.executable.dispatch.symbol (HAL::Loader::ExecutableDispatchSymbolOp)</a></li>
+<li><a href="#hal_loaderexecutableexportordinal-halloaderexecutableexportordinalop">hal_loader.executable.export.ordinal (HAL::Loader::ExecutableExportOrdinalOp)</a></li>
 <li><a href="#hal_loaderexecutableload-halloaderexecutableloadop">hal_loader.executable.load (HAL::Loader::ExecutableLoadOp)</a></li>
 <li><a href="#hal_loaderexecutablelookup-halloaderexecutablelookupop">hal_loader.executable.lookup (HAL::Loader::ExecutableLookupOp)</a></li>
 <li><a href="#hal_loaderexecutablequery_support-halloaderexecutablequerysupportop">hal_loader.executable.query_support (HAL::Loader::ExecutableQuerySupportOp)</a></li>
@@ -3777,12 +3846,6 @@ restrictions.</p>
 </code></pre></div>
 <p>Dispatches execution to an executable entry point with the given parameters.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code></p>
-<h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
-<table>
-<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
-<tr><td><code>entry_point</code></td><td>::mlir::IntegerAttr</td><td>size_t</td></tr>
-</table>
-
 <h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -3795,6 +3858,10 @@ restrictions.</p>
 <tr>
 <td style="text-align: center;"><code>executable</code></td>
 <td>executable</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>entry_point</code></td>
+<td>index</td>
 </tr>
 <tr>
 <td style="text-align: center;"><code>workgroup_x</code></td>
@@ -3826,75 +3893,36 @@ restrictions.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="hal_loaderexecutabledispatchsymbol-halloaderexecutabledispatchsymbolop"><code>hal_loader.executable.dispatch.symbol</code> (HAL::Loader::ExecutableDispatchSymbolOp)<a class="headerlink" href="#hal_loaderexecutabledispatchsymbol-halloaderexecutabledispatchsymbolop" title="Permanent link">link</a></h4>
-<p><em>Inline executable dispatch operation</em></p>
+<h4 id="hal_loaderexecutableexportordinal-halloaderexecutableexportordinalop"><code>hal_loader.executable.export.ordinal</code> (HAL::Loader::ExecutableExportOrdinalOp)<a class="headerlink" href="#hal_loaderexecutableexportordinal-halloaderexecutableexportordinalop" title="Permanent link">link</a></h4>
+<p><em>Executable export ordinal lookup pseudo-op</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `hal_loader.executable.dispatch.symbol` `executable` `(` $executable `:` type($executable) `)`
-              `target` `(` $entry_point `)`
-              `workgroups` `(` `[`
-              $workgroup_x `,`
-              $workgroup_y `,`
-              $workgroup_z
-              `]` `)`
-              (`constants` `(` `[` $push_constants^ `]` `)`)?
-              `bindings` `(` `[`
-              custom&lt;DispatchBindings&gt;($binding_buffers,
-              type($binding_buffers),
-              $binding_offsets,
-              $binding_lengths)
-              `]` `)`
+<div class="highlight"><pre><span></span><code>operation ::= `hal_loader.executable.export.ordinal` `target` `(` $entry_point `)`
+              `:` type($result)
               attr-dict-with-keyword
 </code></pre></div>
-<p>Dispatches execution to an executable entry point with the given parameters.
-The entry point is a symbolic reference to an exported entry point.</p>
-<p>Traits: <code>AttrSizedOperandSegments</code></p>
-<p>Interfaces: <code>SymbolUserOpInterface</code></p>
-<h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
+<p>Resolves an executable export ordinal to a value once ordinals have been
+assigned.</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code>, <code>SymbolUserOpInterface</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
+<h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>entry_point</code></td><td>::mlir::SymbolRefAttr</td><td>symbol reference attribute</td></tr>
 </table>
 
-<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
+<h5 id="results">Results:<a class="headerlink" href="#results" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Operand</th>
+<th style="text-align: center;">Result</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>executable</code></td>
-<td>executable</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>workgroup_x</code></td>
+<td style="text-align: center;"><code>result</code></td>
 <td>index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>workgroup_y</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>workgroup_z</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>push_constants</code></td>
-<td>variadic of 32-bit signless integer</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>binding_buffers</code></td>
-<td>variadic of a reference counted byte buffer</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>binding_offsets</code></td>
-<td>variadic of index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>binding_lengths</code></td>
-<td>variadic of index</td>
 </tr>
 </tbody>
 </table>
@@ -3913,13 +3941,13 @@ runtime-derived parameters.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
+<h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>format</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
 
-<h5 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h5>
+<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -3938,7 +3966,7 @@ runtime-derived parameters.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results">Results:<a class="headerlink" href="#results" title="Permanent link">link</a></h5>
+<h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -3965,13 +3993,13 @@ possibly lazy-initialized executable.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code>, <code>SymbolUserOpInterface</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
+<h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>executable</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
 </table>
 
-<h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
+<h5 id="results_2">Results:<a class="headerlink" href="#results_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -3999,13 +4027,13 @@ functionality that cannot be met my the hosting runtime environment.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
+<h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>executable_format</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
 
-<h5 id="results_2">Results:<a class="headerlink" href="#results_2" title="Permanent link">link</a></h5>
+<h5 id="results_3">Results:<a class="headerlink" href="#results_3" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>

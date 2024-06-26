@@ -1428,6 +1428,12 @@
       
         
       
+        
+      
+        
+      
+        
+      
     
     
       
@@ -1473,6 +1479,27 @@
   
   <span class="md-ellipsis">
     Check
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Encoding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Encoding
   </span>
   
 
@@ -1578,6 +1605,48 @@
   
   <span class="md-ellipsis">
     IO/Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IREECodegen/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREECodegen
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IREEGPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREEGPU
   </span>
   
 
@@ -5823,7 +5892,7 @@
                   
 
   
-    <a href="https://github.com/openxla/iree/tree/main/compiler/src/iree/compiler/Dialect/Stream/IR" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/iree-org/iree/tree/main/compiler/src/iree/compiler/Dialect/Stream/IR" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
@@ -8212,8 +8281,7 @@ underlying allocation buffer.</p>
 <h4 id="streamresourcesize-streamresourcesizeop"><code>stream.resource.size</code> (Stream::ResourceSizeOp)<a class="headerlink" href="#streamresourcesize-streamresourcesizeop" title="Permanent link">link</a></h4>
 <p><em>Returns the size of the resource storage in bytes</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `stream.resource.size` (`on` `(` $affinity^ `)`)?
-              $operand
+<div class="highlight"><pre><span></span><code>operation ::= `stream.resource.size` $operand
               attr-dict `:` type($operand)
 </code></pre></div>
 <p>Returns a possibly runtime-dynamic byte size of the resource backing
@@ -8221,7 +8289,7 @@ storage. This may differ from the logical storage size of a value based on
 the alignment requirements of the target as well as encoding of higher level
 values such as sparse tensor formats.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
-<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Stream_AffinityOp</code>, <code>Util_SizeAwareOp</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Util_SizeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="attributes_28">Attributes:<a class="headerlink" href="#attributes_28" title="Permanent link">link</a></h5>
 <table>
@@ -9530,9 +9598,10 @@ value.</p>
 <h4 id="streamasynctransfer-streamasynctransferop"><code>stream.async.transfer</code> (Stream::AsyncTransferOp)<a class="headerlink" href="#streamasynctransfer-streamasynctransferop" title="Permanent link">link</a></h4>
 <p><em>Transfers a resource from one location/state to another</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `stream.async.transfer` (`from` `(` $source_affinity^ `)`)?
-              $source `:`
-              type($source) `` `{` $source_size `}` `-&gt;`
+<div class="highlight"><pre><span></span><code>operation ::= `stream.async.transfer` $source `:` type($source)
+              `` `{` $source_size `}`
+              (`from` `(` $source_affinity^ `)`)?
+              `-&gt;`
               (`to` `(` $result_affinity^ `)`)?
               type($result) `` `{` $result_size `}`
               attr-dict-with-keyword
@@ -10090,7 +10159,7 @@ cloned value will not effect the result. Acts as a copy-on-write operation.</p>
 <h5 id="attributes_52">Attributes:<a class="headerlink" href="#attributes_52" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
-<tr><td><code>value</code></td><td>::mlir::Attribute</td><td>any attribute</td></tr>
+<tr><td><code>value</code></td><td>::mlir::TypedAttr</td><td>TypedAttr instance</td></tr>
 <tr><td><code>result_encoding</code></td><td>::mlir::TypeAttr</td><td>any type attribute</td></tr>
 <tr><td><code>affinity</code></td><td>::mlir::iree_compiler::IREE::Stream::AffinityAttr</td><td>defines execution context affinity</td></tr>
 </table>
