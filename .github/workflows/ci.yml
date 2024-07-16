@@ -518,90 +518,39 @@ jobs:
   # Jobs that build IREE in some non-default configuration
   ##############################################################################
 
-  build_test_runtime:
+  runtime_linux_x86:
     needs: setup
-    name: "build_test_runtime :: ${{ matrix.name }}"
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'build_test_runtime')
-    runs-on: ${{ matrix.runs-on }}
-    defaults:
-      run:
-        shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: ubuntu-20.04
-            runs-on: ubuntu-20.04
-            container: gcr.io/iree-oss/base@sha256:dc314b4fe30fc1315742512891357bffed4d1b62ffcb46258b1e0761c737b446
-          - name: windows-2022
-            runs-on: windows-2022
-            # No container, (unnecessary, and Windows https://github.com/actions/runner/issues/904).
-          - name: macos-14
-            runs-on: macos-14
-            # No container, just install what we need directly.
-          - name: arm64
-            runs-on:
-              - self-hosted # must come first
-              - runner-group=${{ needs.setup.outputs.runner-group }}
-              - environment=${{ needs.setup.outputs.runner-env }}
-              - arm64
-              - os-family=Linux
-            container: gcr.io/iree-oss/base-arm64@sha256:9daa1cdbbf12da8527319ece76a64d06219e04ecb99a4cff6e6364235ddf6c59
-    env:
-      BUILD_DIR: build-runtime
-      BUILD_PRESET: test
-      CONTAINER: ${{ matrix.container }}
-    steps:
-      - name: "Checking out repository"
-        uses: actions/checkout@v4.1.7
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime_linux_x86')
+    uses: ./.github/workflows/build_test_runtime.yml
+    with:
+      job_name: ubuntu-20.04
+      runner-labels: "['ubuntu-20.04']"
+      container: gcr.io/iree-oss/base@sha256:dc314b4fe30fc1315742512891357bffed4d1b62ffcb46258b1e0761c737b446
 
-      - name: "(Windows) Configuring MSVC"
-        if: contains(matrix.name, 'windows')
-        uses: ilammy/msvc-dev-cmd@v1.13.0
+  runtime_linux_arm64:
+    needs: setup
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime_linux_arm64')
+    uses: ./.github/workflows/build_test_runtime.yml
+    with:
+      job_name: arm64
+      runner-labels: "['self-hosted', 'runner-group=${{ needs.setup.outputs.runner-group }}', 'environment=${{ needs.setup.outputs.runner-env }}', 'arm64', 'os-family=Linux']"
+      container: gcr.io/iree-oss/base-arm64@sha256:9daa1cdbbf12da8527319ece76a64d06219e04ecb99a4cff6e6364235ddf6c59
 
-      - name: "(macOS) Installing requirements"
-        if: contains(matrix.name, 'macos')
-        run: brew install ninja ccache coreutils bash
+  runtime_windows:
+    needs: setup
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime_windows')
+    uses: ./.github/workflows/build_test_runtime.yml
+    with:
+      job_name: windows-2022
+      runner-labels: "['windows-2022']"
 
-      - name: "Checking out runtime submodules"
-        run: bash ./build_tools/scripts/git/update_runtime_submodules.sh
-
-      # Windows/macOS (no Docker): install requirements -> build -> test.
-      #
-      # Note: Python is a mess across operating systems and GitHub runners so...
-      #   * On Windows just install at the system level
-      #   * On macOS install in a venv
-      - name: "(Windows) Installing Python requirements"
-        if: contains(matrix.name, 'windows')
-        run: pip install -r ./runtime/bindings/python/iree/runtime/build_requirements.txt
-      - name: "(Windows) Building runtime"
-        if: contains(matrix.name, 'windows')
-        run: bash ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
-      - name: "(macOS) Building runtime"
-        if: contains(matrix.name, 'macos')
-        env:
-          IREE_BUILD_SETUP_PYTHON_VENV: build-runtime/.venv
-        run: bash ./build_tools/cmake/build_runtime.sh "${BUILD_DIR}"
-      - name: "Testing runtime"
-        if: contains(matrix.name, 'windows') || contains(matrix.name, 'macos')
-        run: bash ./build_tools/cmake/ctest_all.sh "${BUILD_DIR}"
-
-      # With a Docker container: build under Docker -> test under Docker.
-      - name: "(Docker) Building runtime"
-        if: ${{ env.CONTAINER != '' }}
-        run: |
-          ./build_tools/github_actions/docker_run.sh \
-            --env "BUILD_PRESET=test" \
-            ${CONTAINER} \
-            ./build_tools/cmake/build_runtime.sh \
-            "${BUILD_DIR}"
-      - name: "(Docker) Testing runtime"
-        if: ${{ env.CONTAINER != '' }}
-        run: |
-          ./build_tools/github_actions/docker_run.sh \
-            ${CONTAINER} \
-            ./build_tools/cmake/ctest_all.sh \
-            "${BUILD_DIR}"
+  runtime_macos:
+    needs: setup
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime_macos')
+    uses: ./.github/workflows/build_test_runtime.yml
+    with:
+      job_name: macos-14
+      runner-labels: "['macos-14']"
 
   python_release_packages:
     needs: setup
@@ -987,7 +936,10 @@ jobs:
       - test_amd_w7900
 
       # Configurations
-      - build_test_runtime
+      - runtime_linux_x86
+      - runtime_linux_arm64
+      - runtime_windows
+      - runtime_macos
       - python_release_packages
       - sanitizers
       - small_runtime
