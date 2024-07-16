@@ -14,9 +14,6 @@ on:
       job_name:
         required: true
         type: string
-      job-enabled:
-        type: boolean
-        required: true
       runner-labels:
         required: true
         type: string # JSON encoded, see https://github.com/orgs/community/discussions/11692
@@ -28,9 +25,7 @@ permissions:
 
 jobs:
   build_test_runtime:
-    # name: "build_test_runtime :: ${{ inputs.job_name }}"
     runs-on: ${{ fromJson(inputs.runner-labels) }}
-    if: ${{ inputs.job-enabled }}
     defaults:
       run:
         shell: bash
