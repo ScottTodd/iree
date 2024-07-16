@@ -528,15 +528,15 @@ jobs:
         include:
           - job_name: ubuntu-20.04
             job-enabled: true
-            runs-on: ubuntu-20.04
+            runs-on: "['ubuntu-20.04']"
             container: gcr.io/iree-oss/base@sha256:dc314b4fe30fc1315742512891357bffed4d1b62ffcb46258b1e0761c737b446
           - job_name: windows-2022
             job-enabled: true
-            runs-on: windows-2022
+            runs-on: "['windows-2022']"
             # No container, (unnecessary, and Windows https://github.com/actions/runner/issues/904).
           - job_name: macos-14
             job-enabled: true
-            runs-on: macos-14
+            runs-on: "['macos-14']"
             # No container, just install what we need directly.
           - job_name: arm64
             job-enabled: ${{ !fromJson(needs.setup.outputs.is-pr) }}
