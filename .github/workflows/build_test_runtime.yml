@@ -14,14 +14,14 @@ on:
       job_name:
         required: true
         type: string
-      runs-on:
+      job-enabled:
+        type: boolean
+        required: true
+      runner-labels:
         required: true
         type: string # JSON encoded, see https://github.com/orgs/community/discussions/11692
       container:
         type: string
-      job-enabled:
-        type: boolean
-        required: true
 
 permissions:
   contents: read
@@ -29,7 +29,7 @@ permissions:
 jobs:
   build_test_runtime:
     name: "build_test_runtime :: ${{ inputs.job_name }}"
-    runs-on: ${{ fromJson(inputs.runs_on) }}
+    runs-on: ${{ fromJson(inputs.runner-labels) }}
     if: ${{ inputs.job-enabled }}
     defaults:
       run:
