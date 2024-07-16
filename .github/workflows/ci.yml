@@ -520,7 +520,7 @@ jobs:
 
   build_test_runtime:
     needs: setup
-    name: "build_test_runtime :: ${{ matrix.name }}"
+    name: "build_test_runtime"
     if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'build_test_runtime')
     strategy:
       fail-fast: false

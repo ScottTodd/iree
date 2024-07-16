@@ -28,7 +28,7 @@ permissions:
 
 jobs:
   build_test_runtime:
-    name: "build_test_runtime :: ${{ inputs.job_name }}"
+    # name: "build_test_runtime :: ${{ inputs.job_name }}"
     runs-on: ${{ fromJson(inputs.runner-labels) }}
     if: ${{ inputs.job-enabled }}
     defaults:
