@@ -6,16 +6,20 @@
 
 name: PkgCI core tests
 on:
-  workflow_call:
-    inputs:
-      artifact_run_id:
-        type: string
-        default: ""
-  workflow_dispatch:
-    inputs:
-      artifact_run_id:
-        type: string
-        default: ""
+  # workflow_call:
+  #   inputs:
+  #     artifact_run_id:
+  #       type: string
+  #       default: ""
+  workflow_run:
+    workflows: [PkgCI]
+    types: [completed]
+
+  # workflow_dispatch:
+  #   inputs:
+  #     artifact_run_id:
+  #       type: string
+  #       default: ""
 
 concurrency:
   # A PR number if a pull request and otherwise the commit hash. This cancels
@@ -28,6 +32,7 @@ concurrency:
 jobs:
   core_tests:
     runs-on: ubuntu-20.04
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     env:
       PACKAGE_DOWNLOAD_DIR: ${{ github.workspace }}/.packages
       BUILD_DIR: build-tests
@@ -51,11 +56,12 @@ jobs:
         with:
           name: linux_x86_64_release_packages
           path: ${{ env.PACKAGE_DOWNLOAD_DIR }}
+          run-id: ${{ github.event.workflow_run.id }}
       - name: Setup base venv
         run: |
           ./build_tools/pkgci/setup_venv.py ${VENV_DIR} \
             --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
-            --fetch-gh-workflow=${{ inputs.artifact_run_id }}
+            --fetch-gh-workflow=${{ github.event.workflow_run.id }}
       - name: "Installing IREE nightly release Python packages"
         run: |
           source ${VENV_DIR}/bin/activate

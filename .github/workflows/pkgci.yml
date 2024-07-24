@@ -37,11 +37,11 @@ jobs:
     with:
       package_version: 0.dev1
 
-  core_tests:
-    name: Core Tests
-    needs: [setup, build_packages]
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'core_tests')
-    uses: ./.github/workflows/pkgci_core_tests.yml
+  # core_tests:
+  #   name: Core Tests
+  #   needs: [setup, build_packages]
+  #   if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'core_tests')
+  #   uses: ./.github/workflows/pkgci_core_tests.yml
 
   # unit_test:
   #   name: Unit Test
