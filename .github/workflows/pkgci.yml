@@ -37,20 +37,26 @@ jobs:
     with:
       package_version: 0.dev1
 
-  unit_test:
-    name: Unit Test
+  core_tests:
+    name: Core Tests
     needs: [setup, build_packages]
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'unit_test')
-    uses: ./.github/workflows/pkgci_unit_test.yml
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'core_tests')
+    uses: ./.github/workflows/pkgci_core_tests.yml
 
-  regression_test:
-    name: Regression Test
-    needs: [setup, build_packages]
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'regression_test')
-    uses: ./.github/workflows/pkgci_regression_test.yml
+  # unit_test:
+  #   name: Unit Test
+  #   needs: [setup, build_packages]
+  #   if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'unit_test')
+  #   uses: ./.github/workflows/pkgci_unit_test.yml
 
-  test_tensorflow_cpu:
-    name: Test TensorFlow CPU
-    needs: [setup, build_packages]
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'test_tensorflow_cpu')
-    uses: ./.github/workflows/pkgci_test_tensorflow_cpu.yml
+  # regression_test:
+  #   name: Regression Test
+  #   needs: [setup, build_packages]
+  #   if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'regression_test')
+  #   uses: ./.github/workflows/pkgci_regression_test.yml
+
+  # test_tensorflow_cpu:
+  #   name: Test TensorFlow CPU
+  #   needs: [setup, build_packages]
+  #   if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'test_tensorflow_cpu')
+  #   uses: ./.github/workflows/pkgci_test_tensorflow_cpu.yml
