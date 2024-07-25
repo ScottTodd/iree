@@ -6,6 +6,7 @@
 
 name: CI Test 2
 on:
+  pull_request:
   workflow_call:
   workflow_dispatch:
 
