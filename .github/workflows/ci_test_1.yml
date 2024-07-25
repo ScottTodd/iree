@@ -8,6 +8,7 @@ name: CI Test 1
 
 on:
   pull_request:
+  workflow_dispatch:
 
 concurrency:
   # A PR number if a pull request and otherwise the commit hash. This cancels
