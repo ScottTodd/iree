@@ -4033,12 +4033,12 @@
 <p>We use <a href="https://docs.github.com/en/actions">GitHub Actions</a> for continuous
 automation (CI) and continuous delivery (CD) workflows:</p>
 <ul>
-<li>Code formating and linting</li>
-<li>Building from source and running tests</li>
-<li>Building packages for testing and releases</li>
-<li>Testing packages across a variety of platforms</li>
-<li>Publishing the <a href="https://iree.dev">https://iree.dev</a> website</li>
-<li>Updating dependencies</li>
+<li>Code formating and linting.</li>
+<li>Building from source and running tests.</li>
+<li>Building packages for testing and releases.</li>
+<li>Testing packages across a variety of platforms.</li>
+<li>Publishing the <a href="https://iree.dev">https://iree.dev</a> website.</li>
+<li>Updating dependencies.</li>
 </ul>
 <p>Workflows are defined directly in the repository at
 <a href="https://github.com/iree-org/iree/tree/main/.github/workflows"><code>.github/workflows/</code></a>,
@@ -4053,14 +4053,16 @@ hardware accelerators.</p>
 <p><em>(Read more on
 <a href="https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions">https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions</a>)</em></p>
 <ul>
-<li><em>Workflows</em> are configurable automated processes that run one or more <em>jobs</em></li>
+<li><em>Workflows</em> are configurable automated processes that run one or more <em>jobs</em>.</li>
 <li><em>Jobs</em> are a set of <em>steps</em> in a workflow that are executed on the same
-  <em>runner</em></li>
-<li><em>Steps</em> are lists of commands or meta actions to run in a shell environment</li>
+  <em>runner</em>.</li>
+<li><em>Steps</em> are lists of commands or meta actions to run in a shell environment.</li>
 <li><em>Runners</em> are servers (physical or virtual machines) that run <em>workflows</em>
-  when triggered</li>
-<li><em>Events</em> are specific activities in a repository that trigger a <em>workflow run</em></li>
+  when triggered.</li>
+<li><em>Events</em> are specific activities in a repository that trigger a
+  <em>workflow run</em>.</li>
 </ul>
+<p><img src="https://docs.github.com/assets/cb-25535/mw-1440/images/help/actions/overview-actions-simple.webp"></p>
 <h2 id="workflow-descriptions-and-status"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 11 13 7.5l1.4-1.4 2.1 2.1L20.7 4l1.4 1.4-5.6 5.6M11 7H2v2h9V7m10 6.4L19.6 12 17 14.6 14.4 12 13 13.4l2.6 2.6-2.6 2.6 1.4 1.4 2.6-2.6 2.6 2.6 1.4-1.4-2.6-2.6 2.6-2.6M11 15H2v2h9v-2Z"/></svg></span> Workflow descriptions and status<a class="headerlink" href="#workflow-descriptions-and-status" title="Permanent link">link</a></h2>
 <h3 id="package-tests">Package tests<a class="headerlink" href="#package-tests" title="Permanent link">link</a></h3>
 <p>These workflows build packages from source then run test suites using them.</p>
@@ -4068,12 +4070,13 @@ hardware accelerators.</p>
   accTitle: Package tests
   accDescr {
     Package tests start with a build_package step.
-    After build_package, individual jobs are run in parallel nvidia t4 tests,
-    AMD mi300 tests, etc.
+    After build_package, individual jobs are run in parallel for NVIDIA t4
+    tests, AMD mi300 tests, etc.
   }
 
   build_packages --&gt; test_nvidia_t4
-  build_packages --&gt; test_amd_mi300</code></pre>
+  build_packages --&gt; test_amd_mi300
+  build_packages --&gt; test_etc</code></pre>
 <ul>
 <li>Treat test workflows as code that downstream users would write - the
   packages used in workflows should be interchangeable with packages
@@ -4198,6 +4201,11 @@ then run basic tests.</p>
 </thead>
 <tbody>
 <tr>
+<td><a href="https://github.com/iree-org/iree/blob/main/.github/workflows/ci.yml"><code>ci.yml</code></a></td>
+<td style="text-align: right;"><a href="https://github.com/iree-org/iree/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush"><img alt="cI" src="https://github.com/iree-org/iree/actions/workflows/ci.yml/badge.svg?query=branch%3Amain+event%3Apush" /></a></td>
+<td><code>pull_request</code>, <code>push</code></td>
+</tr>
+<tr>
 <td><a href="https://github.com/iree-org/iree/blob/main/.github/workflows/build_package.yml"><code>build_package.yml</code></a></td>
 <td style="text-align: right;"><a href="https://github.com/iree-org/iree/actions/workflows/build_package.yml"><img alt="Build Release Packages" src="https://github.com/iree-org/iree/actions/workflows/build_package.yml/badge.svg" /></a></td>
 <td><code>schedule</code></td>
@@ -4275,6 +4283,23 @@ we most commonly use:</p>
 </ul>
 </li>
 </ul>
+<div class="admonition example -">
+<p class="admonition-title">Example workflow triggers</p>
+<ul>
+<li><a href="https://github.com/iree-org/iree/blob/main/.github/workflows/ci_linux_x64_clang_asan.yml"><code>ci_linux_x64_clang_asan.yml</code></a>
+  runs on <code>pull_request</code> and <code>push</code> events despite building the compiler
+  and needing to use large build machines because it is generally useful
+  for all C/C++ compiler and runtime changes.</li>
+<li><a href="https://github.com/iree-org/iree/blob/main/.github/workflows/ci_linux_x64_clang_tsan.yml"><code>ci_linux_x64_clang_tsan.yml</code></a>
+  is similar to the ASan build but it runs on the <code>schedule</code> event because
+  it is only situationally useful and we want to limit use of large build
+  machines. It would run on GitHub-hosted runners if they could handle it
+  without running out of disk space.</li>
+<li><a href="https://github.com/iree-org/iree/blob/main/.github/workflows/ci_linux_arm64_clang.yml"><code>ci_linux_arm64_clang.yml</code></a>
+  uses the <code>schedule</code> event since GitHub does not offer free Linux arm64
+  runners.</li>
+</ul>
+</div>
 <h4 id="required-and-optional-checks"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm1.5 0a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm10.28-1.72-4.5 4.5a.75.75 0 0 1-1.06 0l-2-2a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l1.47 1.47 3.97-3.97a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"/></svg></span> Required and optional checks<a class="headerlink" href="#required-and-optional-checks" title="Permanent link">link</a></h4>
 <p>Any workflow that runs on the <code>pull_request</code> event can be either optional
 (the default) or
@@ -4350,6 +4375,11 @@ of our contributing guide.</p>
   reliably, and how access is limited to the group that maintains the
   hardware, any jobs using these self-hosted runners must be optional and
   easy to disable.</li>
+<li>Self-hosted runners can either be ephemeral (one job per runner,
+  compatible with
+  <a href="https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/autoscaling-with-self-hosted-runners">autoscaling</a>),
+  or persistent. Persistent runners can retain local build and artifact
+  caches to improve workflow time substantially.</li>
 </ul>
 </li>
 </ol>
