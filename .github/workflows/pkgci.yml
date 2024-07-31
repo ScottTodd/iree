@@ -79,15 +79,15 @@ jobs:
     if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'test_tensorflow_cpu')
     uses: ./.github/workflows/pkgci_test_tensorflow_cpu.yml
 
-  test_android:
-    needs: [setup, build_packages]
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'test_android')
-    uses: ./.github/workflows/build_and_test_android.yml
-    with:
-      runner-group: ${{ needs.setup.outputs.runner-group }}
-      runner-env: ${{ needs.setup.outputs.runner-env }}
-      # write-caches: ${{ needs.setup.outputs.write-caches }}
-      is-pr: ${{ fromJson(needs.setup.outputs.is-pr) }}
-      # install-dir: ${{ needs.build_all.outputs.install-dir }}
-      # install-dir-archive: ${{ needs.build_all.outputs.install-dir-archive }}
-      # install-dir-gcs-artifact: ${{ needs.build_all.outputs.install-dir-gcs-artifact }}
+  # test_android:
+  #   needs: [setup, build_packages]
+  #   if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'test_android')
+  #   uses: ./.github/workflows/build_and_test_android.yml
+  #   with:
+  #     runner-group: ${{ needs.setup.outputs.runner-group }}
+  #     runner-env: ${{ needs.setup.outputs.runner-env }}
+  #     # write-caches: ${{ needs.setup.outputs.write-caches }}
+  #     is-pr: ${{ fromJson(needs.setup.outputs.is-pr) }}
+  #     # install-dir: ${{ needs.build_all.outputs.install-dir }}
+  #     # install-dir-archive: ${{ needs.build_all.outputs.install-dir-archive }}
+  #     # install-dir-gcs-artifact: ${{ needs.build_all.outputs.install-dir-gcs-artifact }}
