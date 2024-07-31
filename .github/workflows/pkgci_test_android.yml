@@ -7,11 +7,31 @@
 # Workflow for android cross-compilation and test jobs.
 # The concurrency of this workflow is controlled by the caller's job.
 
-name: Build and test android
+name: PkgCI Test Android
 
 on:
   workflow_call:
     inputs:
+      artifact_run_id:
+        type: string
+        default: ""
+      runner-group:
+        required: true
+        type: string
+      runner-env:
+        required: true
+        type: string
+      write-caches:
+        required: true
+        type: string
+      is-pr:
+        required: true
+        type: boolean
+  workflow_dispatch:
+    inputs:
+      artifact_run_id:
+        type: string
+        default: ""
       runner-group:
         required: true
         type: string

@@ -82,7 +82,7 @@ jobs:
   test_android:
     needs: [setup, build_packages]
     if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'test_android')
-    uses: ./.github/workflows/build_and_test_android.yml
+    uses: ./.github/workflows/pkgci_test_android.yml
     with:
       runner-group: ${{ needs.setup.outputs.runner-group }}
       runner-env: ${{ needs.setup.outputs.runner-env }}
