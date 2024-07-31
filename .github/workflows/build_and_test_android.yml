@@ -81,7 +81,10 @@ jobs:
         with:
           # Must match the subset of versions built in pkgci_build_packages.
           python-version: "3.11"
-
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: ${{ github.job }}
       - name: Setup base venv
         run: |
           python -m venv ${VENV_DIR}
@@ -117,6 +120,10 @@ jobs:
         env:
           IREE_TARGET_BUILD_DIR: build-android-arm_64
           IREE_HOST_BIN_DIR: ${{ env.VENV_DIR }}/bin
+          IREE_READ_REMOTE_CCACHE: 0
+          IREE_WRITE_REMOTE_CCACHE: 0
+          IREE_READ_LOCAL_CCACHE: 1
+          IREE_WRITE_LOCAL_CCACHE: 1
           BUILD_PRESET: test
         run: build_tools/cmake/build_android.sh
         # run: |

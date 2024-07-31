@@ -34,6 +34,7 @@ E2E_TEST_ARTIFACTS_DIR="${E2E_TEST_ARTIFACTS_DIR:-build-e2e-test-artifacts/e2e_t
 BUILD_PRESET="${BUILD_PRESET:-test}"
 
 source build_tools/cmake/setup_build.sh
+source build_tools/cmake/setup_ccache.sh
 
 declare -a args=(
   -G Ninja
@@ -93,3 +94,7 @@ echo "------------"
 echo "Building test deps for device"
 echo "------------------"
 "${CMAKE_BIN}" --build "${BUILD_DIR}" --target iree-test-deps -- -k 0
+
+if (( IREE_USE_CCACHE == 1 )); then
+  ccache --show-stats
+fi
