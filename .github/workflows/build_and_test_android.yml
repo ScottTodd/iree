@@ -63,6 +63,7 @@ jobs:
     env:
       PACKAGE_DOWNLOAD_DIR: ${{ github.workspace }}/.packages
       VENV_DIR: ${{ github.workspace }}/.venv
+      IREE_TARGET_BUILD_DIR: build-android-arm_64
     # outputs:
     #   target-build-dir: ${{ steps.build.outputs.target-build-dir }}
     #   target-build-dir-archive: ${{ steps.archive.outputs.target-build-dir-archive }}
@@ -116,9 +117,7 @@ jobs:
 
       # Build and test.
       - name: "Build cross-compiling target"
-        id: build
         env:
-          IREE_TARGET_BUILD_DIR: build-android-arm_64
           IREE_HOST_BIN_DIR: ${{ env.VENV_DIR }}/bin
           IREE_READ_REMOTE_CCACHE: 0
           IREE_WRITE_REMOTE_CCACHE: 0
@@ -126,6 +125,14 @@ jobs:
           IREE_WRITE_LOCAL_CCACHE: 1
           BUILD_PRESET: test
         run: build_tools/cmake/build_android.sh
+
+      - name: "Uploading target build dir archive"
+        uses: actions/upload-artifact@v4
+        with:
+          name: "android-29_arm64-v8a_build_dir"
+          path: ${{ env.IREE_TARGET_BUILD_DIR }}
+          if-no-files-found: error
+
         # run: |
         #   ./build_tools/github_actions/docker_run.sh \
         #     --env "IREE_CCACHE_GCP_TOKEN=$(gcloud auth application-default print-access-token)" \
