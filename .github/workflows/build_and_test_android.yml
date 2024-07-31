@@ -118,6 +118,10 @@ jobs:
         with:
           name: android-29_arm64-v8a_build_dir
           path: ${{ env.TARGET_BUILD_DIR }}
+      - name: "Examining artifact directory structure"
+        run: ls -R ${{ env.TARGET_BUILD_DIR }}
+      - name: "Examining github workspace directory structure"
+        run: ls -R ${{ github.workspace }}
       - name: "Running tests"
         env:
           LABEL_EXCLUDE: ${{ matrix.target.label-exclude }}
