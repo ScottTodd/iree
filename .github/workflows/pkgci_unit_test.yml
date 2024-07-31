@@ -25,6 +25,7 @@ jobs:
       PACKAGE_DOWNLOAD_DIR: ${{ github.workspace }}/.packages
       VENV_DIR: ${{ github.workspace }}/.venv
     steps:
+      # General setup.
       - name: Checking out repository
         uses: actions/checkout@v4.1.7
         with:
@@ -42,6 +43,8 @@ jobs:
           ./build_tools/pkgci/setup_venv.py ${VENV_DIR} \
             --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
             --fetch-gh-workflow=${{ inputs.artifact_run_id }}
+
+      # Test.
       - name: Validate runtime wheel
         run: |
           source ${VENV_DIR}/bin/activate

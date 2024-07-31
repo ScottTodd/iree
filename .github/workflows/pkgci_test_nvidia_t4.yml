@@ -34,22 +34,13 @@ jobs:
       IREE_CUDA_DISABLE: 0
       IREE_HIP_DISABLE: 1
     steps:
+      # General setup.
       - name: Checking out repository
         uses: actions/checkout@v4.1.7
         with:
           submodules: false
       - name: "Checking out runtime submodules"
         run: ./build_tools/scripts/git/update_runtime_submodules.sh
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y cmake clang ninja-build
-          export CC=clang
-          export CXX=clang
-      - name: Querying GPU information
-        run: |
-          ./build_tools/scripts/check_cuda.sh
-          ./build_tools/scripts/check_vulkan.sh
       - uses: actions/setup-python@v5.1.0
         with:
           # Must match the subset of versions built in pkgci_build_packages.
@@ -63,6 +54,20 @@ jobs:
           ./build_tools/pkgci/setup_venv.py ${VENV_DIR} \
             --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
             --fetch-gh-workflow=${{ inputs.artifact_run_id }}
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y cmake clang ninja-build
+          export CC=clang
+          export CXX=clang
+
+      # CUDA-specific setup.
+      - name: Querying GPU information
+        run: |
+          ./build_tools/scripts/check_cuda.sh
+          ./build_tools/scripts/check_vulkan.sh
+
+      # Build and test.
       - name: "Building tests"
         run: ./build_tools/pkgci/build_tests_using_package.sh ${VENV_DIR}/bin
       - name: "Running GPU tests"

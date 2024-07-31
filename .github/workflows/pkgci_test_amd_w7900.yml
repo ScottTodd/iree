@@ -30,6 +30,7 @@ jobs:
       IREE_HIP_DISABLE: 0
       IREE_HIP_TEST_TARGET_CHIP: "gfx1100"
     steps:
+      # General setup.
       - name: Checking out repository
         uses: actions/checkout@v4.1.7
         with:
@@ -49,6 +50,8 @@ jobs:
           ./build_tools/pkgci/setup_venv.py ${VENV_DIR} \
             --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
             --fetch-gh-workflow=${{ inputs.artifact_run_id }}
+
+      # Build and test.
       - name: "Building tests"
         run: ./build_tools/pkgci/build_tests_using_package.sh ${VENV_DIR}/bin
       - name: "Running GPU tests"

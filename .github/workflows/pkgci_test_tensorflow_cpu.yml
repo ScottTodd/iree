@@ -27,6 +27,7 @@ jobs:
       VENV_DIR: ${{ github.workspace }}/.venv
       IREE_VMVX_DISABLE: 0
     steps:
+      # General setup.
       - name: Checking out repository
         uses: actions/checkout@v4.1.7
         with:
@@ -44,6 +45,8 @@ jobs:
           ./build_tools/pkgci/setup_venv.py ${VENV_DIR} \
             --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
             --fetch-gh-workflow=${{ inputs.artifact_run_id }}
+
+      # Test.
       - name: Run tests
         run: |
           source ${VENV_DIR}/bin/activate
