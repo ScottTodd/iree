@@ -54,12 +54,12 @@ jobs:
           ./build_tools/pkgci/setup_venv.py ${VENV_DIR} \
             --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
             --fetch-gh-workflow=${{ inputs.artifact_run_id }}
-      - name: Install dependencies
+      - name: "Installing build dependencies"
         run: |
           sudo apt update
           sudo apt install -y cmake clang ninja-build
           export CC=clang
-          export CXX=clang
+          export CXX=clang++
 
       # CUDA-specific setup.
       - name: Querying GPU information

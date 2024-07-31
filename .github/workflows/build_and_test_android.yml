@@ -10,7 +10,6 @@
 name: Build and test android
 
 on:
-  # pull_request:
   workflow_call:
     inputs:
       runner-group:
@@ -19,65 +18,29 @@ on:
       runner-env:
         required: true
         type: string
-      # write-caches:
-      #   required: true
-      #   type: string
+      write-caches:
+        required: true
+        type: string
       is-pr:
         required: true
         type: boolean
-      # install-dir:
-      #   required: true
-      #   type: string
-      # install-dir-archive:
-      #   required: true
-      #   type: string
-      # install-dir-gcs-artifact:
-      #   required: true
-      #   type: string
 
 permissions:
   contents: read
 
-# env:
-#   # This duplicates the variable from ci.yml. The variable needs to be in env
-#   # instead of the outputs of setup because it contains the run attempt and we
-#   # want that to be the current attempt, not whatever attempt the setup step
-#   # last ran in. It therefore can't be passed in via inputs because the env
-#   # context isn't available there.
-#   GCS_DIR: gs://iree-github-actions-${{ github.event_name == 'pull_request' && 'presubmit' || 'postsubmit' }}-artifacts/${{ github.run_id }}/${{ github.run_attempt }}
-
 jobs:
   cross_compile:
     runs-on: ubuntu-20.04
-    # runs-on:
-    #   - self-hosted # must come first
-    #   - runner-group=${{ inputs.runner-group }}
-    #   - environment=${{ inputs.runner-env }}
-    #   - cpu
-    #   - os-family=Linux
-    # env:
-    #   INSTALL_DIR: ${{ inputs.install-dir }}
-    #   INSTALL_DIR_ARCHIVE: ${{ inputs.install-dir-archive }}
-    #   INSTALL_DIR_GCS_ARTIFACT: ${{ inputs.install-dir-gcs-artifact }}
-    #   IREE_WRITE_REMOTE_CCACHE: ${{ inputs.write-caches }}
     env:
       PACKAGE_DOWNLOAD_DIR: ${{ github.workspace }}/.packages
       VENV_DIR: ${{ github.workspace }}/.venv
       IREE_TARGET_BUILD_DIR: build-android-arm_64
-    # outputs:
-    #   target-build-dir: ${{ steps.build.outputs.target-build-dir }}
-    #   target-build-dir-archive: ${{ steps.archive.outputs.target-build-dir-archive }}
-    #   target-build-dir-gcs-artifact: ${{ steps.upload.outputs.target-build-dir-gcs-artifact }}
     steps:
       # General setup.
       - name: "Checking out repository"
         uses: actions/checkout@v4.1.7
       - name: "Checking out runtime submodules"
         run: ./build_tools/scripts/git/update_runtime_submodules.sh
-      # - name: "Downloading install dir archive"
-      #   run: gcloud storage cp "${INSTALL_DIR_GCS_ARTIFACT}" "${INSTALL_DIR_ARCHIVE}"
-      # - name: "Extracting install directory"
-      #   run: tar -xf "${INSTALL_DIR_ARCHIVE}"
       - uses: actions/setup-python@v5.1.0
         with:
           # Must match the subset of versions built in pkgci_build_packages.
@@ -86,25 +49,17 @@ jobs:
         uses: hendrikmuhs/ccache-action@v1.2
         with:
           key: ${{ github.job }}
-          # save: ${{ inputs.write-caches }}
+          save: ${{ inputs.write-caches }}
+      - uses: actions/download-artifact@v4.1.7
+        with:
+          name: linux_x86_64_release_packages
+          path: ${{ env.PACKAGE_DOWNLOAD_DIR }}
       - name: Setup base venv
         run: |
-          python -m venv ${VENV_DIR}
-          source ${VENV_DIR}/bin/activate
-          python -m pip install \
-            --find-links https://iree.dev/pip-release-links.html \
-            --upgrade iree-compiler iree-runtime
-
-      # - uses: actions/download-artifact@v4.1.7
-      #   with:
-      #     name: linux_x86_64_release_packages
-      #     path: ${{ env.PACKAGE_DOWNLOAD_DIR }}
-      # - name: Setup base venv
-      #   run: |
-      #     ./build_tools/pkgci/setup_venv.py ${VENV_DIR} \
-      #       --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
-      #       --fetch-gh-workflow=${{ inputs.artifact_run_id }}
-      - name: "Installing build dependencies"
+          ./build_tools/pkgci/setup_venv.py ${VENV_DIR} \
+            --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
+            --fetch-gh-workflow=${{ inputs.artifact_run_id }}
+      - name: Install build dependencies
         run: |
           sudo apt update
           sudo apt install -y cmake clang ninja-build
@@ -116,17 +71,16 @@ jobs:
         with:
           ndk-version: r25b
 
-      # Build and test.
-      - name: "Build cross-compiling target"
+      # Build then upload.
+      - name: Build for Android
         env:
           IREE_HOST_BIN_DIR: ${{ env.VENV_DIR }}/bin
           IREE_READ_REMOTE_CCACHE: 0
           IREE_WRITE_REMOTE_CCACHE: 0
           IREE_READ_LOCAL_CCACHE: 1
-          IREE_WRITE_LOCAL_CCACHE: 1
+          IREE_WRITE_LOCAL_CCACHE: ${{ inputs.write-caches }}
           BUILD_PRESET: test
         run: build_tools/cmake/build_android.sh
-
       - name: "Uploading target build dir archive"
         uses: actions/upload-artifact@v4
         with:
@@ -134,40 +88,9 @@ jobs:
           path: ${{ env.IREE_TARGET_BUILD_DIR }}
           if-no-files-found: error
 
-        # run: |
-        #   ./build_tools/github_actions/docker_run.sh \
-        #     --env "IREE_CCACHE_GCP_TOKEN=$(gcloud auth application-default print-access-token)" \
-        #     --env "IREE_WRITE_REMOTE_CCACHE=${IREE_WRITE_REMOTE_CCACHE}" \
-        #     --env "CCACHE_NAMESPACE=${DOCKER_IMAGE}" \
-        #     --env "IREE_TARGET_BUILD_DIR=${TARGET_BUILD_DIR}" \
-        #     --env "BUILD_PRESET=test" \
-        #     --env "IREE_HOST_BIN_DIR=${INSTALL_DIR}/bin" \
-        #     gcr.io/iree-oss/android@sha256:66b92a1c920588a73d03316f26025407ea754bab93e8f9bfe40dbf6ed5fe6c7e \
-        #     build_tools/cmake/build_android.sh
-        #   echo "target-build-dir=${TARGET_BUILD_DIR}" >> "${GITHUB_OUTPUT}"
-      # - name: "Creating archive of target build dir"
-      #   id: archive
-      #   env:
-      #     TARGET_BUILD_DIR: ${{ steps.build.outputs.target-build-dir }}
-      #     TARGET_BUILD_DIR_ARCHIVE: build-android-arm_64.tar
-      #   run: |
-      #     tar -cf "${TARGET_BUILD_DIR_ARCHIVE}" \
-      #       --exclude="*.o" \
-      #       --exclude="*.a" \
-      #       "${TARGET_BUILD_DIR}"
-      #     echo "target-build-dir-archive=${TARGET_BUILD_DIR_ARCHIVE}" >> "${GITHUB_OUTPUT}"
-      # - name: "Uploading target build dir archive"
-      #   id: upload
-      #   env:
-      #     TARGET_BUILD_DIR_ARCHIVE: ${{ steps.archive.outputs.target-build-dir-archive }}
-      #     TARGET_BUILD_DIR_GCS_ARTIFACT: ${{ env.GCS_DIR }}/${{ steps.archive.outputs.target-build-dir-archive }}
-      #   run: |
-      #     gcloud storage cp "${TARGET_BUILD_DIR_ARCHIVE}" "${TARGET_BUILD_DIR_GCS_ARTIFACT}"
-      #     echo "target-build-dir-gcs-artifact=${TARGET_BUILD_DIR_GCS_ARTIFACT}" >> "${GITHUB_OUTPUT}"
-
   test:
     # These physical devices are not scalable. Only run on postsubmit for now.
-    # if: (! inputs.is-pr)
+    # if: (! inputs.is-pr)  # re-enable before merge
     needs: cross_compile
     strategy:
       matrix:
@@ -187,10 +110,7 @@ jobs:
       - environment=${{ inputs.runner-env }}
       - machine-type=${{ matrix.target.device-name }}
     env:
-      # TARGET_BUILD_DIR: ${{ needs.cross_compile.outputs.target-build-dir }}
       TARGET_BUILD_DIR: build-android-arm_64
-    #   TARGET_BUILD_DIR_ARCHIVE: ${{ needs.cross_compile.outputs.target-build-dir-archive }}
-    #   TARGET_BUILD_DIR_GCS_ARTIFACT: ${{ needs.cross_compile.outputs.target-build-dir-gcs-artifact }}
     steps:
       - name: "Checking out repository"
         uses: actions/checkout@v4.1.7
@@ -198,11 +118,6 @@ jobs:
         with:
           name: android-29_arm64-v8a_build_dir
           path: ${{ env.TARGET_BUILD_DIR }}
-      # - name: "Downloading target build archive"
-      #   run: |
-      #     gcloud storage cp "${TARGET_BUILD_DIR_GCS_ARTIFACT}" "${TARGET_BUILD_DIR_ARCHIVE}"
-      # - name: "Extracting target build dir archive"
-      #   run: tar -xf "${TARGET_BUILD_DIR_ARCHIVE}" "${TARGET_BUILD_DIR}"
       - name: "Running tests"
         env:
           LABEL_EXCLUDE: ${{ matrix.target.label-exclude }}
