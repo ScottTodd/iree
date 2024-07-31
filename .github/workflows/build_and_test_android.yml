@@ -11,29 +11,29 @@ name: Build and test android
 
 on:
   pull_request:
-  workflow_call:
-    inputs:
-      runner-group:
-        required: true
-        type: string
-      runner-env:
-        required: true
-        type: string
-      # write-caches:
-      #   required: true
-      #   type: string
-      is-pr:
-        required: true
-        type: boolean
-      # install-dir:
-      #   required: true
-      #   type: string
-      # install-dir-archive:
-      #   required: true
-      #   type: string
-      # install-dir-gcs-artifact:
-      #   required: true
-      #   type: string
+  # workflow_call:
+  #   inputs:
+  #     runner-group:
+  #       required: true
+  #       type: string
+  #     runner-env:
+  #       required: true
+  #       type: string
+  #     # write-caches:
+  #     #   required: true
+  #     #   type: string
+  #     is-pr:
+  #       required: true
+  #       type: boolean
+  #     # install-dir:
+  #     #   required: true
+  #     #   type: string
+  #     # install-dir-archive:
+  #     #   required: true
+  #     #   type: string
+  #     # install-dir-gcs-artifact:
+  #     #   required: true
+  #     #   type: string
 
 permissions:
   contents: read
@@ -81,21 +81,30 @@ jobs:
         with:
           # Must match the subset of versions built in pkgci_build_packages.
           python-version: "3.11"
-      - uses: actions/download-artifact@v4.1.7
-        with:
-          name: linux_x86_64_release_packages
-          path: ${{ env.PACKAGE_DOWNLOAD_DIR }}
+
       - name: Setup base venv
         run: |
-          ./build_tools/pkgci/setup_venv.py ${VENV_DIR} \
-            --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
-            --fetch-gh-workflow=${{ inputs.artifact_run_id }}
-      - name: Install dependencies
+          python -m venv ${VENV_DIR}
+          source ${VENV_DIR}/bin/activate
+          python -m pip install \
+            --find-links https://iree.dev/pip-release-links.html \
+            --upgrade iree-compiler iree-runtime
+
+      # - uses: actions/download-artifact@v4.1.7
+      #   with:
+      #     name: linux_x86_64_release_packages
+      #     path: ${{ env.PACKAGE_DOWNLOAD_DIR }}
+      # - name: Setup base venv
+      #   run: |
+      #     ./build_tools/pkgci/setup_venv.py ${VENV_DIR} \
+      #       --artifact-path=${PACKAGE_DOWNLOAD_DIR} \
+      #       --fetch-gh-workflow=${{ inputs.artifact_run_id }}
+      - name: "Installing build dependencies"
         run: |
           sudo apt update
           sudo apt install -y cmake clang ninja-build
           export CC=clang
-          export CXX=clang
+          export CXX=clang++
 
       # Android-specific setup.
       - uses: nttld/setup-ndk@v1
@@ -107,7 +116,7 @@ jobs:
         id: build
         env:
           IREE_TARGET_BUILD_DIR: build-android-arm_64
-          IREE_HOST_BIN_DIR: ${VENV_DIR}/bin
+          IREE_HOST_BIN_DIR: ${{ env.VENV_DIR }}/bin
           BUILD_PRESET: test
         run: build_tools/cmake/build_android.sh
         # run: |
