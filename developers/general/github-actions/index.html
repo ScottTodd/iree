@@ -4041,14 +4041,9 @@ automation (CI) and continuous delivery (CD) workflows:</p>
 <li>Updating dependencies.</li>
 </ul>
 <p>Workflows are defined directly in the repository at
-<a href="https://github.com/iree-org/iree/tree/main/.github/workflows"><code>.github/workflows/</code></a>,
-using a mix of official actions
-(e.g. <a href="https://github.com/actions/checkout">actions/checkout</a>),
-community actions
-(e.g. <a href="https://github.com/pre-commit/action">pre-commit/action</a>),
-and custom code. We use a mix of GitHub-hosted runners and self-hosted runners
-to get automated build and test coverage across a variety of platforms and
-hardware accelerators.</p>
+<a href="https://github.com/iree-org/iree/tree/main/.github/workflows"><code>.github/workflows/</code></a>.
+We use a mix of GitHub-hosted runners and self-hosted runners to get automated
+build and test coverage across a variety of platforms and hardware accelerators.</p>
 <h3 id="terminology-primer">Terminology primer<a class="headerlink" href="#terminology-primer" title="Permanent link">link</a></h3>
 <p><em>(Read more on
 <a href="https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions">https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions</a>)</em></p>
@@ -4062,7 +4057,35 @@ hardware accelerators.</p>
 <li><em>Events</em> are specific activities in a repository that trigger a
   <em>workflow run</em>.</li>
 </ul>
-<p><img src="https://docs.github.com/assets/cb-25535/mw-1440/images/help/actions/overview-actions-simple.webp"></p>
+<pre class="mermaid"><code>graph
+  accTitle: Example workflow run diagram
+  accDescr {
+    An event runs two jobs - job 1 on runner 1 and job 2 on runner.
+    Job 1 runs four steps, each either an action or script.
+    Job 2 runs three other steps.
+  }
+
+  event("Event")
+
+  event --&gt; runner_1
+  event --&gt; runner_2
+
+  subgraph runner_1["Runner 1"]
+    job_1("Job 1
+    • Step 1: Run action
+    • Step 2: Run script
+    • Step 3: Run script
+    • Step 4: Run action
+    ")
+  end
+
+  subgraph runner_2["Runner 2"]
+    job_2("Job 2
+    • Step 1: Run action
+    • Step 2: Run script
+    • Step 3: Run script
+    ")
+  end</code></pre>
 <h2 id="workflow-descriptions-and-status"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 11 13 7.5l1.4-1.4 2.1 2.1L20.7 4l1.4 1.4-5.6 5.6M11 7H2v2h9V7m10 6.4L19.6 12 17 14.6 14.4 12 13 13.4l2.6 2.6-2.6 2.6 1.4 1.4 2.6-2.6 2.6 2.6 1.4-1.4-2.6-2.6 2.6-2.6M11 15H2v2h9v-2Z"/></svg></span> Workflow descriptions and status<a class="headerlink" href="#workflow-descriptions-and-status" title="Permanent link">link</a></h2>
 <h3 id="package-tests">Package tests<a class="headerlink" href="#package-tests" title="Permanent link">link</a></h3>
 <p>These workflows build packages from source then run test suites using them.</p>
@@ -4283,13 +4306,30 @@ we most commonly use:</p>
 </ul>
 </li>
 </ul>
+<div class="admonition info -">
+<p class="admonition-title">"Presubmit" and "postsubmit"</p>
+<p>We use the terminology "presubmit" and "postsubmit" to differentiate
+between stages when checks run:</p>
+<ul>
+<li>"Presubmit" checks run on code that has not yet been
+  reviewed/approved/merged with either of the <code>pull_request</code> or
+  <code>workflow_dispatch</code> triggers.</li>
+<li>"Postsubmit" checks run on code that has been merged to a common branch
+  like <code>main</code> with either of the <code>push</code> or <code>schedule</code> triggers.</li>
+</ul>
+<p>In an ideal world every check would run on presubmit, but some operating
+system or hardware runners are in short supply and some workflows are slow
+even with sufficient resources (e.g. benchmark suites). We try to strike a
+balance between utility and economics.</p>
+</div>
 <div class="admonition example -">
 <p class="admonition-title">Example workflow triggers</p>
 <ul>
 <li><a href="https://github.com/iree-org/iree/blob/main/.github/workflows/ci_linux_x64_clang_asan.yml"><code>ci_linux_x64_clang_asan.yml</code></a>
-  runs on <code>pull_request</code> and <code>push</code> events despite building the compiler
-  and needing to use large build machines because it is generally useful
-  for all C/C++ compiler and runtime changes.</li>
+  runs on presubmit (<code>pull_request</code> trigger) and postsubmit (<code>push</code>
+  trigger). Even though this workflow builds the compiler and needs to use
+  large build machines because, it is generally useful for all C/C++
+  compiler and runtime changes.</li>
 <li><a href="https://github.com/iree-org/iree/blob/main/.github/workflows/ci_linux_x64_clang_tsan.yml"><code>ci_linux_x64_clang_tsan.yml</code></a>
   is similar to the ASan build but it runs on the <code>schedule</code> event because
   it is only situationally useful and we want to limit use of large build
@@ -4323,9 +4363,9 @@ workflows run based on paths modified. This mechanism is simple but somewhat
 limited in what it can express, so we have a custom mechanism for marking
 certain jobs as conditionally enabled:</p>
 <ul>
-<li>All jobs run on <code>push</code> events, after pull requests are merged ('postsubmit').</li>
+<li>Always run on <code>push</code> events, after pull requests are merged (postsubmit).</li>
 <li>
-<p>Jobs may be marked as opt-in for <code>pull_request</code> events ('presubmit') by editing
+<p>Jobs may be marked as opt-in for <code>pull_request</code> events (presubmit) by editing
   <a href="https://github.com/iree-org/iree/blob/main/build_tools/github_actions/configure_ci.py"><code>build_tools/github_actions/configure_ci.py</code></a>.
   That script runs as part of the
   <a href="https://github.com/iree-org/iree/blob/main/.github/workflows/setup.yml"><code>setup.yml</code></a>
@@ -4388,21 +4428,21 @@ of our contributing guide.</p>
 <p>Want to run tests on your own hardware as part of IREE's upstream CI? Get
 in touch with us on one of our
 <a href="../../../#communication-channels">communication channels</a> and we'd be
-happy to help discuss the options available.</p>
+happy to discuss the options available.</p>
 </div>
 <h2 id="maintenance-tips"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 4H3a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2M3 19V6h8v13H3m18 0h-8V6h8v13m-7-9.5h6V11h-6V9.5m0 2.5h6v1.5h-6V12m0 2.5h6V16h-6v-1.5Z"/></svg></span> Maintenance tips<a class="headerlink" href="#maintenance-tips" title="Permanent link">link</a></h2>
 <ul>
 <li>Certain workflow failures are posted in the <code>#github-ci</code> channel in IREE's
-  Discord server</li>
+  Discord server.</li>
 <li>GitHub supports
   <a href="https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/monitoring-workflows/notifications-for-workflow-runs">notifications for workflow runs</a>
-  but only for the user that last modified a workflow</li>
+  but only for the user that last modified a workflow.</li>
 <li>GitHub sometimes experiences incidents outside of our control. Monitor
   <a href="https://www.githubstatus.com/">https://www.githubstatus.com/</a> to see if issues are widespread.</li>
 <li>Repository admins can monitor repository runners at
-  <a href="https://github.com/iree-org/iree/settings/actions/runners">https://github.com/iree-org/iree/settings/actions/runners</a></li>
+  <a href="https://github.com/iree-org/iree/settings/actions/runners">https://github.com/iree-org/iree/settings/actions/runners</a>.</li>
 <li>Organization admins can monitor organization runners at
-  <a href="https://github.com/organizations/iree-org/settings/actions/runners">https://github.com/organizations/iree-org/settings/actions/runners</a></li>
+  <a href="https://github.com/organizations/iree-org/settings/actions/runners">https://github.com/organizations/iree-org/settings/actions/runners</a>.</li>
 </ul>
 <h3 id="self-hosted-runner-maintenance">Self-hosted runner maintenance<a class="headerlink" href="#self-hosted-runner-maintenance" title="Permanent link">link</a></h3>
 <p>Configuration scripting for runners hosted on Google Cloud Platform (GCP) is
@@ -4411,16 +4451,21 @@ stored at
 <h2 id="useful-resources"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 16V4H8v12h12m2 0c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h12c1.1 0 2 .9 2 2v12m-6 4v2H4c-1.1 0-2-.9-2-2V7h2v13h12M14.2 5c-.9 0-1.6.2-2.1.6-.5.4-.8 1-.8 1.8h1.9c0-.3.1-.5.3-.7.2-.1.4-.2.7-.2.3 0 .6.1.8.3.2.2.3.4.3.8 0 .3-.1.6-.2.8-.1.2-.4.4-.6.6-.5.3-.9.6-1 .9-.4.2-.5.6-.5 1.1h2c0-.3 0-.6.1-.7.1-.2.3-.4.5-.5.4-.2.8-.5 1.1-.9.3-.5.5-.9.5-1.4 0-.8-.3-1.4-.8-1.8-.5-.5-1.3-.7-2.2-.7M13 12v2h2v-2h-2Z"/></svg></span> Useful resources<a class="headerlink" href="#useful-resources" title="Permanent link">link</a></h2>
 <p>Official:</p>
 <ul>
-<li>Guides for GitHub Actions: <a href="https://docs.github.com/en/actions/guides">https://docs.github.com/en/actions/guides</a></li>
-<li>Events that trigger workflows: <a href="https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows">https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows</a></li>
-<li>About GitHub-hosted runners: <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners">https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners</a></li>
-<li>About large runners: <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners">https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners</a></li>
-<li>GitHub Actions Runner application: <a href="https://github.com/actions/runner">https://github.com/actions/runner</a></li>
-<li>GitHub Actions Runner Images with included software: <a href="https://github.com/actions/runner-images">https://github.com/actions/runner-images</a></li>
+<li>Guides for GitHub Actions: <a href="https://docs.github.com/en/actions/guides">https://docs.github.com/en/actions/guides</a>.</li>
+<li>Events that trigger workflows:
+  <a href="https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows">https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows</a>.</li>
+<li>About GitHub-hosted runners:
+  <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners">https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners</a>.</li>
+<li>About large runners:
+  <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners">https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners</a>.</li>
+<li>GitHub Actions Runner application: <a href="https://github.com/actions/runner">https://github.com/actions/runner</a>.</li>
+<li>GitHub Actions Runner Images with included software:
+  <a href="https://github.com/actions/runner-images">https://github.com/actions/runner-images</a>.</li>
 </ul>
 <p>Community:</p>
 <ul>
-<li>A curated list of awesome things related to GitHub Actions: <a href="https://github.com/sdras/awesome-actions">https://github.com/sdras/awesome-actions</a></li>
+<li>A curated list of awesome things related to GitHub Actions:
+  <a href="https://github.com/sdras/awesome-actions">https://github.com/sdras/awesome-actions</a>.</li>
 </ul>
 
 
