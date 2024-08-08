@@ -245,9 +245,7 @@ jobs:
             -DCMAKE_C_COMPILER_LAUNCHER=ccache \
             -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
             -DIREE_BUILD_COMPILER=OFF \
-            -DIREE_SIZE_OPTIMIZED=ON \
-            -DIREE_FORCE_LTO_COMPAT_BINUTILS_ON_LINUX=size \
-            -DIREE_FORCE_GCC_BINUTILS_ON_LINUX=ON \
+            -DIREE_RUNTIME_OPTIMIZATION_PROFILE=size \
             -DIREE_ENABLE_LLD=ON
       - name: CMake - build
         run: cmake --build ${BUILD_DIR} -- -k 0
