@@ -637,8 +637,7 @@ def main():
         "is-pr": json.dumps(is_pr),
         "runner-env": get_runner_env(trailers),
         "runner-group": "presubmit" if is_pr else "postsubmit",
-        # "write-caches": "0" if is_pr else "1",
-        "write-caches": "1",
+        "write-caches": "0" if is_pr else "1",
         "benchmark-presets": benchmark_presets,
     }
 
