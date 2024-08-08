@@ -148,10 +148,10 @@ jobs:
   # Jobs that build IREE in some non-default configuration
   ##############################################################################
 
-  build_test_runtime:
+  runtime:
     needs: setup
-    name: "build_test_runtime :: ${{ matrix.name }}"
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'build_test_runtime')
+    name: "runtime :: ${{ matrix.name }}"
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime')
     runs-on: ${{ matrix.runs-on }}
     defaults:
       run:
@@ -215,9 +215,9 @@ jobs:
       - name: CTest
         run: bash ./build_tools/cmake/ctest_all.sh "${BUILD_DIR}"
 
-  small_runtime:
+  runtime_small:
     needs: setup
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'small_runtime')
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime_small')
     runs-on: ubuntu-20.04
     env:
       BUILD_DIR: build-runtime
@@ -252,10 +252,10 @@ jobs:
       - name: CTest
         run: bash ./build_tools/cmake/ctest_all.sh "${BUILD_DIR}"
 
-  tracing:
+  runtime_tracing:
     needs: setup
-    name: "tracing :: ${{ matrix.provider }} provider"
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'tracing')
+    name: "runtime_tracing :: ${{ matrix.provider }} provider"
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime_tracing')
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
@@ -396,16 +396,16 @@ jobs:
     needs:
       - setup
 
-      # Basic
+      # Toolchains
       - build_test_all_bazel
 
       # Accelerators
       # - test_nvidia_a100
 
-      # Configurations
-      - build_test_runtime
-      - small_runtime
-      - tracing
+      # Runtime build variants
+      - runtime
+      - runtime_small
+      - runtime_tracing
 
       # Crosscompilation
       # - cross_compile_and_test
