@@ -160,12 +160,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: ubuntu-20.04
-            runs-on: ubuntu-20.04
+          # - name: ubuntu-20.04
+          #   runs-on: ubuntu-20.04
           - name: windows-2022
             runs-on: windows-2022
-          - name: macos-14
-            runs-on: macos-14
+          # - name: macos-14
+          #   runs-on: macos-14
     env:
       BUILD_DIR: build-runtime
     steps:
@@ -192,12 +192,19 @@ jobs:
         run: bash ./build_tools/scripts/git/update_runtime_submodules.sh
       - name: Install Python requirements
         run: pip install -r ./runtime/bindings/python/iree/runtime/build_requirements.txt
+      - name: (Windows) Setup Dev Drive
+        uses: samypr100/setup-dev-drive@v3
+        if: contains(matrix.name, 'windows')
+        with:
+          workspace-copy: true
+          drive-size: 8GB
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1.2
         with:
           key: ${{ github.job }}-${{ matrix.name }}
           save: ${{ needs.setup.outputs.write-caches == 1 }}
       - name: CMake - configure
+        working-directory: ${{ env.DEV_DRIVE_WORKSPACE }}
         run: |
           cmake \
             -G Ninja \
@@ -211,8 +218,10 @@ jobs:
             -DIREE_ENABLE_LLD=ON \
             -DIREE_ENABLE_ASSERTIONS=ON
       - name: CMake - build
+        working-directory: ${{ env.DEV_DRIVE_WORKSPACE }}
         run: cmake --build ${BUILD_DIR} -- -k 0
       - name: CTest
+        working-directory: ${{ env.DEV_DRIVE_WORKSPACE }}
         run: bash ./build_tools/cmake/ctest_all.sh "${BUILD_DIR}"
 
   runtime_small:
