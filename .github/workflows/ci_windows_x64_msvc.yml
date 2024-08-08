@@ -26,9 +26,11 @@ jobs:
     defaults:
       run:
         shell: bash
-    env:
-      BUILD_DIR: build-windows
     steps:
+      - name: (Windows) Setup Dev Drive
+        uses: samypr100/setup-dev-drive@v3
+        with:
+          drive-size: 8GB
       - name: "Checking out repository"
         uses: actions/checkout@v4.1.7
         with:
@@ -47,6 +49,10 @@ jobs:
       - name: "Configuring MSVC"
         uses: ilammy/msvc-dev-cmd@v1.13.0
       - name: "Building IREE"
+        env:
+          BUILD_DIR: ${{ env.DEV_DRIVE_WORKSPACE }}/build
         run: ./build_tools/cmake/build_all.sh "${BUILD_DIR}"
       - name: "Testing IREE"
+        env:
+          BUILD_DIR: ${{ env.DEV_DRIVE_WORKSPACE }}/build
         run: ./build_tools/cmake/ctest_all.sh "${BUILD_DIR}"
