@@ -25,8 +25,22 @@ for log_name, log_obj in logging.Logger.manager.loggerDict.items():
 
 
 @functools.cache
-def get_artifact_root_dir() -> Path:
+def get_generic_artifact_root_dir() -> Path:
+    root_path = Path.cwd() + "/artifacts"
+    return Path(os.path.expanduser(root_path)).resolve()
+
+
+def get_fetched_artifact_root_dir() -> Path:
+    # Write fetched files into a ${IREE_TEST_FILES} cache location, or CWD.
     root_path = os.getenv("IREE_TEST_FILES", default=str(Path.cwd())) + "/artifacts"
+    return Path(os.path.expanduser(root_path)).resolve()
+
+
+def get_producted_artifact_root_dir() -> Path:
+    # Write produced files into a ${IREE_TEST_PRODUCED_FILES} work dir, or CWD.
+    root_path = (
+        os.getenv("IREE_TEST_PRODUCED_FILES", default=str(Path.cwd())) + "/artifacts"
+    )
     return Path(os.path.expanduser(root_path)).resolve()
 
 
@@ -35,12 +49,18 @@ class ArtifactGroup:
 
     _INSTANCES: Dict[str, "ArtifactGroup"] = {}
 
-    def __init__(self, group_name: str):
+    def __init__(self, group_name: str, group_type: str):
         self.group_name = group_name
-        if group_name:
-            self.directory = get_artifact_root_dir() / group_name
+        self.group_type = group_type
+        if group_type == "fetched":
+            self.directory = get_fetched_artifact_root_dir()
+        elif group_type == "produced":
+            self.directory = get_producted_artifact_root_dir()
         else:
-            self.directory = get_artifact_root_dir()
+            self.directory = get_generic_artifact_root_dir()
+
+        if group_name:
+            self.directory = self.directory / group_name
         self.directory.mkdir(parents=True, exist_ok=True)
 
     @classmethod
@@ -89,6 +109,7 @@ class ProducedArtifact(Artifact):
         *,
         depends: Collection["Artifact"] = (),
     ):
+        # TODO: maybe tag all groups as the "produced" type?
         self.group = ArtifactGroup.get(group)
         super().__init__(group, name, depends)
         self.name = name

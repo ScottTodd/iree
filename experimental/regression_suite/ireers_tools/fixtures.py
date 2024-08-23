@@ -61,6 +61,9 @@ def iree_compile(source: Artifact, compiled_variant: str, flags: Sequence[str]):
         print(f"Compilation succeeded in {run_time}s")
         print("**************************************************************")
 
+    # TODO: don't inherit source.group (possibly a fetched/cached file)
+    #   produced files can be stored in an ephemeral working directory
+    #   they should not be stored in a persisted cache directory __unless__ they are tagged
     return ProducedArtifact(source.group, name, callback, depends=[source]).start()
 
 

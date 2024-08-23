@@ -249,6 +249,7 @@ jobs:
             runs-on: nodai-amdgpu-mi300-x86-64
     env:
       PACKAGE_DOWNLOAD_DIR: ${{ github.workspace }}/.packages
+      IREE_TEST_PRODUCED_FILES: ${{ github.workspace }}/test_produced_files
       IREE_TEST_PATH_EXTENSION: ${{ github.workspace }}/build_tools/pkgci/external_test_suite
       VENV_DIR: ${{ github.workspace }}/venv
     steps:
