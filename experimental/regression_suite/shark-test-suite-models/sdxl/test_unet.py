@@ -7,7 +7,6 @@
 import pytest
 from ireers_tools import *
 import os
-import setuptools
 from conftest import VmfbManager
 from pathlib import Path
 

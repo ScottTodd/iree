@@ -7,7 +7,6 @@
 from typing import Any, Callable, Collection, Dict, Union
 import functools
 from pathlib import Path
-from tqdm import tqdm
 import urllib.parse
 import urllib.request
 import os
@@ -23,18 +22,6 @@ logging.basicConfig(level=logging.INFO)
 for log_name, log_obj in logging.Logger.manager.loggerDict.items():
     if log_name.startswith("azure"):
         logging.getLogger(log_name).setLevel(logging.WARNING)
-
-
-def show_progress(t):
-    last_b = [0]
-
-    def update_to(b=1, bsize=1, tsize=None):
-        if tsize is not None:
-            t.total = tsize
-        t.update((b - last_b[0]) * bsize)
-        last_b[0] = b
-
-    return update_to
 
 
 @functools.cache

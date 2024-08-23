@@ -24,7 +24,6 @@ setup(
         "pytest-xdist",
         "pytest-check",
         "tabulate",
-        "tqdm",
         "azure-storage-blob",
     ],
     extras_require={},

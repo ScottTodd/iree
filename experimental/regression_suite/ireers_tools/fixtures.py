@@ -6,7 +6,7 @@
 
 import pytest
 
-from typing import Dict, Sequence, Union
+from typing import Sequence
 from pathlib import Path
 import subprocess
 import time
