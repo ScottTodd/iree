@@ -22,8 +22,11 @@
 set -euo pipefail
 
 # Configuration environment variables.
+# TODO(#18238): Drop IREE_[READ,WRITE]_REMOTE_GCP_CCACHE after migration
 IREE_READ_REMOTE_GCP_CCACHE="${IREE_READ_REMOTE_GCP_CCACHE:-1}"
 IREE_WRITE_REMOTE_GCP_CCACHE="${IREE_WRITE_REMOTE_GCP_CCACHE:-0}"
+IREE_READ_REMOTE_AZURE_CCACHE="${IREE_READ_REMOTE_AZURE_CCACHE:-0}"
+IREE_WRITE_REMOTE_AZURE_CCACHE="${IREE_WRITE_REMOTE_AZURE_CCACHE:-0}"
 IREE_READ_LOCAL_CCACHE="${IREE_READ_LOCAL_CCACHE:-0}"
 IREE_WRITE_LOCAL_CCACHE="${IREE_WRITE_LOCAL_CCACHE:-0}"
 
@@ -31,12 +34,24 @@ if (( ${IREE_WRITE_REMOTE_GCP_CCACHE} == 1 && ${IREE_READ_REMOTE_GCP_CCACHE} != 
   echo "Can't have 'IREE_WRITE_REMOTE_GCP_CCACHE' (${IREE_WRITE_REMOTE_GCP_CCACHE})" \
        " set without 'IREE_READ_REMOTE_GCP_CCACHE' (${IREE_READ_REMOTE_GCP_CCACHE})"
 fi
+if (( ${IREE_WRITE_REMOTE_AZURE_CCACHE} == 1 && ${IREE_READ_REMOTE_AZURE_CCACHE} != 1 )); then
+  echo "Can't have 'IREE_WRITE_REMOTE_AZURE_CCACHE' (${IREE_WRITE_REMOTE_AZURE_CCACHE})" \
+       " set without 'IREE_READ_REMOTE_AZURE_CCACHE' (${IREE_READ_REMOTE_AZURE_CCACHE})"
+fi
+if (( ${IREE_READ_REMOTE_GCP_CCACHE} == 1 && ${IREE_READ_REMOTE_AZURE_CCACHE} == 1 )); then
+  echo "Can't have 'IREE_READ_REMOTE_GCP_CCACHE' (${IREE_READ_REMOTE_GCP_CCACHE})" \
+       " set together with 'IREE_READ_REMOTE_AZURE_CCACHE' (${IREE_READ_REMOTE_AZURE_CCACHE})"
+fi
+if (( ${IREE_READ_REMOTE_AZURE_CCACHE} == 1 && [[ "${OSTYPE}" =~ ^msys ]] )); then
+  # TODO(scotttodd): Windows support somehow?
+  echo "Can't set 'IREE_READ_REMOTE_AZURE_CCACHE' (${IREE_READ_REMOTE_AZURE_CCACHE}) on Windows"
+fi
 if (( ${IREE_WRITE_LOCAL_CCACHE} == 1 && ${IREE_READ_LOCAL_CCACHE} != 1 )); then
   echo "Can't have 'IREE_WRITE_LOCAL_CCACHE' (${IREE_WRITE_LOCAL_CCACHE})" \
        " set without 'IREE_READ_LOCAL_CCACHE' (${IREE_READ_LOCAL_CCACHE})"
 fi
 
-if (( IREE_READ_REMOTE_GCP_CCACHE == 1 || IREE_READ_LOCAL_CCACHE == 1 )); then
+if (( IREE_READ_REMOTE_GCP_CCACHE == 1 || IREE_READ_REMOTE_AZURE_CCACHE == 1 || IREE_READ_LOCAL_CCACHE == 1 )); then
   export IREE_USE_CCACHE=1
   export CMAKE_C_COMPILER_LAUNCHER="$(which ccache)"
   export CMAKE_CXX_COMPILER_LAUNCHER="$(which ccache)"
@@ -54,6 +69,10 @@ if (( IREE_READ_REMOTE_GCP_CCACHE == 1 && IREE_READ_LOCAL_CCACHE == 0 )); then
   export CCACHE_REMOTE_ONLY=1
 fi
 
+if (( IREE_READ_REMOTE_AZURE_CCACHE == 1 && IREE_WRITE_REMOTE_AZURE_CCACHE == 0 )); then
+  export CCACHE_READONLY=1
+fi
+
 if (( IREE_READ_REMOTE_GCP_CCACHE == 1 )); then
   export CCACHE_REMOTE_STORAGE="http://storage.googleapis.com/iree-sccache/ccache"
   if (( IREE_WRITE_REMOTE_GCP_CCACHE == 1 )); then
@@ -63,4 +82,13 @@ if (( IREE_READ_REMOTE_GCP_CCACHE == 1 )); then
   else
     export CCACHE_REMOTE_STORAGE="${CCACHE_REMOTE_STORAGE}|read-only"
   fi
+fi
+
+if (( IREE_READ_REMOTE_AZURE_CCACHE == 1 )); then
+  # mkdir -p /mnt/azureblob
+  # set +x
+  # python3 ./build_tools/ccache/edit_fuse_connection.py ${{ secrets.AZURE_CCACHE_CONTAINER_KEY }}
+  # set -x
+  # blobfuse2 mount --allow-other --config-file=./build_tools/ccache/fuse_connection2.yaml /mnt/azureblob/
+  # export CCACHE_DIR=/mnt/azureblob/ccache-container
 fi
