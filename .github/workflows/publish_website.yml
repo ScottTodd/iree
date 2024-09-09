@@ -64,7 +64,7 @@ jobs:
         run: |
           ./build_tools/github_actions/docker_run.sh \
             --env "IREE_CCACHE_GCP_TOKEN=${{ steps.gcp-auth.outputs.access_token }}" \
-            --env "IREE_WRITE_REMOTE_CCACHE=1" \
+            --env "IREE_WRITE_REMOTE_GCP_CCACHE=1" \
             --env "CCACHE_NAMESPACE=gcr.io/iree-oss/base@sha256:dc314b4fe30fc1315742512891357bffed4d1b62ffcb46258b1e0761c737b446" \
             gcr.io/iree-oss/base@sha256:dc314b4fe30fc1315742512891357bffed4d1b62ffcb46258b1e0761c737b446 \
             ./docs/website/generate_extra_files.sh

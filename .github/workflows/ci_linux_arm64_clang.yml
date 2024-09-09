@@ -43,11 +43,11 @@ jobs:
           submodules: true
       - name: "Building IREE"
         env:
-          IREE_WRITE_REMOTE_CCACHE: ${{ needs.setup.outputs.write-caches }}
+          IREE_WRITE_REMOTE_GCP_CCACHE: ${{ needs.setup.outputs.write-caches }}
         run: |
           ./build_tools/github_actions/docker_run.sh \
             --env "IREE_CCACHE_GCP_TOKEN=$(gcloud auth application-default print-access-token)" \
-            --env "IREE_WRITE_REMOTE_CCACHE=${IREE_WRITE_REMOTE_CCACHE}" \
+            --env "IREE_WRITE_REMOTE_GCP_CCACHE=${IREE_WRITE_REMOTE_GCP_CCACHE}" \
             --env "CCACHE_NAMESPACE=gcr.io/iree-oss/base-arm64@sha256:9daa1cdbbf12da8527319ece76a64d06219e04ecb99a4cff6e6364235ddf6c59" \
             --env "IREE_BUILD_SETUP_PYTHON_VENV=${BUILD_DIR}/.venv" \
             gcr.io/iree-oss/base-arm64@sha256:9daa1cdbbf12da8527319ece76a64d06219e04ecb99a4cff6e6364235ddf6c59 \

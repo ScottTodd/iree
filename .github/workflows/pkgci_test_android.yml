@@ -74,8 +74,8 @@ jobs:
       - name: Build for Android
         env:
           IREE_HOST_BIN_DIR: ${{ env.VENV_DIR }}/bin
-          IREE_READ_REMOTE_CCACHE: 0
-          IREE_WRITE_REMOTE_CCACHE: 0
+          IREE_READ_REMOTE_GCP_CCACHE: 0
+          IREE_WRITE_REMOTE_GCP_CCACHE: 0
           IREE_READ_LOCAL_CCACHE: 1
           IREE_WRITE_LOCAL_CCACHE: ${{ inputs.write-caches }}
         run: build_tools/cmake/build_android.sh
