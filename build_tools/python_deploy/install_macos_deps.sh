@@ -5,8 +5,7 @@
 # See https://llvm.org/LICENSE.txt for license information.
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-# Installs dependencies on MacOS necessary to build IREE.
-# Additional dependencies (i.e MoltenVK) may be needed to use all functionality.
+# Installs dependencies on MacOS necessary to build IREE Python wheels.
 #
 # Usage:
 #   sudo install_macos_deps.sh
@@ -60,7 +59,7 @@ done
 # Special case: install Python 3.13 free-threaded.
 # See https://github.com/python/cpython/issues/120098, specifically
 # https://github.com/python/cpython/issues/120098#issuecomment-2151122033
-curl https://www.python.org/ftp/python/3.13.0/python-3.13.0rc3-macos11.pkg -o /tmp/iree_python_install/313t
+curl https://www.python.org/ftp/python/3.13.0/python-3.13.0rc3-macos11.pkg -o /tmp/iree_python_install/python-3.13.0rc3-macos11.pkg
 
 cat > ./choicechanges.plist <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -79,7 +78,7 @@ cat > ./choicechanges.plist <<EOF
 </plist>
 EOF
 
-installer -pkg /tmp/iree_python_install/313t -applyChoiceChangesXML ./choicechanges.plist -target /
+installer -pkg /tmp/iree_python_install/python-3.13.0rc3-macos11.pkg -applyChoiceChangesXML ./choicechanges.plist -target /
 ###############################################################################
 
 echo "*** All done ***"
