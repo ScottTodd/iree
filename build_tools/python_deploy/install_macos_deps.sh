@@ -56,4 +56,30 @@ for python_spec in "${PYTHON_SPECS[@]}"; do
   $python_exe -m pip install --upgrade delocate
 done
 
+###############################################################################
+# Special case: install Python 3.13 free-threaded.
+# See https://github.com/python/cpython/issues/120098, specifically
+# https://github.com/python/cpython/issues/120098#issuecomment-2151122033
+curl https://www.python.org/ftp/python/3.13.0/python-3.13.0rc3-macos11.pkg -o /tmp/iree_python_install/313t
+
+cat > ./choicechanges.plist <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+        <dict>
+                <key>attributeSetting</key>
+                <integer>1</integer>
+                <key>choiceAttribute</key>
+                <string>selected</string>
+                <key>choiceIdentifier</key>
+                <string>org.python.Python.PythonTFramework-3.13</string>
+        </dict>
+</array>
+</plist>
+EOF
+
+installer -pkg /tmp/iree_python_install/313t -applyChoiceChangesXML ./choicechanges.plist -target /
+###############################################################################
+
 echo "*** All done ***"
