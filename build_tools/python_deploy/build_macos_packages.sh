@@ -44,8 +44,15 @@ function run() {
     for python_version in $python_versions; do
       python_dir="/Library/Frameworks/Python.framework/Versions/$python_version"
       if ! [ -x "$python_dir/bin/python3" ]; then
-        echo "ERROR: Could not find python3: $python_dir (skipping)"
-        continue
+        echo "WARNING: Could not find python3: $python_dir (checking PythonT)"
+        # python3.13 introduced a free-threaded (no-GIL) `t` suffixed version.
+        # The install paths on macOS are different than on other operating
+        # systems. Just always check the other dir for now ¯\_(ツ)_/¯.
+        python_dir="/Library/Frameworks/PythonT.framework/Versions/$python_version"
+        if ! [ -x "$python_dir/bin/python3" ]; then
+          echo "ERROR: Could not find python3: $python_dir (skipping)"
+          continue
+        fi
       fi
       export PATH=$python_dir/bin:$orig_path
       echo ":::: Python version $(python3 --version)"
