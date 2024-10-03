@@ -59,7 +59,7 @@ for($i=0 ; $i -lt $PYTHON_VERSIONS.Length; $i++) {
 
     Write-Host "::  Running installer: $DOWNLOAD_PATH"
     # https://docs.python.org/3/using/windows.html#installing-without-ui
-    & "$DOWNLOAD_PATH" /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
+    & "$DOWNLOAD_PATH" /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 Include_freethreaded=1
   }
 
   Write-Host "::  Python version $PYTHON_VERSION installed:"
