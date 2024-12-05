@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/IREE_Logo_Icon_Color.svg">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.19">
     
     
       
@@ -1425,6 +1425,8 @@
       
         
       
+        
+      
     
     
       
@@ -1656,6 +1658,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../reference/mlir-dialects/IREEVectorExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREEVectorExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../reference/mlir-dialects/LinalgExt/" class="md-nav__link">
         
   
@@ -1773,8 +1796,6 @@
       
         
       
-        
-      
     
     
       
@@ -1822,27 +1843,6 @@
   
   <span class="md-ellipsis">
     IREEInput
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../reference/mlir-dialects/IREEVectorExt/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IREEVectorExt
   </span>
   
 
@@ -2093,6 +2093,8 @@
       
         
       
+        
+      
     
     
       
@@ -2234,6 +2236,29 @@
   
   <span class="md-ellipsis">
     Release management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/general/versioning-scheme/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M7.75 14A1.75 1.75 0 0 1 6 12.25v-8.5C6 2.784 6.784 2 7.75 2h6.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14Zm-.25-1.75c0 .138.112.25.25.25h6.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-6.5a.25.25 0 0 0-.25.25ZM4.9 3.508a.75.75 0 0 1-.274 1.025.249.249 0 0 0-.126.217v6.5c0 .09.048.173.126.217a.75.75 0 0 1-.752 1.298A1.75 1.75 0 0 1 3 11.25v-6.5c0-.649.353-1.214.874-1.516a.75.75 0 0 1 1.025.274ZM1.625 5.533h.001a.249.249 0 0 0-.126.217v4.5c0 .09.048.173.126.217a.75.75 0 0 1-.752 1.298A1.748 1.748 0 0 1 0 10.25v-4.5a1.748 1.748 0 0 1 .873-1.516.75.75 0 1 1 .752 1.299Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Versioning scheme
   </span>
   
 
@@ -2672,8 +2697,6 @@
       
         
       
-        
-      
     
     
       
@@ -2723,29 +2746,6 @@
   
   <span class="md-ellipsis">
     Benchmarking
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../developers/performance/benchmark-suites/" class="md-nav__link">
-        
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m11.628 16.186-2.047-2.14 6.791-5.953 1.21 1.302zm8.837 6.047c2.14-2.14 3.535-5.117 3.535-8.466 0-6.604-5.395-12-12-12s-12 5.396-12 12c0 3.35 1.302 6.326 3.535 8.466l1.674-1.675c-1.767-1.767-2.79-4.093-2.79-6.79A9.568 9.568 0 0 1 12 4.185a9.568 9.568 0 0 1 9.581 9.581c0 2.605-1.116 5.024-2.79 6.791Z"/></svg>
-  
-  <span class="md-ellipsis">
-    Benchmark suites
   </span>
   
 
@@ -3669,9 +3669,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ir-dump-after-cpumaterializeencoding" class="md-nav__link">
+  <a href="#ir-dump-after-cpumaterializehostencoding" class="md-nav__link">
     <span class="md-ellipsis">
-      IR Dump After CPUMaterializeEncoding
+      IR Dump After CPUMaterializeHostEncoding
     </span>
   </a>
   
@@ -4006,11 +4006,11 @@ style Part3 stroke:#43A047,stroke-width:2px</code></pre>
 <p>Some initial boilerplate happens <em>around</em> our <code>linalg.matmul</code> before anything
 interesting happens <em>to</em> it.:</p>
 <p><a href="#ir-dump-after-wrapentrypointspass">➤ Appendix: IR dump after WrapEntryPointsPass</a></p>
-<p>Next, the first interesting thing is the <code>CPUMaterializeEncoding</code> pass, where
+<p>Next, the first interesting thing is the <code>CPUMaterializeHostEncoding</code> pass, where
 the <code>linalg.matmul</code> gets rewritten into a <code>linalg.mmt4d</code> which is a matmul with
 a tiled data layout. This is where we start specializing to the target ISA
 feature set, AVX-512, favoring a 16x16 tile size for this float32 matmul.</p>
-<p><a href="#ir-dump-after-cpumaterializeencoding">➤ Appendix: IR Dump After CPUMaterializeEncoding</a></p>
+<p><a href="#ir-dump-after-cpumaterializehostencoding">➤ Appendix: IR Dump After CPUMaterializeHostEncoding</a></p>
 <p>The idea is that <code>linalg.mmt4d</code> is what we will have a microkernel for, below.
 There is no need to have microkernels for anything but the target-optimal tiled
 layout, so we don't bother carrying a microkernel for <code>linalg.matmul</code> itself.
@@ -4147,7 +4147,7 @@ for all the unused code paths within each microkernel.</p>
 [...]
 // -----// IR Dump After Inliner (inline) //----- //
 #executable_target_embedded_elf_x86_64_ = #hal.executable.target&lt;&quot;llvm-cpu&quot;, &quot;embedded-elf-x86_64&quot;, {cpu = &quot;znver4&quot;, cpu_features = &quot;+mmx,+popcnt,+sse,+sse2,+sse3,+ssse3,+sse4.1,+sse4.2,+avx,+avx2,+sse4a,+fma,+avx512f,+bmi,+bmi2,+aes,+pclmul,+avx512vl,+avx512bw,+avx512dq,+avx512cd,+avx512vbmi,+avx512ifma,+avx512vpopcntdq,+avx512vbmi2,+gfni,+vpclmulqdq,+avx512vnni,+avx512bitalg,+avx512bf16,+adx,+clflushopt,+clwb,+clzero,+cx16,+cx8,+crc32,+f16c,+fsgsbase,+fxsr,+invpcid,+lzcnt,+movbe,+mwaitx,+pku,+prfchw,+rdpid,+rdpru,+rdrnd,+rdseed,+sahf,+sha,+shstk,+vaes,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,+evex512&quot;, data_layout = &quot;e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128&quot;, native_vector_size = 64 : index, target_triple = &quot;x86_64-unknown-unknown-eabi-elf&quot;, ukernels = &quot;all&quot;}&gt;
-#device_target_llvm_cpu = #hal.device.target&lt;&quot;llvm-cpu&quot;, {executable_targets = [#executable_target_embedded_elf_x86_64_]}&gt;
+#device_target_llvm_cpu = #hal.device.target&lt;&quot;local&quot;, {executable_targets = [#executable_target_embedded_elf_x86_64_]}&gt; : !hal.device
 module attributes {hal.device.targets = [#device_target_llvm_cpu]} {
   func.func @matmul_dynamic(%arg0: !hal.buffer_view, %arg1: !hal.buffer_view, %arg2: !hal.buffer_view) -&gt; !hal.buffer_view attributes {iree.abi.stub, iree.reflection = {iree.abi.declaration = &quot;sync func @matmul_dynamic(%input0: tensor&lt;?x?xf32&gt;, %input1: tensor&lt;?x?xf32&gt;, %input2: tensor&lt;?x?xf32&gt;) -&gt; (%output0: tensor&lt;?x?xf32&gt;)&quot;}} {
     %0 = hal.buffer_view.dim&lt;%arg0 : !hal.buffer_view&gt;[0] : index
@@ -4165,15 +4165,15 @@ module attributes {hal.device.targets = [#device_target_llvm_cpu]} {
   }
 }
 </code></pre></div>
-<h3 id="ir-dump-after-cpumaterializeencoding">IR Dump After CPUMaterializeEncoding<a class="headerlink" href="#ir-dump-after-cpumaterializeencoding" title="Permanent link">link</a></h3>
-<div class="highlight"><pre><span></span><code>// -----// IR Dump After CPUMaterializeEncoding (iree-codegen-cpu-materialize-encoding) //----- //
+<h3 id="ir-dump-after-cpumaterializehostencoding">IR Dump After CPUMaterializeHostEncoding<a class="headerlink" href="#ir-dump-after-cpumaterializehostencoding" title="Permanent link">link</a></h3>
+<div class="highlight"><pre><span></span><code>// -----// IR Dump After CPUMaterializeHostEncoding (iree-codegen-cpu-materialize-host-encoding) //----- //
 [...]
 // -----// IR Dump After Canonicalizer (canonicalize) //----- //
 [...]
 // -----// IR Dump After CSE (cse) //----- //
 #executable_target_embedded_elf_x86_64_ = #hal.executable.target&lt;&quot;llvm-cpu&quot;, &quot;embedded-elf-x86_64&quot;, {cpu = &quot;znver4&quot;, cpu_features = &quot;+mmx,+popcnt,+sse,+sse2,+sse3,+ssse3,+sse4.1,+sse4.2,+avx,+avx2,+sse4a,+fma,+avx512f,+bmi,+bmi2,+aes,+pclmul,+avx512vl,+avx512bw,+avx512dq,+avx512cd,+avx512vbmi,+avx512ifma,+avx512vpopcntdq,+avx512vbmi2,+gfni,+vpclmulqdq,+avx512vnni,+avx512bitalg,+avx512bf16,+adx,+clflushopt,+clwb,+clzero,+cx16,+cx8,+crc32,+f16c,+fsgsbase,+fxsr,+invpcid,+lzcnt,+movbe,+mwaitx,+pku,+prfchw,+rdpid,+rdpru,+rdrnd,+rdseed,+sahf,+sha,+shstk,+vaes,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,+evex512&quot;, data_layout = &quot;e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128&quot;, native_vector_size = 64 : index, target_triple = &quot;x86_64-unknown-unknown-eabi-elf&quot;, ukernels = &quot;all&quot;}&gt;
 #map = affine_map&lt;()[s0] -&gt; (s0 ceildiv 16)&gt;
-#device_target_llvm_cpu = #hal.device.target&lt;&quot;llvm-cpu&quot;, {executable_targets = [#executable_target_embedded_elf_x86_64_]}&gt;
+#device_target_llvm_cpu = #hal.device.target&lt;&quot;local&quot;, {executable_targets = [#executable_target_embedded_elf_x86_64_]}&gt; : !hal.device
 module attributes {hal.device.targets = [#device_target_llvm_cpu]} {
   func.func @matmul_dynamic(%arg0: !hal.buffer_view, %arg1: !hal.buffer_view, %arg2: !hal.buffer_view) -&gt; !hal.buffer_view attributes {iree.abi.stub, iree.reflection = {iree.abi.declaration = &quot;sync func @matmul_dynamic(%input0: tensor&lt;?x?xf32&gt;, %input1: tensor&lt;?x?xf32&gt;, %input2: tensor&lt;?x?xf32&gt;) -&gt; (%output0: tensor&lt;?x?xf32&gt;)&quot;}} {
     %cst = arith.constant 0.000000e+00 : f32
@@ -4214,22 +4214,22 @@ module {
     %c1 = arith.constant 1 : index
     %c0 = arith.constant 0 : index
     %c32_i64 = arith.constant 32 : i64
-    %0 = hal.interface.constant.load[0] : i32
-    %1 = hal.interface.constant.load[1] : i32
-    %2 = hal.interface.constant.load[2] : i32
-    %3 = hal.interface.constant.load[3] : i32
-    %4 = hal.interface.constant.load[4] : i32
-    %5 = hal.interface.constant.load[5] : i32
-    %6 = hal.interface.constant.load[6] : i32
-    %7 = hal.interface.constant.load[7] : i32
-    %8 = hal.interface.constant.load[8] : i32
-    %9 = hal.interface.constant.load[9] : i32
-    %10 = hal.interface.constant.load[10] : i32
-    %11 = hal.interface.constant.load[11] : i32
-    %12 = hal.interface.constant.load[12] : i32
-    %13 = hal.interface.constant.load[13] : i32
-    %14 = hal.interface.constant.load[14] : i32
-    %15 = hal.interface.constant.load[15] : i32
+    %0 = hal.interface.constant.load layout(#pipeline_layout) ordinal(0) : i32
+    %1 = hal.interface.constant.load layout(#pipeline_layout) ordinal(1) : i32
+    %2 = hal.interface.constant.load layout(#pipeline_layout) ordinal(2) : i32
+    %3 = hal.interface.constant.load layout(#pipeline_layout) ordinal(3) : i32
+    %4 = hal.interface.constant.load layout(#pipeline_layout) ordinal(4) : i32
+    %5 = hal.interface.constant.load layout(#pipeline_layout) ordinal(5) : i32
+    %6 = hal.interface.constant.load layout(#pipeline_layout) ordinal(6) : i32
+    %7 = hal.interface.constant.load layout(#pipeline_layout) ordinal(7) : i32
+    %8 = hal.interface.constant.load layout(#pipeline_layout) ordinal(8) : i32
+    %9 = hal.interface.constant.load layout(#pipeline_layout) ordinal(9) : i32
+    %10 = hal.interface.constant.load layout(#pipeline_layout) ordinal(10) : i32
+    %11 = hal.interface.constant.load layout(#pipeline_layout) ordinal(11) : i32
+    %12 = hal.interface.constant.load layout(#pipeline_layout) ordinal(12) : i32
+    %13 = hal.interface.constant.load layout(#pipeline_layout) ordinal(13) : i32
+    %14 = hal.interface.constant.load layout(#pipeline_layout) ordinal(14) : i32
+    %15 = hal.interface.constant.load layout(#pipeline_layout) ordinal(15) : i32
     %16 = arith.extui %0 : i32 to i64
     %17 = arith.extui %1 : i32 to i64
     %18 = arith.shli %17, %c32_i64 : i64
@@ -4270,9 +4270,9 @@ module {
     %53 = arith.shli %52, %c32_i64 : i64
     %54 = arith.ori %51, %53 : i64
     %55 = arith.index_castui %54 : i64 to index
-    %56 = hal.interface.binding.subspan set(0) binding(0) type(storage_buffer) alignment(64) offset(%c0) flags(ReadOnly) : !flow.dispatch.tensor&lt;readonly:tensor&lt;?x?x16x1xf32&gt;&gt;{%30, %35}
-    %57 = hal.interface.binding.subspan set(0) binding(0) type(storage_buffer) alignment(64) offset(%20) flags(ReadOnly) : !flow.dispatch.tensor&lt;readonly:tensor&lt;?x?x16x1xf32&gt;&gt;{%40, %45}
-    %58 = hal.interface.binding.subspan set(0) binding(1) type(storage_buffer) alignment(64) offset(%25) : !flow.dispatch.tensor&lt;readwrite:tensor&lt;?x?x16x16xf32&gt;&gt;{%50, %55}
+    %56 = hal.interface.binding.subspan layout(#layout) binding(0) alignment(64) offset(%c0) flags(ReadOnly) : !flow.dispatch.tensor&lt;readonly:tensor&lt;?x?x16x1xf32&gt;&gt;{%30, %35}
+    %57 = hal.interface.binding.subspan layout(#layout) binding(0) alignment(64) offset(%20) flags(ReadOnly) : !flow.dispatch.tensor&lt;readonly:tensor&lt;?x?x16x1xf32&gt;&gt;{%40, %45}
+    %58 = hal.interface.binding.subspan layout(#layout) binding(1) alignment(64) offset(%25) : !flow.dispatch.tensor&lt;readwrite:tensor&lt;?x?x16x16xf32&gt;&gt;{%50, %55}
     %workgroup_id_x = hal.interface.workgroup.id[0] : index
     %workgroup_count_x = hal.interface.workgroup.count[0] : index
     %workgroup_id_y = hal.interface.workgroup.id[1] : index
@@ -4310,22 +4310,22 @@ func.func @matmul_dynamic_dispatch_3_mmt4d_DxDxDx16x16x1_f32() {
   %c1 = arith.constant 1 : index
   %c0 = arith.constant 0 : index
   %c32_i64 = arith.constant 32 : i64
-  %0 = hal.interface.constant.load[0] : i32
-  %1 = hal.interface.constant.load[1] : i32
-  %2 = hal.interface.constant.load[2] : i32
-  %3 = hal.interface.constant.load[3] : i32
-  %4 = hal.interface.constant.load[4] : i32
-  %5 = hal.interface.constant.load[5] : i32
-  %6 = hal.interface.constant.load[6] : i32
-  %7 = hal.interface.constant.load[7] : i32
-  %8 = hal.interface.constant.load[8] : i32
-  %9 = hal.interface.constant.load[9] : i32
-  %10 = hal.interface.constant.load[10] : i32
-  %11 = hal.interface.constant.load[11] : i32
-  %12 = hal.interface.constant.load[12] : i32
-  %13 = hal.interface.constant.load[13] : i32
-  %14 = hal.interface.constant.load[14] : i32
-  %15 = hal.interface.constant.load[15] : i32
+  %0 = hal.interface.constant.load layout(#pipeline_layout) ordinal(0) : i32
+  %1 = hal.interface.constant.load layout(#pipeline_layout) ordinal(1) : i32
+  %2 = hal.interface.constant.load layout(#pipeline_layout) ordinal(2) : i32
+  %3 = hal.interface.constant.load layout(#pipeline_layout) ordinal(3) : i32
+  %4 = hal.interface.constant.load layout(#pipeline_layout) ordinal(4) : i32
+  %5 = hal.interface.constant.load layout(#pipeline_layout) ordinal(5) : i32
+  %6 = hal.interface.constant.load layout(#pipeline_layout) ordinal(6) : i32
+  %7 = hal.interface.constant.load layout(#pipeline_layout) ordinal(7) : i32
+  %8 = hal.interface.constant.load layout(#pipeline_layout) ordinal(8) : i32
+  %9 = hal.interface.constant.load layout(#pipeline_layout) ordinal(9) : i32
+  %10 = hal.interface.constant.load layout(#pipeline_layout) ordinal(10) : i32
+  %11 = hal.interface.constant.load layout(#pipeline_layout) ordinal(11) : i32
+  %12 = hal.interface.constant.load layout(#pipeline_layout) ordinal(12) : i32
+  %13 = hal.interface.constant.load layout(#pipeline_layout) ordinal(13) : i32
+  %14 = hal.interface.constant.load layout(#pipeline_layout) ordinal(14) : i32
+  %15 = hal.interface.constant.load layout(#pipeline_layout) ordinal(15) : i32
   %16 = arith.extui %0 : i32 to i64
   %17 = arith.extui %1 : i32 to i64
   %18 = arith.shli %17, %c32_i64 : i64
@@ -4366,11 +4366,11 @@ func.func @matmul_dynamic_dispatch_3_mmt4d_DxDxDx16x16x1_f32() {
   %53 = arith.shli %52, %c32_i64 : i64
   %54 = arith.ori %51, %53 : i64
   %55 = arith.index_castui %54 : i64 to index
-  %56 = hal.interface.binding.subspan set(0) binding(0) type(storage_buffer) alignment(64) offset(%c0) flags(ReadOnly) : memref&lt;?x?x16x1xf32, #hal.descriptor_type&lt;storage_buffer&gt;&gt;{%30, %35}
+  %56 = hal.interface.binding.subspan layout(#layout) binding(0) alignment(64) offset(%c0) flags(ReadOnly) : memref&lt;?x?x16x1xf32, #hal.descriptor_type&lt;storage_buffer&gt;&gt;{%30, %35}
   memref.assume_alignment %56, 64 : memref&lt;?x?x16x1xf32, #hal.descriptor_type&lt;storage_buffer&gt;&gt;
-  %57 = hal.interface.binding.subspan set(0) binding(0) type(storage_buffer) alignment(64) offset(%20) flags(ReadOnly) : memref&lt;?x?x16x1xf32, strided&lt;[?, 16, 1, 1], offset: ?&gt;, #hal.descriptor_type&lt;storage_buffer&gt;&gt;{%40, %45}
+  %57 = hal.interface.binding.subspan layout(#layout) binding(0) alignment(64) offset(%20) flags(ReadOnly) : memref&lt;?x?x16x1xf32, strided&lt;[?, 16, 1, 1], offset: ?&gt;, #hal.descriptor_type&lt;storage_buffer&gt;&gt;{%40, %45}
   memref.assume_alignment %57, 1 : memref&lt;?x?x16x1xf32, strided&lt;[?, 16, 1, 1], offset: ?&gt;, #hal.descriptor_type&lt;storage_buffer&gt;&gt;
-  %58 = hal.interface.binding.subspan set(0) binding(1) type(storage_buffer) alignment(64) offset(%25) : memref&lt;?x?x16x16xf32, strided&lt;[?, 256, 16, 1], offset: ?&gt;, #hal.descriptor_type&lt;storage_buffer&gt;&gt;{%50, %55}
+  %58 = hal.interface.binding.subspan layout(#layout) binding(1) alignment(64) offset(%25) : memref&lt;?x?x16x16xf32, strided&lt;[?, 256, 16, 1], offset: ?&gt;, #hal.descriptor_type&lt;storage_buffer&gt;&gt;{%50, %55}
   memref.assume_alignment %58, 1 : memref&lt;?x?x16x16xf32, strided&lt;[?, 256, 16, 1], offset: ?&gt;, #hal.descriptor_type&lt;storage_buffer&gt;&gt;
   %workgroup_id_x = hal.interface.workgroup.id[0] : index
   %workgroup_count_x = hal.interface.workgroup.count[0] : index
@@ -4398,22 +4398,22 @@ module {
     %c1 = arith.constant 1 : index
     %c0 = arith.constant 0 : index
     %c32_i64 = arith.constant 32 : i64
-    %0 = hal.interface.constant.load[0] : i32
-    %1 = hal.interface.constant.load[1] : i32
-    %2 = hal.interface.constant.load[2] : i32
-    %3 = hal.interface.constant.load[3] : i32
-    %4 = hal.interface.constant.load[4] : i32
-    %5 = hal.interface.constant.load[5] : i32
-    %6 = hal.interface.constant.load[6] : i32
-    %7 = hal.interface.constant.load[7] : i32
-    %8 = hal.interface.constant.load[8] : i32
-    %9 = hal.interface.constant.load[9] : i32
-    %10 = hal.interface.constant.load[10] : i32
-    %11 = hal.interface.constant.load[11] : i32
-    %12 = hal.interface.constant.load[12] : i32
-    %13 = hal.interface.constant.load[13] : i32
-    %14 = hal.interface.constant.load[14] : i32
-    %15 = hal.interface.constant.load[15] : i32
+    %0 = hal.interface.constant.load layout(#pipeline_layout) ordinal(0) : i32
+    %1 = hal.interface.constant.load layout(#pipeline_layout) ordinal(1) : i32
+    %2 = hal.interface.constant.load layout(#pipeline_layout) ordinal(2) : i32
+    %3 = hal.interface.constant.load layout(#pipeline_layout) ordinal(3) : i32
+    %4 = hal.interface.constant.load layout(#pipeline_layout) ordinal(4) : i32
+    %5 = hal.interface.constant.load layout(#pipeline_layout) ordinal(5) : i32
+    %6 = hal.interface.constant.load layout(#pipeline_layout) ordinal(6) : i32
+    %7 = hal.interface.constant.load layout(#pipeline_layout) ordinal(7) : i32
+    %8 = hal.interface.constant.load layout(#pipeline_layout) ordinal(8) : i32
+    %9 = hal.interface.constant.load layout(#pipeline_layout) ordinal(9) : i32
+    %10 = hal.interface.constant.load layout(#pipeline_layout) ordinal(10) : i32
+    %11 = hal.interface.constant.load layout(#pipeline_layout) ordinal(11) : i32
+    %12 = hal.interface.constant.load layout(#pipeline_layout) ordinal(12) : i32
+    %13 = hal.interface.constant.load layout(#pipeline_layout) ordinal(13) : i32
+    %14 = hal.interface.constant.load layout(#pipeline_layout) ordinal(14) : i32
+    %15 = hal.interface.constant.load layout(#pipeline_layout) ordinal(15) : i32
     %16 = arith.extui %0 : i32 to i64
     %17 = arith.extui %1 : i32 to i64
     %18 = arith.shli %17, %c32_i64 : i64
@@ -4454,11 +4454,11 @@ module {
     %53 = arith.shli %52, %c32_i64 : i64
     %54 = arith.ori %51, %53 : i64
     %55 = arith.index_castui %54 : i64 to index
-    %56 = hal.interface.binding.subspan set(0) binding(0) type(storage_buffer) alignment(64) offset(%c0) flags(ReadOnly) : memref&lt;?x?x16x1xf32&gt;{%30, %35}
+    %56 = hal.interface.binding.subspan layout(#layout) binding(0) alignment(64) offset(%c0) flags(ReadOnly) : memref&lt;?x?x16x1xf32&gt;{%30, %35}
     memref.assume_alignment %56, 64 : memref&lt;?x?x16x1xf32&gt;
-    %57 = hal.interface.binding.subspan set(0) binding(0) type(storage_buffer) alignment(64) offset(%20) flags(ReadOnly) : memref&lt;?x?x16x1xf32, strided&lt;[?, 16, 1, 1], offset: ?&gt;&gt;{%40, %45}
+    %57 = hal.interface.binding.subspan layout(#layout) binding(0) alignment(64) offset(%20) flags(ReadOnly) : memref&lt;?x?x16x1xf32, strided&lt;[?, 16, 1, 1], offset: ?&gt;&gt;{%40, %45}
     memref.assume_alignment %57, 1 : memref&lt;?x?x16x1xf32, strided&lt;[?, 16, 1, 1], offset: ?&gt;&gt;
-    %58 = hal.interface.binding.subspan set(0) binding(1) type(storage_buffer) alignment(64) offset(%25) : memref&lt;?x?x16x16xf32, strided&lt;[?, 256, 16, 1], offset: ?&gt;&gt;{%50, %55}
+    %58 = hal.interface.binding.subspan layout(#layout) binding(1) alignment(64) offset(%25) : memref&lt;?x?x16x16xf32, strided&lt;[?, 256, 16, 1], offset: ?&gt;&gt;{%50, %55}
     memref.assume_alignment %58, 1 : memref&lt;?x?x16x16xf32, strided&lt;[?, 256, 16, 1], offset: ?&gt;&gt;
     %workgroup_id_x = hal.interface.workgroup.id[0] : index
     %workgroup_count_x = hal.interface.workgroup.count[0] : index
@@ -5885,8 +5885,16 @@ module attributes {llvm.data_layout = &quot;e-m:e-p270:32:32-p271:32:32-p272:64:
     
     
     
-    <a href="https://groups.google.com/forum/#!forum/iree-discuss" target="_blank" rel="noopener" title="IREE Discuss Google Group" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M144 0a80 80 0 1 1 0 160 80 80 0 1 1 0-160zm368 0a80 80 0 1 1 0 160 80 80 0 1 1 0-160zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7-1.3 7.2-1.9 14.7-1.9 22.3 0 38.2 16.8 72.5 43.3 96H21.3C9.6 320 0 310.4 0 298.7zM405.3 320h-.7c26.6-23.5 43.3-57.8 43.3-96 0-7.6-.7-15-1.9-22.3 13.6-6.3 28.7-9.7 44.6-9.7h42.7c58.9 0 106.7 47.8 106.7 106.7 0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1-192 0zm-96 261.3c0-73.6 59.7-133.3 133.3-133.3h117.4c73.6 0 133.3 59.7 133.3 133.3 0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z"/></svg>
+    <a href="https://lists.lfaidata.foundation/g/iree-announce" target="_blank" rel="noopener" title="IREE Announcement Mailing List" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M480 32c0-12.9-7.8-24.6-19.8-29.6S434.5.2 425.3 9.3L381.7 53c-48 48-113.1 75-181 75H64c-35.3 0-64 28.7-64 64v96c0 35.3 28.7 64 64 64v128c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V352h8.7c67.9 0 133 27 181 75l43.6 43.6c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6V300.4c18.6-8.8 32-32.5 32-60.4s-13.4-51.6-32-60.4V32zm-64 76.7v262.6C357.2 317.8 280.5 288 200.7 288H192v-96h8.7c79.8 0 156.5-29.8 215.3-83.3z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://lists.lfaidata.foundation/g/iree-technical-discussion" target="_blank" rel="noopener" title="IREE Technical Discussion Mailing List" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l217.6 163.2c11.4 8.5 27 8.5 38.4 0l217.6-163.2c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48H48zM0 176v208c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V176L294.4 339.2a63.9 63.9 0 0 1-76.8 0L0 176z"/></svg>
     </a>
   
 </div>

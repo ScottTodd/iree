@@ -14,11 +14,11 @@
         <link rel="prev" href="../IREECodegen/">
       
       
-        <link rel="next" href="../LinalgExt/">
+        <link rel="next" href="../IREEVectorExt/">
       
       
       <link rel="icon" href="../../../assets/images/IREE_Logo_Icon_Color.svg">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.19">
     
     
       
@@ -1434,6 +1434,8 @@
       
         
       
+        
+      
     
     
       
@@ -1698,6 +1700,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#iree_gpubarrier_region-gpubarrierregionop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_gpu.barrier_region (GPU::BarrierRegionOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#iree_gpumulti_mma-gpumultimmaop" class="md-nav__link">
     <span class="md-ellipsis">
       iree_gpu.multi_mma (GPU::MultiMmaOp)
@@ -1718,15 +1729,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iree_gpushuffle_tensor-gpushuffletensorop" class="md-nav__link">
-    <span class="md-ellipsis">
-      iree_gpu.shuffle_tensor (GPU::ShuffleTensorOp)
-    </span>
-  </a>
   
 </li>
         
@@ -1754,7 +1756,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#attributes_2" class="md-nav__link">
+  <a href="#attributes_1" class="md-nav__link">
     <span class="md-ellipsis">
       Attributes
     </span>
@@ -1773,6 +1775,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#datatiledmmaattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      DataTiledMMAAttr
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#derivedthreadconfigattr" class="md-nav__link">
     <span class="md-ellipsis">
       DerivedThreadConfigAttr
@@ -1785,6 +1796,15 @@
   <a href="#dotproductopsattr" class="md-nav__link">
     <span class="md-ellipsis">
       DotProductOpsAttr
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpupipelineoptionsattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPUPipelineOptionsAttr
     </span>
   </a>
   
@@ -1854,6 +1874,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reorderworkgroupsstrategyattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      ReorderWorkgroupsStrategyAttr
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#storagebitwidthsattr" class="md-nav__link">
     <span class="md-ellipsis">
       StorageBitwidthsAttr
@@ -1898,6 +1927,303 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#virtualmmaattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      VirtualMMAAttr
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtualmmaintrinsicattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      VirtualMMAIntrinsicAttr
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enums
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enums">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#computebitwidths" class="md-nav__link">
+    <span class="md-ellipsis">
+      ComputeBitwidths
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ComputeBitwidths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dotproductops" class="md-nav__link">
+    <span class="md-ellipsis">
+      DotProductOps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DotProductOps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mmafragment" class="md-nav__link">
+    <span class="md-ellipsis">
+      MMAFragment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MMAFragment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mmaintrinsic" class="md-nav__link">
+    <span class="md-ellipsis">
+      MMAIntrinsic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MMAIntrinsic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mmascope" class="md-nav__link">
+    <span class="md-ellipsis">
+      MMAScope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MMAScope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reorderworkgroupsstrategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      ReorderWorkgroupsStrategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ReorderWorkgroupsStrategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storagebitwidths" class="md-nav__link">
+    <span class="md-ellipsis">
+      StorageBitwidths
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="StorageBitwidths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subgroupops" class="md-nav__link">
+    <span class="md-ellipsis">
+      SubgroupOps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SubgroupOps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tilinglevel" class="md-nav__link">
+    <span class="md-ellipsis">
+      TilingLevel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TilingLevel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtualmmaintrinsic" class="md-nav__link">
+    <span class="md-ellipsis">
+      VirtualMMAIntrinsic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VirtualMMAIntrinsic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iteratortype" class="md-nav__link">
+    <span class="md-ellipsis">
+      IteratorType
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IteratorType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1907,6 +2233,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IREEVectorExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREEVectorExt
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -2036,8 +2383,6 @@
       
         
       
-        
-      
     
     
       
@@ -2085,27 +2430,6 @@
   
   <span class="md-ellipsis">
     IREEInput
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../IREEVectorExt/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IREEVectorExt
   </span>
   
 
@@ -2359,6 +2683,8 @@
       
         
       
+        
+      
     
     
       
@@ -2500,6 +2826,29 @@
   
   <span class="md-ellipsis">
     Release management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/general/versioning-scheme/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M7.75 14A1.75 1.75 0 0 1 6 12.25v-8.5C6 2.784 6.784 2 7.75 2h6.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14Zm-.25-1.75c0 .138.112.25.25.25h6.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-6.5a.25.25 0 0 0-.25.25ZM4.9 3.508a.75.75 0 0 1-.274 1.025.249.249 0 0 0-.126.217v6.5c0 .09.048.173.126.217a.75.75 0 0 1-.752 1.298A1.75 1.75 0 0 1 3 11.25v-6.5c0-.649.353-1.214.874-1.516a.75.75 0 0 1 1.025.274ZM1.625 5.533h.001a.249.249 0 0 0-.126.217v4.5c0 .09.048.173.126.217a.75.75 0 0 1-.752 1.298A1.748 1.748 0 0 1 0 10.25v-4.5a1.748 1.748 0 0 1 .873-1.516.75.75 0 1 1 .752 1.299Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Versioning scheme
   </span>
   
 
@@ -2938,8 +3287,6 @@
       
         
       
-        
-      
     
     
       
@@ -2989,29 +3336,6 @@
   
   <span class="md-ellipsis">
     Benchmarking
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../developers/performance/benchmark-suites/" class="md-nav__link">
-        
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m11.628 16.186-2.047-2.14 6.791-5.953 1.21 1.302zm8.837 6.047c2.14-2.14 3.535-5.117 3.535-8.466 0-6.604-5.395-12-12-12s-12 5.396-12 12c0 3.35 1.302 6.326 3.535 8.466l1.674-1.675c-1.767-1.767-2.79-4.093-2.79-6.79A9.568 9.568 0 0 1 12 4.185a9.568 9.568 0 0 1 9.581 9.581c0 2.605-1.116 5.024-2.79 6.791Z"/></svg>
-  
-  <span class="md-ellipsis">
-    Benchmark suites
   </span>
   
 
@@ -3873,6 +4197,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#iree_gpubarrier_region-gpubarrierregionop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_gpu.barrier_region (GPU::BarrierRegionOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#iree_gpumulti_mma-gpumultimmaop" class="md-nav__link">
     <span class="md-ellipsis">
       iree_gpu.multi_mma (GPU::MultiMmaOp)
@@ -3893,15 +4226,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iree_gpushuffle_tensor-gpushuffletensorop" class="md-nav__link">
-    <span class="md-ellipsis">
-      iree_gpu.shuffle_tensor (GPU::ShuffleTensorOp)
-    </span>
-  </a>
   
 </li>
         
@@ -3929,7 +4253,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#attributes_2" class="md-nav__link">
+  <a href="#attributes_1" class="md-nav__link">
     <span class="md-ellipsis">
       Attributes
     </span>
@@ -3948,6 +4272,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#datatiledmmaattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      DataTiledMMAAttr
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#derivedthreadconfigattr" class="md-nav__link">
     <span class="md-ellipsis">
       DerivedThreadConfigAttr
@@ -3960,6 +4293,15 @@
   <a href="#dotproductopsattr" class="md-nav__link">
     <span class="md-ellipsis">
       DotProductOpsAttr
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpupipelineoptionsattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPUPipelineOptionsAttr
     </span>
   </a>
   
@@ -4029,6 +4371,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reorderworkgroupsstrategyattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      ReorderWorkgroupsStrategyAttr
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#storagebitwidthsattr" class="md-nav__link">
     <span class="md-ellipsis">
       StorageBitwidthsAttr
@@ -4073,6 +4424,303 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#virtualmmaattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      VirtualMMAAttr
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtualmmaintrinsicattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      VirtualMMAIntrinsicAttr
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enums
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enums">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#computebitwidths" class="md-nav__link">
+    <span class="md-ellipsis">
+      ComputeBitwidths
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ComputeBitwidths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dotproductops" class="md-nav__link">
+    <span class="md-ellipsis">
+      DotProductOps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DotProductOps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mmafragment" class="md-nav__link">
+    <span class="md-ellipsis">
+      MMAFragment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MMAFragment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mmaintrinsic" class="md-nav__link">
+    <span class="md-ellipsis">
+      MMAIntrinsic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MMAIntrinsic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mmascope" class="md-nav__link">
+    <span class="md-ellipsis">
+      MMAScope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MMAScope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reorderworkgroupsstrategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      ReorderWorkgroupsStrategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ReorderWorkgroupsStrategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storagebitwidths" class="md-nav__link">
+    <span class="md-ellipsis">
+      StorageBitwidths
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="StorageBitwidths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subgroupops" class="md-nav__link">
+    <span class="md-ellipsis">
+      SubgroupOps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SubgroupOps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tilinglevel" class="md-nav__link">
+    <span class="md-ellipsis">
+      TilingLevel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TilingLevel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtualmmaintrinsic" class="md-nav__link">
+    <span class="md-ellipsis">
+      VirtualMMAIntrinsic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VirtualMMAIntrinsic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iteratortype" class="md-nav__link">
+    <span class="md-ellipsis">
+      IteratorType
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IteratorType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4103,7 +4751,7 @@
 
 <!-- Autogenerated by mlir-tblgen; don't manually edit -->
 <h1 id="iree_gpu-dialect">'iree_gpu' Dialect<a class="headerlink" href="#iree_gpu-dialect" title="Permanent link">link</a></h1>
-<p>A dialect representing attributes used by GPU focused IREE code generation.</p>
+<p>A dialect for common functionality used by GPU focused IREE code generation.</p>
 <p>This dialect provides operations and attributes to aid in code generation
 for GPU targets. The functionality in this dialect can be hardware specific,
 but is intended to be independent of the lowering target. Late lowerings to
@@ -4112,19 +4760,21 @@ SPIR-V/LLVM are handled separately.</p>
 <ul>
 <li><a href="#iree_gpu-dialect">'iree_gpu' Dialect</a><ul>
 <li><a href="#operations">Operations</a><ul>
+<li><a href="#iree_gpubarrier_region-gpubarrierregionop">iree_gpu.barrier_region (GPU::BarrierRegionOp)</a></li>
 <li><a href="#iree_gpumulti_mma-gpumultimmaop">iree_gpu.multi_mma (GPU::MultiMmaOp)</a><ul>
 <li><a href="#motivation-design-choices-and-pitfalls">Motivation, Design Choices, and Pitfalls</a></li>
 </ul>
 </li>
-<li><a href="#iree_gpushuffle_tensor-gpushuffletensorop">iree_gpu.shuffle_tensor (GPU::ShuffleTensorOp)</a></li>
 <li><a href="#iree_gpuvalue_barrier-gpuvaluebarrierop">iree_gpu.value_barrier (GPU::ValueBarrierOp)</a></li>
 <li><a href="#iree_gpuyield-gpuyieldop">iree_gpu.yield (GPU::YieldOp)</a></li>
 </ul>
 </li>
-<li><a href="#attributes_2">Attributes</a><ul>
+<li><a href="#attributes_1">Attributes</a><ul>
 <li><a href="#computebitwidthsattr">ComputeBitwidthsAttr</a></li>
+<li><a href="#datatiledmmaattr">DataTiledMMAAttr</a></li>
 <li><a href="#derivedthreadconfigattr">DerivedThreadConfigAttr</a></li>
 <li><a href="#dotproductopsattr">DotProductOpsAttr</a></li>
+<li><a href="#gpupipelineoptionsattr">GPUPipelineOptionsAttr</a></li>
 <li><a href="#iteratortypeattr">IteratorTypeAttr</a></li>
 <li><a href="#laneidattr">LaneIdAttr</a></li>
 <li><a href="#loweringconfigattr">LoweringConfigAttr</a></li>
@@ -4132,11 +4782,61 @@ SPIR-V/LLVM are handled separately.</p>
 <li><a href="#mmaintrinsicattr">MMAIntrinsicAttr</a></li>
 <li><a href="#mmaopsarrayattr">MMAOpsArrayAttr</a></li>
 <li><a href="#mmascheduleattr">MMAScheduleAttr</a></li>
+<li><a href="#reorderworkgroupsstrategyattr">ReorderWorkgroupsStrategyAttr</a></li>
 <li><a href="#storagebitwidthsattr">StorageBitwidthsAttr</a></li>
 <li><a href="#subgroupopsattr">SubgroupOpsAttr</a></li>
 <li><a href="#targetattr">TargetAttr</a></li>
 <li><a href="#targetchipattr">TargetChipAttr</a></li>
 <li><a href="#targetwgpattr">TargetWgpAttr</a></li>
+<li><a href="#virtualmmaattr">VirtualMMAAttr</a></li>
+<li><a href="#virtualmmaintrinsicattr">VirtualMMAIntrinsicAttr</a></li>
+</ul>
+</li>
+<li><a href="#enums">Enums</a><ul>
+<li><a href="#computebitwidths">ComputeBitwidths</a><ul>
+<li><a href="#cases">Cases:</a></li>
+</ul>
+</li>
+<li><a href="#dotproductops">DotProductOps</a><ul>
+<li><a href="#cases_1">Cases:</a></li>
+</ul>
+</li>
+<li><a href="#mmafragment">MMAFragment</a><ul>
+<li><a href="#cases_2">Cases:</a></li>
+</ul>
+</li>
+<li><a href="#mmaintrinsic">MMAIntrinsic</a><ul>
+<li><a href="#cases_3">Cases:</a></li>
+</ul>
+</li>
+<li><a href="#mmascope">MMAScope</a><ul>
+<li><a href="#cases_4">Cases:</a></li>
+</ul>
+</li>
+<li><a href="#reorderworkgroupsstrategy">ReorderWorkgroupsStrategy</a><ul>
+<li><a href="#cases_5">Cases:</a></li>
+</ul>
+</li>
+<li><a href="#storagebitwidths">StorageBitwidths</a><ul>
+<li><a href="#cases_6">Cases:</a></li>
+</ul>
+</li>
+<li><a href="#subgroupops">SubgroupOps</a><ul>
+<li><a href="#cases_7">Cases:</a></li>
+</ul>
+</li>
+<li><a href="#tilinglevel">TilingLevel</a><ul>
+<li><a href="#cases_8">Cases:</a></li>
+</ul>
+</li>
+<li><a href="#virtualmmaintrinsic">VirtualMMAIntrinsic</a><ul>
+<li><a href="#cases_9">Cases:</a></li>
+</ul>
+</li>
+<li><a href="#iteratortype">IteratorType</a><ul>
+<li><a href="#cases_10">Cases:</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -4144,6 +4844,97 @@ SPIR-V/LLVM are handled separately.</p>
 </ul>
 </div>
 <h2 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">link</a></h2>
+<h3 id="iree_gpubarrier_region-gpubarrierregionop"><code>iree_gpu.barrier_region</code> (GPU::BarrierRegionOp)<a class="headerlink" href="#iree_gpubarrier_region-gpubarrierregionop" title="Permanent link">link</a></h3>
+<p><em>Synchronizes uses of a shared tensor.</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_gpu.barrier_region` (`ins` `(` $inputs^ `:` type($inputs) `)` )?
+              $region attr-dict `:` type($results)
+</code></pre></div>
+<p>This op is designed to represent synchronization of workers on the operands
+and results of the given region. This operation naturally arises when combining
+the regions of producer-consumer <code>scf.forall</code> operations that share a
+mapping type.</p>
+<p>For example, consider the following pair of parallel loops.
+<div class="highlight"><pre><span></span><code>  %0 = scf.forall (%idy, %idx) in (2, 32) shared_outs(%init = %empty) -&gt; (tensor&lt;4x128xf32&gt;) {
+    %in = ...
+    %2 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 2)&gt; (%idy)
+    %3 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 4)&gt; (%idx)
+    scf.forall.in_parallel {
+      tensor.parallel_insert_slice %in into %init[%2, %3] [2, 4] [1, 1]
+        : tensor&lt;2x4xf32&gt; into tensor&lt;4x128xf32&gt;
+    }
+  } {mapping = [#gpu.thread&lt;y&gt;, #gpu.thread&lt;x&gt;]}
+  %1 = scf.forall (%idy, %idx) in (8, 8) -&gt; (tensor&lt;128x128xf32&gt;) {
+    %4 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 16)&gt; (%idx)
+    %extracted_slice = tensor.extract_slice %0[0, %4] [4, 16] [1, 1]
+      : tensor&lt;4x128xf32&gt; to tensor&lt;4x16xf32&gt;
+    ...
+  } {mapping = [#gpu.thread&lt;y&gt;, #gpu.thread&lt;x&gt;]}
+</code></pre></div></p>
+<p>Because these loops share the same worker type and total count, the bodies
+of these two loops can be merged with a barrier an insert_slice and a
+shuffle where the boundary of the loops currently is.</p>
+<div class="highlight"><pre><span></span><code>  %0 = scf.forall (%idy, %idx) in (8, 8) -&gt; (tensor&lt;4x128xf32&gt;) {
+    %alloc = bufferization.alloc_tensor {memory_space = #gpu.address_space&lt;workgroup&gt;}
+      : tensor&lt;4x128xf32&gt;
+    %barrier = iree_gpu.barrier_region %alloc {
+    ^bb0(%shared: tensor&lt;4x128xf32&gt;):
+      %ids = affine.delinearize_index %idy * 8 + %idx to (2, 32) : index
+      %in = ...
+      %2 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 2)&gt; (%ids#0)
+      %3 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 4)&gt; (%ids#1)
+      %inserted_slice = tensor.insert_slice %in into %shared[%2, %3] [2, 4] [1, 1]
+        : tensor&lt;2x4xf32&gt; to tensor&lt;4x128xf32&gt;
+      iree_gpu.yield %slice : tensor&lt;4x16xf32&gt;
+    } : tensor&lt;4x128xf32&gt; -&gt; tensor&lt;4x16xf32&gt;
+    %4 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 16)&gt; (%idx)
+    %slice = tensor.extract_slice %barrier[0, %4] [4, 16] [1, 1] : tensor&lt;4x128xf32&gt; to tensor&lt;4x16xf32&gt;
+    ...
+  } {mapping = [#gpu.thread&lt;y&gt;, #gpu.thread&lt;x&gt;]}
+</code></pre></div>
+<p>A barrier_region can be lowered to two barriers, one on the input operands
+and a second one on the results.</p>
+<p>Movtivation and Intended Use Cases:</p>
+<p>The primary way this op is generated is when fusing parallel loops with
+tensor results. This operation helps to make lowerings more progressive
+and flexible.
+  - Lowering directly to an alloc + reads and writes breaks the dependency
+    chain making transformations like barrier placement and pipelining
+    potentially more difficult.
+  - Allows the option of non-vector based lowering paths.</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>SingleBlockImplicitTerminator&lt;mlir::iree_compiler::IREE::GPU::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
+<h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>inputs</code></td>
+<td>variadic of any type</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results">Results:<a class="headerlink" href="#results" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>results</code></td>
+<td>variadic of any type</td>
+</tr>
+</tbody>
+</table>
 <h3 id="iree_gpumulti_mma-gpumultimmaop"><code>iree_gpu.multi_mma</code> (GPU::MultiMmaOp)<a class="headerlink" href="#iree_gpumulti_mma-gpumultimmaop" title="Permanent link">link</a></h3>
 <p><em>Models a contraction of multiple mma operations</em></p>
 <p>Syntax:</p>
@@ -4172,7 +4963,7 @@ operand.</p>
 #contraction_trait = {
   indexing_maps = #contraction_accesses,
   iterator_types = [&quot;parallel&quot;, &quot;parallel&quot;, &quot;reduction&quot;],
-  kind = #iree_gpu.mma_layout&lt;MFMA_F16_16x16x16_F32&gt;
+  kind = #iree_gpu.mma_layout&lt;MFMA_F32_16x16x16_F16&gt;
 }
 %3 = iree_gpu.multi_mma %0, %1, %2 #contraction_trait
   : vector&lt;2x3x4xf16&gt;, vector&lt;3x5x4xf16&gt; into vector&lt;2x5x4xf32&gt;
@@ -4211,7 +5002,7 @@ operand.</p>
 #contraction_trait = {
   indexing_maps = #contraction_accesses,
   iterator_types = [],
-  kind = #iree_gpu.mma_layout&lt;MFMA_F16_16x16x16_F32&gt;
+  kind = #iree_gpu.mma_layout&lt;MFMA_F32_16x16x16_F16&gt;
 }
 %3 = iree_gpu.multi_mma %0, %1, %2 #contraction_trait
   : vector&lt;4xf16&gt;, vector&lt;4xf16&gt; into vector&lt;4xf32&gt;
@@ -4234,7 +5025,7 @@ subgroup semantics and must be resolved before distribution.</p>
 #contraction_trait = {
   indexing_maps = #contraction_accesses,
   iterator_types = [&quot;parallel&quot;, &quot;parallel&quot;, &quot;reduction&quot;],
-  kind = #iree_gpu.mma_layout&lt;MFMA_F16_16x16x16_F32&gt;,
+  kind = #iree_gpu.mma_layout&lt;MFMA_F32_16x16x16_F16&gt;,
   rhs_permutation = [1, 0]
 }
 %7 = iree_gpu.multi_mma %4, %5, %6 #contraction_trait
@@ -4254,7 +5045,7 @@ to generate and to skip the need for type conversion ops. However this comes
 at the expense of ease of verification for the operation. It is also
 implicitly linked to a lane-level parent <code>scf.forall</code> operation.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
-<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>VectorUnrollOpInterface</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>DestinationStyleOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>TilingInterface</code>, <code>VectorUnrollOpInterface</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
 <table>
@@ -4267,7 +5058,7 @@ implicitly linked to a lane-level parent <code>scf.forall</code> operation.</p>
 <tr><td><code>acc_permutation</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
+<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4290,135 +5081,6 @@ implicitly linked to a lane-level parent <code>scf.forall</code> operation.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results">Results:<a class="headerlink" href="#results" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>result</code></td>
-<td>ranked tensor or vector of any type values</td>
-</tr>
-</tbody>
-</table>
-<h3 id="iree_gpushuffle_tensor-gpushuffletensorop"><code>iree_gpu.shuffle_tensor</code> (GPU::ShuffleTensorOp)<a class="headerlink" href="#iree_gpushuffle_tensor-gpushuffletensorop" title="Permanent link">link</a></h3>
-<p><em>Shuffles a private tensor across a shared allocation</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `iree_gpu.shuffle_tensor` $source ``
-              custom&lt;DynamicIndexList&gt;($offsets, $static_offsets)
-              custom&lt;DynamicIndexList&gt;($sizes, $static_sizes)
-              custom&lt;DynamicIndexList&gt;($strides, $static_strides)
-              `to` $dest $region attr-dict
-              `:` type($source) `-&gt;` type($dest) `-&gt;` type($result)
-</code></pre></div>
-<p>This op is designed to represent a shuffle of private tensor data
-collectively held across a set of workers. This operation naturally arises
-when combining the regions of producer-consumer <code>scf.forall</code> operations
-that share a mapping type and worker count.</p>
-<p>For example, consider the following pair of parallel loops.
-<div class="highlight"><pre><span></span><code>  %0 = scf.forall (%idy, %idx) in (2, 32) shared_outs(%init = %empty) -&gt; (tensor&lt;4x128xf32&gt;) {
-    %in = ...
-    %2 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 2)&gt; (%idy)
-    %3 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 4)&gt; (%idx)
-    scf.forall.in_parallel {
-      tensor.parallel_insert_slice %in into %init[%2, %3] [2, 4] [1, 1]
-        : tensor&lt;2x4xf32&gt; into tensor&lt;4x128xf32&gt;
-    }
-  } {mapping = [#gpu.thread&lt;y&gt;, #gpu.thread&lt;x&gt;]}
-  %1 = scf.forall (%idy, %idx) in (8, 8) -&gt; (tensor&lt;128x128xf32&gt;) {
-    %4 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 16)&gt; (%idx)
-    %extracted_slice = tensor.extract_slice %0[0, %4] [4, 16] [1, 1]
-      : tensor&lt;4x128xf32&gt; to tensor&lt;4x16xf32&gt;
-    ...
-  } {mapping = [#gpu.thread&lt;y&gt;, #gpu.thread&lt;x&gt;]}
-</code></pre></div></p>
-<p>Because these loops share the same worker type and total count, the bodies
-of these two loops can be merged with a barrier and a shuffle where the
-boundary of the loops currently is.</p>
-<div class="highlight"><pre><span></span><code>  %0 = scf.forall (%idy, %idx) in (8, 8) -&gt; (tensor&lt;4x128xf32&gt;) {
-    %ids = affine.delinearize_index %idy * 8 + %idx to (2, 32) : index
-    %in = ...
-    %2 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 2)&gt; (%ids#0)
-    %3 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 4)&gt; (%ids#1)
-    %4 = affine.apply #affine_map&lt;(d0) -&gt; (d0 * 16)&gt; (%idx)
-    %slice = iree_gpu.shuffle_tensor %in[%2, %3] [2, 4] [1, 1] to %empty {
-    ^bb0(%intermediate: tensor&lt;4x128xf32&gt;):
-      %slice = tensor.extract_slice %intermediate[0, %4] [4, 16] [1, 1] : tensor&lt;4x128xf32&gt; to tensor&lt;4x16xf32&gt;
-      iree_gpu.yield %slice : tensor&lt;4x16xf32&gt;
-    } : tensor&lt;2x4xf32&gt; -&gt; tensor&lt;4x128xf32&gt; -&gt; tensor&lt;4x16xf32&gt;
-    ...
-  } {mapping = [#gpu.thread&lt;y&gt;, #gpu.thread&lt;x&gt;]}
-</code></pre></div>
-<p>A shuffle can be lowered to a shared allocation with a write of the source
-slice, a barrier, inlining the body of the shuffle op (the read), and then
-a barrier to synchronize all workers on the result of the read. Note that
-it is undefined behavior if there are any conflicting writes to the
-intermediate. Also to execute the barrier, any lowerings of the enclosing
-<code>scf.forall</code> to serial loops is invalid. In other words, the lowerings must
-provide the number of workers requested by the loop.</p>
-<p>This op takes an input |source| tensor to represent the slice held by this
-worker before the shuffle, an intermediate tensor |dest| that all workers
-insert into, and performs a synchronized read from that intermediate
-tensor.</p>
-<p>It is undefined behavior if the source tensor is out of bounds of the
-intermediate allocation.</p>
-<p>Movtivation and Intended Use Cases:</p>
-<p>The primary way this op is generated is when fusing parallel loops with
-tensor results. This operation helps to make lowerings more progressive
-and flexible.
-  - Rather than lowering straight to vector ops for the reads/writes
-    for the shuffle, this allows separating out the vectorization of the
-    shared memory accesses from earlier tiling steps.
-  - Lowering directly to an alloc + reads and writes breaks the dependency
-    chain making transformations like barrier placement and pipelining
-    potentially more difficult.
-  - Allows the option of non-vector based lowering paths.</p>
-<p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;mlir::iree_compiler::IREE::GPU::YieldOp&gt;</code>, <code>SingleBlock</code></p>
-<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
-<p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
-<table>
-<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
-<tr><td><code>static_offsets</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
-<tr><td><code>static_sizes</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
-<tr><td><code>static_strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
-</table>
-
-<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>source</code></td>
-<td>ranked tensor of any type values</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>offsets</code></td>
-<td>variadic of index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sizes</code></td>
-<td>variadic of index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>strides</code></td>
-<td>variadic of index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>dest</code></td>
-<td>ranked tensor of any type values</td>
-</tr>
-</tbody>
-</table>
 <h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
@@ -4435,15 +5097,16 @@ and flexible.
 </tbody>
 </table>
 <h3 id="iree_gpuvalue_barrier-gpuvaluebarrierop"><code>iree_gpu.value_barrier</code> (GPU::ValueBarrierOp)<a class="headerlink" href="#iree_gpuvalue_barrier-gpuvaluebarrierop" title="Permanent link">link</a></h3>
-<p><em>Shuffles a private tensor across a shared allocation</em></p>
+<p><em>Synchronizes workers on a value semantic tensor or vector.</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `iree_gpu.value_barrier` $input attr-dict `:` type($result)
+<div class="highlight"><pre><span></span><code>operation ::= `iree_gpu.value_barrier` $inputs attr-dict `:` type($inputs)
 </code></pre></div>
-<p>This operation acts as a barrier on a value semantic SSA value (tensor or
-vector). It takes a single operand and produces a value equivalent to the
+<p>This operation acts as a barrier on a value semantic SSA values (tensor or
+vector). It takes multiple operands and produces a value equivalent to each
 input. This does not have copy and/or data movement semantics and simply
 represents a barrier on all writes in the tensor case, and a barrier until
 all threads acquire the input vector in the vector case.</p>
+<p>The inputs must be either all tensors, or all vectors.</p>
 <p>This operation is a no-op when not present in a parallel context. This
 operation is pure as it only requires synchronization for the value it
 produces.</p>
@@ -4460,8 +5123,8 @@ produces.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>input</code></td>
-<td>ranked tensor or vector of any type values</td>
+<td style="text-align: center;"><code>inputs</code></td>
+<td>variadic of ranked tensor or vector of any type values</td>
 </tr>
 </tbody>
 </table>
@@ -4475,18 +5138,18 @@ produces.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>result</code></td>
-<td>ranked tensor or vector of any type values</td>
+<td style="text-align: center;"><code>results</code></td>
+<td>variadic of ranked tensor or vector of any type values</td>
 </tr>
 </tbody>
 </table>
 <h3 id="iree_gpuyield-gpuyieldop"><code>iree_gpu.yield</code> (GPU::YieldOp)<a class="headerlink" href="#iree_gpuyield-gpuyieldop" title="Permanent link">link</a></h3>
-<p><em>Yield a value from a region</em></p>
+<p><em>Yield values from a region</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `iree_gpu.yield` $value attr-dict `:` type($value)
+<div class="highlight"><pre><span></span><code>operation ::= `iree_gpu.yield` attr-dict ($values^ `:` type($values))?
 </code></pre></div>
-<p>This operation is used to yield a single value from a within a region.</p>
-<p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>HasParent&lt;::mlir::iree_compiler::IREE::GPU::ShuffleTensorOp&gt;</code>, <code>ReturnLike</code>, <code>Terminator</code></p>
+<p>This operation is used to yield values from a within a region.</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>HasParent&lt;::mlir::iree_compiler::IREE::GPU::BarrierRegionOp&gt;</code>, <code>ReturnLike</code>, <code>Terminator</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>RegionBranchTerminatorOpInterface</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h5>
@@ -4499,12 +5162,12 @@ produces.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>value</code></td>
-<td>any type</td>
+<td style="text-align: center;"><code>values</code></td>
+<td>variadic of any type</td>
 </tr>
 </tbody>
 </table>
-<h2 id="attributes_2">Attributes<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h2>
+<h2 id="attributes_1">Attributes<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h2>
 <h3 id="computebitwidthsattr">ComputeBitwidthsAttr<a class="headerlink" href="#computebitwidthsattr" title="Permanent link">link</a></h3>
 <p>Supported bitwidths for compute</p>
 <p>Syntax:</p>
@@ -4537,6 +5200,67 @@ produces.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="datatiledmmaattr">DataTiledMMAAttr<a class="headerlink" href="#datatiledmmaattr" title="Permanent link">link</a></h3>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>#iree_gpu.data_tiled_mma_layout&lt;
+  ::mlir::iree_compiler::IREE::GPU::MMAIntrinsicAttr,   # intrinsic
+  int64_t,   # unroll_m
+  int64_t,   # subgroups_m
+  int64_t,   # unroll_n
+  int64_t,   # subgroups_n
+  int64_t   # unroll_k
+&gt;
+</code></pre></div>
+<p>This mma variant represents MMA ops with data-tiling details. The
+|intrinsic| field specifies which particular MMA intrinsic is targeted by
+the data-tiling.</p>
+<p>The other fields default to one, and that default results in a single
+intrinsic equivalent to MMAAttr, while values greater than one result in
+wider "kernels" consisting of multiple intrinsics, with the data layout
+already swizzled into a tile layout that allows each intrinsic to access
+data at an offset that's as simple as possible a mapping from the thread ID.</p>
+<h5 id="parameters_1">Parameters:<a class="headerlink" href="#parameters_1" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Parameter</th>
+<th style="text-align: center;">C++ type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">intrinsic</td>
+<td style="text-align: center;"><code>::mlir::iree_compiler::IREE::GPU::MMAIntrinsicAttr</code></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">unroll_m</td>
+<td style="text-align: center;"><code>int64_t</code></td>
+<td>Unrolling along the M dimension, on the same thread.</td>
+</tr>
+<tr>
+<td style="text-align: center;">subgroups_m</td>
+<td style="text-align: center;"><code>int64_t</code></td>
+<td>Unrolling along the M dimension, distributed across this many more threads.</td>
+</tr>
+<tr>
+<td style="text-align: center;">unroll_n</td>
+<td style="text-align: center;"><code>int64_t</code></td>
+<td>Unrolling along the N dimension, on the same thread.</td>
+</tr>
+<tr>
+<td style="text-align: center;">subgroups_n</td>
+<td style="text-align: center;"><code>int64_t</code></td>
+<td>Unrolling along the N dimension, distributed across this many more threads.</td>
+</tr>
+<tr>
+<td style="text-align: center;">unroll_k</td>
+<td style="text-align: center;"><code>int64_t</code></td>
+<td>Unrolling along the K dimension, on the same thread, with interleaved layout.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="derivedthreadconfigattr">DerivedThreadConfigAttr<a class="headerlink" href="#derivedthreadconfigattr" title="Permanent link">link</a></h3>
 <pre><code>drive lowering of an operation by deriving thread distribution when needed.
 </code></pre>
@@ -4556,7 +5280,7 @@ tiling configs.</p>
 <p>Enum cases:
 * none (<code>None</code>)
 * dp4xi8toi32 (<code>DP4xI8ToI32</code>)</p>
-<h5 id="parameters_1">Parameters:<a class="headerlink" href="#parameters_1" title="Permanent link">link</a></h5>
+<h5 id="parameters_2">Parameters:<a class="headerlink" href="#parameters_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4573,6 +5297,56 @@ tiling configs.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="gpupipelineoptionsattr">GPUPipelineOptionsAttr<a class="headerlink" href="#gpupipelineoptionsattr" title="Permanent link">link</a></h3>
+<p>GPU pipeline options attribute.</p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>#iree_gpu.pipeline_options&lt;
+  BoolAttr,   # prefetch_shared_memory
+  BoolAttr,   # no_reduce_shared_memory_bank_conflicts
+  BoolAttr,   # use_igemm_convolution
+  ReorderWorkgroupsStrategyAttr   # reorder_workgroups_strategy
+&gt;
+</code></pre></div>
+<p>This attributes describes lowering pipeline specific configuration options:
+* prefetch_shared_memory: Boolean option indicating whether or not to run
+  the loop prefetching pass in the lowering pipeline.
+* no_reduce_shared_memory_bank_conflicts: Boolean option indicating whether
+  or not to skip the bank conflict reduction pass in the lowering pipeline.
+* reorder_workgroups_strategy: Enum attribute indicating which strategy to
+  choose for the workgroup reordering pass. Options are <code>None</code>, <code>Swizzle</code>,
+  and <code>Transpose</code>.</p>
+<h5 id="parameters_3">Parameters:<a class="headerlink" href="#parameters_3" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Parameter</th>
+<th style="text-align: center;">C++ type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">prefetch_shared_memory</td>
+<td style="text-align: center;"><code>BoolAttr</code></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">no_reduce_shared_memory_bank_conflicts</td>
+<td style="text-align: center;"><code>BoolAttr</code></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">use_igemm_convolution</td>
+<td style="text-align: center;"><code>BoolAttr</code></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">reorder_workgroups_strategy</td>
+<td style="text-align: center;"><code>ReorderWorkgroupsStrategyAttr</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h3 id="iteratortypeattr">IteratorTypeAttr<a class="headerlink" href="#iteratortypeattr" title="Permanent link">link</a></h3>
 <p>Iterator type</p>
 <p>Syntax:</p>
@@ -4583,7 +5357,7 @@ tiling configs.</p>
 <p>Enum cases:
 * parallel (<code>parallel</code>)
 * reduction (<code>reduction</code>)</p>
-<h5 id="parameters_2">Parameters:<a class="headerlink" href="#parameters_2" title="Permanent link">link</a></h5>
+<h5 id="parameters_4">Parameters:<a class="headerlink" href="#parameters_4" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4607,7 +5381,7 @@ tiling configs.</p>
 &gt;
 </code></pre></div>
 <p>An attribute for mapping scf.forall ops to subgroup lanes.</p>
-<h5 id="parameters_3">Parameters:<a class="headerlink" href="#parameters_3" title="Permanent link">link</a></h5>
+<h5 id="parameters_5">Parameters:<a class="headerlink" href="#parameters_5" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4634,7 +5408,7 @@ tiling configs.</p>
 <p>GPU specific implementation of a lowering config. This carries just a
 dictionary attribute to store any relevant fields. This is the simplest
 form of a lowering config, offering flexibility at the cost of structure.</p>
-<h5 id="parameters_4">Parameters:<a class="headerlink" href="#parameters_4" title="Permanent link">link</a></h5>
+<h5 id="parameters_6">Parameters:<a class="headerlink" href="#parameters_6" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4667,11 +5441,9 @@ and |cType| for matrices <code>A</code>, <code>B</code>, and <code>C</code> resp
 <h6 id="_1"><a class="headerlink" href="#_1" title="Permanent link">link</a></h6>
 <p>This mma variant describes configurations for MMA ops. The |intrinsic|
 field specifies which particular MMA intrinsic this refers to, with each
-intrinsic implicating a specific MNK shape and operand types. The intrinsic
-enum name describes these fields as</p>
-<p><InputType><em>MxNxK</em><CType></p>
-<p>Where the element type for the <code>A</code> and <code>B</code> matrices are both <code>InputType</code>.</p>
-<h5 id="parameters_5">Parameters:<a class="headerlink" href="#parameters_5" title="Permanent link">link</a></h5>
+intrinsic implicating a specific MNK shape and operand types.
+See IREEGPUEnums.td for the definition of the intrinsics.</p>
+<h5 id="parameters_7">Parameters:<a class="headerlink" href="#parameters_7" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4726,11 +5498,34 @@ enum name describes these fields as</p>
 &gt;
 </code></pre></div>
 <p>Enum cases:
-* MFMA_F16_16x16x16_F32 (<code>MFMA_F16_16x16x16_F32</code>)
-* MFMA_F16_32x32x8_F32 (<code>MFMA_F16_32x32x8_F32</code>)
-* WMMA_F16_16x16x16_F32 (<code>WMMA_F16_16x16x16_F32</code>)
-* WMMA_F16_16x16x16_F16 (<code>WMMA_F16_16x16x16_F16</code>)</p>
-<h5 id="parameters_6">Parameters:<a class="headerlink" href="#parameters_6" title="Permanent link">link</a></h5>
+* MFMA_F32_16x16x4_F32 (<code>MFMA_F32_16x16x4_F32</code>)
+* MFMA_F32_16x16x16_F16 (<code>MFMA_F32_16x16x16_F16</code>)
+* MFMA_F32_32x32x8_F16 (<code>MFMA_F32_32x32x8_F16</code>)
+* MFMA_I32_16x16x16_I8 (<code>MFMA_I32_16x16x16_I8</code>)
+* MFMA_I32_32x32x8_I8 (<code>MFMA_I32_32x32x8_I8</code>)
+* MFMA_F32_16x16x8_BF16 (<code>MFMA_F32_16x16x8_BF16</code>)
+* MFMA_F32_32x32x4_BF16 (<code>MFMA_F32_32x32x4_BF16</code>)
+* MFMA_F64_16x16x4_F64 (<code>MFMA_F64_16x16x4_F64</code>)
+* MFMA_F32_16x16x16_BF16 (<code>MFMA_F32_16x16x16_BF16</code>)
+* MFMA_F32_32x32x8_BF16 (<code>MFMA_F32_32x32x8_BF16</code>)
+* MFMA_F32_16x16x32_F8E5M2FNUZ (<code>MFMA_F32_16x16x32_F8E5M2FNUZ</code>)
+* MFMA_F32_16x16x32_F8E5M2FNUZ_F8E4M3FNUZ (<code>MFMA_F32_16x16x32_F8E5M2FNUZ_F8E4M3FNUZ</code>)
+* MFMA_F32_16x16x32_F8E4M3FNUZ (<code>MFMA_F32_16x16x32_F8E4M3FNUZ</code>)
+* MFMA_F32_16x16x32_F8E4M3FNUZ_F8E5M2FNUZ (<code>MFMA_F32_16x16x32_F8E4M3FNUZ_F8E5M2FNUZ</code>)
+* MFMA_F32_32x32x16_F8E5M2FNUZ (<code>MFMA_F32_32x32x16_F8E5M2FNUZ</code>)
+* MFMA_F32_32x32x16_F8E5M2FNUZ_F8E4M3FNUZ (<code>MFMA_F32_32x32x16_F8E5M2FNUZ_F8E4M3FNUZ</code>)
+* MFMA_F32_32x32x16_F8E4M3FNUZ (<code>MFMA_F32_32x32x16_F8E4M3FNUZ</code>)
+* MFMA_F32_32x32x16_F8E4M3FNUZ_F8E5M2FNUZ (<code>MFMA_F32_32x32x16_F8E4M3FNUZ_F8E5M2FNUZ</code>)
+* MFMA_I32_16x16x32_I8 (<code>MFMA_I32_16x16x32_I8</code>)
+* MFMA_I32_32x32x16_I8 (<code>MFMA_I32_32x32x16_I8</code>)
+* WMMA_F32_16x16x16_F16 (<code>WMMA_F32_16x16x16_F16</code>)
+* WMMA_F16_16x16x16_F16 (<code>WMMA_F16_16x16x16_F16</code>)
+* WMMA_F32_16x16x16_BF16 (<code>WMMA_F32_16x16x16_BF16</code>)
+* WMMA_BF16_16x16x16_BF16 (<code>WMMA_BF16_16x16x16_BF16</code>)
+* WMMA_I32_16x16x16_I8 (<code>WMMA_I32_16x16x16_I8</code>)
+* NV_WMMA_F32_16x16x16_F16 (<code>NV_WMMA_F32_16x16x16_F16</code>)
+* NV_WMMA_F16_16x16x16_F16 (<code>NV_WMMA_F16_16x16x16_F16</code>)</p>
+<h5 id="parameters_8">Parameters:<a class="headerlink" href="#parameters_8" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4753,7 +5548,7 @@ enum name describes these fields as</p>
   ::llvm::ArrayRef&lt;MMAAttr&gt;   # value
 &gt;
 </code></pre></div>
-<h5 id="parameters_7">Parameters:<a class="headerlink" href="#parameters_7" title="Permanent link">link</a></h5>
+<h5 id="parameters_9">Parameters:<a class="headerlink" href="#parameters_9" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4780,7 +5575,7 @@ enum name describes these fields as</p>
 </code></pre></div>
 <p>A schedule of MMA intrinsic instruction and various levels of tile sizes
 to solve a specific contraction problem.</p>
-<h5 id="parameters_8">Parameters:<a class="headerlink" href="#parameters_8" title="Permanent link">link</a></h5>
+<h5 id="parameters_10">Parameters:<a class="headerlink" href="#parameters_10" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4807,6 +5602,33 @@ to solve a specific contraction problem.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="reorderworkgroupsstrategyattr">ReorderWorkgroupsStrategyAttr<a class="headerlink" href="#reorderworkgroupsstrategyattr" title="Permanent link">link</a></h3>
+<p>Strategy for workgroup reordering</p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>#iree_gpu.reorder_workgroups_strategy&lt;
+  ::mlir::iree_compiler::IREE::GPU::ReorderWorkgroupsStrategy   # value
+&gt;
+</code></pre></div>
+<p>Enum cases:
+* None (<code>None</code>)
+* Transpose (<code>Transpose</code>)</p>
+<h5 id="parameters_11">Parameters:<a class="headerlink" href="#parameters_11" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Parameter</th>
+<th style="text-align: center;">C++ type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">value</td>
+<td style="text-align: center;"><code>::mlir::iree_compiler::IREE::GPU::ReorderWorkgroupsStrategy</code></td>
+<td>an enum of type ReorderWorkgroupsStrategy</td>
+</tr>
+</tbody>
+</table>
 <h3 id="storagebitwidthsattr">StorageBitwidthsAttr<a class="headerlink" href="#storagebitwidthsattr" title="Permanent link">link</a></h3>
 <p>Supported bitwidths for storage</p>
 <p>Syntax:</p>
@@ -4819,7 +5641,7 @@ to solve a specific contraction problem.</p>
 * b32 (<code>B32</code>)
 * b16 (<code>B16</code>)
 * b8 (<code>B8</code>)</p>
-<h5 id="parameters_9">Parameters:<a class="headerlink" href="#parameters_9" title="Permanent link">link</a></h5>
+<h5 id="parameters_12">Parameters:<a class="headerlink" href="#parameters_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4847,7 +5669,7 @@ to solve a specific contraction problem.</p>
 * none (<code>None</code>)
 * shuffle (<code>Shuffle</code>)
 * arithmetic (<code>Arithmetic</code>)</p>
-<h5 id="parameters_10">Parameters:<a class="headerlink" href="#parameters_10" title="Permanent link">link</a></h5>
+<h5 id="parameters_13">Parameters:<a class="headerlink" href="#parameters_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4882,7 +5704,7 @@ to solve a specific contraction problem.</p>
   streaming multiprocessor
 * An optional TargetChipAttr describing GPU features for the final chip
   or product, e.g., wgp count</p>
-<h5 id="parameters_11">Parameters:<a class="headerlink" href="#parameters_11" title="Permanent link">link</a></h5>
+<h5 id="parameters_14">Parameters:<a class="headerlink" href="#parameters_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4926,7 +5748,7 @@ to solve a specific contraction problem.</p>
 Here a GPU chip means the hardware functionality scope where the whole
 software compute grid is scheduled onto. A chip typically contains many
 AMD compute units or NVIDIA streaming multiprocessors; it's the final SKU.</p>
-<h5 id="parameters_12">Parameters:<a class="headerlink" href="#parameters_12" title="Permanent link">link</a></h5>
+<h5 id="parameters_15">Parameters:<a class="headerlink" href="#parameters_15" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4959,8 +5781,12 @@ AMD compute units or NVIDIA streaming multiprocessors; it's the final SKU.</p>
   MMAOpsArrayAttr,   # mma
   DenseI32ArrayAttr,   # subgroup_size_choices
   DenseI32ArrayAttr,   # max_workgroup_sizes
-  uint32_t,   # max_thread_count_per_workgroup
-  uint32_t,   # max_workgroup_memory_bytes
+  int32_t,   # max_thread_count_per_workgroup
+  int32_t,   # max_workgroup_memory_bytes
+  DenseI32ArrayAttr,   # max_workgroup_counts
+  std::optional&lt;int32_t&gt;,   # max_load_instruction_bits
+  std::optional&lt;int32_t&gt;,   # simds_per_wgp
+  std::optional&lt;int32_t&gt;,   # vgpr_space_bits
   DictionaryAttr   # extra
 &gt;
 </code></pre></div>
@@ -4969,7 +5795,7 @@ processor (WGP) level. Here a GPU workgroup processor means the basic
 hardware functionality unit where a software workgroup is scheduled onto;
 that is, a compute unit for AMD GPUs or a streaming multiprocessor for
 NVIDIA GPUs.</p>
-<h5 id="parameters_13">Parameters:<a class="headerlink" href="#parameters_13" title="Permanent link">link</a></h5>
+<h5 id="parameters_16">Parameters:<a class="headerlink" href="#parameters_16" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5016,18 +5842,561 @@ NVIDIA GPUs.</p>
 </tr>
 <tr>
 <td style="text-align: center;">max_thread_count_per_workgroup</td>
-<td style="text-align: center;"><code>uint32_t</code></td>
+<td style="text-align: center;"><code>int32_t</code></td>
 <td></td>
 </tr>
 <tr>
 <td style="text-align: center;">max_workgroup_memory_bytes</td>
-<td style="text-align: center;"><code>uint32_t</code></td>
+<td style="text-align: center;"><code>int32_t</code></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">max_workgroup_counts</td>
+<td style="text-align: center;"><code>DenseI32ArrayAttr</code></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">max_load_instruction_bits</td>
+<td style="text-align: center;"><code>std::optional&lt;int32_t&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">simds_per_wgp</td>
+<td style="text-align: center;"><code>std::optional&lt;int32_t&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">vgpr_space_bits</td>
+<td style="text-align: center;"><code>std::optional&lt;int32_t&gt;</code></td>
 <td></td>
 </tr>
 <tr>
 <td style="text-align: center;">extra</td>
 <td style="text-align: center;"><code>DictionaryAttr</code></td>
 <td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="virtualmmaattr">VirtualMMAAttr<a class="headerlink" href="#virtualmmaattr" title="Permanent link">link</a></h3>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>#iree_gpu.virtual_mma_layout&lt;
+  ::mlir::iree_compiler::IREE::GPU::VirtualMMAIntrinsicAttr   # intrinsic
+&gt;
+</code></pre></div>
+<p>This mma variant represents "virtual" MMA ops that has modification to
+its native layouts by unrollK and/or interleave reads. The |intrinsic|
+field represents different kinds of "Virtual" MMA Ops we found helpful.</p>
+<p>These interleaving and/or unrolling changes in the layout is especially
+useful to coalesce reads from shared memory to register or align layouts
+in a chained-matmul operation.</p>
+<h5 id="parameters_17">Parameters:<a class="headerlink" href="#parameters_17" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Parameter</th>
+<th style="text-align: center;">C++ type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">intrinsic</td>
+<td style="text-align: center;"><code>::mlir::iree_compiler::IREE::GPU::VirtualMMAIntrinsicAttr</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="virtualmmaintrinsicattr">VirtualMMAIntrinsicAttr<a class="headerlink" href="#virtualmmaintrinsicattr" title="Permanent link">link</a></h3>
+<p>Descriptor for different Virtual MMA intrinsics</p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>#iree_gpu.virtual_mma_intrinsic&lt;
+  ::mlir::iree_compiler::IREE::GPU::VirtualMMAIntrinsic   # value
+&gt;
+</code></pre></div>
+<p>Enum cases:
+* VMFMA_F32_16x16x32_F16 (<code>VMFMA_F32_16x16x32_F16</code>)
+* VMFMA_F32_32x32x16_F16 (<code>VMFMA_F32_32x32x16_F16</code>)
+* VMFMA_F32_16x16x32_F8E4M3FNUZ (<code>VMFMA_F32_16x16x32_F8E4M3FNUZ</code>)
+* VMFMA_F32_32x32x16_F8E4M3FNUZ (<code>VMFMA_F32_32x32x16_F8E4M3FNUZ</code>)</p>
+<h5 id="parameters_18">Parameters:<a class="headerlink" href="#parameters_18" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Parameter</th>
+<th style="text-align: center;">C++ type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">value</td>
+<td style="text-align: center;"><code>::mlir::iree_compiler::IREE::GPU::VirtualMMAIntrinsic</code></td>
+<td>an enum of type VirtualMMAIntrinsic</td>
+</tr>
+</tbody>
+</table>
+<h2 id="enums">Enums<a class="headerlink" href="#enums" title="Permanent link">link</a></h2>
+<h3 id="computebitwidths">ComputeBitwidths<a class="headerlink" href="#computebitwidths" title="Permanent link">link</a></h3>
+<p>Supported bitwidths for compute</p>
+<h4 id="cases">Cases:<a class="headerlink" href="#cases" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">FP64</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>fp64</td>
+</tr>
+<tr>
+<td style="text-align: center;">FP32</td>
+<td style="text-align: center;"><code>2</code></td>
+<td>fp32</td>
+</tr>
+<tr>
+<td style="text-align: center;">FP16</td>
+<td style="text-align: center;"><code>4</code></td>
+<td>fp16</td>
+</tr>
+<tr>
+<td style="text-align: center;">Int64</td>
+<td style="text-align: center;"><code>8</code></td>
+<td>int64</td>
+</tr>
+<tr>
+<td style="text-align: center;">Int32</td>
+<td style="text-align: center;"><code>16</code></td>
+<td>int32</td>
+</tr>
+<tr>
+<td style="text-align: center;">Int16</td>
+<td style="text-align: center;"><code>32</code></td>
+<td>int16</td>
+</tr>
+<tr>
+<td style="text-align: center;">Int8</td>
+<td style="text-align: center;"><code>64</code></td>
+<td>int8</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dotproductops">DotProductOps<a class="headerlink" href="#dotproductops" title="Permanent link">link</a></h3>
+<p>Supported dot product ops</p>
+<h4 id="cases_1">Cases:<a class="headerlink" href="#cases_1" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">None</td>
+<td style="text-align: center;"><code>0</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td style="text-align: center;">DP4xI8ToI32</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>dp4xi8toi32</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mmafragment">MMAFragment<a class="headerlink" href="#mmafragment" title="Permanent link">link</a></h3>
+<p>Descriptor for a particular fragment of an MMA operation</p>
+<h4 id="cases_2">Cases:<a class="headerlink" href="#cases_2" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Lhs</td>
+<td style="text-align: center;"><code>0</code></td>
+<td>Lhs</td>
+</tr>
+<tr>
+<td style="text-align: center;">Rhs</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>Rhs</td>
+</tr>
+<tr>
+<td style="text-align: center;">Acc</td>
+<td style="text-align: center;"><code>2</code></td>
+<td>Acc</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mmaintrinsic">MMAIntrinsic<a class="headerlink" href="#mmaintrinsic" title="Permanent link">link</a></h3>
+<p>Descriptor for different MMA intrinsics</p>
+<h4 id="cases_3">Cases:<a class="headerlink" href="#cases_3" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">MFMA_F32_16x16x4_F32</td>
+<td style="text-align: center;"><code>4112</code></td>
+<td>MFMA_F32_16x16x4_F32</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_16x16x16_F16</td>
+<td style="text-align: center;"><code>4128</code></td>
+<td>MFMA_F32_16x16x16_F16</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_32x32x8_F16</td>
+<td style="text-align: center;"><code>4129</code></td>
+<td>MFMA_F32_32x32x8_F16</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_I32_16x16x16_I8</td>
+<td style="text-align: center;"><code>4288</code></td>
+<td>MFMA_I32_16x16x16_I8</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_I32_32x32x8_I8</td>
+<td style="text-align: center;"><code>4289</code></td>
+<td>MFMA_I32_32x32x8_I8</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_16x16x8_BF16</td>
+<td style="text-align: center;"><code>4384</code></td>
+<td>MFMA_F32_16x16x8_BF16</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_32x32x4_BF16</td>
+<td style="text-align: center;"><code>4385</code></td>
+<td>MFMA_F32_32x32x4_BF16</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F64_16x16x4_F64</td>
+<td style="text-align: center;"><code>4352</code></td>
+<td>MFMA_F64_16x16x4_F64</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_16x16x16_BF16</td>
+<td style="text-align: center;"><code>4640</code></td>
+<td>MFMA_F32_16x16x16_BF16</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_32x32x8_BF16</td>
+<td style="text-align: center;"><code>4641</code></td>
+<td>MFMA_F32_32x32x8_BF16</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_16x16x32_F8E5M2FNUZ</td>
+<td style="text-align: center;"><code>4656</code></td>
+<td>MFMA_F32_16x16x32_F8E5M2FNUZ</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_16x16x32_F8E5M2FNUZ_F8E4M3FNUZ</td>
+<td style="text-align: center;"><code>4657</code></td>
+<td>MFMA_F32_16x16x32_F8E5M2FNUZ_F8E4M3FNUZ</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_16x16x32_F8E4M3FNUZ</td>
+<td style="text-align: center;"><code>4658</code></td>
+<td>MFMA_F32_16x16x32_F8E4M3FNUZ</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_16x16x32_F8E4M3FNUZ_F8E5M2FNUZ</td>
+<td style="text-align: center;"><code>4659</code></td>
+<td>MFMA_F32_16x16x32_F8E4M3FNUZ_F8E5M2FNUZ</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_32x32x16_F8E5M2FNUZ</td>
+<td style="text-align: center;"><code>4660</code></td>
+<td>MFMA_F32_32x32x16_F8E5M2FNUZ</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_32x32x16_F8E5M2FNUZ_F8E4M3FNUZ</td>
+<td style="text-align: center;"><code>4661</code></td>
+<td>MFMA_F32_32x32x16_F8E5M2FNUZ_F8E4M3FNUZ</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_32x32x16_F8E4M3FNUZ</td>
+<td style="text-align: center;"><code>4662</code></td>
+<td>MFMA_F32_32x32x16_F8E4M3FNUZ</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_F32_32x32x16_F8E4M3FNUZ_F8E5M2FNUZ</td>
+<td style="text-align: center;"><code>4663</code></td>
+<td>MFMA_F32_32x32x16_F8E4M3FNUZ_F8E5M2FNUZ</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_I32_16x16x32_I8</td>
+<td style="text-align: center;"><code>4800</code></td>
+<td>MFMA_I32_16x16x32_I8</td>
+</tr>
+<tr>
+<td style="text-align: center;">MFMA_I32_32x32x16_I8</td>
+<td style="text-align: center;"><code>4801</code></td>
+<td>MFMA_I32_32x32x16_I8</td>
+</tr>
+<tr>
+<td style="text-align: center;">WMMA_F32_16x16x16_F16</td>
+<td style="text-align: center;"><code>6176</code></td>
+<td>WMMA_F32_16x16x16_F16</td>
+</tr>
+<tr>
+<td style="text-align: center;">WMMA_F16_16x16x16_F16</td>
+<td style="text-align: center;"><code>6177</code></td>
+<td>WMMA_F16_16x16x16_F16</td>
+</tr>
+<tr>
+<td style="text-align: center;">WMMA_F32_16x16x16_BF16</td>
+<td style="text-align: center;"><code>6178</code></td>
+<td>WMMA_F32_16x16x16_BF16</td>
+</tr>
+<tr>
+<td style="text-align: center;">WMMA_BF16_16x16x16_BF16</td>
+<td style="text-align: center;"><code>6179</code></td>
+<td>WMMA_BF16_16x16x16_BF16</td>
+</tr>
+<tr>
+<td style="text-align: center;">WMMA_I32_16x16x16_I8</td>
+<td style="text-align: center;"><code>6336</code></td>
+<td>WMMA_I32_16x16x16_I8</td>
+</tr>
+<tr>
+<td style="text-align: center;">NV_WMMA_F32_16x16x16_F16</td>
+<td style="text-align: center;"><code>8224</code></td>
+<td>NV_WMMA_F32_16x16x16_F16</td>
+</tr>
+<tr>
+<td style="text-align: center;">NV_WMMA_F16_16x16x16_F16</td>
+<td style="text-align: center;"><code>8225</code></td>
+<td>NV_WMMA_F16_16x16x16_F16</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mmascope">MMAScope<a class="headerlink" href="#mmascope" title="Permanent link">link</a></h3>
+<p>Descriptor for a particular scope of an MMA operation</p>
+<h4 id="cases_4">Cases:<a class="headerlink" href="#cases_4" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Workgroup</td>
+<td style="text-align: center;"><code>0</code></td>
+<td>Workgroup</td>
+</tr>
+<tr>
+<td style="text-align: center;">Subgroup</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>Subgroup</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reorderworkgroupsstrategy">ReorderWorkgroupsStrategy<a class="headerlink" href="#reorderworkgroupsstrategy" title="Permanent link">link</a></h3>
+<p>Strategy for workgroup reordering</p>
+<h4 id="cases_5">Cases:<a class="headerlink" href="#cases_5" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">None</td>
+<td style="text-align: center;"><code>0</code></td>
+<td>None</td>
+</tr>
+<tr>
+<td style="text-align: center;">Transpose</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>Transpose</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storagebitwidths">StorageBitwidths<a class="headerlink" href="#storagebitwidths" title="Permanent link">link</a></h3>
+<p>Supported bitwidths for storage</p>
+<h4 id="cases_6">Cases:<a class="headerlink" href="#cases_6" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">B64</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>b64</td>
+</tr>
+<tr>
+<td style="text-align: center;">B32</td>
+<td style="text-align: center;"><code>2</code></td>
+<td>b32</td>
+</tr>
+<tr>
+<td style="text-align: center;">B16</td>
+<td style="text-align: center;"><code>4</code></td>
+<td>b16</td>
+</tr>
+<tr>
+<td style="text-align: center;">B8</td>
+<td style="text-align: center;"><code>8</code></td>
+<td>b8</td>
+</tr>
+</tbody>
+</table>
+<h3 id="subgroupops">SubgroupOps<a class="headerlink" href="#subgroupops" title="Permanent link">link</a></h3>
+<p>Supported subgroup ops</p>
+<h4 id="cases_7">Cases:<a class="headerlink" href="#cases_7" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">None</td>
+<td style="text-align: center;"><code>0</code></td>
+<td>none</td>
+</tr>
+<tr>
+<td style="text-align: center;">Shuffle</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>shuffle</td>
+</tr>
+<tr>
+<td style="text-align: center;">Arithmetic</td>
+<td style="text-align: center;"><code>2</code></td>
+<td>arithmetic</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tilinglevel">TilingLevel<a class="headerlink" href="#tilinglevel" title="Permanent link">link</a></h3>
+<p>Descriptor for tiling levels for GPU lowering configs</p>
+<h4 id="cases_8">Cases:<a class="headerlink" href="#cases_8" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Workgroup</td>
+<td style="text-align: center;"><code>0</code></td>
+<td>Workgroup</td>
+</tr>
+<tr>
+<td style="text-align: center;">Reduction</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>Reduction</td>
+</tr>
+<tr>
+<td style="text-align: center;">PartialReduction</td>
+<td style="text-align: center;"><code>2</code></td>
+<td>PartialReduction</td>
+</tr>
+<tr>
+<td style="text-align: center;">Thread</td>
+<td style="text-align: center;"><code>3</code></td>
+<td>Thread</td>
+</tr>
+<tr>
+<td style="text-align: center;">Subgroup</td>
+<td style="text-align: center;"><code>4</code></td>
+<td>Subgroup</td>
+</tr>
+<tr>
+<td style="text-align: center;">Lane</td>
+<td style="text-align: center;"><code>5</code></td>
+<td>Lane</td>
+</tr>
+</tbody>
+</table>
+<h3 id="virtualmmaintrinsic">VirtualMMAIntrinsic<a class="headerlink" href="#virtualmmaintrinsic" title="Permanent link">link</a></h3>
+<p>Descriptor for different Virtual MMA intrinsics</p>
+<h4 id="cases_9">Cases:<a class="headerlink" href="#cases_9" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">VMFMA_F32_16x16x32_F16</td>
+<td style="text-align: center;"><code>0</code></td>
+<td>VMFMA_F32_16x16x32_F16</td>
+</tr>
+<tr>
+<td style="text-align: center;">VMFMA_F32_32x32x16_F16</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>VMFMA_F32_32x32x16_F16</td>
+</tr>
+<tr>
+<td style="text-align: center;">VMFMA_F32_16x16x32_F8E4M3FNUZ</td>
+<td style="text-align: center;"><code>2</code></td>
+<td>VMFMA_F32_16x16x32_F8E4M3FNUZ</td>
+</tr>
+<tr>
+<td style="text-align: center;">VMFMA_F32_32x32x16_F8E4M3FNUZ</td>
+<td style="text-align: center;"><code>3</code></td>
+<td>VMFMA_F32_32x32x16_F8E4M3FNUZ</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iteratortype">IteratorType<a class="headerlink" href="#iteratortype" title="Permanent link">link</a></h3>
+<p>Iterator type</p>
+<h4 id="cases_10">Cases:<a class="headerlink" href="#cases_10" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">parallel</td>
+<td style="text-align: center;"><code>0</code></td>
+<td>parallel</td>
+</tr>
+<tr>
+<td style="text-align: center;">reduction</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>reduction</td>
 </tr>
 </tbody>
 </table>
@@ -5104,8 +6473,16 @@ NVIDIA GPUs.</p>
     
     
     
-    <a href="https://groups.google.com/forum/#!forum/iree-discuss" target="_blank" rel="noopener" title="IREE Discuss Google Group" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M144 0a80 80 0 1 1 0 160 80 80 0 1 1 0-160zm368 0a80 80 0 1 1 0 160 80 80 0 1 1 0-160zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7-1.3 7.2-1.9 14.7-1.9 22.3 0 38.2 16.8 72.5 43.3 96H21.3C9.6 320 0 310.4 0 298.7zM405.3 320h-.7c26.6-23.5 43.3-57.8 43.3-96 0-7.6-.7-15-1.9-22.3 13.6-6.3 28.7-9.7 44.6-9.7h42.7c58.9 0 106.7 47.8 106.7 106.7 0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1-192 0zm-96 261.3c0-73.6 59.7-133.3 133.3-133.3h117.4c73.6 0 133.3 59.7 133.3 133.3 0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z"/></svg>
+    <a href="https://lists.lfaidata.foundation/g/iree-announce" target="_blank" rel="noopener" title="IREE Announcement Mailing List" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M480 32c0-12.9-7.8-24.6-19.8-29.6S434.5.2 425.3 9.3L381.7 53c-48 48-113.1 75-181 75H64c-35.3 0-64 28.7-64 64v96c0 35.3 28.7 64 64 64v128c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V352h8.7c67.9 0 133 27 181 75l43.6 43.6c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6V300.4c18.6-8.8 32-32.5 32-60.4s-13.4-51.6-32-60.4V32zm-64 76.7v262.6C357.2 317.8 280.5 288 200.7 288H192v-96h8.7c79.8 0 156.5-29.8 215.3-83.3z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://lists.lfaidata.foundation/g/iree-technical-discussion" target="_blank" rel="noopener" title="IREE Technical Discussion Mailing List" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l217.6 163.2c11.4 8.5 27 8.5 38.4 0l217.6-163.2c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48H48zM0 176v208c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V176L294.4 339.2a63.9 63.9 0 0 1-76.8 0L0 176z"/></svg>
     </a>
   
 </div>

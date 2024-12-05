@@ -11,14 +11,14 @@
         <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/LinalgExt/">
       
       
-        <link rel="prev" href="../IREEGPU/">
+        <link rel="prev" href="../IREEVectorExt/">
       
       
         <link rel="next" href="../Stream/">
       
       
       <link rel="icon" href="../../../assets/images/IREE_Logo_Icon_Color.svg">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.19">
     
     
       
@@ -1434,6 +1434,8 @@
       
         
       
+        
+      
     
     
       
@@ -1660,6 +1662,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../IREEVectorExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREEVectorExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1717,6 +1740,15 @@
   
     <nav class="md-nav" aria-label="Operations">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iree_linalg_extcustom_op-linalgextcustomop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.custom_op (LinalgExt::CustomOp)
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#data-tiling-ops" class="md-nav__link">
@@ -1798,15 +1830,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#iree_linalg_extreverse-linalgextreverseop" class="md-nav__link">
-    <span class="md-ellipsis">
-      iree_linalg_ext.reverse (LinalgExt::ReverseOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#iree_linalg_extscan-linalgextscanop" class="md-nav__link">
     <span class="md-ellipsis">
       iree_linalg_ext.scan (LinalgExt::ScanOp)
@@ -1858,6 +1881,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#iree_linalg_extindex-linalgextindexop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.index (LinalgExt::IndexOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#iree_linalg_extyield-linalgextyieldop" class="md-nav__link">
     <span class="md-ellipsis">
       iree_linalg_ext.yield (LinalgExt::YieldOp)
@@ -1903,6 +1935,69 @@
   <a href="#iree_linalg_extwinogradoutput_transform-linalgextwinogradoutputtransformop" class="md-nav__link">
     <span class="md-ellipsis">
       iree_linalg_ext.winograd.output_transform (LinalgExt::WinogradOutputTransformOp)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteratortypeattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      IteratorTypeAttr
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enums
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enums">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteratortype" class="md-nav__link">
+    <span class="md-ellipsis">
+      IteratorType
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IteratorType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
     </span>
   </a>
   
@@ -2030,8 +2125,6 @@
       
         
       
-        
-      
     
     
       
@@ -2079,27 +2172,6 @@
   
   <span class="md-ellipsis">
     IREEInput
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../IREEVectorExt/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IREEVectorExt
   </span>
   
 
@@ -2353,6 +2425,8 @@
       
         
       
+        
+      
     
     
       
@@ -2494,6 +2568,29 @@
   
   <span class="md-ellipsis">
     Release management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/general/versioning-scheme/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M7.75 14A1.75 1.75 0 0 1 6 12.25v-8.5C6 2.784 6.784 2 7.75 2h6.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14Zm-.25-1.75c0 .138.112.25.25.25h6.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-6.5a.25.25 0 0 0-.25.25ZM4.9 3.508a.75.75 0 0 1-.274 1.025.249.249 0 0 0-.126.217v6.5c0 .09.048.173.126.217a.75.75 0 0 1-.752 1.298A1.75 1.75 0 0 1 3 11.25v-6.5c0-.649.353-1.214.874-1.516a.75.75 0 0 1 1.025.274ZM1.625 5.533h.001a.249.249 0 0 0-.126.217v4.5c0 .09.048.173.126.217a.75.75 0 0 1-.752 1.298A1.748 1.748 0 0 1 0 10.25v-4.5a1.748 1.748 0 0 1 .873-1.516.75.75 0 1 1 .752 1.299Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Versioning scheme
   </span>
   
 
@@ -2932,8 +3029,6 @@
       
         
       
-        
-      
     
     
       
@@ -2983,29 +3078,6 @@
   
   <span class="md-ellipsis">
     Benchmarking
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../developers/performance/benchmark-suites/" class="md-nav__link">
-        
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m11.628 16.186-2.047-2.14 6.791-5.953 1.21 1.302zm8.837 6.047c2.14-2.14 3.535-5.117 3.535-8.466 0-6.604-5.395-12-12-12s-12 5.396-12 12c0 3.35 1.302 6.326 3.535 8.466l1.674-1.675c-1.767-1.767-2.79-4.093-2.79-6.79A9.568 9.568 0 0 1 12 4.185a9.568 9.568 0 0 1 9.581 9.581c0 2.605-1.116 5.024-2.79 6.791Z"/></svg>
-  
-  <span class="md-ellipsis">
-    Benchmark suites
   </span>
   
 
@@ -3867,6 +3939,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#iree_linalg_extcustom_op-linalgextcustomop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.custom_op (LinalgExt::CustomOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#data-tiling-ops" class="md-nav__link">
     <span class="md-ellipsis">
       Data tiling ops
@@ -3946,15 +4027,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#iree_linalg_extreverse-linalgextreverseop" class="md-nav__link">
-    <span class="md-ellipsis">
-      iree_linalg_ext.reverse (LinalgExt::ReverseOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#iree_linalg_extscan-linalgextscanop" class="md-nav__link">
     <span class="md-ellipsis">
       iree_linalg_ext.scan (LinalgExt::ScanOp)
@@ -4004,6 +4076,15 @@
   
     <nav class="md-nav" aria-label="Utility ops">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iree_linalg_extindex-linalgextindexop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.index (LinalgExt::IndexOp)
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#iree_linalg_extyield-linalgextyieldop" class="md-nav__link">
@@ -4066,6 +4147,69 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#attributes_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteratortypeattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      IteratorTypeAttr
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enums
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enums">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteratortype" class="md-nav__link">
+    <span class="md-ellipsis">
+      IteratorType
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IteratorType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4098,6 +4242,7 @@ cannot be represented efficiently/directly by the Linalg dialect.</p>
 <ul>
 <li><a href="#iree_linalg_ext-dialect">'iree_linalg_ext' Dialect</a><ul>
 <li><a href="#operations">Operations</a><ul>
+<li><a href="#iree_linalg_extcustom_op-linalgextcustomop">iree_linalg_ext.custom_op (LinalgExt::CustomOp)</a></li>
 <li><a href="#data-tiling-ops">Data tiling ops</a><ul>
 <li><a href="#iree_linalg_extpack-linalgextpackop">iree_linalg_ext.pack (LinalgExt::PackOp)</a></li>
 <li><a href="#iree_linalg_extunpack-linalgextunpackop">iree_linalg_ext.unpack (LinalgExt::UnPackOp)</a></li>
@@ -4108,7 +4253,6 @@ cannot be represented efficiently/directly by the Linalg dialect.</p>
 <li><a href="#iree_linalg_extfft-linalgextfftop">iree_linalg_ext.fft (LinalgExt::FftOp)</a></li>
 <li><a href="#iree_linalg_extim2col-linalgextim2colop">iree_linalg_ext.im2col (LinalgExt::Im2colOp)</a></li>
 <li><a href="#iree_linalg_extonline_attention-linalgextonlineattentionop">iree_linalg_ext.online_attention (LinalgExt::OnlineAttentionOp)</a></li>
-<li><a href="#iree_linalg_extreverse-linalgextreverseop">iree_linalg_ext.reverse (LinalgExt::ReverseOp)</a></li>
 <li><a href="#iree_linalg_extscan-linalgextscanop">iree_linalg_ext.scan (LinalgExt::ScanOp)</a></li>
 <li><a href="#iree_linalg_extscatter-linalgextscatterop">iree_linalg_ext.scatter (LinalgExt::ScatterOp)</a></li>
 <li><a href="#iree_linalg_extsort-linalgextsortop">iree_linalg_ext.sort (LinalgExt::SortOp)</a></li>
@@ -4116,6 +4260,7 @@ cannot be represented efficiently/directly by the Linalg dialect.</p>
 </ul>
 </li>
 <li><a href="#utility-ops">Utility ops</a><ul>
+<li><a href="#iree_linalg_extindex-linalgextindexop">iree_linalg_ext.index (LinalgExt::IndexOp)</a></li>
 <li><a href="#iree_linalg_extyield-linalgextyieldop">iree_linalg_ext.yield (LinalgExt::YieldOp)</a></li>
 </ul>
 </li>
@@ -4127,11 +4272,126 @@ cannot be represented efficiently/directly by the Linalg dialect.</p>
 </li>
 </ul>
 </li>
+<li><a href="#attributes_14">Attributes</a><ul>
+<li><a href="#iteratortypeattr">IteratorTypeAttr</a></li>
+</ul>
+</li>
+<li><a href="#enums">Enums</a><ul>
+<li><a href="#iteratortype">IteratorType</a><ul>
+<li><a href="#cases">Cases:</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 <h2 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">link</a></h2>
+<h3 id="iree_linalg_extcustom_op-linalgextcustomop"><code>iree_linalg_ext.custom_op</code> (LinalgExt::CustomOp)<a class="headerlink" href="#iree_linalg_extcustom_op-linalgextcustomop" title="Permanent link">link</a></h3>
+<p><em>Custom operation for compiling with IREE</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.custom_op` `{` `indexing_maps` `=` $indexing_maps `,`
+              `iterator_types` `=` $iterator_types `}`
+              attr-dict-with-keyword
+              (`ins` `(` $inputs^ `:` type($inputs) `)`)?
+              (`outs` `(` $outputs^ `:` type($outputs) `)`)?
+              $region (`-&gt;` type($results)^)?
+</code></pre></div>
+<p>This operation is meant to allow computation sequences that are fused at
+tile level prescriptively. This is to account for cases where such fusion
+cannot/is not yet discovered appropriately.</p>
+<p>The operation implements all the interfaces needed to be able to
+1. Compile e2e using IREE
+2. Still be able to fuse with other operations that the compiler can
+   figure out automatically.</p>
+<p>Similar to how <code>LinalgOp</code>s represent a perfectly nested loop computation
+with
+- <code>indexing_maps</code> representing how the <code>ins</code>/<code>outs</code> are accessed
+- <code>region</code> representing the scalar computation performed
+- <code>iterator_types</code> representing the dependence along each iteration space
+  dimension
+this operation represent a tiled computation with perfectly nested
+inter-tile loop nest.
+- <code>indexing_maps</code> represent what slices slices of the <code>ins</code>/<code>outs</code> are
+  needed for each iteration of the tiled computation.
+- <code>region</code> represents the tiled computation performed using these slices
+- <code>iterator_types</code> represents the dependence between tiles along each
+  iteration space.</p>
+<p>Some modifications required to handle the tile-level semantics are
+- Some dimensions of operands might not be accessed by dimensions of the
+  inter-tile iteration space. This means that along these dimensions the
+  slice size matches the dimension size. This access pattern of operands
+  is captured in the respective indexing map using a <code>symbol</code> to represent
+  that the entire dimension needs to be sliced.
+- The basic block arguments of the region represent the slice of the
+  operand. These are either scalar types (if the corresponding operand is a
+  scalar), or a <code>tensor</code> type with dynamic shapes (if the corresponding
+  operand is a <code>tensor</code> type).</p>
+<p>For example, one could represent a prescriptively fused matmul computation
+as follows</p>
+<div class="highlight"><pre><span></span><code>%0:2 = iree_linalg_ext.custom_op {
+    indexing_maps = [affine_map&lt;(d0, d1)[s0, s1] -&gt; (d0, s0)&gt;,
+                     affine_map&lt;(d0, d1)[s0, s1] -&gt; (s0, s1)&gt;,
+                     affine_map&lt;(d0, d1)[s0, s1] -&gt; (s1, d1)&gt;,
+                     affine_map&lt;(d0, d1)[s0, s1] -&gt; (d0, s1)&gt;,
+                     affine_map&lt;(d0, d1)[s0, s1] -&gt; (d0, d1)],
+    iterator_types = [&quot;parallel&quot;, &quot;parallel&quot;]}
+    ins(%lhs1, %rhs1, %rhs2
+        : tensor&lt;1000000x?xf32&gt;, tensor&lt;?x?xf32&gt;, tensor&lt;?x?xf32&gt;)
+    outs(%outs1, %outs2 : tensor&lt;1000000x?xf32&gt;, tensor&lt;1000000x?xf32&gt;) {
+  ^bb0(%t0 : tensor&lt;?x?xf32&gt;, %t1 : tensor&lt;?x?xf32&gt;, %t2 : tensor&lt;?x?xf32&gt;,
+       %t3 : tensor&lt;?x?xf32&gt;, %t4 : tensor&lt;?x?xf32&gt;) :
+    %0 = linalg.matmul ins(%t0, %t1 : tensor&lt;?x?xf32&gt;, tensor&lt;?x?xf32&gt;)
+        outs(%t3 : tensor&lt;?x?xf32&gt;) -&gt; tensor&lt;?x?xf32&gt;
+    %1 = linalg.matmul ins(%0, %t2 : tensor&lt;?x?xf32&gt;, tensor&lt;?x?xf32&gt;)
+        outs(%t4 : tensor&lt;?x?xf32&gt;) -&gt; tensor&lt;?x?xf32&gt;
+    iree_linalg_ext.yield %0, %1 : tensor&lt;?x?xf32&gt;, tensor&lt;?x?xf32&gt;
+} -&gt; tensor&lt;1000000x?xf32&gt;, tensor&lt;x?xf32&gt;
+</code></pre></div>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>AggregatedOpInterface</code>, <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgFusionOpInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>indexing_maps</code></td><td>::mlir::ArrayAttr</td><td>AffineMap array attribute</td></tr>
+<tr><td><code>iterator_types</code></td><td>::mlir::ArrayAttr</td><td>LinalgExt iterator type</td></tr>
+</table>
+
+<h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>inputs</code></td>
+<td>variadic of ranked tensor of signless integer or index or floating-point values or signless integer or index or floating-point</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>outputs</code></td>
+<td>variadic of ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results">Results:<a class="headerlink" href="#results" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>results</code></td>
+<td>variadic of ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
 <h3 id="data-tiling-ops">Data tiling ops<a class="headerlink" href="#data-tiling-ops" title="Permanent link">link</a></h3>
 <p>Operations for working with data layouts, padding, encodings, and other
 properties useful for tiling computations across iteration space dimensions.</p>
@@ -4180,7 +4440,7 @@ KC_to_CKkc example the tiled loops.</p>
 </code></pre></div>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgExtOp</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
+<h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>outer_dims_perm</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
@@ -4188,7 +4448,7 @@ KC_to_CKkc example the tiled loops.</p>
 <tr><td><code>static_inner_tiles</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
+<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4215,7 +4475,7 @@ KC_to_CKkc example the tiled loops.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results">Results:<a class="headerlink" href="#results" title="Permanent link">link</a></h5>
+<h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4260,7 +4520,7 @@ also supports permuting the tiled loops.</p>
 </code></pre></div>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgExtOp</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
+<h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>outer_dims_perm</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
@@ -4268,7 +4528,7 @@ also supports permuting the tiled loops.</p>
 <tr><td><code>static_inner_tiles</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
+<h5 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4291,7 +4551,7 @@ also supports permuting the tiled loops.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
+<h5 id="results_2">Results:<a class="headerlink" href="#results_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4311,38 +4571,27 @@ also supports permuting the tiled loops.</p>
 <p><em>Attention operator</em></p>
 <p>Syntax:</p>
 <div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.attention` attr-dict
-              `ins` `(` $inputs `:` type($inputs) `)`
-              `outs` `(` $outputs `:` type($outputs) `)`
+              `ins` `(` $query `,` $key `,` $value `,` $scale (`,` $mask^)?  `:` type($query) `,` type($key) `,` type($value) `,` type($scale) (`,` type($mask)^ )?`)`
+              `outs` `(` $output `:` type($output) `)`
+              $region
               (`-&gt;` type($results)^)?
 </code></pre></div>
 <p>Computes the scaled dot product attention function:</p>
 <p>attention(Q, K, V, scale) = softmax(Q @ K.T * scale) @ V</p>
 <p>Here Q, K, V are given tensors and scale is a scalar value specifying
 the scale to use.</p>
-<p>For self-attention, all inputs and the result have the same shape BxNxd
-where B is the batch dimension, N is the sequence length and d is head
-dimension. Typically N &gt;&gt;&gt; d. Usually, this operator also performs
-masking and dropout, but we leave that out of the current implementation.
-For cross-attention, the query and output have the same shape (BxNxd),
-while the key and value differ in sequence length (they have shape BxLxd,
-where L != N).</p>
-<p>This operator after tiling results in a tiled result as per
-FlashAttention 2 and optionally results in the current <code>max</code> and <code>sum</code>
-statistics while processing the current tile.</p>
-<p>If transpose_v is speciifed, the V tensor passed as input is assumed to
-be transposed:</p>
-<p>attention(Q, K, V, scale) = softmax(Q @ K.T * scale) @ V.T</p>
-<p>TODO: We should be moving to using a indexing map like approach so we
-can generalize which tensor is transposed and which is not.</p>
-<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
-<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
+<p>If an additional mask argument M is included, the result of the first matmul is modified according to:</p>
+<p>Q @ K.T += M</p>
+<p>Traits: <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>AggregatedOpInterface</code>, <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgFusionOpInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
-<tr><td><code>transpose_v</code></td><td>::mlir::BoolAttr</td><td>bool attribute</td></tr>
+<tr><td><code>indexing_maps</code></td><td>::mlir::ArrayAttr</td><td>AffineMap array attribute</td></tr>
+<tr><td><code>decomposition_config</code></td><td>::mlir::DictionaryAttr</td><td>dictionary of named attribute values</td></tr>
 </table>
 
-<h5 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h5>
+<h5 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4352,16 +4601,32 @@ can generalize which tensor is transposed and which is not.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>inputs</code></td>
-<td>variadic of any type</td>
+<td style="text-align: center;"><code>query</code></td>
+<td>shaped of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>outputs</code></td>
-<td>variadic of shaped of any type values</td>
+<td style="text-align: center;"><code>key</code></td>
+<td>shaped of any type values</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>value</code></td>
+<td>shaped of any type values</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>scale</code></td>
+<td>floating-point</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>mask</code></td>
+<td>shaped of any type values</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>output</code></td>
+<td>shaped of any type values</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_2">Results:<a class="headerlink" href="#results_2" title="Permanent link">link</a></h5>
+<h5 id="results_3">Results:<a class="headerlink" href="#results_3" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4394,7 +4659,7 @@ algorithm. It represents the computation body. For more details, see
 context, they will be the second and third inputs.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h5>
+<h5 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4413,7 +4678,7 @@ context, they will be the second and third inputs.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_3">Results:<a class="headerlink" href="#results_3" title="Permanent link">link</a></h5>
+<h5 id="results_4">Results:<a class="headerlink" href="#results_4" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4438,8 +4703,10 @@ context, they will be the second and third inputs.</p>
               custom&lt;DynamicIndexList&gt;($kernel_size, $static_kernel_size)
               `m_offset` `=`
               custom&lt;DynamicIndexList&gt;($m_offset, $static_m_offset)
+              `*` custom&lt;DynamicIndexList&gt;($m_strides, $static_m_strides)
               `k_offset` `=`
               custom&lt;DynamicIndexList&gt;($k_offset, $static_k_offset)
+              `*` custom&lt;DynamicIndexList&gt;($k_strides, $static_k_strides)
               `batch_pos` `=` $batch_pos
               `m_pos` `=` $m_pos
               `k_pos` `=` $k_pos
@@ -4465,7 +4732,7 @@ im2col op were tiled to loops with a scalar inner tile, it would look like
 the following:
 <div class="highlight"><pre><span></span><code>  %im2col = iree_linalg_ext.im2col
       strides = [1, 1] dilations = [1, 1] kernel_size = [3, 3]
-      m_offset = [0] k_offset = [0]
+      m_offset = [0] * [1] k_offset = [0] * [1]
       batch_pos = [0] m_pos = [1, 2] k_pos = [3]
       ins(%in : tensor&lt;2x34x34x640xf32&gt;)
       outs(%out : tensor&lt;2x1024x5760xf32&gt;) -&gt; tensor&lt;2x1024x5760xf32&gt;
@@ -4476,7 +4743,7 @@ becomes:
       scf.for %arg2 = %c0 to %c5760 step %c1
         %im2col = iree_linalg_ext.im2col
             strides = [1, 1] dilations = [1, 1] kernel_size = [3, 3]
-            m_offset = [%arg1] k_offset = [%arg2]
+            m_offset = [%arg1] * [1] k_offset = [%arg2] * [1]
             batch_pos = [0] m_pos = [1, 2] k_pos = [3]
             ins(%in_tile : tensor&lt;1x34x34x640xf32&gt;)
             outs(%out_tile : tensor&lt;1x1x1xf32&gt;) -&gt; tensor&lt;1x1x1xf32&gt;
@@ -4488,22 +4755,37 @@ computed using the <code>m_offset</code> and <code>k_offset</code> as:
 (b, m, k) -&gt; (b, M / 32 + K / (640<em>3), M % 32 + K % (640</em>3) / 640, K % 640)
 Where <code>(b, m, k)</code> are the indices of the tiled op's iteration space, and
 <code>M = m + m_offset</code> and <code>K = k + K_offset</code>.</p>
+<p>The <code>m_strides</code> and <code>k_strides</code> fields are used as a basis for linearizing
+the <code>m_offset</code> and <code>k_offset</code>. This is used when there are multiple M or K
+output dimensions, and therefore multiple <code>m_offset</code> or <code>k_offset</code> values.
+The strides fields are assembled in the IR as if they are multiplied as an
+inner product with <code>m_offset</code> and <code>k_offset, indicating that the total
+linear offset along the dimension is equal to this inner product. These
+strides fields also determine the strides of the output dimensions along
+M and K. For example, an op with</code>m_strides = [32, 1]<code>,</code>k_strides = [4, 1]<code>,
+and output type</code>tensor<BxM0xM1xK0xK1><code>(expanded from</code>tensor<BxMxK><code>),
+would have strides along the M dim of 32 for</code>M0<code>, meaning as</code>M0<code>increases
+by 1, the index into the flat</code>M<code>increases by 32. Along the K dim, strides
+would be 4 for</code>K0<code>, and 1 for</code>K1<code>, meaning as</code>K0<code>increases by 1, the
+index into the flat</code>K<code>increases by 4. The strides in M from</code>m_strides<code>are orthogonal to the strides in</code>K<code>from</code>k_strides`.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
-<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code></p>
-<h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
+<p>Interfaces: <code>AggregatedOpInterface</code>, <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>dilations</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>static_kernel_size</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>static_m_offset</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
+<tr><td><code>static_m_strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>static_k_offset</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
+<tr><td><code>static_k_strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>batch_pos</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>m_pos</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>k_pos</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h5>
+<h5 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4529,12 +4811,20 @@ Where <code>(b, m, k)</code> are the indices of the tiled op's iteration space, 
 <td>variadic of index</td>
 </tr>
 <tr>
+<td style="text-align: center;"><code>m_strides</code></td>
+<td>variadic of index</td>
+</tr>
+<tr>
 <td style="text-align: center;"><code>k_offset</code></td>
+<td>variadic of index</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>k_strides</code></td>
 <td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_4">Results:<a class="headerlink" href="#results_4" title="Permanent link">link</a></h5>
+<h5 id="results_5">Results:<a class="headerlink" href="#results_5" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4553,8 +4843,9 @@ Where <code>(b, m, k)</code> are the indices of the tiled op's iteration space, 
 <p><em>Online Attention operator</em></p>
 <p>Syntax:</p>
 <div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.online_attention` attr-dict
-              `ins` `(` $query `,` $key `,` $value `,` $scale `:` type($query) `,` type($key) `,` type($value) `,` type($scale) `)`
+              `ins` `(` $query `,` $key `,` $value `,` $scale (`,` $mask^)?  `:` type($query) `,` type($key) `,` type($value) `,` type($scale) (`,` type($mask)^ )?`)`
               `outs` `(` $output `,` $max `,` $sum `:` type($output) `,` type($max) `,` type($sum) `)`
+              $region
               (`-&gt;` type($results)^)?
 </code></pre></div>
 <p>Traditional scaled dot product attention computes:</p>
@@ -4563,8 +4854,10 @@ Where <code>(b, m, k)</code> are the indices of the tiled op's iteration space, 
 softmax:</p>
 <p>online_attention(Q, K, V, scale, running_max, running_sum)
   = online_normalizer(Q @ K.T * scale, running_max, running_sum) @ V</p>
+<p>If an additional mask argument M is included, the result of the first matmul is modified according to:</p>
+<p>Q @ K.T += M</p>
 <p>The advantage of this online_normalizer is that it can be tiled along
-it's reduction dimension, making the online_attention operator:
+its reduction dimension, making the online_attention operator:
   - Tilable along softmax reduction dimension
   - Associative along softmax reduction dimension
   - Commutative along softmax associative dimension</p>
@@ -4572,14 +4865,16 @@ it's reduction dimension, making the online_attention operator:
 it over the entire softmax reduction dimension by:
   x, _, sum : results
   x = (1 / sum) * x</p>
+<p>Traits: <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>AggregatedOpInterface</code>, <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
+<h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>indexing_maps</code></td><td>::mlir::ArrayAttr</td><td>AffineMap array attribute</td></tr>
+<tr><td><code>decomposition_config</code></td><td>::mlir::DictionaryAttr</td><td>dictionary of named attribute values</td></tr>
 </table>
 
-<h5 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h5>
+<h5 id="operands_6">Operands:<a class="headerlink" href="#operands_6" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4605,6 +4900,10 @@ it over the entire softmax reduction dimension by:
 <td>floating-point</td>
 </tr>
 <tr>
+<td style="text-align: center;"><code>mask</code></td>
+<td>shaped of any type values</td>
+</tr>
+<tr>
 <td style="text-align: center;"><code>output</code></td>
 <td>shaped of any type values</td>
 </tr>
@@ -4615,59 +4914,6 @@ it over the entire softmax reduction dimension by:
 <tr>
 <td style="text-align: center;"><code>sum</code></td>
 <td>shaped of any type values</td>
-</tr>
-</tbody>
-</table>
-<h5 id="results_5">Results:<a class="headerlink" href="#results_5" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>results</code></td>
-<td>variadic of ranked tensor of any type values</td>
-</tr>
-</tbody>
-</table>
-<h4 id="iree_linalg_extreverse-linalgextreverseop"><code>iree_linalg_ext.reverse</code> (LinalgExt::ReverseOp)<a class="headerlink" href="#iree_linalg_extreverse-linalgextreverseop" title="Permanent link">link</a></h4>
-<p><em>Reverse operator</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.reverse` attr-dict `dimensions` `(` $dimensions `)`
-              (`ins` `(` $inputs^ `:` type($inputs) `)`)?
-              (`outs` `(` $outputs^ `:` type($outputs) `)`)?
-              (`:` type($results)^)?
-</code></pre></div>
-<p>A temporary solution for lowering reverse ops into IREE, allowing IREE to
-tile and distribute them.
-}</p>
-<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
-<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgExtOp</code>, <code>LinalgFusionOpInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
-<table>
-<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
-<tr><td><code>dimensions</code></td><td>::mlir::DenseIntElementsAttr</td><td>64-bit signless integer elements attribute</td></tr>
-</table>
-
-<h5 id="operands_6">Operands:<a class="headerlink" href="#operands_6" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>inputs</code></td>
-<td>variadic of shaped of any type values</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>outputs</code></td>
-<td>variadic of shaped of any type values</td>
 </tr>
 </tbody>
 </table>
@@ -4941,6 +5187,39 @@ Note: when the two values are equal, the first occurence is always selected.</p>
 </tbody>
 </table>
 <h3 id="utility-ops">Utility ops<a class="headerlink" href="#utility-ops" title="Permanent link">link</a></h3>
+<h4 id="iree_linalg_extindex-linalgextindexop"><code>iree_linalg_ext.index</code> (LinalgExt::IndexOp)<a class="headerlink" href="#iree_linalg_extindex-linalgextindexop" title="Permanent link">link</a></h4>
+<p><em>Linalg_ext index operation</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.index` $dim attr-dict `:` type($result)
+</code></pre></div>
+<p>This operation is a mirror of <code>linalg.index</code> operation and has the same
+semantics, except that <code>linalg.index</code> enforces that the parent op is a
+<code>LinalgOp</code>, and the <code>iree_linalg_ext.index</code> operation enforces that the
+parent op is a <code>IREE::LinalgExt::CustomOp</code>.</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
+<h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>dim</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute whose minimum value is 0</td></tr>
+</table>
+
+<h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>result</code></td>
+<td>index</td>
+</tr>
+</tbody>
+</table>
 <h4 id="iree_linalg_extyield-linalgextyieldop"><code>iree_linalg_ext.yield</code> (LinalgExt::YieldOp)<a class="headerlink" href="#iree_linalg_extyield-linalgextyieldop" title="Permanent link">link</a></h4>
 <p><em>LinalgExt yield op</em></p>
 <p>Syntax:</p>
@@ -4990,7 +5269,7 @@ of shape (H, W, C, F) or (F, C, H, W) and the output is an operator of shape
 and then fed to a batch matmul op.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
+<h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>output_tile_size</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -5017,7 +5296,7 @@ and then fed to a batch matmul op.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
+<h5 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5055,7 +5334,7 @@ where H' = ceil((H - m + 1)/r) and W' = ceil((W - m + 1)/r). The result
 of this operator is first collapsed and then fed to a batch matmul op.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
+<h5 id="attributes_12">Attributes:<a class="headerlink" href="#attributes_12" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>output_tile_size</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -5082,7 +5361,7 @@ of this operator is first collapsed and then fed to a batch matmul op.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h5>
+<h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5124,7 +5403,7 @@ This operator is followed by a tensor.extract_slice which extracts
 only the non-padded part of the output.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_12">Attributes:<a class="headerlink" href="#attributes_12" title="Permanent link">link</a></h5>
+<h5 id="attributes_13">Attributes:<a class="headerlink" href="#attributes_13" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>output_tile_size</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -5151,7 +5430,7 @@ only the non-padded part of the output.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
+<h5 id="results_14">Results:<a class="headerlink" href="#results_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5163,6 +5442,59 @@ only the non-padded part of the output.</p>
 <tr>
 <td style="text-align: center;"><code>result</code></td>
 <td>variadic of ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
+<h2 id="attributes_14">Attributes<a class="headerlink" href="#attributes_14" title="Permanent link">link</a></h2>
+<h3 id="iteratortypeattr">IteratorTypeAttr<a class="headerlink" href="#iteratortypeattr" title="Permanent link">link</a></h3>
+<p>Iterator type</p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>#iree_linalg_ext.iterator_type&lt;
+  ::mlir::utils::IteratorType   # value
+&gt;
+</code></pre></div>
+<p>Enum cases:
+* parallel (<code>parallel</code>)
+* reduction (<code>reduction</code>)</p>
+<h5 id="parameters">Parameters:<a class="headerlink" href="#parameters" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Parameter</th>
+<th style="text-align: center;">C++ type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">value</td>
+<td style="text-align: center;"><code>::mlir::utils::IteratorType</code></td>
+<td>an enum of type IteratorType</td>
+</tr>
+</tbody>
+</table>
+<h2 id="enums">Enums<a class="headerlink" href="#enums" title="Permanent link">link</a></h2>
+<h3 id="iteratortype">IteratorType<a class="headerlink" href="#iteratortype" title="Permanent link">link</a></h3>
+<p>Iterator type</p>
+<h4 id="cases">Cases:<a class="headerlink" href="#cases" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">parallel</td>
+<td style="text-align: center;"><code>0</code></td>
+<td>parallel</td>
+</tr>
+<tr>
+<td style="text-align: center;">reduction</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>reduction</td>
 </tr>
 </tbody>
 </table>
@@ -5239,8 +5571,16 @@ only the non-padded part of the output.</p>
     
     
     
-    <a href="https://groups.google.com/forum/#!forum/iree-discuss" target="_blank" rel="noopener" title="IREE Discuss Google Group" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M144 0a80 80 0 1 1 0 160 80 80 0 1 1 0-160zm368 0a80 80 0 1 1 0 160 80 80 0 1 1 0-160zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7-1.3 7.2-1.9 14.7-1.9 22.3 0 38.2 16.8 72.5 43.3 96H21.3C9.6 320 0 310.4 0 298.7zM405.3 320h-.7c26.6-23.5 43.3-57.8 43.3-96 0-7.6-.7-15-1.9-22.3 13.6-6.3 28.7-9.7 44.6-9.7h42.7c58.9 0 106.7 47.8 106.7 106.7 0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1-192 0zm-96 261.3c0-73.6 59.7-133.3 133.3-133.3h117.4c73.6 0 133.3 59.7 133.3 133.3 0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z"/></svg>
+    <a href="https://lists.lfaidata.foundation/g/iree-announce" target="_blank" rel="noopener" title="IREE Announcement Mailing List" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M480 32c0-12.9-7.8-24.6-19.8-29.6S434.5.2 425.3 9.3L381.7 53c-48 48-113.1 75-181 75H64c-35.3 0-64 28.7-64 64v96c0 35.3 28.7 64 64 64v128c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V352h8.7c67.9 0 133 27 181 75l43.6 43.6c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6V300.4c18.6-8.8 32-32.5 32-60.4s-13.4-51.6-32-60.4V32zm-64 76.7v262.6C357.2 317.8 280.5 288 200.7 288H192v-96h8.7c79.8 0 156.5-29.8 215.3-83.3z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://lists.lfaidata.foundation/g/iree-technical-discussion" target="_blank" rel="noopener" title="IREE Technical Discussion Mailing List" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l217.6 163.2c11.4 8.5 27 8.5 38.4 0l217.6-163.2c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48H48zM0 176v208c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V176L294.4 339.2a63.9 63.9 0 0 1-76.8 0L0 176z"/></svg>
     </a>
   
 </div>

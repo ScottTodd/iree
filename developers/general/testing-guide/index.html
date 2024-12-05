@@ -11,14 +11,14 @@
         <link rel="canonical" href="https://iree.dev/developers/general/testing-guide/">
       
       
-        <link rel="prev" href="../release-management/">
+        <link rel="prev" href="../versioning-scheme/">
       
       
         <link rel="next" href="../../building/bazel/">
       
       
       <link rel="icon" href="../../../assets/images/IREE_Logo_Icon_Color.svg">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.19">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.19">
     
     
       
@@ -1423,6 +1423,8 @@
       
         
       
+        
+      
     
     
       
@@ -1654,6 +1656,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../reference/mlir-dialects/IREEVectorExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREEVectorExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../reference/mlir-dialects/LinalgExt/" class="md-nav__link">
         
   
@@ -1771,8 +1794,6 @@
       
         
       
-        
-      
     
     
       
@@ -1820,27 +1841,6 @@
   
   <span class="md-ellipsis">
     IREEInput
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../reference/mlir-dialects/IREEVectorExt/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IREEVectorExt
   </span>
   
 
@@ -2096,6 +2096,8 @@
       
         
       
+        
+      
     
     
       
@@ -2238,6 +2240,29 @@
   
   <span class="md-ellipsis">
     Release management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versioning-scheme/" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M7.75 14A1.75 1.75 0 0 1 6 12.25v-8.5C6 2.784 6.784 2 7.75 2h6.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14Zm-.25-1.75c0 .138.112.25.25.25h6.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-6.5a.25.25 0 0 0-.25.25ZM4.9 3.508a.75.75 0 0 1-.274 1.025.249.249 0 0 0-.126.217v6.5c0 .09.048.173.126.217a.75.75 0 0 1-.752 1.298A1.75 1.75 0 0 1 3 11.25v-6.5c0-.649.353-1.214.874-1.516a.75.75 0 0 1 1.025.274ZM1.625 5.533h.001a.249.249 0 0 0-.126.217v4.5c0 .09.048.173.126.217a.75.75 0 0 1-.752 1.298A1.748 1.748 0 0 1 0 10.25v-4.5a1.748 1.748 0 0 1 .873-1.516.75.75 0 1 1 .752 1.299Z"/></svg>
+  
+  <span class="md-ellipsis">
+    Versioning scheme
   </span>
   
 
@@ -2457,28 +2482,52 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#external-test-suite" class="md-nav__link">
+  <a href="#external-test-suites" class="md-nav__link">
     <span class="md-ellipsis">
-      External test suite
+      External test suites
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="External test suite">
+    <nav class="md-nav" aria-label="External test suites">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#adding-new-test-cases" class="md-nav__link">
+  <a href="#linalg-operator-tests" class="md-nav__link">
     <span class="md-ellipsis">
-      Adding new test cases
+      linalg operator tests
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#usage-from-other-projects" class="md-nav__link">
+  <a href="#onnx-operator-tests" class="md-nav__link">
     <span class="md-ellipsis">
-      Usage from other projects
+      ONNX operator tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ONNX operator tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-config-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating config files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onnx-model-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      ONNX model tests
     </span>
   </a>
   
@@ -2910,8 +2959,6 @@
       
         
       
-        
-      
     
     
       
@@ -2964,29 +3011,6 @@
   
   <span class="md-ellipsis">
     Benchmarking
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../performance/benchmark-suites/" class="md-nav__link">
-        
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m11.628 16.186-2.047-2.14 6.791-5.953 1.21 1.302zm8.837 6.047c2.14-2.14 3.535-5.117 3.535-8.466 0-6.604-5.395-12-12-12s-12 5.396-12 12c0 3.35 1.302 6.326 3.535 8.466l1.674-1.675c-1.767-1.767-2.79-4.093-2.79-6.79A9.568 9.568 0 0 1 12 4.185a9.568 9.568 0 0 1 9.581 9.581c0 2.605-1.116 5.024-2.79 6.791Z"/></svg>
-  
-  <span class="md-ellipsis">
-    Benchmark suites
   </span>
   
 
@@ -3997,28 +4021,52 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#external-test-suite" class="md-nav__link">
+  <a href="#external-test-suites" class="md-nav__link">
     <span class="md-ellipsis">
-      External test suite
+      External test suites
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="External test suite">
+    <nav class="md-nav" aria-label="External test suites">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#adding-new-test-cases" class="md-nav__link">
+  <a href="#linalg-operator-tests" class="md-nav__link">
     <span class="md-ellipsis">
-      Adding new test cases
+      linalg operator tests
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#usage-from-other-projects" class="md-nav__link">
+  <a href="#onnx-operator-tests" class="md-nav__link">
     <span class="md-ellipsis">
-      Usage from other projects
+      ONNX operator tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ONNX operator tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-config-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating config files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onnx-model-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      ONNX model tests
     </span>
   </a>
   
@@ -4251,12 +4299,6 @@ need to build the special <code>iree-test-deps</code> target to generate test fi
 to running CTest (from the build directory):</p>
 <div class="highlight"><pre><span></span><code>cmake<span class="w"> </span>--build<span class="w"> </span>.<span class="w"> </span>--target<span class="w"> </span>iree-test-deps
 </code></pre></div>
-<p>To run e2e model tests in
-<a href="https://github.com/iree-org/iree/blob/main/tests/e2e/stablehlo_models/generated_e2e_model_tests.cmake">generated_e2e_model_tests.cmake</a>,
-because of their dependencies, <code>-DIREE_BUILD_E2E_TEST_ARTIFACTS=ON</code> needs to be
-set when configuring CMake. Also see
-<a href="../../performance/benchmark-suites/#prerequisites">IREE Benchmark Suite Prerequisites</a>
-for required packages.</p>
 <h3 id="running-a-test_2">Running a Test<a class="headerlink" href="#running-a-test_2" title="Permanent link">link</a></h3>
 <p>For the test
 <a href="https://github.com/iree-org/iree/blob/main/tests/e2e/stablehlo_ops/floor.mlir"><code>tests/e2e/stablehlo_ops/floor.mlir</code></a>
@@ -4388,42 +4430,66 @@ our <code>CMakeLists.txt</code> file by
 <p>There are other test targets that generate tests based on template configuraton
 and platform detection, such as <code>iree_static_linker_test</code>. Those targets are
 not supported by Bazel rules at this point.</p>
-<h2 id="external-test-suite">External test suite<a class="headerlink" href="#external-test-suite" title="Permanent link">link</a></h2>
-<p>An out-of-tree test suite is under development at
-<a href="https://github.com/nod-ai/SHARK-TestSuite/tree/main/iree_tests">nod-ai/SHARK-TestSuite</a>
-for large collections of generated tests and machine learning models that are
-too large to fit into the main git repository.</p>
-<p>Testing these programs follows several stages:</p>
+<h2 id="external-test-suites">External test suites<a class="headerlink" href="#external-test-suites" title="Permanent link">link</a></h2>
+<p>Multiple test suites are under development in the
+<a href="https://github.com/iree-org/iree-test-suites">iree-org/iree-test-suites</a>
+repository.</p>
+<ul>
+<li>Many program, input, and output files are too large to store directly in Git,
+  especially in a monorepo, so test suites may use
+  <a href="https://git-lfs.com/">Git LFS</a>, cloud storage, and persistent caches on
+  test machines as needed.</li>
+<li>Keeping tests out of tree forces them to use public project APIs and allows
+  the core project to keep its infrastructure simpler.</li>
+</ul>
+<p>The <a href="https://github.com/nod-ai/SHARK-TestSuite">nod-ai/SHARK-TestSuite</a>
+repository also contains tests for many machine learning models. Some of these
+tests are planned to be migrated into
+<a href="https://github.com/iree-org/iree-test-suites">iree-org/iree-test-suites</a>.</p>
+<h3 id="linalg-operator-tests">linalg operator tests<a class="headerlink" href="#linalg-operator-tests" title="Permanent link">link</a></h3>
+<p>Tests for operators in the MLIR linalg dialect like <code>matmul</code>, and <code>convolution</code>
+are being migrated from folders like
+<a href="https://github.com/iree-org/iree/tree/main/tests/e2e/matmul"><code>tests/e2e/matmul/</code></a>
+in the
+<a href="https://github.com/iree-org/iree">iree-org/iree</a> repository to
+<a href="https://github.com/iree-org/iree-test-suites/tree/main/linalg_ops"><code>linalg_ops/</code></a>
+in the
+<a href="https://github.com/iree-org/iree-test-suites">iree-org/iree-test-suites</a>
+repository.</p>
+<h3 id="onnx-operator-tests">ONNX operator tests<a class="headerlink" href="#onnx-operator-tests" title="Permanent link">link</a></h3>
+<p>Tests for individual ONNX operators are included at
+<a href="https://github.com/iree-org/iree-test-suites/tree/main/onnx_ops"><code>onnx_ops/</code></a>
+in the
+<a href="https://github.com/iree-org/iree-test-suites">iree-org/iree-test-suites</a>
+repository. These tests are generated from the upstream tests at
+<a href="https://github.com/onnx/onnx/tree/main/onnx/backend/test/data/node"><code>onnx/backend/test/data/node/</code></a>
+in the <a href="https://github.com/onnx/onnx">onnxx/onnx</a> repository.</p>
+<p>Testing ONNX programs follows several stages:</p>
 <pre class="mermaid"><code>graph LR
   Import -. "\n(offline)" .-&gt; Compile
   Compile --&gt; Run</code></pre>
-<p>This particular test suite treats importing (e.g. from ONNX, PyTorch, or
-TensorFlow) as an offline step and contains test cases organized into folders
-of programs, inputs, and expected outputs:</p>
+<p>This particular test suite treats importing as an offline step and contains
+test cases organized into folders of programs, inputs, and expected outputs:</p>
 <div class="highlight"><span class="filename">Sample test case directory</span><pre><span></span><code>test_case_name/
   model.mlir
-  input_0.npy
-  output_0.npy
-  test_data_flags.txt
+  input_0.bin
+  output_0.bin
+  run_module_io_flags.txt
 </code></pre></div>
-<div class="highlight"><span class="filename">Sample test_data_flags.txt</span><pre><span></span><code>--input=@input_0.npy
---expected_output=@output_0.npy
+<div class="highlight"><span class="filename">Sample run_module_io_flags.txt</span><pre><span></span><code>--input=2x3xf32=@input_0.bin
+--expected_output=2x3xf32=@output_0.bin
 </code></pre></div>
-<ul>
-<li>Many model, input, and output files are too large to store directly in Git,
-so the external test suite also uses <a href="https://git-lfs.com/">Git LFS</a> and cloud
-storage.</li>
-</ul>
 <p>Each test case can be run using a sequence of commands like:</p>
 <div class="highlight"><pre><span></span><code>iree-compile<span class="w"> </span>model.mlir<span class="w"> </span><span class="o">{</span>flags<span class="o">}</span><span class="w"> </span>-o<span class="w"> </span>model.vmfb
-iree-run-module<span class="w"> </span>--module<span class="o">=</span>model.vmfb<span class="w"> </span>--flagfile<span class="o">=</span>test_data_flags.txt
+iree-run-module<span class="w"> </span>--module<span class="o">=</span>model.vmfb<span class="w"> </span>--flagfile<span class="o">=</span>run_module_io_flags.txt
 </code></pre></div>
 <p>To run slices of the test suite, a <a href="https://docs.pytest.org/en/stable/">pytest</a>
 runner is included that can be configured using JSON files. The JSON files
 tested in the IREE repo itself are stored in
-<a href="https://github.com/iree-org/iree/tree/main/build_tools/pkgci/external_test_suite"><code>build_tools/pkgci/external_test_suite/</code></a>.</p>
+<a href="https://github.com/iree-org/iree/tree/main/tests/external/iree-test-suites/onnx_ops"><code>tests/external/iree-test-suites/onnx_ops/</code></a>.</p>
 <p>For example, here is part of a config file for running ONNX tests on CPU:</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">build_tools/pkgci/external_test_suite/onnx_cpu_llvm_sync.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<!-- markdownlint-disable-next-line -->
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">tests/external/iree-test-suites/onnx_ops/onnx_ops_cpu_llvm_sync.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
 <span class="normal"> 4</span>
@@ -4446,47 +4512,43 @@ tested in the IREE repo itself are stored in
 <span class="w">  </span><span class="nt">&quot;config_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cpu_llvm_sync&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;iree_compile_flags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="s2">&quot;--iree-hal-target-backends=llvm-cpu&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;--iree-input-demote-f64-to-f32&quot;</span>
+<span class="w">    </span><span class="s2">&quot;--iree-input-demote-f64-to-f32=false&quot;</span>
 <span class="w">  </span><span class="p">],</span>
 <span class="w">  </span><span class="nt">&quot;iree_run_module_flags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="s2">&quot;--device=local-sync&quot;</span>
 <span class="w">  </span><span class="p">],</span>
 <span class="w">  </span><span class="nt">&quot;skip_compile_tests&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_dequantizelinear&quot;</span>
+<span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_dequantizelinear&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_einsum_inner_prod&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_group_normalization_epsilon_expanded&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_group_normalization_example_expanded&quot;</span>
 <span class="w">  </span><span class="p">],</span>
 <span class="w">  </span><span class="nt">&quot;skip_run_tests&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
 <span class="w">  </span><span class="nt">&quot;expected_compile_failures&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_adagrad&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_adagrad_multiple&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_adam&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_adam_multiple&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_affine_grid_2d&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_affine_grid_2d_align_corners&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;onnx/node/generated/test_affine_grid_2d_align_corners_expanded&quot;</span><span class="p">,</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="adding-new-test-cases">Adding new test cases<a class="headerlink" href="#adding-new-test-cases" title="Permanent link">link</a></h3>
-<p>To add new test cases to the external test suite:</p>
-<ol>
-<li>Import the programs you want to test into MLIR. This can be done manually or
-   using automation. Prefer to automate, or at least document, the process so
-   test cases can be regenerated later.</li>
-<li>Construct sets of inputs and expected outputs (as .npy or .bin files). These
-   can be manually authored or imported by running the program through a
-   reference backend.</li>
-<li>Group the program, inputs, and outputs together using a flagfile.</li>
-</ol>
-<p>To start running new test cases:</p>
-<ol>
-<li>Bump the commit of the test suite that is used in IREE's
-   <a href="https://github.com/iree-org/iree/tree/main/.github/workflows"><code>.github/workflows/</code> files</a></li>
-<li>Add new pytest invocations and/or config files that run the new tests</li>
-</ol>
-<h3 id="usage-from-other-projects">Usage from other projects<a class="headerlink" href="#usage-from-other-projects" title="Permanent link">link</a></h3>
-<p>The external test suite only needs <code>iree-compile</code> and <code>iree-run-module</code> to run,
-so it is well suited for use in downstream projects that implement plugins for
-IREE. The
-<a href="https://github.com/nod-ai/SHARK-TestSuite/blob/main/iree_tests/conftest.py"><code>conftest.py</code></a>
-file can also be forked (or bypassed entirely) to further customize the test
-runner behavior.</p>
+<h4 id="updating-config-files">Updating config files<a class="headerlink" href="#updating-config-files" title="Permanent link">link</a></h4>
+<p>If the ONNX operator tests fail on a GitHub Actions workflow, check the logs
+for the nature of the failure. Often, a test is <em>newly passing</em>, with logs
+like this:</p>
+<div class="highlight"><pre><span></span><code>=================================== FAILURES ===================================
+_ IREE compile and run: test_mod_uint64::model.mlir::model.mlir::cpu_llvm_sync _
+[gw1] linux -- Python 3.11.9 /home/runner/work/iree/iree/venv/bin/python
+[XPASS(strict)] Expected run to fail (included in &#39;expected_run_failures&#39;)
+</code></pre></div>
+<p>The workflow job that failed should then upload a new config file as an
+"Artifact", which can be downloaded from the action run summary page and then
+committed:</p>
+<p><img alt="image" src="https://github.com/user-attachments/assets/b5dbdcb4-4c0a-4ff2-adc6-9021614179b2" /></p>
+<h3 id="onnx-model-tests">ONNX model tests<a class="headerlink" href="#onnx-model-tests" title="Permanent link">link</a></h3>
+<p>Tests for ONNX models are included at
+<a href="https://github.com/iree-org/iree-test-suites/tree/main/onnx_models"><code>onnx_models/</code></a>
+in the
+<a href="https://github.com/iree-org/iree-test-suites">iree-org/iree-test-suites</a>
+repository. These tests use models from the upstream
+<a href="https://github.com/onnx/models">onnx/models</a> repository.</p>
 
 
 
@@ -4560,8 +4622,16 @@ runner behavior.</p>
     
     
     
-    <a href="https://groups.google.com/forum/#!forum/iree-discuss" target="_blank" rel="noopener" title="IREE Discuss Google Group" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M144 0a80 80 0 1 1 0 160 80 80 0 1 1 0-160zm368 0a80 80 0 1 1 0 160 80 80 0 1 1 0-160zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7-1.3 7.2-1.9 14.7-1.9 22.3 0 38.2 16.8 72.5 43.3 96H21.3C9.6 320 0 310.4 0 298.7zM405.3 320h-.7c26.6-23.5 43.3-57.8 43.3-96 0-7.6-.7-15-1.9-22.3 13.6-6.3 28.7-9.7 44.6-9.7h42.7c58.9 0 106.7 47.8 106.7 106.7 0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1-192 0zm-96 261.3c0-73.6 59.7-133.3 133.3-133.3h117.4c73.6 0 133.3 59.7 133.3 133.3 0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z"/></svg>
+    <a href="https://lists.lfaidata.foundation/g/iree-announce" target="_blank" rel="noopener" title="IREE Announcement Mailing List" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M480 32c0-12.9-7.8-24.6-19.8-29.6S434.5.2 425.3 9.3L381.7 53c-48 48-113.1 75-181 75H64c-35.3 0-64 28.7-64 64v96c0 35.3 28.7 64 64 64v128c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V352h8.7c67.9 0 133 27 181 75l43.6 43.6c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6V300.4c18.6-8.8 32-32.5 32-60.4s-13.4-51.6-32-60.4V32zm-64 76.7v262.6C357.2 317.8 280.5 288 200.7 288H192v-96h8.7c79.8 0 156.5-29.8 215.3-83.3z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://lists.lfaidata.foundation/g/iree-technical-discussion" target="_blank" rel="noopener" title="IREE Technical Discussion Mailing List" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l217.6 163.2c11.4 8.5 27 8.5 38.4 0l217.6-163.2c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48H48zM0 176v208c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V176L294.4 339.2a63.9 63.9 0 0 1-76.8 0L0 176z"/></svg>
     </a>
   
 </div>
