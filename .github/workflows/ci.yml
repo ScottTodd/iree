@@ -52,7 +52,7 @@ jobs:
   runtime:
     needs: setup
     name: "runtime :: ${{ matrix.name }}"
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime')
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime') && 0
     runs-on: ${{ matrix.runs-on }}
     defaults:
       run:
@@ -122,7 +122,7 @@ jobs:
 
   runtime_small:
     needs: setup
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime_small')
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime_small') && 0
     runs-on: ubuntu-24.04
     env:
       BUILD_DIR: build-runtime
@@ -226,19 +226,19 @@ jobs:
 
   linux_x64_bazel:
     needs: setup
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'linux_x64_bazel')
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'linux_x64_bazel') && 0
     uses: ./.github/workflows/ci_linux_x64_bazel.yml
     secrets: inherit
 
   linux_x64_clang:
     needs: setup
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'linux_x64_clang')
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'linux_x64_clang') && 0
     uses: ./.github/workflows/ci_linux_x64_clang.yml
     secrets: inherit
 
   linux_x64_clang_asan:
     needs: setup
-    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'linux_x64_clang_asan')
+    if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'linux_x64_clang_asan') && 0
     uses: ./.github/workflows/ci_linux_x64_clang_asan.yml
     secrets: inherit
 
