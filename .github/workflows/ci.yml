@@ -196,6 +196,7 @@ jobs:
             compiler: clang
     env:
       BUILD_DIR: build-tracing
+      IREE_ENABLE_LLD: ON
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
@@ -220,6 +221,7 @@ jobs:
         run: |
           echo "CC=gcc" >> $GITHUB_ENV
           echo "CXX=g++" >> $GITHUB_ENV
+          echo "IREE_ENABLE_LLD=OFF" >> $GITHUB_ENV
       - name: Configure MSVC
         if: contains(matrix.compiler, 'msvc')
         uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
@@ -249,7 +251,7 @@ jobs:
             -DCMAKE_C_COMPILER_LAUNCHER=ccache \
             -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
             -DIREE_BUILD_COMPILER=OFF \
-            -DIREE_ENABLE_LLD=ON \
+            -DIREE_ENABLE_LLD=${IREE_ENABLE_LLD} \
             -DIREE_ENABLE_RUNTIME_TRACING=ON \
             -DIREE_TRACING_PROVIDER=${{ matrix.provider }} \
             ${IREE_DRIVER_OPTIONS}
