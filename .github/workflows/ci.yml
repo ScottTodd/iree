@@ -172,11 +172,11 @@ jobs:
             provider: tracy
             compiler: clang
           - runs-on: ubuntu-24.04
-            provider: console
-            compiler: clang
-          - runs-on: ubuntu-24.04
             provider: tracy
             compiler: gcc
+          - runs-on: ubuntu-24.04
+            provider: console
+            compiler: clang
 
           # Windows
           - runs-on: windows-2022
@@ -240,7 +240,7 @@ jobs:
       - name: ccache
         uses: hendrikmuhs/ccache-action@ed74d11c0b343532753ecead8a951bb09bb34bc9 # v1.2.14
         with:
-          key: ${{ github.job }}-${{ matrix.runs-on}}-${{ matrix.provider }}
+          key: ${{ github.job }}-${{ matrix.runs-on}}-${{ matrix.provider }}-${{ matrix.compiler }}
           save: ${{ needs.setup.outputs.write-caches == 1 }}
       - name: CMake - configure
         run: |
