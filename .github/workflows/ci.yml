@@ -157,7 +157,7 @@ jobs:
 
   runtime_tracing:
     needs: setup
-    name: "runtime_tracing :: ${{ matrix.runs-on }} :: ${{ matrix.provider }}"
+    name: "runtime_tracing :: ${{ matrix.runs-on }} :: ${{ matrix.provider }} :: ${{ matrix.compiler }}"
     if: contains(fromJson(needs.setup.outputs.enabled-jobs), 'runtime_tracing')
     runs-on: ${{ matrix.runs-on }}
     defaults:
@@ -166,31 +166,65 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runs-on: [ubuntu-24.04, windows-2022, macos-14]
-        provider: [tracy, console]
-        # TODO: re-enable macOS Tracy build once it has no errors
-        exclude:
-          - runs-on: macos-14
+        include:
+          # Linux
+          - runs-on: ubuntu-24.04
             provider: tracy
+            compiler: clang
+          - runs-on: ubuntu-24.04
+            provider: console
+            compiler: clang
+          - runs-on: ubuntu-24.04
+            provider: tracy
+            compiler: gcc
+
+          # Windows
+          - runs-on: windows-2022
+            provider: tracy
+            compiler: msvc
+          - runs-on: windows-2022
+            provider: console
+            compiler: msvc
+
+          # macOS
+          # TODO: re-enable once this has no errors
+          # - runs-on: macos-14
+          #   provider: tracy
+          #   compiler: clang
+          - runs-on: macos-14
+            provider: console
+            compiler: clang
     env:
       BUILD_DIR: build-tracing
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
+      # Install requirements depending on the selected OS.
       - name: (Linux) Install requirements
         if: contains(matrix.runs-on, 'ubuntu')
         run: |
           sudo apt update
           sudo apt install -y ninja-build
-          echo "CC=clang" >> $GITHUB_ENV
-          echo "CXX=clang++" >> $GITHUB_ENV
-      - name: (Windows) Configure MSVC
-        if: contains(matrix.runs-on, 'windows')
-        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
       - name: (macOS) Install requirements
         if: contains(matrix.runs-on, 'macos')
         run: brew install ninja ccache coreutils bash
 
+      # Configure the selected compiler.
+      - name: Configure clang
+        if: contains(matrix.compiler, 'clang')
+        run: |
+          echo "CC=clang" >> $GITHUB_ENV
+          echo "CXX=clang++" >> $GITHUB_ENV
+      - name: Configure gcc
+        if: contains(matrix.compiler, 'gcc')
+        run: |
+          echo "CC=gcc" >> $GITHUB_ENV
+          echo "CXX=g++" >> $GITHUB_ENV
+      - name: Configure MSVC
+        if: contains(matrix.compiler, 'msvc')
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+
+      # Set OS-specific CMake options.
       - name: (Linux/Windows) Set driver options
         if: contains(matrix.runs-on, 'ubuntu') || contains(matrix.runs-on, 'windows')
         run: echo IREE_DRIVER_OPTIONS="-DIREE_HAL_DRIVER_CUDA=ON -DIREE_HAL_DRIVER_HIP=ON -DIREE_HAL_DRIVER_VULKAN=ON" >> $GITHUB_ENV
@@ -198,6 +232,7 @@ jobs:
         if: contains(matrix.runs-on, 'macos')
         run: echo IREE_DRIVER_OPTIONS="-DIREE_HAL_DRIVER_METAL=ON -DIREE_HAL_DRIVER_VULKAN=OFF" >> $GITHUB_ENV
 
+      # Configure and build.
       - name: Checkout runtime submodules
         run: bash ./build_tools/scripts/git/update_runtime_submodules.sh
       - name: ccache
