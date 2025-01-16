@@ -81,18 +81,23 @@ jobs:
         with:
           python-version: "3.11"
 
+      # https://github.com/actions/partner-runner-images/issues/27
+      - name: (arm) Fix XDG_CONFIG_HOME
+        if: contains(matrix.runs-on, 'arm')
+        run: echo "XDG_CONFIG_HOME=~/.config" >> $GITHUB_ENV
+
       - name: (Linux) Install requirements
-        if: contains(matrix.name, 'ubuntu')
+        if: contains(matrix.runs-on, 'ubuntu')
         run: |
           sudo apt update
           sudo apt install -y ninja-build
           echo "CC=clang" >> $GITHUB_ENV
           echo "CXX=clang++" >> $GITHUB_ENV
       - name: (Windows) Configure MSVC
-        if: contains(matrix.name, 'windows')
+        if: contains(matrix.runs-on, 'windows')
         uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
       - name: (macOS) Install requirements
-        if: contains(matrix.name, 'macos')
+        if: contains(matrix.runs-on, 'macos')
         run: brew install ninja ccache coreutils bash
 
       - name: Checkout runtime submodules
@@ -176,6 +181,11 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
+      # https://github.com/actions/partner-runner-images/issues/27
+      - name: (arm) Fix XDG_CONFIG_HOME
+        if: contains(matrix.runs-on, 'arm')
+        run: echo "XDG_CONFIG_HOME=~/.config" >> $GITHUB_ENV
+
       - name: (Linux) Install requirements
         if: contains(matrix.runs-on, 'ubuntu')
         run: |
@@ -202,7 +212,7 @@ jobs:
       - name: ccache
         uses: hendrikmuhs/ccache-action@53911442209d5c18de8a31615e0923161e435875 # v1.2.16
         with:
-          key: ${{ github.job }}-${{ matrix.runs-on}}-${{ matrix.provider }}
+          key: ${{ github.job }}-${{ matrix.runs-on }}-${{ matrix.provider }}
           save: ${{ needs.setup.outputs.write-caches == 1 }}
       - name: CMake - configure
         run: |
