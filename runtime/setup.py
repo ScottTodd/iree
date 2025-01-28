@@ -70,7 +70,6 @@ CONFIGURED_BINARY_DIR = "@IREE_BINARY_DIR@"
 ENABLE_TRACY = getenv_bool(
     "IREE_RUNTIME_BUILD_TRACY", "@IREE_RUNTIME_BUILD_TRACY@", "ON"
 )
-
 if ENABLE_TRACY:
     print(
         "*** Enabling Tracy instrumented runtime (disable with IREE_RUNTIME_BUILD_TRACY=OFF)",
@@ -81,6 +80,7 @@ else:
         "*** Tracy instrumented runtime not enabled (enable with IREE_RUNTIME_BUILD_TRACY=ON)",
         file=sys.stderr,
     )
+
 ENABLE_TRACY_TOOLS = getenv_bool(
     "IREE_RUNTIME_BUILD_TRACY_TOOLS", "@IREE_RUNTIME_BUILD_TRACY_TOOLS@"
 )
@@ -91,6 +91,9 @@ else:
         "*** Tracy tools not enabled (enable with IREE_RUNTIME_BUILD_TRACY_TOOLS=ON)",
         file=sys.stderr,
     )
+
+PLATFORM_EXE_EXTENSION = "" if platform.system() != "Windows" else ".exe"
+
 # Default to LTO builds for our python releases.
 IREE_RUNTIME_OPTIMIZATION_PROFILE = os.getenv(
     "IREE_RUNTIME_OPTIMIZATION_PROFILE", "lto"
@@ -433,8 +436,6 @@ class CMakeBuildPy(_build_py):
         cmake_args = [
             "-DIREE_ENABLE_RUNTIME_TRACING=ON",
         ]
-        if ENABLE_TRACY_TOOLS:
-            cmake_args.append("-DIREE_BUILD_TRACY=ON")
         build_configuration(
             IREE_TRACY_BINARY_DIR,
             CMAKE_TRACY_INSTALL_DIR_ABS,
@@ -460,6 +461,63 @@ class CMakeBuildPy(_build_py):
             target_dir,
             symlinks=self.editable_mode,
         )
+
+        if ENABLE_TRACY_TOOLS:
+            print("Tracy tools enabled, building from source", file=sys.stderr)
+            # TODO(scotttodd): build into IREE_TRACY_BINARY_DIR?
+            # TODO(scotttodd): maybe_nuke_cmake_cache(cmake_build_dir, cmake_install_dir)
+            script_dir = os.path.join(
+                IREE_SOURCE_DIR, "build_tools", "third_party", "tracy"
+            )
+            source_dir = os.path.join(IREE_SOURCE_DIR, "third_party", "tracy")
+            subprocess.check_call(
+                ["bash", os.path.join(script_dir, "build_tracy_capture.sh")],
+                shell=True,
+            )
+            subprocess.check_call(
+                ["bash", os.path.join(script_dir, "build_tracy_csvexport.sh")],
+                shell=True,
+            )
+            subprocess.check_call(
+                ["bash", os.path.join(script_dir, "build_tracy_profiler.sh")],
+                shell=True,
+            )
+            print("Copying Tracy tools into target directory", file=sys.stderr)
+            shutil.copy2(
+                os.path.join(
+                    source_dir,
+                    "capture",
+                    "build",
+                    "tracy-capture" + PLATFORM_EXE_EXTENSION,
+                ),
+                os.path.join(target_dir, "iree-tracy-capture" + PLATFORM_EXE_EXTENSION),
+                follow_symlinks=self.editable_mode,
+            )
+            shutil.copy2(
+                os.path.join(
+                    source_dir,
+                    "csvexport",
+                    "build",
+                    "tracy-csvexport" + PLATFORM_EXE_EXTENSION,
+                ),
+                os.path.join(
+                    target_dir, "iree-tracy-csvexport" + PLATFORM_EXE_EXTENSION
+                ),
+                follow_symlinks=self.editable_mode,
+            )
+            shutil.copy2(
+                os.path.join(
+                    source_dir,
+                    "profiler",
+                    "build",
+                    "tracy-profiler" + PLATFORM_EXE_EXTENSION,
+                ),
+                os.path.join(
+                    target_dir, "iree-tracy-profiler" + PLATFORM_EXE_EXTENSION
+                ),
+                follow_symlinks=self.editable_mode,
+            )
+
         print("Target populated.", file=sys.stderr)
 
 
@@ -643,7 +701,15 @@ setup(
                     "iree-benchmark-executable*",
                     "iree-benchmark-module*",
                 ]
-                + (["iree-tracy-capture"] if ENABLE_TRACY_TOOLS else [])
+                + (
+                    [
+                        "iree-tracy-capture*",
+                        "iree-tracy-csvexport*",
+                        "iree-tracy-profiler*",
+                    ]
+                    if ENABLE_TRACY_TOOLS
+                    else []
+                )
             }
             if ENABLE_TRACY
             else {}
@@ -664,7 +730,9 @@ setup(
         ]
         + (
             [
-                "iree-tracy-capture = iree._runtime.scripts.iree_tracy_capture.__main__:main"
+                "iree-tracy-capture = iree._runtime.scripts.iree_tracy_capture.__main__:main",
+                "iree-tracy-csvexport = iree._runtime.scripts.iree_tracy_csvexport.__main__:main",
+                "iree-tracy-profiler = iree._runtime.scripts.iree_tracy_profiler.__main__:main",
             ]
             if ENABLE_TRACY_TOOLS
             else []

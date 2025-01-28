@@ -1,9 +1,4 @@
-# Tracy capture build support
+# Utilities for building Tracy tools
 
-This directory contains support for building the `tracy-capture` binary on
-supported platforms so IREE can bundle the capture tool in its own releases.
-
-Upstream CMake projects also exist for `tracy-capture`, `tracy-profiler`, and
-other tools and most developers should use those instead.
-
-For the client libraries, see the sibling directory tracy_client.
+See the upstream project at https://github.com/wolfpld/tracy and the git
+submodule at [`third_party/tracy/`](../../../third_party/tracy).

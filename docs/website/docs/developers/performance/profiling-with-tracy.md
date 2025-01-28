@@ -394,6 +394,8 @@ sudo sh -c "ulimit -n <bigNum> && <myTracyInstrumentedProgram>"
 
 ### Building Tracy from source
 
+<!-- TODO(scotttodd): mention bundled tools, refresh these docs -->
+
 First, refer to the upstream build instructions at either the
 <https://github.com/wolfpld/tracy/> repository itself or the
 [Tracy PDF manual](#the-tracy-manual).

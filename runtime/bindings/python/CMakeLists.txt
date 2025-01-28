@@ -4,15 +4,6 @@
 # See https://llvm.org/LICENSE.txt for license information.
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-set(_EXTRA_INSTALL_TOOL_TARGETS)
-set(_TRACY_ENABLED OFF)
-
-if(IREE_BUILD_TRACY)
-  message(STATUS "Bundling Tracy CLI tools with Python API")
-  set(_TRACY_ENABLED ON)
-  list(APPEND _EXTRA_INSTALL_TOOL_TARGETS "IREETracyCaptureServer")
-endif()
-
 ################################################################################
 # Package
 ################################################################################
@@ -197,14 +188,6 @@ iree_symlink_tool(
   TO_EXE_NAME iree/_runtime_libs/iree-run-module
 )
 
-if(_TRACY_ENABLED)
-  iree_symlink_tool(
-    TARGET runtime
-    FROM_TOOL_TARGET IREETracyCaptureServer
-    TO_EXE_NAME iree/_runtime_libs/iree-tracy-capture
-  )
-endif()
-
 ################################################################################
 # Tests
 ################################################################################
@@ -345,7 +328,6 @@ cmake_language(DEFER DIRECTORY \"${IREE_SOURCE_DIR}\"
     iree-dump-parameters
     iree-flatcc-cli
     iree-run-module
-    ${_EXTRA_INSTALL_TOOL_TARGETS}
   DESTINATION \"${_INSTALL_DIR}/iree/_runtime_libs\"
   COMPONENT \"${_INSTALL_COMPONENT}\"
 )

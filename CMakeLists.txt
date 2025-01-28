@@ -78,7 +78,6 @@ option(IREE_BUILD_TESTS "Builds IREE unit tests." ON)
 option(IREE_BUILD_DOCS "Builds IREE documentation files." OFF)
 option(IREE_BUILD_SAMPLES "Builds IREE sample projects." ON)
 option(IREE_BUILD_PYTHON_BINDINGS "Builds the IREE python bindings" OFF)
-option(IREE_BUILD_TRACY "Enables building the 'iree-tracy-capture' CLI tool and includes it in runtime Python bindings." OFF)
 option(IREE_BUILD_BUNDLED_LLVM "Builds the bundled llvm-project (vs using installed)" ON)
 
 # Properties controlling version and naming of release artifacts.
@@ -968,16 +967,6 @@ add_subdirectory(tests EXCLUDE_FROM_ALL)
 
 if(IREE_ENABLE_CLANG_TIDY)
   set(CMAKE_CXX_CLANG_TIDY "")
-endif()
-
-if(IREE_BUILD_TRACY)
-  if(NOT CMAKE_SYSTEM_NAME MATCHES "Darwin|Linux")
-    message(WARNING "Building Tracy (IREE_BUILD_TRACY) on non-Darwin/Linux is unsupported and may fail below.")
-  endif()
-  add_subdirectory(build_tools/third_party/tracy ${CMAKE_CURRENT_BINARY_DIR}/tracy)
-  if(NOT TARGET IREETracyCaptureServer)
-    message(SEND_ERROR "Could not build Tracy. Either unset IREE_BUILD_TRACY or look for missing dependencies above and install them.")
-  endif()
 endif()
 
 # Order constraint: The python bindings install tools targets from tools/
