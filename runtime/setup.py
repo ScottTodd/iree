@@ -218,7 +218,7 @@ if is_dev_build:
     PACKAGE_VERSION += f"+{git_versions.get('IREE') or '0'}"
 
 
-def maybe_nuke_cmake_cache(cmake_build_dir, cmake_install_dir):
+def maybe_nuke_cmake_cache(cmake_build_dir, cmake_install_dir=None):
     # From run to run under pip, we can end up with different paths to ninja,
     # which isn't great and will confuse cmake. Detect if the location of
     # ninja changes and force a cache flush.
@@ -252,7 +252,7 @@ def maybe_nuke_cmake_cache(cmake_build_dir, cmake_install_dir):
     # Also clean the install directory. This avoids version specific pileups
     # of binaries that can occur with repeated builds against different
     # Python versions.
-    if os.path.exists(cmake_install_dir):
+    if cmake_install_dir and os.path.exists(cmake_install_dir):
         print(
             f"Removing CMake install dir because Python version changed: "
             f"{cmake_install_dir}",
@@ -392,6 +392,46 @@ def build_configuration(cmake_build_dir, cmake_install_dir, extra_cmake_args=())
     print(f"Installation prepared: {cmake_install_dir}", file=sys.stderr)
 
 
+def build_tracy_tool(tool_name, cmake_install_dir):
+    print(f"Building Tracy tool '{tool_name}'", file=sys.stderr)
+
+    # TODO(scotttodd): build under IREE_TRACY_BINARY_DIR instead?
+    source_dir = os.path.join(IREE_SOURCE_DIR, "third_party", "tracy")
+    cmake_build_dir = os.path.join(source_dir, tool_name, "build")
+    os.makedirs(cmake_build_dir, exist_ok=True)
+    maybe_nuke_cmake_cache(cmake_build_dir)
+
+    subprocess.check_call(
+        [
+            "cmake",
+            "-B",
+            tool_name + "/build",
+            "-S",
+            tool_name,
+            "-GNinja",
+            "-DCMAKE_BUILD_TYPE=Release",
+        ],
+        cwd=source_dir,
+    )
+    subprocess.check_call(
+        [
+            "cmake",
+            "--build",
+            tool_name + "/build",
+            "--config",
+            "Release",
+        ],
+        cwd=source_dir,
+    )
+
+    original_exe_name = "tracy-" + tool_name + PLATFORM_EXE_EXTENSION
+    iree_exe_name = "iree-" + original_exe_name
+    copy_src = os.path.join(cmake_build_dir, original_exe_name)
+    copy_target = os.path.join(cmake_install_dir, iree_exe_name)
+    print(f"Copying Tracy tool from '{copy_src}' to '{copy_target}", file=sys.stderr)
+    shutil.copy2(copy_src, copy_target)
+
+
 class CMakeBuildPy(_build_py):
     def run(self):
         # The super-class handles the pure python build.
@@ -441,6 +481,22 @@ class CMakeBuildPy(_build_py):
             CMAKE_TRACY_INSTALL_DIR_ABS,
             extra_cmake_args=cmake_args,
         )
+
+        install_libs_dir = os.path.join(
+            CMAKE_TRACY_INSTALL_DIR_ABS,
+            "python_packages",
+            "iree_runtime",
+            "iree",
+            "_runtime_libs",
+        )
+
+        if ENABLE_TRACY_TOOLS:
+            print("Tracy tools enabled, building from source", file=sys.stderr)
+
+            build_tracy_tool("capture", install_libs_dir)
+            build_tracy_tool("csvexport", install_libs_dir)
+            build_tracy_tool("profiler", install_libs_dir)
+
         # We only take the iree._runtime_libs from the default build.
         target_dir = os.path.join(
             os.path.abspath(self.build_lib), "iree", "_runtime_libs_tracy"
@@ -451,73 +507,10 @@ class CMakeBuildPy(_build_py):
         if os.path.exists(target_dir):
             shutil.rmtree(target_dir)
         shutil.copytree(
-            os.path.join(
-                CMAKE_TRACY_INSTALL_DIR_ABS,
-                "python_packages",
-                "iree_runtime",
-                "iree",
-                "_runtime_libs",
-            ),
+            install_libs_dir,
             target_dir,
             symlinks=self.editable_mode,
         )
-
-        if ENABLE_TRACY_TOOLS:
-            print("Tracy tools enabled, building from source", file=sys.stderr)
-            # TODO(scotttodd): build into IREE_TRACY_BINARY_DIR?
-            # TODO(scotttodd): maybe_nuke_cmake_cache(cmake_build_dir, cmake_install_dir)
-            script_dir = os.path.join(
-                IREE_SOURCE_DIR, "build_tools", "third_party", "tracy"
-            )
-            source_dir = os.path.join(IREE_SOURCE_DIR, "third_party", "tracy")
-            subprocess.check_call(
-                ["bash", os.path.join(script_dir, "build_tracy_capture.sh")],
-                shell=True,
-            )
-            subprocess.check_call(
-                ["bash", os.path.join(script_dir, "build_tracy_csvexport.sh")],
-                shell=True,
-            )
-            subprocess.check_call(
-                ["bash", os.path.join(script_dir, "build_tracy_profiler.sh")],
-                shell=True,
-            )
-            print("Copying Tracy tools into target directory", file=sys.stderr)
-            shutil.copy2(
-                os.path.join(
-                    source_dir,
-                    "capture",
-                    "build",
-                    "tracy-capture" + PLATFORM_EXE_EXTENSION,
-                ),
-                os.path.join(target_dir, "iree-tracy-capture" + PLATFORM_EXE_EXTENSION),
-                follow_symlinks=self.editable_mode,
-            )
-            shutil.copy2(
-                os.path.join(
-                    source_dir,
-                    "csvexport",
-                    "build",
-                    "tracy-csvexport" + PLATFORM_EXE_EXTENSION,
-                ),
-                os.path.join(
-                    target_dir, "iree-tracy-csvexport" + PLATFORM_EXE_EXTENSION
-                ),
-                follow_symlinks=self.editable_mode,
-            )
-            shutil.copy2(
-                os.path.join(
-                    source_dir,
-                    "profiler",
-                    "build",
-                    "tracy-profiler" + PLATFORM_EXE_EXTENSION,
-                ),
-                os.path.join(
-                    target_dir, "iree-tracy-profiler" + PLATFORM_EXE_EXTENSION
-                ),
-                follow_symlinks=self.editable_mode,
-            )
-
         print("Target populated.", file=sys.stderr)
 
 
