@@ -402,26 +402,32 @@ def build_tracy_tool(tool_name, cmake_install_dir):
     maybe_nuke_cmake_cache(cmake_build_dir)
 
     subprocess.check_call(
-        [
-            "cmake",
-            "-B",
-            tool_name + "/build",
-            "-S",
-            tool_name,
-            "-GNinja",
-            "-DCMAKE_BUILD_TYPE=Release",
-        ],
+        " ".join(
+            [
+                "cmake",
+                "-B",
+                tool_name + "/build",
+                "-S",
+                tool_name,
+                "-GNinja",
+                "-DCMAKE_BUILD_TYPE=Release",
+            ]
+        ),
         cwd=source_dir,
+        shell=True,
     )
     subprocess.check_call(
-        [
-            "cmake",
-            "--build",
-            tool_name + "/build",
-            "--config",
-            "Release",
-        ],
+        " ".join(
+            [
+                "cmake",
+                "--build",
+                tool_name + "/build",
+                "--config",
+                "Release",
+            ]
+        ),
         cwd=source_dir,
+        shell=True,
     )
 
     original_exe_name = "tracy-" + tool_name + PLATFORM_EXE_EXTENSION
