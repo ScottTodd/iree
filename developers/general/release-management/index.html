@@ -2340,6 +2340,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Projects in scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#types-of-dependency-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of dependency links
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -3836,6 +3851,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Projects in scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#types-of-dependency-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of dependency links
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -4013,7 +4043,15 @@ in scope:</p>
 <li><a href="https://github.com/iree-org/iree-turbine">iree-org/iree-turbine</a></li>
 <li><a href="https://github.com/nod-ai/shark-ai">nod-ai/shark-ai</a></li>
 </ul>
-<p>With this dependency graph:</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If you maintain a project that you would like to connect with this release
+process, please reach out on one of our
+<a href="../../../#communication-channels">communication channels</a>. The current
+project list is driven by the priorities of the core project maintainers and
+we would be happy to adapt the process to include other projects too.</p>
+</div>
+<p>The dependency graph looks like this:</p>
 <pre class="mermaid"><code>graph TD
   accTitle: Dependency graph between in-scope packages
 
@@ -4040,22 +4078,41 @@ in scope:</p>
   iree-base-compiler --&gt; sharktank
   iree-turbine --&gt; sharktank
   iree-base-runtime -. source dependency .-&gt; shortfin
-  sharktank -- meta package --&gt; shark-ai
-  shortfin -- meta package --&gt; shark-ai</code></pre>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>If you maintain a project that you would like to connect with this release
-process, please reach out on one of our
-<a href="../../../#communication-channels">communication channels</a>. The current
-project list is driven by the priorities of the core project maintainers and
-we would be happy to adapt the process to include other projects too.</p>
-</div>
+  sharktank --&gt; shark-ai
+  shortfin --&gt; shark-ai</code></pre>
+<h4 id="types-of-dependency-links"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M418.4 157.9c35.3-8.3 61.6-40 61.6-77.9 0-44.2-35.8-80-80-80-43.4 0-78.7 34.5-80 77.5l-183.8 73.6C121.7 136.8 101.9 128 80 128c-44.2 0-80 35.8-80 80s35.8 80 80 80c12.2 0 23.8-2.7 34.1-7.6l145.6 127.4c-2.4 7.6-3.7 15.8-3.7 24.2 0 44.2 35.8 80 80 80s80-35.8 80-80c0-27.7-14-52.1-35.4-66.4zm-262.1 74.3c2.2-6.9 3.5-14.2 3.7-21.7L343.8 137c3.6 3.5 7.4 6.7 11.6 9.5l-37.8 207.6c-5.5 1.3-10.8 3.1-15.8 5.5z"/></svg></span> Types of dependency links<a class="headerlink" href="#types-of-dependency-links" title="Permanent link">link</a></h4>
+<p>Most dependencies are loose requirements, not imposing strict limitations on
+the versions installed. This allows users to freely install similar versions of
+each package without risking issues during pip dependency resolution. This is
+important for libraries near the root or middle of a dependency graph.</p>
+<div class="highlight"><span class="filename">iree-turbine METADATA snippet</span><pre><span></span><code>Requires-Dist: numpy
+<span class="hll">Requires-Dist: iree-base-compiler
+</span><span class="hll">Requires-Dist: iree-base-runtime
+</span>Requires-Dist: Jinja2&gt;=3.1.3
+Requires-Dist: ml_dtypes&gt;=0.5.0
+</code></pre></div>
+<p>The shark-ai package is special in that it is a leaf project acting as a full
+solution for ML model development that <em>does</em> specify precise versions. By
+installing this package, users will receive packages that have been more
+rigorously tested together:</p>
+<div class="highlight"><span class="filename">shark-ai METADATA snippet</span><pre><span></span><code>Requires-Dist: iree-base-compiler==3.2.*
+Requires-Dist: iree-base-runtime==3.2.*
+Requires-Dist: iree-turbine==3.2.*
+Requires-Dist: sharktank==3.2.0
+Requires-Dist: shortfin==3.2.0
+</code></pre></div>
+<p>This feeds back into the release process - while release candidate selection
+typically flows from the base projects outwards, leaf projects are responsible
+for testing regularly and ensuring that the entire collective continues to work
+as expected.</p>
 <h3 id="release-timeline"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.75 0a.75.75 0 0 1 .75.75V2h5V.75a.75.75 0 0 1 1.5 0V2h1.25c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 13.25 16H2.75A1.75 1.75 0 0 1 1 14.25V3.75C1 2.784 1.784 2 2.75 2H4V.75A.75.75 0 0 1 4.75 0M2.5 7.5v6.75c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25V7.5Zm10.75-4H2.75a.25.25 0 0 0-.25.25V6h11V3.75a.25.25 0 0 0-.25-.25"/></svg></span> Release timeline<a class="headerlink" href="#release-timeline" title="Permanent link">link</a></h3>
 <p>Over the course of a release cycle there are several milestones to look out for:</p>
 <ul>
 <li>Week 0<ul>
-<li>Release <code>X.Y.Z</code> is published</li>
-<li>Versions in source code are updated to <code>X.{Y+1}.Z</code></li>
+<li>Release <code>X.Y.0</code> is published (see also
+  <a href="../versioning-scheme/">Versioning scheme</a>)</li>
+<li>Versions in source code are updated to <code>X.{Y+1}.0</code> (see also
+  <a href="#creating-a-patch-release">Creating a patch release</a>)</li>
 <li>The next release date target is set for ~6 weeks later</li>
 <li>Subprojects set goals for the release</li>
 </ul>
@@ -4063,9 +4120,9 @@ we would be happy to adapt the process to include other projects too.</p>
 <li>~1 week before the release date<ul>
 <li>Any unstable build/test/release workflows must be stabilized</li>
 <li>Calls for release note contributions are sent out</li>
-<li>Release note drafts are drafted</li>
-<li>Release candidate selection</li>
-<li>Release candidate testing</li>
+<li>Release notes are drafted</li>
+<li>Release candidates are selected</li>
+<li>Release candidates are tested</li>
 </ul>
 </li>
 <li>Release day<ul>
