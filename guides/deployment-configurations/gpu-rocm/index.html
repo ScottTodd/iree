@@ -4077,6 +4077,25 @@ may want to include this path in your system's <code>PATH</code> environment var
 <span class="go">local-task://</span>
 <span class="go">vulkan://00000000-1111-2222-3333-444444444444</span>
 </code></pre></div>
+<p>To see device details, including the architecture to use as a
+<a href="#choosing-hip-targets">HIP target</a> when
+<a href="#compile-and-run-a-program">compiling a program</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>iree-run-module<span class="w"> </span>--dump_devices
+
+<span class="go">...</span>
+<span class="gp"># </span><span class="o">============================================================================</span>
+<span class="gp"># </span>Enumerated<span class="w"> </span>devices<span class="w"> </span><span class="k">for</span><span class="w"> </span>driver<span class="w"> </span><span class="s1">&#39;hip&#39;</span>
+<span class="gp"># </span><span class="o">============================================================================</span>
+
+<span class="gp"># </span><span class="o">===</span>----------------------------------------------------------------------<span class="o">===</span>
+<span class="hll"><span class="gp"># </span>--device<span class="o">=</span>hip://GPU-00000000-1111-2222-3333-444444444444
+</span><span class="hll"><span class="gp">#   </span>AMD<span class="w"> </span>Radeon<span class="w"> </span>PRO<span class="w"> </span>W7900<span class="w"> </span>Dual<span class="w"> </span><span class="nv">Slot</span>
+</span><span class="gp"># </span><span class="o">===</span>----------------------------------------------------------------------<span class="o">===</span>
+
+<span class="go">- amdhip64_dylib_path: /opt/rocm-6.1.3/lib/libamdhip64.so</span>
+<span class="go">- gpu-compute-capability: 11.0</span>
+<span class="hll"><span class="go">- gpu-arch-name: gfx1100</span>
+</span></code></pre></div>
 <h4 id="download-the-runtime-from-a-release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/><path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06z"/></svg></span> Download the runtime from a release<a class="headerlink" href="#download-the-runtime-from-a-release" title="Permanent link">link</a></h4>
 <p>Python packages are distributed through multiple channels. See the
 <a href="../../../reference/bindings/python/">Python Bindings</a> page for more details.
@@ -4137,7 +4156,9 @@ pip<span class="w"> </span>install<span class="w"> </span>iree-base-compiler<spa
 iree-import-onnx<span class="w"> </span>mobilenetv2-10.onnx<span class="w"> </span>--opset-version<span class="w"> </span><span class="m">17</span><span class="w"> </span>-o<span class="w"> </span>mobilenetv2.mlir
 </code></pre></div>
 <p>Then run the following command to compile with the <code>rocm</code> target backend:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># See the section below for information about HIP targets.</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># You need to specify a HIP target for your GPU. For this example we extract</span>
+<span class="c1"># the architecture name for the first device using rocm_agent_enumerator.</span>
+<span class="c1"># See the section below for more context and alternatives.</span>
 <span class="nv">IREE_HIP_TARGET</span><span class="o">=</span><span class="k">$(</span>rocm_agent_enumerator<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;2 p&#39;</span><span class="k">)</span><span class="w">  </span><span class="c1"># e.g. gfx1100</span>
 
 iree-compile<span class="w"> </span><span class="se">\</span>
@@ -4264,7 +4285,7 @@ architectures:</p>
 <a href="https://llvm.org/docs/AMDGPUUsage.html#processors">LLVM AMDGPU backend</a>.</p>
 <p>The <code>iree-hip-target</code> option support three schemes:</p>
 <ol>
-<li>The exact GPU product (SKU), e.g., <code>--iree-hip-target=mi300x</code>. This
+<li>The exact GPU product name (SKU), e.g., <code>--iree-hip-target=mi300x</code>. This
     allows the compiler to know about both the target architecture and about
     additional hardware details like the number of compute units. This extra
     information guides some compiler heuristics and allows for SKU-specific
@@ -4283,8 +4304,19 @@ is the most general.</p>
 <p>In the example above we used
 <a href="https://rocm.docs.amd.com/projects/rocminfo/en/latest/how-to/use-rocm-agent-enumerator.html"><code>rocm_agent_enumerator</code></a>
 to get target chip information for the first GPU device on our system. This
-information can also be queried via:</p>
+information can be queried in several ways:</p>
 <ul>
+<li>
+<p>The
+  <a href="https://rocm.docs.amd.com/projects/rocminfo/en/latest/how-to/use-rocm-agent-enumerator.html"><code>rocm_agent_enumerator</code></a>
+  program:</p>
+<div class="highlight"><pre><span></span><code>rocm_agent_enumerator
+
+<span class="c1"># gfx000</span>
+<span class="c1"># gfx1100</span>
+<span class="c1"># gfx1100</span>
+</code></pre></div>
+</li>
 <li>
 <p>IREE's <a href="../../../developers/general/developer-overview/#iree-run-module"><code>iree-run-module</code></a>
   tool:</p>
