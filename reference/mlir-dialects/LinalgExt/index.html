@@ -11,10 +11,10 @@
         <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/LinalgExt/">
       
       
-        <link rel="prev" href="../IREEVectorExt/">
+        <link rel="prev" href="../Encoding/">
       
       
-        <link rel="next" href="../Stream/">
+        <link rel="next" href="../TensorExt/">
       
       
       <link rel="icon" href="../../../assets/images/IREE_Logo_Icon_Color.svg">
@@ -1139,6 +1139,8 @@
       
         
       
+        
+      
     
     
       
@@ -1323,6 +1325,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1375,32 +1381,10 @@
                 
   
   
-    
   
   
-  
     
     
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
       
         
       
@@ -1420,72 +1404,32 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_2" >
         
           
           <label class="md-nav__link" for="__nav_4_3_2" id="__nav_4_3_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
-    Internal dialects
+    Core
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_3_2">
             <span class="md-nav__icon md-icon"></span>
-            Internal dialects
+            Core
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Check/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Check
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Encoding/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Encoding
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1536,11 +1480,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../HALInline/" class="md-nav__link">
+      <a href="../Stream/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    HAL/Inline
+    Stream
   </span>
   
 
@@ -1557,11 +1501,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../HALLoader/" class="md-nav__link">
+      <a href="../Util/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    HAL/Loader
+    Util
   </span>
   
 
@@ -1578,11 +1522,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../IOParameters/" class="md-nav__link">
+      <a href="../VM/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    IO/Parameters
+    VM
   </span>
   
 
@@ -1592,22 +1536,9 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../IREECodegen/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IREECodegen
-  </span>
-  
-
-      </a>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1617,22 +1548,51 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../IREEGPU/" class="md-nav__link">
+  
+    
+    
+      
         
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
+            
   
   <span class="md-ellipsis">
-    IREEGPU
+    MLIR extensions
   </span>
   
 
-      </a>
-    </li>
-  
-
-              
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            MLIR extensions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
                 
@@ -1641,11 +1601,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../IREEVectorExt/" class="md-nav__link">
+      <a href="../Encoding/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    IREEVectorExt
+    Encoding
   </span>
   
 
@@ -1718,6 +1678,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#iree_linalg_extcustom_op-linalgextcustomop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.custom_op (LinalgExt::CustomOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#data-tiling-ops" class="md-nav__link">
     <span class="md-ellipsis">
       Data tiling ops
@@ -1779,9 +1748,27 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#iree_linalg_extgather-linalgextgatherop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.gather (LinalgExt::GatherOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#iree_linalg_extim2col-linalgextim2colop" class="md-nav__link">
     <span class="md-ellipsis">
       iree_linalg_ext.im2col (LinalgExt::Im2colOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iree_linalg_extmap_scatter-linalgextmapscatterop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.map_scatter (LinalgExt::MapScatterOp)
     </span>
   </a>
   
@@ -1848,6 +1835,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#iree_linalg_extindex-linalgextindexop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.index (LinalgExt::IndexOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#iree_linalg_extyield-linalgextyieldop" class="md-nav__link">
     <span class="md-ellipsis">
       iree_linalg_ext.yield (LinalgExt::YieldOp)
@@ -1908,6 +1904,69 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#attributes_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteratortypeattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      IteratorTypeAttr
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enums
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enums">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteratortype" class="md-nav__link">
+    <span class="md-ellipsis">
+      IteratorType
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IteratorType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1924,11 +1983,92 @@
   
   
     <li class="md-nav__item">
-      <a href="../Stream/" class="md-nav__link">
+      <a href="../TensorExt/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Stream
+    TensorExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_4" id="__nav_4_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Codegen/target-specific
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Codegen/target-specific
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IREECodegen/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IREECodegen
   </span>
   
 
@@ -1945,11 +2085,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../Util/" class="md-nav__link">
+      <a href="../IREEGPU/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Util
+    IREEGPU
   </span>
   
 
@@ -1966,11 +2106,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../VM/" class="md-nav__link">
+      <a href="../IREEVectorExt/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    VM
+    IREEVectorExt
   </span>
   
 
@@ -2020,6 +2160,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -2034,24 +2178,24 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_3" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_5" >
         
           
-          <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_3_5" id="__nav_4_3_5_label" tabindex="0">
             
   
   <span class="md-ellipsis">
-    Public dialects
+    Optional modules
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_3_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_5">
             <span class="md-nav__icon md-icon"></span>
-            Public dialects
+            Optional modules
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -2062,11 +2206,854 @@
   
   
     <li class="md-nav__item">
-      <a href="../IREEInput/" class="md-nav__link">
+      <a href="../Check/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    IREEInput
+    Check
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_5_2" id="__nav_4_3_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    HAL
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            HAL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HALInline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HALLoader/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loader
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_5_3" id="__nav_4_3_5_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    IO
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_3_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            IO
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IOParameters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../mlir-passes/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m20.83 2.978-.086.095a16 16 0 0 0-1.19 1.487 6 6 0 0 0-.446.719 3 3 0 0 0-.249.596.5.5 0 0 0-.033.177v.004a.3.3 0 0 0-.21.29.3.3 0 0 0 .187.284c.038.371.08 1.142.07 2.2l-.004.142a8 8 0 0 1-.434 2.327q-.024-.015-.04-.013c-.03.003-.11.12-.19.251-.058.09-.119.195-.154.291a.4.4 0 0 0-.03.14.3.3 0 0 0 .01.088c.01.037.022.058.022.058l-.003.007a.14.14 0 0 0-.028.067l-.012.029a7 7 0 0 1-.257.527l-.077.142-.07.115-.022-.014a.16.16 0 0 0-.113.024c-.047.035-.151.194-.498.368a1.4 1.4 0 0 1-.32.114 14 14 0 0 0 .248-2.07 5 5 0 0 0-.064-1.057q.004-.016.003-.017l-.005.01a4 4 0 0 0-.104-.458 3.55 3.55 0 0 0-.724-1.385c-.631-.754-1.496-1.14-2.256-1.165l-.125-.002q0-.012.002-.022c.02-.098.024-.127-.087-.032l-.057.054-.146.007a1 1 0 0 1-.003-.108c.004-.076.024-.127-.087-.032a.6.6 0 0 0-.142.167c-.05.008-.08.015-.08.015l.045-.002-.047.008c-.016-.042-.053-.105-.048-.16.01-.118.043-.14-.037-.065-.098.09-.202.226-.22.3l-.096.03c-.018-.019-.074-.07-.086-.179-.013-.11-.012-.166-.08-.05a1.1 1.1 0 0 0-.13.348q-.048.022-.093.046a.27.27 0 0 1-.057-.173c-.005-.144.04-.26-.067-.068a1.6 1.6 0 0 0-.146.406 2 2 0 0 0-.105.08 3 3 0 0 1-.008-.17c-.002-.143.021-.296-.067-.026a2 2 0 0 0-.07.321c-.404.385-.65.917-.644 1.572v.007a3 3 0 0 0 .014.33q.031.356.107.605c-.095.13-.103.689-.01.818.073.104.496.35.586.399a.4.4 0 0 1 .094.093c.115.188.115.567.027.762-.107.238.107.285.285.32s.415-.023.463-.118c.047-.095-.154-.31-.237-.748-.084-.439.13-.474.13-.474s.095.024.237.249c.11.175.227.313.336.413a.7.7 0 0 1-.201.172c.12.005.24-.051.304-.087a1 1 0 0 0 .07.045l-.05.05a.5.5 0 0 0 .109-.022.3.3 0 0 0 .084.022c.155.012.57-.368.57-.439q-.002-.028-.038-.063c-.042-.045-.12-.1-.207-.177a1 1 0 0 1-.11-.116.7.7 0 0 1-.141-.374v-.01l-.003-.031s.007-.007.016-.02v.004l.004-.01c.052-.08.15-.379-.47-1.078a3.05 3.05 0 0 0-.924-.706c-.042-.472.15-.913.626-1.13l-.005.005.008-.006c.227-.102.517-.155.877-.136.69.036 1.22.36 1.59.845.514.712.738 1.78.575 2.856-.068.065-.055.075-.013.077a5 5 0 0 1-.055.273l-.027.015c-.123.074-.071.073 0 .092l-.006.02a4 4 0 0 1-.066.193 1 1 0 0 0-.087.03c-.135.053-.08.06-.012.09l.044.023a6 6 0 0 1-.101.237 1 1 0 0 0-.08.017c-.142.036-.088.05-.024.09l.04.027a7 7 0 0 1-.107.214 1 1 0 0 0-.153.025c-.14.036-.087.05-.023.09q.05.03.08.059l-.094.165-.023.036a.6.6 0 0 0-.206.024c-.142.036-.088.05-.024.09a.7.7 0 0 1 .104.079l-.126.18a.5.5 0 0 0-.23-.005c-.144.02-.092.04-.033.086.068.053.1.099.118.118l-.062.084c-.044-.058-.15-.124-.246-.193a.9.9 0 0 0-.29-.13c-.048 0-.2.268-1.017.197-.819-.071-.87-.15-.942-.15a1 1 0 0 0-.228.059l-.034-.02a11 11 0 0 1-.972-.674c-.464-.37-.72-.647-.72-.647s.137-.125-.047-.284a3 3 0 0 0-.338-.277 2 2 0 0 0-.242-.166l-.088-.127a12 12 0 0 1-.363-.628 11 11 0 0 1-.25-.527c-.16-.36-.27-.682-.346-.964a5.6 5.6 0 0 1-.148-.923 2 2 0 0 1 .004-.242.41.41 0 0 0 .158-.323.41.41 0 0 0-.358-.407c-.204-.427-.982-1.477-3.881-3.68l-.127-.097.005.004-.036-.027C7.067 6.599 7.644 7.587 7.795 8l-.027.033-.018-.013c.018 0 .025-.005.025-.005s-.672-.546-1.787-1.23c-1.118-.687-1.748-.849-1.88-.877l-.026-.006s.206.19.174.285c-.01.032-.168.022-.421.028a4 4 0 0 0-.725.07 4.1 4.1 0 0 0-1.567.63C.238 7.785 0 8.401 0 8.401s.55-.768 1.58-1.305c-.014.337-.047 1.97.445 4.12.53 2.32 1.53 4.487 1.614 4.665.004.178.016.272.016.272s.148-1.79.756-3.647c.175.283.758 1.117 2.075 2.096 1.628 1.21 2.37 1.536 2.4 1.548.001.157.005.24.005.24s.005-.1.018-.263a4.7 4.7 0 0 1 .552-.67 3.6 3.6 0 0 1 .54-.435q.048.166.093.276-.029-.145-.052-.282c.107.01.538.066 1.206.393.343.168.609.395.798.595l-.014.006s.123.112.269.403a2.4 2.4 0 0 0-.73.084 3 3 0 0 0-.098-.19.5.5 0 0 0-.039-.134c-.027-.061-.095-.1-.164-.14a.4.4 0 0 0-.104-.073.2.2 0 0 1-.055-.073c-.084-.184-.798.012-.942.18-.175.204-.209.464-.14.608.021.045.07.082.138.11.002.22.137.75.404 1.133a5 5 0 0 1-.108-.666c-.009-.16 0-.274.015-.35.047.328.174.684.577 1.124-.248-.54-.22-.861-.195-1.143l.01-.044.005-.001c.036.263.142.534.482.963l-.014-.028.014.021a1.63 1.63 0 0 1-.167-1.03l.008-.002q.07.044.134.126c.128.172.188.349.212.47a.53.53 0 0 0 .067.383 18 18 0 0 1-.72.501c-.23.15-.49.313-.757.47q-.21.121-.414.23l-.135-.077h.002l-.008-.004c-.97-.559-1.69-.932-2.518-1.082-.93-.166-1.786.283-1.982 1.082a1.28 1.28 0 0 0 .552 1.38l.012.008q.02.014.04.026l.06.036h.002a2.1 2.1 0 0 0 .69.237l.028.005h.006a4 4 0 0 0 .412.044c.975.047 2.156-.408 3.323-.982q.15.08.306.166c2.547 1.403 4.098 1.585 6.154.728-.502.151-1.208.356-2.094.344a.1.1 0 0 0-.02-.006v.006a6 6 0 0 1-.647-.05l-.03-.004v-.003l-.001.002a6.3 6.3 0 0 1-1.556-.436 8 8 0 0 1-.745-.362 57 57 0 0 1-1.006-.569c.348-.178.692-.363 1.026-.545.355-.189.672-.362.918-.5l.009-.004h.007s.083-.019.16-.043c.17-.052.41-.149.695-.283.028.117.095.215.195.253.235.091.407.027.522-.102l.018-.01.047-.037c.05-.03.107-.067.156-.09l.053-.022q.06-.016.116-.037l.033-.01c-.145.297-.091.581-.091.581.043-.37.22-.608.392-.715q.096-.041.2-.067c.064 0 .116.023.144.07.07.12.217.194.364.226.024.15-.045.404-.4.866l.09-.062.004-.003.072-.053q.213-.162.334-.305a1 1 0 0 0 .19-.305c.013.2-.042.507-.31 1.036 0 0 .317-.276.514-.63.006.191-.01.443-.063.785.345-.673.325-1.085.239-1.326l-.01-.036a.4.4 0 0 0-.01-.065l.042-.057c.118-.166-.048-.344-.154-.414-.06-.04-.2-.154-.454-.157-.225-.27-.51-.15-.958.145a1.3 1.3 0 0 1-.166.092 1 1 0 0 0-.055-.116q.241-.145.494-.308c.317-.207.553-.416.728-.615.51-.517.69-1.02 1.21-1.446h-.013l.06-.031c.854-.458 1.306-.547 1.338-.553l-.003.128.018-.125a1.8 1.8 0 0 1 .481.344 2.1 2.1 0 0 1 .362.487l.044.3s0-.116-.01-.33c.153-.151 1.02-1.043 1.724-2.466.694-1.404.944-2.523 1.017-2.924a18 18 0 0 1 .665 2.466s-.002-.133-.03-.374c.096-.336.515-1.872.626-3.756.1-1.68-.065-2.78-.14-3.173.648.536.995 1.306.995 1.306s-.04-.163-.188-.437l.02.027s-.236-.455-.644-.904a7 7 0 0 0-.157-.172c-.432-.46-.854-.617-1.17-.672a1.6 1.6 0 0 0-.308-.03h-.019c-.125-.003-.2.002-.207-.026-.02-.095.11-.285.11-.285s-.177.046-.554.33c-.23.167-.52.41-.853.76a14 14 0 0 0-.89.994l-.075.095-.023-.017c.076-.33.362-1.117 1.788-3.111zM11.92 14.09l.012.006zm-.263 2.606q.133.064.303.194h-.005a.5.5 0 0 0-.155.07 1 1 0 0 1-.126-.224zm-4.855 1.57q.198-.002.432.047l.02.005.017.004q.165.041.337.102l.057.021q.287.11.611.248c.32.14.62.277.838.375l.183.088c-.22.106-.424.196-.577.261-1.014.416-1.83.536-2.338.391-.944-.269-.76-1.536.42-1.542"/></svg>
+  
+  <span class="md-ellipsis">
+    MLIR passes
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            MLIR passes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4_2" id="__nav_4_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Core dialects
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Core dialects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/Flow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/HAL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HAL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/Stream/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Stream
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/Util/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Util
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/VM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4_3" id="__nav_4_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Pipelines
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Pipelines
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/ConstEval/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ConstEval
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/DispatchCreation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DispatchCreation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/GlobalOptimization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GlobalOptimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/InputConversion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InputConversion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/Preprocessing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preprocessing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4_4" id="__nav_4_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Codegen
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Codegen
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenCommon/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenCommonCPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common/CPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenCommonGPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common/GPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenDialectGPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dialect/GPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenDialectVectorExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dialect/VectorExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenLLVMCPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLVMCPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenLLVMGPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLVMGPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenSPIRV/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SPIRV
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenVMVX/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMVX
   </span>
   
 
@@ -2126,10 +3113,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5" >
         
           
-          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -2140,8 +3127,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_4">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
             <span class="md-nav__icon md-icon"></span>
             Other topics
           </label>
@@ -3867,6 +4854,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#iree_linalg_extcustom_op-linalgextcustomop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.custom_op (LinalgExt::CustomOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#data-tiling-ops" class="md-nav__link">
     <span class="md-ellipsis">
       Data tiling ops
@@ -3928,9 +4924,27 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#iree_linalg_extgather-linalgextgatherop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.gather (LinalgExt::GatherOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#iree_linalg_extim2col-linalgextim2colop" class="md-nav__link">
     <span class="md-ellipsis">
       iree_linalg_ext.im2col (LinalgExt::Im2colOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iree_linalg_extmap_scatter-linalgextmapscatterop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.map_scatter (LinalgExt::MapScatterOp)
     </span>
   </a>
   
@@ -3997,6 +5011,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#iree_linalg_extindex-linalgextindexop" class="md-nav__link">
+    <span class="md-ellipsis">
+      iree_linalg_ext.index (LinalgExt::IndexOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#iree_linalg_extyield-linalgextyieldop" class="md-nav__link">
     <span class="md-ellipsis">
       iree_linalg_ext.yield (LinalgExt::YieldOp)
@@ -4057,6 +5080,69 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#attributes_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteratortypeattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      IteratorTypeAttr
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enums
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enums">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteratortype" class="md-nav__link">
+    <span class="md-ellipsis">
+      IteratorType
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IteratorType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cases:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4081,14 +5167,16 @@
 
 
 <!-- Autogenerated by mlir-tblgen; don't manually edit -->
+
 <h1 id="iree_linalg_ext-dialect">'iree_linalg_ext' Dialect<a class="headerlink" href="#iree_linalg_ext-dialect" title="Permanent link">link</a></h1>
-<p>IREE Linalg Extensions.</p>
+<p><em>IREE Linalg Extensions.</em></p>
 <p>A dialect designed for experimenting with non-structured operations that
 cannot be represented efficiently/directly by the Linalg dialect.</p>
 <div class="toc">
 <ul>
 <li><a href="#iree_linalg_ext-dialect">'iree_linalg_ext' Dialect</a><ul>
 <li><a href="#operations">Operations</a><ul>
+<li><a href="#iree_linalg_extcustom_op-linalgextcustomop">iree_linalg_ext.custom_op (LinalgExt::CustomOp)</a></li>
 <li><a href="#data-tiling-ops">Data tiling ops</a><ul>
 <li><a href="#iree_linalg_extpack-linalgextpackop">iree_linalg_ext.pack (LinalgExt::PackOp)</a></li>
 <li><a href="#iree_linalg_extunpack-linalgextunpackop">iree_linalg_ext.unpack (LinalgExt::UnPackOp)</a></li>
@@ -4097,7 +5185,9 @@ cannot be represented efficiently/directly by the Linalg dialect.</p>
 <li><a href="#non-structured-ops">Non-structured ops</a><ul>
 <li><a href="#iree_linalg_extattention-linalgextattentionop">iree_linalg_ext.attention (LinalgExt::AttentionOp)</a></li>
 <li><a href="#iree_linalg_extfft-linalgextfftop">iree_linalg_ext.fft (LinalgExt::FftOp)</a></li>
+<li><a href="#iree_linalg_extgather-linalgextgatherop">iree_linalg_ext.gather (LinalgExt::GatherOp)</a></li>
 <li><a href="#iree_linalg_extim2col-linalgextim2colop">iree_linalg_ext.im2col (LinalgExt::Im2colOp)</a></li>
+<li><a href="#iree_linalg_extmap_scatter-linalgextmapscatterop">iree_linalg_ext.map_scatter (LinalgExt::MapScatterOp)</a></li>
 <li><a href="#iree_linalg_extonline_attention-linalgextonlineattentionop">iree_linalg_ext.online_attention (LinalgExt::OnlineAttentionOp)</a></li>
 <li><a href="#iree_linalg_extscan-linalgextscanop">iree_linalg_ext.scan (LinalgExt::ScanOp)</a></li>
 <li><a href="#iree_linalg_extscatter-linalgextscatterop">iree_linalg_ext.scatter (LinalgExt::ScatterOp)</a></li>
@@ -4106,6 +5196,7 @@ cannot be represented efficiently/directly by the Linalg dialect.</p>
 </ul>
 </li>
 <li><a href="#utility-ops">Utility ops</a><ul>
+<li><a href="#iree_linalg_extindex-linalgextindexop">iree_linalg_ext.index (LinalgExt::IndexOp)</a></li>
 <li><a href="#iree_linalg_extyield-linalgextyieldop">iree_linalg_ext.yield (LinalgExt::YieldOp)</a></li>
 </ul>
 </li>
@@ -4117,11 +5208,126 @@ cannot be represented efficiently/directly by the Linalg dialect.</p>
 </li>
 </ul>
 </li>
+<li><a href="#attributes_15">Attributes</a><ul>
+<li><a href="#iteratortypeattr">IteratorTypeAttr</a></li>
+</ul>
+</li>
+<li><a href="#enums">Enums</a><ul>
+<li><a href="#iteratortype">IteratorType</a><ul>
+<li><a href="#cases">Cases:</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 <h2 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">link</a></h2>
+<h3 id="iree_linalg_extcustom_op-linalgextcustomop"><code>iree_linalg_ext.custom_op</code> (LinalgExt::CustomOp)<a class="headerlink" href="#iree_linalg_extcustom_op-linalgextcustomop" title="Permanent link">link</a></h3>
+<p><em>Custom operation for compiling with IREE</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.custom_op` `{` `indexing_maps` `=` $indexing_maps `,`
+              `iterator_types` `=` $iterator_types `}`
+              attr-dict-with-keyword
+              (`ins` `(` $inputs^ `:` type($inputs) `)`)?
+              (`outs` `(` $outputs^ `:` type($outputs) `)`)?
+              $region (`-&gt;` type($results)^)?
+</code></pre></div>
+<p>This operation is meant to allow computation sequences that are fused at
+tile level prescriptively. This is to account for cases where such fusion
+cannot/is not yet discovered appropriately.</p>
+<p>The operation implements all the interfaces needed to be able to
+1. Compile e2e using IREE
+2. Still be able to fuse with other operations that the compiler can
+   figure out automatically.</p>
+<p>Similar to how <code>LinalgOp</code>s represent a perfectly nested loop computation
+with
+- <code>indexing_maps</code> representing how the <code>ins</code>/<code>outs</code> are accessed
+- <code>region</code> representing the scalar computation performed
+- <code>iterator_types</code> representing the dependence along each iteration space
+  dimension
+this operation represent a tiled computation with perfectly nested
+inter-tile loop nest.
+- <code>indexing_maps</code> represent what slices slices of the <code>ins</code>/<code>outs</code> are
+  needed for each iteration of the tiled computation.
+- <code>region</code> represents the tiled computation performed using these slices
+- <code>iterator_types</code> represents the dependence between tiles along each
+  iteration space.</p>
+<p>Some modifications required to handle the tile-level semantics are
+- Some dimensions of operands might not be accessed by dimensions of the
+  inter-tile iteration space. This means that along these dimensions the
+  slice size matches the dimension size. This access pattern of operands
+  is captured in the respective indexing map using a <code>symbol</code> to represent
+  that the entire dimension needs to be sliced.
+- The basic block arguments of the region represent the slice of the
+  operand. These are either scalar types (if the corresponding operand is a
+  scalar), or a <code>tensor</code> type with dynamic shapes (if the corresponding
+  operand is a <code>tensor</code> type).</p>
+<p>For example, one could represent a prescriptively fused matmul computation
+as follows</p>
+<div class="highlight"><pre><span></span><code>%0:2 = iree_linalg_ext.custom_op {
+    indexing_maps = [affine_map&lt;(d0, d1)[s0, s1] -&gt; (d0, s0)&gt;,
+                     affine_map&lt;(d0, d1)[s0, s1] -&gt; (s0, s1)&gt;,
+                     affine_map&lt;(d0, d1)[s0, s1] -&gt; (s1, d1)&gt;,
+                     affine_map&lt;(d0, d1)[s0, s1] -&gt; (d0, s1)&gt;,
+                     affine_map&lt;(d0, d1)[s0, s1] -&gt; (d0, d1)],
+    iterator_types = [&quot;parallel&quot;, &quot;parallel&quot;]}
+    ins(%lhs1, %rhs1, %rhs2
+        : tensor&lt;1000000x?xf32&gt;, tensor&lt;?x?xf32&gt;, tensor&lt;?x?xf32&gt;)
+    outs(%outs1, %outs2 : tensor&lt;1000000x?xf32&gt;, tensor&lt;1000000x?xf32&gt;) {
+  ^bb0(%t0 : tensor&lt;?x?xf32&gt;, %t1 : tensor&lt;?x?xf32&gt;, %t2 : tensor&lt;?x?xf32&gt;,
+       %t3 : tensor&lt;?x?xf32&gt;, %t4 : tensor&lt;?x?xf32&gt;) :
+    %0 = linalg.matmul ins(%t0, %t1 : tensor&lt;?x?xf32&gt;, tensor&lt;?x?xf32&gt;)
+        outs(%t3 : tensor&lt;?x?xf32&gt;) -&gt; tensor&lt;?x?xf32&gt;
+    %1 = linalg.matmul ins(%0, %t2 : tensor&lt;?x?xf32&gt;, tensor&lt;?x?xf32&gt;)
+        outs(%t4 : tensor&lt;?x?xf32&gt;) -&gt; tensor&lt;?x?xf32&gt;
+    iree_linalg_ext.yield %0, %1 : tensor&lt;?x?xf32&gt;, tensor&lt;?x?xf32&gt;
+} -&gt; tensor&lt;1000000x?xf32&gt;, tensor&lt;x?xf32&gt;
+</code></pre></div>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>AggregatedOpInterface</code>, <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgFusionOpInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>indexing_maps</code></td><td>::mlir::ArrayAttr</td><td>AffineMap array attribute</td></tr>
+<tr><td><code>iterator_types</code></td><td>::mlir::ArrayAttr</td><td>LinalgExt iterator type</td></tr>
+</table>
+
+<h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>inputs</code></td>
+<td>variadic of ranked tensor of signless integer or index or floating-point values or signless integer or index or floating-point</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>outputs</code></td>
+<td>variadic of ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results">Results:<a class="headerlink" href="#results" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>results</code></td>
+<td>variadic of ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
 <h3 id="data-tiling-ops">Data tiling ops<a class="headerlink" href="#data-tiling-ops" title="Permanent link">link</a></h3>
 <p>Operations for working with data layouts, padding, encodings, and other
 properties useful for tiling computations across iteration space dimensions.</p>
@@ -4170,7 +5376,7 @@ KC_to_CKkc example the tiled loops.</p>
 </code></pre></div>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgExtOp</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">link</a></h5>
+<h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>outer_dims_perm</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
@@ -4178,7 +5384,7 @@ KC_to_CKkc example the tiled loops.</p>
 <tr><td><code>static_inner_tiles</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands">Operands:<a class="headerlink" href="#operands" title="Permanent link">link</a></h5>
+<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4205,7 +5411,7 @@ KC_to_CKkc example the tiled loops.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results">Results:<a class="headerlink" href="#results" title="Permanent link">link</a></h5>
+<h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4250,7 +5456,7 @@ also supports permuting the tiled loops.</p>
 </code></pre></div>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgExtOp</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
+<h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>outer_dims_perm</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
@@ -4258,7 +5464,7 @@ also supports permuting the tiled loops.</p>
 <tr><td><code>static_inner_tiles</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands_1">Operands:<a class="headerlink" href="#operands_1" title="Permanent link">link</a></h5>
+<h5 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4281,7 +5487,7 @@ also supports permuting the tiled loops.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_1">Results:<a class="headerlink" href="#results_1" title="Permanent link">link</a></h5>
+<h5 id="results_2">Results:<a class="headerlink" href="#results_2" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4301,37 +5507,27 @@ also supports permuting the tiled loops.</p>
 <p><em>Attention operator</em></p>
 <p>Syntax:</p>
 <div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.attention` attr-dict
-              `ins` `(` $query `,` $key `,` $value `,` $scale `:` type($query) `,` type($key) `,` type($value) `,` type($scale) `)`
-              `outs` `(` $outputs `:` type($outputs) `)`
+              `ins` `(` $query `,` $key `,` $value `,` $scale (`,` $mask^)?  `:` type($query) `,` type($key) `,` type($value) `,` type($scale) (`,` type($mask)^ )?`)`
+              `outs` `(` $output `:` type($output) `)`
+              $region
               (`-&gt;` type($results)^)?
 </code></pre></div>
 <p>Computes the scaled dot product attention function:</p>
 <p>attention(Q, K, V, scale) = softmax(Q @ K.T * scale) @ V</p>
 <p>Here Q, K, V are given tensors and scale is a scalar value specifying
 the scale to use.</p>
-<p>For self-attention, all inputs and the result have the same shape BxNxd
-where B is the batch dimension, N is the sequence length and d is head
-dimension. Typically N &gt;&gt;&gt; d. Usually, this operator also performs
-masking and dropout, but we leave that out of the current implementation.
-For cross-attention, the query and output have the same shape (BxNxd),
-while the key and value differ in sequence length (they have shape BxLxd,
-where L != N).</p>
-<p>This operator after tiling results in a tiled result as per
-FlashAttention 2 and optionally results in the current <code>max</code> and <code>sum</code>
-statistics while processing the current tile.</p>
-<p>With indexing_maps we can also infer when variables are transposed.
-for example, if V has indexing_map of (m, k1, k2, n) -&gt; (n, k2) instead
-of (m, k1, k2, n) -&gt; (k2, n), then we'd know that V is transposed (V.T),
-and we can expect computation to look like:</p>
-<p>attention(Q, K, V, scale) = softmax(Q @ K.T * scale) @ V.T</p>
-<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
+<p>If an additional mask argument M is included, the result of the first matmul is modified according to:</p>
+<p>Q @ K.T += M</p>
+<p>Traits: <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>AggregatedOpInterface</code>, <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgFusionOpInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>indexing_maps</code></td><td>::mlir::ArrayAttr</td><td>AffineMap array attribute</td></tr>
+<tr><td><code>decomposition_config</code></td><td>::mlir::DictionaryAttr</td><td>dictionary of named attribute values</td></tr>
 </table>
 
-<h5 id="operands_2">Operands:<a class="headerlink" href="#operands_2" title="Permanent link">link</a></h5>
+<h5 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4357,12 +5553,16 @@ and we can expect computation to look like:</p>
 <td>floating-point</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>outputs</code></td>
-<td>variadic of shaped of any type values</td>
+<td style="text-align: center;"><code>mask</code></td>
+<td>shaped of any type values</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>output</code></td>
+<td>shaped of any type values</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_2">Results:<a class="headerlink" href="#results_2" title="Permanent link">link</a></h5>
+<h5 id="results_3">Results:<a class="headerlink" href="#results_3" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4395,7 +5595,7 @@ algorithm. It represents the computation body. For more details, see
 context, they will be the second and third inputs.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="operands_3">Operands:<a class="headerlink" href="#operands_3" title="Permanent link">link</a></h5>
+<h5 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4414,7 +5614,73 @@ context, they will be the second and third inputs.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_3">Results:<a class="headerlink" href="#results_3" title="Permanent link">link</a></h5>
+<h5 id="results_4">Results:<a class="headerlink" href="#results_4" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>results</code></td>
+<td>variadic of ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
+<h4 id="iree_linalg_extgather-linalgextgatherop"><code>iree_linalg_ext.gather</code> (LinalgExt::GatherOp)<a class="headerlink" href="#iree_linalg_extgather-linalgextgatherop" title="Permanent link">link</a></h4>
+<p><em>Gather operator</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.gather` attr-dict `dimension_map` `=` $dimension_map
+              (`ins` `(` $inputs^ `:` type($inputs) `)`)?
+              `outs` `(` $outputs `:` type($outputs) `)`
+              $region (`-&gt;` type($results)^)?
+</code></pre></div>
+<p>Takes two inputs (<code>source</code> and <code>indices</code>) and outputs value (<code>output</code>).
+The operation returns the value at the slices specified by <code>indices</code> by
+combining the gathered value from <code>source</code> with the value in <code>output</code>
+using the computation specified in <code>region</code>. The <code>region</code> specifies a binary
+operation of signature <code>(T, T) -&gt; T</code>, where <code>T</code> is the element-type of
+<code>source</code> &amp; <code>output</code>. The first argument is from <code>source</code> and the second is
+from <code>output</code>.</p>
+<p>The size of the <code>dimension_map</code> attribute is used to determine how many
+indices are used to index into <code>source</code>, i.e. <code>index_depth</code>. The
+<code>dimension_map</code> attribute describes which index value maps to which dimension
+in the destination.</p>
+<p>This operation preforms the opposite operation of <code>iree_linalg_ext.scatter</code>.
+Instead of scattering <code>updates</code> into <code>original</code>, it gathers the values from
+<code>source</code> into <code>output</code> using the indices in <code>indices</code>. See the documentation
+on <code>iree_linalg_ext.scatter</code> for more details regarding the indexing/shape
+semantics.</p>
+<p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>dimension_map</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
+</table>
+
+<h5 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>inputs</code></td>
+<td>variadic of ranked tensor or memref of any type values</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>outputs</code></td>
+<td>variadic of ranked tensor or memref of any type values</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results_5">Results:<a class="headerlink" href="#results_5" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4439,11 +5705,14 @@ context, they will be the second and third inputs.</p>
               custom&lt;DynamicIndexList&gt;($kernel_size, $static_kernel_size)
               `m_offset` `=`
               custom&lt;DynamicIndexList&gt;($m_offset, $static_m_offset)
+              `*` custom&lt;DynamicIndexList&gt;($m_strides, $static_m_strides)
               `k_offset` `=`
               custom&lt;DynamicIndexList&gt;($k_offset, $static_k_offset)
+              `*` custom&lt;DynamicIndexList&gt;($k_strides, $static_k_strides)
               `batch_pos` `=` $batch_pos
               `m_pos` `=` $m_pos
               `k_pos` `=` $k_pos
+              `input_k_perm` `=` $input_k_perm
               `ins` `(` $input `:` type($input) `)`
               `outs` `(` $output `:` type($output) `)`
               (`-&gt;` type($results)^)?
@@ -4466,7 +5735,7 @@ im2col op were tiled to loops with a scalar inner tile, it would look like
 the following:
 <div class="highlight"><pre><span></span><code>  %im2col = iree_linalg_ext.im2col
       strides = [1, 1] dilations = [1, 1] kernel_size = [3, 3]
-      m_offset = [0] k_offset = [0]
+      m_offset = [0] * [1] k_offset = [0] * [1]
       batch_pos = [0] m_pos = [1, 2] k_pos = [3]
       ins(%in : tensor&lt;2x34x34x640xf32&gt;)
       outs(%out : tensor&lt;2x1024x5760xf32&gt;) -&gt; tensor&lt;2x1024x5760xf32&gt;
@@ -4477,7 +5746,7 @@ becomes:
       scf.for %arg2 = %c0 to %c5760 step %c1
         %im2col = iree_linalg_ext.im2col
             strides = [1, 1] dilations = [1, 1] kernel_size = [3, 3]
-            m_offset = [%arg1] k_offset = [%arg2]
+            m_offset = [%arg1] * [1] k_offset = [%arg2] * [1]
             batch_pos = [0] m_pos = [1, 2] k_pos = [3]
             ins(%in_tile : tensor&lt;1x34x34x640xf32&gt;)
             outs(%out_tile : tensor&lt;1x1x1xf32&gt;) -&gt; tensor&lt;1x1x1xf32&gt;
@@ -4489,22 +5758,48 @@ computed using the <code>m_offset</code> and <code>k_offset</code> as:
 (b, m, k) -&gt; (b, M / 32 + K / (640<em>3), M % 32 + K % (640</em>3) / 640, K % 640)
 Where <code>(b, m, k)</code> are the indices of the tiled op's iteration space, and
 <code>M = m + m_offset</code> and <code>K = k + K_offset</code>.</p>
+<p>The <code>m_strides</code> and <code>k_strides</code> fields are used as a basis for linearizing
+the <code>m_offset</code> and <code>k_offset</code>. This is used when there are multiple M or K
+output dimensions, and therefore multiple <code>m_offset</code> or <code>k_offset</code> values.
+The strides fields are assembled in the IR as if they are multiplied as an
+inner product with <code>m_offset</code> and <code>k_offset, indicating that the total
+linear offset along the dimension is equal to this inner product. These
+strides fields also determine the strides of the output dimensions along
+M and K. For example, an op with</code>m_strides = [32, 1]<code>,</code>k_strides = [4, 1]<code>,
+and output type</code>tensor<BxM0xM1xK0xK1><code>(expanded from</code>tensor<BxMxK><code>),
+would have strides along the M dim of 32 for</code>M0<code>, meaning as</code>M0<code>increases
+by 1, the index into the flat</code>M<code>increases by 32. Along the K dim, strides
+would be 4 for</code>K0<code>, and 1 for</code>K1<code>, meaning as</code>K0<code>increases by 1, the
+index into the flat</code>K<code>increases by 4. The strides in M from</code>m_strides<code>are orthogonal to the strides in</code>K<code>from</code>k_strides`.</p>
+<p>The <code>input_k_perm</code> attribute defines the permutation needed to align the
+reduction dimensions of the input layout with those of the filter layout
+when computing the K dimension of the im2col output. This is useful when the
+layout of the filter (e.g., <code>CHW</code>) differs from that of the input (e.g., <code>HWC</code>).
+For instance, an <code>input_k_perm = [2, 0, 1]</code> indicates the input indices needs
+to be transposed from <code>HWC</code> to <code>CHW</code> layout before extracting slices during
+decomposition. The identity permutation (e.g., input_k_perm = [0, 1, 2])
+indicates that the input layout is already aligned with the filter layout
+in terms of reduction dimensions, so no transposition of indices is necessary
+before slice extraction.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>AggregatedOpInterface</code>, <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
+<h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>dilations</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>static_kernel_size</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>static_m_offset</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
+<tr><td><code>static_m_strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>static_k_offset</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
+<tr><td><code>static_k_strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>batch_pos</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>m_pos</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>k_pos</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
+<tr><td><code>input_k_perm</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands_4">Operands:<a class="headerlink" href="#operands_4" title="Permanent link">link</a></h5>
+<h5 id="operands_6">Operands:<a class="headerlink" href="#operands_6" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4530,12 +5825,20 @@ Where <code>(b, m, k)</code> are the indices of the tiled op's iteration space, 
 <td>variadic of index</td>
 </tr>
 <tr>
+<td style="text-align: center;"><code>m_strides</code></td>
+<td>variadic of index</td>
+</tr>
+<tr>
 <td style="text-align: center;"><code>k_offset</code></td>
+<td>variadic of index</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>k_strides</code></td>
 <td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_4">Results:<a class="headerlink" href="#results_4" title="Permanent link">link</a></h5>
+<h5 id="results_6">Results:<a class="headerlink" href="#results_6" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4550,12 +5853,70 @@ Where <code>(b, m, k)</code> are the indices of the tiled op's iteration space, 
 </tr>
 </tbody>
 </table>
+<h4 id="iree_linalg_extmap_scatter-linalgextmapscatterop"><code>iree_linalg_ext.map_scatter</code> (LinalgExt::MapScatterOp)<a class="headerlink" href="#iree_linalg_extmap_scatter-linalgextmapscatterop" title="Permanent link">link</a></h4>
+<p><em>Scatter with a mapping from source indices to result indices</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.map_scatter` attr-dict $input `into` $output
+              $transformation_region
+              `:` type($input) `into` type($output) (`-&gt;` type($results)^)?
+</code></pre></div>
+<p>Takes two operands, <code>input</code> and <code>output</code>, and stores every element of
+<code>input</code> to a unique location in <code>output</code>. If the operands are tensors, the
+op will also return a Value for the result. For an element of the <code>input</code>,
+the index to store into the <code>output</code> is determined by index computation
+mapping the index in the <code>input</code> value to an index in the <code>output</code> value.
+This computation is contained in the <code>transformation_region</code>, which contains
+a single block, with one argument for each dimension in the <code>input</code> value.
+The block arguments represent the index of a given element along the
+corresponding dimension (i.e., block arg <code>i</code> represents the index along
+dimension <code>i</code> of the <code>input</code> value). The block is terminated by an
+iree_linalg_ext.yield op, which yields one index for each dimension in
+the <code>output</code>, and an additional <code>i1</code> Value, which represents a mask on
+whether or not to write to the <code>output</code> at the yielded set of indices. Iff
+the mask value is true, the input value will be written.</p>
+<p>Traits: <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code></p>
+<h5 id="operands_7">Operands:<a class="headerlink" href="#operands_7" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>input</code></td>
+<td>ranked tensor or memref of any type values</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>output</code></td>
+<td>ranked tensor or memref of any type values</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results_7">Results:<a class="headerlink" href="#results_7" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>results</code></td>
+<td>variadic of ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
 <h4 id="iree_linalg_extonline_attention-linalgextonlineattentionop"><code>iree_linalg_ext.online_attention</code> (LinalgExt::OnlineAttentionOp)<a class="headerlink" href="#iree_linalg_extonline_attention-linalgextonlineattentionop" title="Permanent link">link</a></h4>
 <p><em>Online Attention operator</em></p>
 <p>Syntax:</p>
 <div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.online_attention` attr-dict
-              `ins` `(` $query `,` $key `,` $value `,` $scale `:` type($query) `,` type($key) `,` type($value) `,` type($scale) `)`
+              `ins` `(` $query `,` $key `,` $value `,` $scale (`,` $mask^)?  `:` type($query) `,` type($key) `,` type($value) `,` type($scale) (`,` type($mask)^ )?`)`
               `outs` `(` $output `,` $max `,` $sum `:` type($output) `,` type($max) `,` type($sum) `)`
+              $region
               (`-&gt;` type($results)^)?
 </code></pre></div>
 <p>Traditional scaled dot product attention computes:</p>
@@ -4564,8 +5925,10 @@ Where <code>(b, m, k)</code> are the indices of the tiled op's iteration space, 
 softmax:</p>
 <p>online_attention(Q, K, V, scale, running_max, running_sum)
   = online_normalizer(Q @ K.T * scale, running_max, running_sum) @ V</p>
+<p>If an additional mask argument M is included, the result of the first matmul is modified according to:</p>
+<p>Q @ K.T += M</p>
 <p>The advantage of this online_normalizer is that it can be tiled along
-it's reduction dimension, making the online_attention operator:
+its reduction dimension, making the online_attention operator:
   - Tilable along softmax reduction dimension
   - Associative along softmax reduction dimension
   - Commutative along softmax associative dimension</p>
@@ -4573,14 +5936,16 @@ it's reduction dimension, making the online_attention operator:
 it over the entire softmax reduction dimension by:
   x, _, sum : results
   x = (1 / sum) * x</p>
-<p>Interfaces: <code>AggregatedOpInterface</code>, <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
+<p>Traits: <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
+<p>Interfaces: <code>AggregatedOpInterface</code>, <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>PartialReductionOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
+<h5 id="attributes_6">Attributes:<a class="headerlink" href="#attributes_6" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>indexing_maps</code></td><td>::mlir::ArrayAttr</td><td>AffineMap array attribute</td></tr>
+<tr><td><code>decomposition_config</code></td><td>::mlir::DictionaryAttr</td><td>dictionary of named attribute values</td></tr>
 </table>
 
-<h5 id="operands_5">Operands:<a class="headerlink" href="#operands_5" title="Permanent link">link</a></h5>
+<h5 id="operands_8">Operands:<a class="headerlink" href="#operands_8" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4606,6 +5971,10 @@ it over the entire softmax reduction dimension by:
 <td>floating-point</td>
 </tr>
 <tr>
+<td style="text-align: center;"><code>mask</code></td>
+<td>shaped of any type values</td>
+</tr>
+<tr>
 <td style="text-align: center;"><code>output</code></td>
 <td>shaped of any type values</td>
 </tr>
@@ -4619,7 +5988,7 @@ it over the entire softmax reduction dimension by:
 </tr>
 </tbody>
 </table>
-<h5 id="results_5">Results:<a class="headerlink" href="#results_5" title="Permanent link">link</a></h5>
+<h5 id="results_8">Results:<a class="headerlink" href="#results_8" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4647,14 +6016,14 @@ it over the entire softmax reduction dimension by:
 <p>Computes the inclusive/exclusive scan along a given dimension.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
+<h5 id="attributes_7">Attributes:<a class="headerlink" href="#attributes_7" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
 <tr><td><code>inclusive</code></td><td>::mlir::BoolAttr</td><td>bool attribute</td></tr>
 </table>
 
-<h5 id="operands_6">Operands:<a class="headerlink" href="#operands_6" title="Permanent link">link</a></h5>
+<h5 id="operands_9">Operands:<a class="headerlink" href="#operands_9" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4673,7 +6042,7 @@ it over the entire softmax reduction dimension by:
 </tr>
 </tbody>
 </table>
-<h5 id="results_6">Results:<a class="headerlink" href="#results_6" title="Permanent link">link</a></h5>
+<h5 id="results_9">Results:<a class="headerlink" href="#results_9" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4697,45 +6066,47 @@ it over the entire softmax reduction dimension by:
               `outs` `(` $outputs `:` type($outputs) `)`
               $region (`-&gt;` type($results)^)?
 </code></pre></div>
-<p>Based on XLA operation semantics, takes two <code>inputs</code> (<code>update</code> and
-<code>indices</code>) and <code>outputs</code> value (<code>original</code>). The operation updates
-the value at the slices specified by <code>indices</code> by combining the
-current value with the value in <code>updates</code> using the computation
+<p>Takes two <code>inputs</code> (<code>update</code> and <code>indices</code>) and <code>outputs</code> value (<code>original</code>).
+The operation updates the value at the slices specified by <code>indices</code> by
+combining the current value with the value in <code>updates</code> using the computation
 specified in <code>region</code>. The <code>region</code> specifies a binary operation
-of signature (T, T) -&gt; T, where <code>T</code> is the element-type of
-<code>updates</code> (and <code>original</code>). The first argument correspond the
-value to be updated (i.e. from <code>updates</code>), and the second the
-current value (i.e. value from <code>original</code>).</p>
-<p>The <code>indices</code> is a 2D tensor/memref type. The first dim is the number of
-updates, and the second dim is index depth. The index depth should always be
-static.</p>
-<p>The first dim of <code>updates</code> and <code>indices</code> is identical, since they represent
-the number of updates.</p>
-<p>The rank of the <code>original</code>/<code>result</code> is at least
-<code>index_depth + rank(%updates) - 1</code>. The first <code>index_depth</code> indices are
-derived from <code>indices</code> and the shape of update value has the last
-rank(%original) - index_depth values match %(originals) last dimensions,
-with the previous dims extending from the index offsets.</p>
-<p>The dimension_map attributes describes which index value maps to which
-dimension in the destionation. It cannot contain duplicate values, must
-have as many entries as index depth, and values must be within the rank of
-the destination.</p>
-<p>The unique_indices attribute carries the information whether all the indices
-are unique. If there are repeated indices, the first iteration loop will be
-marked as reduction.</p>
-<p>The shapes definition follows tensorflow operations execept that it force
-batch dims to be 1D. See more information in
+of signature <code>(T, T) -&gt; T</code>, where <code>T</code> is the element-type of
+<code>updates</code> (and <code>original</code>). The first argument is from <code>updates</code>,
+and the second is from <code>original</code>.</p>
+<p>The size of the <code>dimension_map</code> attribute is used to determine how many
+indices are used to index into <code>original</code>, i.e. <code>index_depth</code>. The
+<code>dimension_map</code> attribute describes which index value maps to which dimension
+in the destination.</p>
+<p>The operand <code>indices</code> is a N-D tensor/memref type that is composed
+of two logical parts. The first <code>N-1</code> dimensions represent the batch of
+updates. The last dim (at index <code>N-1</code>) is the <code>index_depth</code>, which can be
+omitted if <code>index_depth</code> is 1.</p>
+<p>The operand <code>update</code> is a M-D tensor/memref type and similarly
+consists of two parts. The first <code>N-1</code> dimensions represent the batch of
+updates. This must exactly match to the first <code>N-1</code> dimensions in <code>indices</code>.
+Dimensions <code>N..M-1</code> represent the slice scattered into <code>original</code>,
+<code>update_slice</code>, and must match the last dimensions in original. This
+represents a contiguous slice to be inserted into <code>original</code>.</p>
+<p>The operand <code>original</code> is a DPS init representing the destination that
+<code>update</code> gets scattered to.
+Where <code>rank(original) = rank(update_slice) + index_depth</code></p>
+<p>The unique_indices attribute carries the information whether all the
+indices are unique. If <code>unique_indices</code> is <code>true</code> and two or more updates
+scatter to the same location in <code>original</code> the final value in <code>original</code> is
+not guaranteed. If <code>unique_indices</code> is set to false, the first
+<code>batch_rank</code> iteration loops will be marked as reduction.</p>
+<p>The shapes definition follows tensorflow operations. See more information in
   <a href="https://www.tensorflow.org/api_docs/python/tf/tensor_scatter_nd_update">https://www.tensorflow.org/api_docs/python/tf/tensor_scatter_nd_update</a></p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgFusionOpInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_6">Attributes:<a class="headerlink" href="#attributes_6" title="Permanent link">link</a></h5>
+<h5 id="attributes_8">Attributes:<a class="headerlink" href="#attributes_8" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension_map</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 <tr><td><code>unique_indices</code></td><td>::mlir::BoolAttr</td><td>bool attribute</td></tr>
 </table>
 
-<h5 id="operands_7">Operands:<a class="headerlink" href="#operands_7" title="Permanent link">link</a></h5>
+<h5 id="operands_10">Operands:<a class="headerlink" href="#operands_10" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4754,7 +6125,7 @@ batch dims to be 1D. See more information in
 </tr>
 </tbody>
 </table>
-<h5 id="results_7">Results:<a class="headerlink" href="#results_7" title="Permanent link">link</a></h5>
+<h5 id="results_10">Results:<a class="headerlink" href="#results_10" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4783,13 +6154,13 @@ batch dims to be 1D. See more information in
 <p>See <a href="https://www.tensorflow.org/xla/operation_semantics#sort">https://www.tensorflow.org/xla/operation_semantics#sort</a>.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_7">Attributes:<a class="headerlink" href="#attributes_7" title="Permanent link">link</a></h5>
+<h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
 </table>
 
-<h5 id="operands_8">Operands:<a class="headerlink" href="#operands_8" title="Permanent link">link</a></h5>
+<h5 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4808,7 +6179,7 @@ batch dims to be 1D. See more information in
 </tr>
 </tbody>
 </table>
-<h5 id="results_8">Results:<a class="headerlink" href="#results_8" title="Permanent link">link</a></h5>
+<h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4848,13 +6219,13 @@ i1. If true, the two values are swapped:
 Note: when the two values are equal, the first occurence is always selected.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>LinalgExtOp</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_8">Attributes:<a class="headerlink" href="#attributes_8" title="Permanent link">link</a></h5>
+<h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
 </table>
 
-<h5 id="operands_9">Operands:<a class="headerlink" href="#operands_9" title="Permanent link">link</a></h5>
+<h5 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4873,7 +6244,7 @@ Note: when the two values are equal, the first occurence is always selected.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_9">Results:<a class="headerlink" href="#results_9" title="Permanent link">link</a></h5>
+<h5 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4889,6 +6260,39 @@ Note: when the two values are equal, the first occurence is always selected.</p>
 </tbody>
 </table>
 <h3 id="utility-ops">Utility ops<a class="headerlink" href="#utility-ops" title="Permanent link">link</a></h3>
+<h4 id="iree_linalg_extindex-linalgextindexop"><code>iree_linalg_ext.index</code> (LinalgExt::IndexOp)<a class="headerlink" href="#iree_linalg_extindex-linalgextindexop" title="Permanent link">link</a></h4>
+<p><em>Linalg_ext index operation</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `iree_linalg_ext.index` $dim attr-dict `:` type($result)
+</code></pre></div>
+<p>This operation is a mirror of <code>linalg.index</code> operation and has the same
+semantics, except that <code>linalg.index</code> enforces that the parent op is a
+<code>LinalgOp</code>, and the <code>iree_linalg_ext.index</code> operation enforces that the
+parent op is a <code>IREE::LinalgExt::CustomOp</code>.</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
+<h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>dim</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute whose minimum value is 0</td></tr>
+</table>
+
+<h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>result</code></td>
+<td>index</td>
+</tr>
+</tbody>
+</table>
 <h4 id="iree_linalg_extyield-linalgextyieldop"><code>iree_linalg_ext.yield</code> (LinalgExt::YieldOp)<a class="headerlink" href="#iree_linalg_extyield-linalgextyieldop" title="Permanent link">link</a></h4>
 <p><em>LinalgExt yield op</em></p>
 <p>Syntax:</p>
@@ -4899,7 +6303,7 @@ regions in <code>iree_linalg_ext</code> ops.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>ReturnLike</code>, <code>Terminator</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>RegionBranchTerminatorOpInterface</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_10">Operands:<a class="headerlink" href="#operands_10" title="Permanent link">link</a></h5>
+<h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4938,7 +6342,7 @@ of shape (H, W, C, F) or (F, C, H, W) and the output is an operator of shape
 and then fed to a batch matmul op.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
+<h5 id="attributes_12">Attributes:<a class="headerlink" href="#attributes_12" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>output_tile_size</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -4946,7 +6350,7 @@ and then fed to a batch matmul op.</p>
 <tr><td><code>kernel_dimensions</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h5>
+<h5 id="operands_14">Operands:<a class="headerlink" href="#operands_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4965,7 +6369,7 @@ and then fed to a batch matmul op.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_10">Results:<a class="headerlink" href="#results_10" title="Permanent link">link</a></h5>
+<h5 id="results_14">Results:<a class="headerlink" href="#results_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -4993,7 +6397,7 @@ and then fed to a batch matmul op.</p>
 </code></pre></div>
 <p>This operator is part of the first step in converting a convolution to
 its Winograd equivalent. Given a tile of an input image (I),
-this operator computes matmul(tranpose(B), matmul(I, B)).
+this operator computes matmul(transpose(B), matmul(I, B)).
 The input tile is assumed to be square with each side of size m + r - 1,
 where the convolutional kernel is m x m and the output tile size is r x r.
 B is a constant 2-d square matrix of the same shape as the input tile I.
@@ -5003,7 +6407,7 @@ where H' = ceil((H - m + 1)/r) and W' = ceil((W - m + 1)/r). The result
 of this operator is first collapsed and then fed to a batch matmul op.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
+<h5 id="attributes_13">Attributes:<a class="headerlink" href="#attributes_13" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>output_tile_size</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -5011,7 +6415,7 @@ of this operator is first collapsed and then fed to a batch matmul op.</p>
 <tr><td><code>image_dimensions</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h5>
+<h5 id="operands_15">Operands:<a class="headerlink" href="#operands_15" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5030,7 +6434,7 @@ of this operator is first collapsed and then fed to a batch matmul op.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
+<h5 id="results_15">Results:<a class="headerlink" href="#results_15" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5072,7 +6476,7 @@ This operator is followed by a tensor.extract_slice which extracts
 only the non-padded part of the output.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code>, <code>SingleBlockImplicitTerminator&lt;::mlir::iree_compiler::IREE::LinalgExt::YieldOp&gt;</code>, <code>SingleBlock</code></p>
 <p>Interfaces: <code>DestinationStyleOpInterface</code>, <code>LinalgExtInterface</code>, <code>MemoryEffectOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TilingInterface</code></p>
-<h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
+<h5 id="attributes_14">Attributes:<a class="headerlink" href="#attributes_14" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>output_tile_size</code></td><td>::mlir::IntegerAttr</td><td>64-bit signless integer attribute</td></tr>
@@ -5080,7 +6484,7 @@ only the non-padded part of the output.</p>
 <tr><td><code>image_dimensions</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
 </table>
 
-<h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
+<h5 id="operands_16">Operands:<a class="headerlink" href="#operands_16" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5099,7 +6503,7 @@ only the non-padded part of the output.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h5>
+<h5 id="results_16">Results:<a class="headerlink" href="#results_16" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5111,6 +6515,56 @@ only the non-padded part of the output.</p>
 <tr>
 <td style="text-align: center;"><code>result</code></td>
 <td>variadic of ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
+<h2 id="attributes_15">Attributes<a class="headerlink" href="#attributes_15" title="Permanent link">link</a></h2>
+<h3 id="iteratortypeattr">IteratorTypeAttr<a class="headerlink" href="#iteratortypeattr" title="Permanent link">link</a></h3>
+<p><em>Iterator type</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>#iree_linalg_ext.iterator_type&lt;
+  ::mlir::utils::IteratorType   # value
+&gt;
+</code></pre></div>
+<h5 id="parameters">Parameters:<a class="headerlink" href="#parameters" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Parameter</th>
+<th style="text-align: center;">C++ type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">value</td>
+<td style="text-align: center;"><code>::mlir::utils::IteratorType</code></td>
+<td>an enum of type IteratorType</td>
+</tr>
+</tbody>
+</table>
+<h2 id="enums">Enums<a class="headerlink" href="#enums" title="Permanent link">link</a></h2>
+<h3 id="iteratortype">IteratorType<a class="headerlink" href="#iteratortype" title="Permanent link">link</a></h3>
+<p><em>Iterator type</em></p>
+<h4 id="cases">Cases:<a class="headerlink" href="#cases" title="Permanent link">link</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">parallel</td>
+<td style="text-align: center;"><code>0</code></td>
+<td>parallel</td>
+</tr>
+<tr>
+<td style="text-align: center;">reduction</td>
+<td style="text-align: center;"><code>1</code></td>
+<td>reduction</td>
 </tr>
 </tbody>
 </table>

@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://iree.dev/reference/mlir-dialects/Flow/">
       
       
-        <link rel="prev" href="../Encoding/">
+        <link rel="prev" href="../">
       
       
         <link rel="next" href="../HAL/">
@@ -1139,6 +1139,8 @@
       
         
       
+        
+      
     
     
       
@@ -1323,6 +1325,10 @@
       
         
       
+        
+      
+        
+      
     
     
       
@@ -1392,26 +1398,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
       
@@ -1431,7 +1417,7 @@
             
   
   <span class="md-ellipsis">
-    Internal dialects
+    Core
   </span>
   
 
@@ -1441,51 +1427,9 @@
         <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_3_2">
             <span class="md-nav__icon md-icon"></span>
-            Internal dialects
+            Core
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Check/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Check
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Encoding/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Encoding
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1731,24 +1675,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#flowdispatchtensorload-flowdispatchtensorloadop" class="md-nav__link">
-    <span class="md-ellipsis">
-      flow.dispatch.tensor.load (Flow::DispatchTensorLoadOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowdispatchtensorstore-flowdispatchtensorstoreop" class="md-nav__link">
-    <span class="md-ellipsis">
-      flow.dispatch.tensor.store (Flow::DispatchTensorStoreOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#flowdispatchtie_shape-flowdispatchtieshapeop" class="md-nav__link">
     <span class="md-ellipsis">
       flow.dispatch.tie_shape (Flow::DispatchTieShapeOp)
@@ -1851,36 +1777,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#flowdispatchworkgroup_count_from_dag_root-flowdispatchworkgroupcountfromdagrootop" class="md-nav__link">
-    <span class="md-ellipsis">
-      flow.dispatch.workgroup_count_from_dag_root (Flow::DispatchWorkgroupCountFromDagRootOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowdispatchworkgroup_count_from_slice-flowdispatchworkgroupcountfromsliceop" class="md-nav__link">
-    <span class="md-ellipsis">
-      flow.dispatch.workgroup_count_from_slice (Flow::DispatchWorkgroupCountFromSliceOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowdispatchworkloadordinal-flowdispatchworkloadordinalop" class="md-nav__link">
-    <span class="md-ellipsis">
-      flow.dispatch.workload.ordinal (Flow::DispatchWorkloadOrdinalOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#flowtensoralloca-flowtensorallocaop" class="md-nav__link">
     <span class="md-ellipsis">
       flow.tensor.alloca (Flow::TensorAllocaOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowtensorbarrier-flowtensorbarrierop" class="md-nav__link">
+    <span class="md-ellipsis">
+      flow.tensor.barrier (Flow::TensorBarrierOp)
     </span>
   </a>
   
@@ -1926,6 +1834,15 @@
   <a href="#flowtensorempty-flowtensoremptyop" class="md-nav__link">
     <span class="md-ellipsis">
       flow.tensor.empty (Flow::TensorEmptyOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowtensorencode-flowtensorencodeop" class="md-nav__link">
+    <span class="md-ellipsis">
+      flow.tensor.encode (Flow::TensorEncodeOp)
     </span>
   </a>
   
@@ -2023,7 +1940,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#attributes_22" class="md-nav__link">
+  <a href="#attributes_20" class="md-nav__link">
     <span class="md-ellipsis">
       Attributes
     </span>
@@ -2045,48 +1962,6 @@
   <a href="#namedparameterattr" class="md-nav__link">
     <span class="md-ellipsis">
       NamedParameterAttr
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#type-constraints" class="md-nav__link">
-    <span class="md-ellipsis">
-      Type constraints
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Type constraints">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dispatchtensor" class="md-nav__link">
-    <span class="md-ellipsis">
-      dispatch.tensor
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dispatchtensor_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      dispatch.tensor
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dispatchtensor_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      dispatch.tensor
     </span>
   </a>
   
@@ -2230,11 +2105,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../HALInline/" class="md-nav__link">
+      <a href="../Stream/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    HAL/Inline
+    Stream
   </span>
   
 
@@ -2251,11 +2126,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../HALLoader/" class="md-nav__link">
+      <a href="../Util/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    HAL/Loader
+    Util
   </span>
   
 
@@ -2272,11 +2147,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../IOParameters/" class="md-nav__link">
+      <a href="../VM/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    IO/Parameters
+    VM
   </span>
   
 
@@ -2285,6 +2160,187 @@
   
 
               
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    MLIR extensions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            MLIR extensions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Encoding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Encoding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LinalgExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LinalgExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TensorExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TensorExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_4" id="__nav_4_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Codegen/target-specific
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Codegen/target-specific
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
                 
@@ -2356,95 +2412,180 @@
   
   
     <li class="md-nav__item">
-      <a href="../LinalgExt/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    LinalgExt
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Stream/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Stream
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Util/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Util
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../VM/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    VM
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../VMVX/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     VMVX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_5" id="__nav_4_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Optional modules
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Optional modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Check/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_5_2" id="__nav_4_3_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    HAL
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            HAL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HALInline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HALLoader/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loader
   </span>
   
 
@@ -2487,24 +2628,24 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_3" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_5_3" >
         
           
-          <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_3_5_3" id="__nav_4_3_5_3_label" tabindex="0">
             
   
   <span class="md-ellipsis">
-    Public dialects
+    IO
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_3_3">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_3_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_5_3">
             <span class="md-nav__icon md-icon"></span>
-            Public dialects
+            IO
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -2515,11 +2656,689 @@
   
   
     <li class="md-nav__item">
-      <a href="../IREEInput/" class="md-nav__link">
+      <a href="../IOParameters/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    IREEInput
+    Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../mlir-passes/" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m20.83 2.978-.086.095a16 16 0 0 0-1.19 1.487 6 6 0 0 0-.446.719 3 3 0 0 0-.249.596.5.5 0 0 0-.033.177v.004a.3.3 0 0 0-.21.29.3.3 0 0 0 .187.284c.038.371.08 1.142.07 2.2l-.004.142a8 8 0 0 1-.434 2.327q-.024-.015-.04-.013c-.03.003-.11.12-.19.251-.058.09-.119.195-.154.291a.4.4 0 0 0-.03.14.3.3 0 0 0 .01.088c.01.037.022.058.022.058l-.003.007a.14.14 0 0 0-.028.067l-.012.029a7 7 0 0 1-.257.527l-.077.142-.07.115-.022-.014a.16.16 0 0 0-.113.024c-.047.035-.151.194-.498.368a1.4 1.4 0 0 1-.32.114 14 14 0 0 0 .248-2.07 5 5 0 0 0-.064-1.057q.004-.016.003-.017l-.005.01a4 4 0 0 0-.104-.458 3.55 3.55 0 0 0-.724-1.385c-.631-.754-1.496-1.14-2.256-1.165l-.125-.002q0-.012.002-.022c.02-.098.024-.127-.087-.032l-.057.054-.146.007a1 1 0 0 1-.003-.108c.004-.076.024-.127-.087-.032a.6.6 0 0 0-.142.167c-.05.008-.08.015-.08.015l.045-.002-.047.008c-.016-.042-.053-.105-.048-.16.01-.118.043-.14-.037-.065-.098.09-.202.226-.22.3l-.096.03c-.018-.019-.074-.07-.086-.179-.013-.11-.012-.166-.08-.05a1.1 1.1 0 0 0-.13.348q-.048.022-.093.046a.27.27 0 0 1-.057-.173c-.005-.144.04-.26-.067-.068a1.6 1.6 0 0 0-.146.406 2 2 0 0 0-.105.08 3 3 0 0 1-.008-.17c-.002-.143.021-.296-.067-.026a2 2 0 0 0-.07.321c-.404.385-.65.917-.644 1.572v.007a3 3 0 0 0 .014.33q.031.356.107.605c-.095.13-.103.689-.01.818.073.104.496.35.586.399a.4.4 0 0 1 .094.093c.115.188.115.567.027.762-.107.238.107.285.285.32s.415-.023.463-.118c.047-.095-.154-.31-.237-.748-.084-.439.13-.474.13-.474s.095.024.237.249c.11.175.227.313.336.413a.7.7 0 0 1-.201.172c.12.005.24-.051.304-.087a1 1 0 0 0 .07.045l-.05.05a.5.5 0 0 0 .109-.022.3.3 0 0 0 .084.022c.155.012.57-.368.57-.439q-.002-.028-.038-.063c-.042-.045-.12-.1-.207-.177a1 1 0 0 1-.11-.116.7.7 0 0 1-.141-.374v-.01l-.003-.031s.007-.007.016-.02v.004l.004-.01c.052-.08.15-.379-.47-1.078a3.05 3.05 0 0 0-.924-.706c-.042-.472.15-.913.626-1.13l-.005.005.008-.006c.227-.102.517-.155.877-.136.69.036 1.22.36 1.59.845.514.712.738 1.78.575 2.856-.068.065-.055.075-.013.077a5 5 0 0 1-.055.273l-.027.015c-.123.074-.071.073 0 .092l-.006.02a4 4 0 0 1-.066.193 1 1 0 0 0-.087.03c-.135.053-.08.06-.012.09l.044.023a6 6 0 0 1-.101.237 1 1 0 0 0-.08.017c-.142.036-.088.05-.024.09l.04.027a7 7 0 0 1-.107.214 1 1 0 0 0-.153.025c-.14.036-.087.05-.023.09q.05.03.08.059l-.094.165-.023.036a.6.6 0 0 0-.206.024c-.142.036-.088.05-.024.09a.7.7 0 0 1 .104.079l-.126.18a.5.5 0 0 0-.23-.005c-.144.02-.092.04-.033.086.068.053.1.099.118.118l-.062.084c-.044-.058-.15-.124-.246-.193a.9.9 0 0 0-.29-.13c-.048 0-.2.268-1.017.197-.819-.071-.87-.15-.942-.15a1 1 0 0 0-.228.059l-.034-.02a11 11 0 0 1-.972-.674c-.464-.37-.72-.647-.72-.647s.137-.125-.047-.284a3 3 0 0 0-.338-.277 2 2 0 0 0-.242-.166l-.088-.127a12 12 0 0 1-.363-.628 11 11 0 0 1-.25-.527c-.16-.36-.27-.682-.346-.964a5.6 5.6 0 0 1-.148-.923 2 2 0 0 1 .004-.242.41.41 0 0 0 .158-.323.41.41 0 0 0-.358-.407c-.204-.427-.982-1.477-3.881-3.68l-.127-.097.005.004-.036-.027C7.067 6.599 7.644 7.587 7.795 8l-.027.033-.018-.013c.018 0 .025-.005.025-.005s-.672-.546-1.787-1.23c-1.118-.687-1.748-.849-1.88-.877l-.026-.006s.206.19.174.285c-.01.032-.168.022-.421.028a4 4 0 0 0-.725.07 4.1 4.1 0 0 0-1.567.63C.238 7.785 0 8.401 0 8.401s.55-.768 1.58-1.305c-.014.337-.047 1.97.445 4.12.53 2.32 1.53 4.487 1.614 4.665.004.178.016.272.016.272s.148-1.79.756-3.647c.175.283.758 1.117 2.075 2.096 1.628 1.21 2.37 1.536 2.4 1.548.001.157.005.24.005.24s.005-.1.018-.263a4.7 4.7 0 0 1 .552-.67 3.6 3.6 0 0 1 .54-.435q.048.166.093.276-.029-.145-.052-.282c.107.01.538.066 1.206.393.343.168.609.395.798.595l-.014.006s.123.112.269.403a2.4 2.4 0 0 0-.73.084 3 3 0 0 0-.098-.19.5.5 0 0 0-.039-.134c-.027-.061-.095-.1-.164-.14a.4.4 0 0 0-.104-.073.2.2 0 0 1-.055-.073c-.084-.184-.798.012-.942.18-.175.204-.209.464-.14.608.021.045.07.082.138.11.002.22.137.75.404 1.133a5 5 0 0 1-.108-.666c-.009-.16 0-.274.015-.35.047.328.174.684.577 1.124-.248-.54-.22-.861-.195-1.143l.01-.044.005-.001c.036.263.142.534.482.963l-.014-.028.014.021a1.63 1.63 0 0 1-.167-1.03l.008-.002q.07.044.134.126c.128.172.188.349.212.47a.53.53 0 0 0 .067.383 18 18 0 0 1-.72.501c-.23.15-.49.313-.757.47q-.21.121-.414.23l-.135-.077h.002l-.008-.004c-.97-.559-1.69-.932-2.518-1.082-.93-.166-1.786.283-1.982 1.082a1.28 1.28 0 0 0 .552 1.38l.012.008q.02.014.04.026l.06.036h.002a2.1 2.1 0 0 0 .69.237l.028.005h.006a4 4 0 0 0 .412.044c.975.047 2.156-.408 3.323-.982q.15.08.306.166c2.547 1.403 4.098 1.585 6.154.728-.502.151-1.208.356-2.094.344a.1.1 0 0 0-.02-.006v.006a6 6 0 0 1-.647-.05l-.03-.004v-.003l-.001.002a6.3 6.3 0 0 1-1.556-.436 8 8 0 0 1-.745-.362 57 57 0 0 1-1.006-.569c.348-.178.692-.363 1.026-.545.355-.189.672-.362.918-.5l.009-.004h.007s.083-.019.16-.043c.17-.052.41-.149.695-.283.028.117.095.215.195.253.235.091.407.027.522-.102l.018-.01.047-.037c.05-.03.107-.067.156-.09l.053-.022q.06-.016.116-.037l.033-.01c-.145.297-.091.581-.091.581.043-.37.22-.608.392-.715q.096-.041.2-.067c.064 0 .116.023.144.07.07.12.217.194.364.226.024.15-.045.404-.4.866l.09-.062.004-.003.072-.053q.213-.162.334-.305a1 1 0 0 0 .19-.305c.013.2-.042.507-.31 1.036 0 0 .317-.276.514-.63.006.191-.01.443-.063.785.345-.673.325-1.085.239-1.326l-.01-.036a.4.4 0 0 0-.01-.065l.042-.057c.118-.166-.048-.344-.154-.414-.06-.04-.2-.154-.454-.157-.225-.27-.51-.15-.958.145a1.3 1.3 0 0 1-.166.092 1 1 0 0 0-.055-.116q.241-.145.494-.308c.317-.207.553-.416.728-.615.51-.517.69-1.02 1.21-1.446h-.013l.06-.031c.854-.458 1.306-.547 1.338-.553l-.003.128.018-.125a1.8 1.8 0 0 1 .481.344 2.1 2.1 0 0 1 .362.487l.044.3s0-.116-.01-.33c.153-.151 1.02-1.043 1.724-2.466.694-1.404.944-2.523 1.017-2.924a18 18 0 0 1 .665 2.466s-.002-.133-.03-.374c.096-.336.515-1.872.626-3.756.1-1.68-.065-2.78-.14-3.173.648.536.995 1.306.995 1.306s-.04-.163-.188-.437l.02.027s-.236-.455-.644-.904a7 7 0 0 0-.157-.172c-.432-.46-.854-.617-1.17-.672a1.6 1.6 0 0 0-.308-.03h-.019c-.125-.003-.2.002-.207-.026-.02-.095.11-.285.11-.285s-.177.046-.554.33c-.23.167-.52.41-.853.76a14 14 0 0 0-.89.994l-.075.095-.023-.017c.076-.33.362-1.117 1.788-3.111zM11.92 14.09l.012.006zm-.263 2.606q.133.064.303.194h-.005a.5.5 0 0 0-.155.07 1 1 0 0 1-.126-.224zm-4.855 1.57q.198-.002.432.047l.02.005.017.004q.165.041.337.102l.057.021q.287.11.611.248c.32.14.62.277.838.375l.183.088c-.22.106-.424.196-.577.261-1.014.416-1.83.536-2.338.391-.944-.269-.76-1.536.42-1.542"/></svg>
+  
+  <span class="md-ellipsis">
+    MLIR passes
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            MLIR passes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4_2" id="__nav_4_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Core dialects
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Core dialects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/Flow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/HAL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HAL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/Stream/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Stream
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/Util/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Util
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/VM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4_3" id="__nav_4_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Pipelines
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Pipelines
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/ConstEval/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ConstEval
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/DispatchCreation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DispatchCreation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/GlobalOptimization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GlobalOptimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/InputConversion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InputConversion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/Preprocessing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preprocessing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4_4" id="__nav_4_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Codegen
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Codegen
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenCommon/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenCommonCPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common/CPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenCommonGPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common/GPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenDialectGPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dialect/GPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenDialectVectorExt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dialect/VectorExt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenLLVMCPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLVMCPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenLLVMGPU/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLVMGPU
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenSPIRV/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SPIRV
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlir-passes/CodegenVMVX/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMVX
   </span>
   
 
@@ -2579,10 +3398,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5" >
         
           
-          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -2593,8 +3412,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_4">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
             <span class="md-nav__icon md-icon"></span>
             Other topics
           </label>
@@ -4501,24 +5320,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#flowdispatchtensorload-flowdispatchtensorloadop" class="md-nav__link">
-    <span class="md-ellipsis">
-      flow.dispatch.tensor.load (Flow::DispatchTensorLoadOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowdispatchtensorstore-flowdispatchtensorstoreop" class="md-nav__link">
-    <span class="md-ellipsis">
-      flow.dispatch.tensor.store (Flow::DispatchTensorStoreOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#flowdispatchtie_shape-flowdispatchtieshapeop" class="md-nav__link">
     <span class="md-ellipsis">
       flow.dispatch.tie_shape (Flow::DispatchTieShapeOp)
@@ -4621,36 +5422,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#flowdispatchworkgroup_count_from_dag_root-flowdispatchworkgroupcountfromdagrootop" class="md-nav__link">
-    <span class="md-ellipsis">
-      flow.dispatch.workgroup_count_from_dag_root (Flow::DispatchWorkgroupCountFromDagRootOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowdispatchworkgroup_count_from_slice-flowdispatchworkgroupcountfromsliceop" class="md-nav__link">
-    <span class="md-ellipsis">
-      flow.dispatch.workgroup_count_from_slice (Flow::DispatchWorkgroupCountFromSliceOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowdispatchworkloadordinal-flowdispatchworkloadordinalop" class="md-nav__link">
-    <span class="md-ellipsis">
-      flow.dispatch.workload.ordinal (Flow::DispatchWorkloadOrdinalOp)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#flowtensoralloca-flowtensorallocaop" class="md-nav__link">
     <span class="md-ellipsis">
       flow.tensor.alloca (Flow::TensorAllocaOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowtensorbarrier-flowtensorbarrierop" class="md-nav__link">
+    <span class="md-ellipsis">
+      flow.tensor.barrier (Flow::TensorBarrierOp)
     </span>
   </a>
   
@@ -4696,6 +5479,15 @@
   <a href="#flowtensorempty-flowtensoremptyop" class="md-nav__link">
     <span class="md-ellipsis">
       flow.tensor.empty (Flow::TensorEmptyOp)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flowtensorencode-flowtensorencodeop" class="md-nav__link">
+    <span class="md-ellipsis">
+      flow.tensor.encode (Flow::TensorEncodeOp)
     </span>
   </a>
   
@@ -4793,7 +5585,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#attributes_22" class="md-nav__link">
+  <a href="#attributes_20" class="md-nav__link">
     <span class="md-ellipsis">
       Attributes
     </span>
@@ -4815,48 +5607,6 @@
   <a href="#namedparameterattr" class="md-nav__link">
     <span class="md-ellipsis">
       NamedParameterAttr
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#type-constraints" class="md-nav__link">
-    <span class="md-ellipsis">
-      Type constraints
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Type constraints">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dispatchtensor" class="md-nav__link">
-    <span class="md-ellipsis">
-      dispatch.tensor
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dispatchtensor_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      dispatch.tensor
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dispatchtensor_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      dispatch.tensor
     </span>
   </a>
   
@@ -4987,8 +5737,9 @@
 
 
 <!-- Autogenerated by mlir-tblgen; don't manually edit -->
+
 <h1 id="flow-dialect">'flow' Dialect<a class="headerlink" href="#flow-dialect" title="Permanent link">link</a></h1>
-<p>A dialect designed to model execution data flow and partitioning.</p>
+<p><em>A dialect designed to model execution data flow and partitioning.</em></p>
 <p>The flow dialect is used to model regions of dense computation and the data
 flow between them. MLIR value-semantic tensors are used as the primary data
 type to allow SSA use-def to provide a bulk of the infrastructure required
@@ -5049,8 +5800,6 @@ workload size, shapes of inputs and outputs, etc.</p>
 </li>
 <li><a href="#partitioned-region-ops">Partitioned region ops</a><ul>
 <li><a href="#flowdispatchregion-flowdispatchregionop">flow.dispatch.region (Flow::DispatchRegionOp)</a></li>
-<li><a href="#flowdispatchtensorload-flowdispatchtensorloadop">flow.dispatch.tensor.load (Flow::DispatchTensorLoadOp)</a></li>
-<li><a href="#flowdispatchtensorstore-flowdispatchtensorstoreop">flow.dispatch.tensor.store (Flow::DispatchTensorStoreOp)</a></li>
 <li><a href="#flowdispatchtie_shape-flowdispatchtieshapeop">flow.dispatch.tie_shape (Flow::DispatchTieShapeOp)</a></li>
 <li><a href="#flowdispatchworkgroupcount-flowdispatchworkgroupcountop">flow.dispatch.workgroup.count (Flow::DispatchWorkgroupCountOp)</a></li>
 <li><a href="#flowdispatchworkgroupid-flowdispatchworkgroupidop">flow.dispatch.workgroup.id (Flow::DispatchWorkgroupIDOp)</a></li>
@@ -5065,15 +5814,14 @@ workload size, shapes of inputs and outputs, etc.</p>
 </ul>
 </li>
 <li><a href="#tensor-ops">Tensor ops</a><ul>
-<li><a href="#flowdispatchworkgroup_count_from_dag_root-flowdispatchworkgroupcountfromdagrootop">flow.dispatch.workgroup_count_from_dag_root (Flow::DispatchWorkgroupCountFromDagRootOp)</a></li>
-<li><a href="#flowdispatchworkgroup_count_from_slice-flowdispatchworkgroupcountfromsliceop">flow.dispatch.workgroup_count_from_slice (Flow::DispatchWorkgroupCountFromSliceOp)</a></li>
-<li><a href="#flowdispatchworkloadordinal-flowdispatchworkloadordinalop">flow.dispatch.workload.ordinal (Flow::DispatchWorkloadOrdinalOp)</a></li>
 <li><a href="#flowtensoralloca-flowtensorallocaop">flow.tensor.alloca (Flow::TensorAllocaOp)</a></li>
+<li><a href="#flowtensorbarrier-flowtensorbarrierop">flow.tensor.barrier (Flow::TensorBarrierOp)</a></li>
 <li><a href="#flowtensorbitcast-flowtensorbitcastop">flow.tensor.bitcast (Flow::TensorBitCastOp)</a></li>
 <li><a href="#flowtensorclone-flowtensorcloneop">flow.tensor.clone (Flow::TensorCloneOp)</a></li>
 <li><a href="#flowtensorconstant-flowtensorconstantop">flow.tensor.constant (Flow::TensorConstantOp)</a></li>
 <li><a href="#flowtensordynamic_constant-flowtensordynamicconstantop">flow.tensor.dynamic_constant (Flow::TensorDynamicConstantOp)</a></li>
 <li><a href="#flowtensorempty-flowtensoremptyop">flow.tensor.empty (Flow::TensorEmptyOp)</a></li>
+<li><a href="#flowtensorencode-flowtensorencodeop">flow.tensor.encode (Flow::TensorEncodeOp)</a></li>
 <li><a href="#flowtensorload-flowtensorloadop">flow.tensor.load (Flow::TensorLoadOp)</a></li>
 <li><a href="#flowtensorreshape-flowtensorreshapeop">flow.tensor.reshape (Flow::TensorReshapeOp)</a></li>
 <li><a href="#flowtensorslice-flowtensorsliceop">flow.tensor.slice (Flow::TensorSliceOp)</a></li>
@@ -5087,15 +5835,9 @@ workload size, shapes of inputs and outputs, etc.</p>
 </li>
 </ul>
 </li>
-<li><a href="#attributes_22">Attributes</a><ul>
+<li><a href="#attributes_20">Attributes</a><ul>
 <li><a href="#dummyattr">DummyAttr</a></li>
 <li><a href="#namedparameterattr">NamedParameterAttr</a></li>
-</ul>
-</li>
-<li><a href="#type-constraints">Type constraints</a><ul>
-<li><a href="#dispatchtensor">dispatch.tensor</a></li>
-<li><a href="#dispatchtensor_1">dispatch.tensor</a></li>
-<li><a href="#dispatchtensor_2">dispatch.tensor</a></li>
 </ul>
 </li>
 <li><a href="#types">Types</a><ul>
@@ -5293,8 +6035,8 @@ group.</p>
               custom&lt;ShapedTiedResult&gt;(type($result), $target_dims, $tied_operands)
               attr-dict-with-keyword
 </code></pre></div>
-<p>It gathers data from all ranks and concatenates them on the 0-th dimension.
-Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
+<p>It gathers data from all ranks and concatenates them on the 0-th dimension.</p>
+<p>Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
 <h5 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
@@ -5352,8 +6094,8 @@ Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
               custom&lt;ShapedTiedResult&gt;(type($result), $target_dims, $tied_operands)
               attr-dict-with-keyword
 </code></pre></div>
-<p>The operation reduces data across all the ranks in the channel.
-Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
+<p>The operation reduces data across all the ranks in the channel.</p>
+<p>Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
 <h5 id="attributes_2">Attributes:<a class="headerlink" href="#attributes_2" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
@@ -5412,8 +6154,8 @@ Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
               custom&lt;ShapedTiedResult&gt;(type($result), $target_dims, $tied_operands)
               attr-dict-with-keyword
 </code></pre></div>
-<p>This operation mutually exchanges data acrosss all of the ranks in the channel.
-Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
+<p>This operation mutually exchanges data acrosss all of the ranks in the channel.</p>
+<p>Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
 <h5 id="attributes_3">Attributes:<a class="headerlink" href="#attributes_3" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
@@ -5472,8 +6214,8 @@ Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
               attr-dict-with-keyword
 </code></pre></div>
 <p>The operation reduces data across all the ranks in the channel and
-    scatters the result to each rank.
-Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
+    scatters the result to each rank.</p>
+<p>Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
 <h5 id="attributes_4">Attributes:<a class="headerlink" href="#attributes_4" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
@@ -5535,8 +6277,8 @@ Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
 <p>The operation sends data to the rank specificied by send
     and receives data from the rank specified by recv. If send is -1, this rank
     will not send any data. If recv is -1, this rank will not receive any data
-    and the output will be all zeros.
-Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
+    and the output will be all zeros.</p>
+<p>Interfaces: <code>InferTypeOpInterface</code>, <code>TiedOpInterface</code></p>
 <h5 id="attributes_5">Attributes:<a class="headerlink" href="#attributes_5" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
@@ -5730,7 +6472,7 @@ region represent the workload for the dispatch, and returns the number of
 workgroups for the dispatch. The region is lowered directly to
 <code>workload_count</code> region of <code>dispatch.workgroups</code>.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code></p>
-<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Util_ShapeAwareOp</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
 <h5 id="operands_9">Operands:<a class="headerlink" href="#operands_9" title="Permanent link">link</a></h5>
 <table>
@@ -5766,138 +6508,6 @@ workgroups for the dispatch. The region is lowered directly to
 </tr>
 </tbody>
 </table>
-<h4 id="flowdispatchtensorload-flowdispatchtensorloadop"><code>flow.dispatch.tensor.load</code> (Flow::DispatchTensorLoadOp)<a class="headerlink" href="#flowdispatchtensorload-flowdispatchtensorloadop" title="Permanent link">link</a></h4>
-<p><em>Loads a tensor from a dispatch input placeholder</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `flow.dispatch.tensor.load` $source
-              `,` `offsets` `=` custom&lt;DynamicIndexList&gt;(
-              $offsets, $static_offsets)
-              `,` `sizes` `=` custom&lt;DynamicIndexList&gt;(
-              $sizes, $static_sizes)
-              `,` `strides` `=` custom&lt;DynamicIndexList&gt;(
-              $strides, $static_strides)
-              attr-dict `:` type($source) (`{` $source_dims^ `}`)?  `-&gt;` type($result)
-</code></pre></div>
-<p>Loads an input tensor or subtensor from an input placeholder. As each
-workgroup executes concurrently all workgroups will receive identical loaded
-results of regions that may overlap.</p>
-<p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code></p>
-<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OffsetSizeAndStrideOpInterface</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>TiedOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
-<p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
-<table>
-<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
-<tr><td><code>static_offsets</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
-<tr><td><code>static_sizes</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
-<tr><td><code>static_strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
-</table>
-
-<h5 id="operands_10">Operands:<a class="headerlink" href="#operands_10" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>source</code></td>
-<td>dispatch.tensor</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>source_dims</code></td>
-<td>variadic of index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>offsets</code></td>
-<td>variadic of index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sizes</code></td>
-<td>variadic of index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>strides</code></td>
-<td>variadic of index</td>
-</tr>
-</tbody>
-</table>
-<h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>result</code></td>
-<td>ranked tensor of any type values</td>
-</tr>
-</tbody>
-</table>
-<h4 id="flowdispatchtensorstore-flowdispatchtensorstoreop"><code>flow.dispatch.tensor.store</code> (Flow::DispatchTensorStoreOp)<a class="headerlink" href="#flowdispatchtensorstore-flowdispatchtensorstoreop" title="Permanent link">link</a></h4>
-<p><em>Stores a tensor into a dispatch output placeholder</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `flow.dispatch.tensor.store` $value `,` $target
-              `,` `offsets` `=` custom&lt;DynamicIndexList&gt;(
-              $offsets, $static_offsets)
-              `,` `sizes` `=` custom&lt;DynamicIndexList&gt;(
-              $sizes, $static_sizes)
-              `,` `strides` `=` custom&lt;DynamicIndexList&gt;(
-              $strides, $static_strides)
-              attr-dict `:` type($value) `-&gt;` type($target) (`{` $target_dims^ `}`)?
-</code></pre></div>
-<p>Stores a tensor or subtensor into an output tensor placeholder. As each
-workgroup executes concurrently behavior is undefined if more than one
-workgroup stores into overlapping regions of the full output tensor.</p>
-<p>Traits: <code>AttrSizedOperandSegments</code></p>
-<p>Interfaces: <code>OffsetSizeAndStrideOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
-<h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
-<table>
-<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
-<tr><td><code>static_offsets</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
-<tr><td><code>static_sizes</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
-<tr><td><code>static_strides</code></td><td>::mlir::DenseI64ArrayAttr</td><td>i64 dense array attribute</td></tr>
-</table>
-
-<h5 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>value</code></td>
-<td>ranked tensor of any type values</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>target</code></td>
-<td>dispatch.tensor</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>target_dims</code></td>
-<td>variadic of index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>offsets</code></td>
-<td>variadic of index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>sizes</code></td>
-<td>variadic of index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>strides</code></td>
-<td>variadic of index</td>
-</tr>
-</tbody>
-</table>
 <h4 id="flowdispatchtie_shape-flowdispatchtieshapeop"><code>flow.dispatch.tie_shape</code> (Flow::DispatchTieShapeOp)<a class="headerlink" href="#flowdispatchtie_shape-flowdispatchtieshapeop" title="Permanent link">link</a></h4>
 <p><em>Ties a runtime shape to a dispatch I/O argument</em></p>
 <p>Syntax:</p>
@@ -5910,7 +6520,7 @@ pass-through result of this op to allow for SSA-based shape resolution.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h5>
+<h5 id="operands_10">Operands:<a class="headerlink" href="#operands_10" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5929,7 +6539,7 @@ pass-through result of this op to allow for SSA-based shape resolution.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h5>
+<h5 id="results_11">Results:<a class="headerlink" href="#results_11" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5960,13 +6570,13 @@ built-in variable.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
+<h5 id="attributes_9">Attributes:<a class="headerlink" href="#attributes_9" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
 
-<h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
+<h5 id="results_12">Results:<a class="headerlink" href="#results_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -5998,13 +6608,13 @@ built-in variable.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_12">Attributes:<a class="headerlink" href="#attributes_12" title="Permanent link">link</a></h5>
+<h5 id="attributes_10">Attributes:<a class="headerlink" href="#attributes_10" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
 
-<h5 id="results_14">Results:<a class="headerlink" href="#results_14" title="Permanent link">link</a></h5>
+<h5 id="results_13">Results:<a class="headerlink" href="#results_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6041,13 +6651,13 @@ built-in variable.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>OpAsmOpInterface</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_13">Attributes:<a class="headerlink" href="#attributes_13" title="Permanent link">link</a></h5>
+<h5 id="attributes_11">Attributes:<a class="headerlink" href="#attributes_11" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>dimension</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
 </table>
 
-<h5 id="results_15">Results:<a class="headerlink" href="#results_15" title="Permanent link">link</a></h5>
+<h5 id="results_14">Results:<a class="headerlink" href="#results_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6108,16 +6718,16 @@ workload is not limited to the 3D XYZ grid dispatch of the workgroup count
 and can contain any number of parameters used to compute it.</p>
 <div class="highlight"><pre><span></span><code>%r = flow.dispatch.workgroups[%c5, %c5](%0, %1)
     : (tensor&lt;5x5xf32&gt;, tensor&lt;5xf32&gt;) -&gt; tensor&lt;5x5xf32&gt; =
-          (%arg0: !flow.dispatch.tensor&lt;readonly:tensor&lt;5x5xf32&gt;&gt;,
-           %arg1: !flow.dispatch.tensor&lt;readonly:tensor&lt;5xf32&gt;&gt;,
-           %arg2: !flow.dispatch.tensor&lt;writeonly:tensor&lt;5x5xf32&gt;&gt;) {
+          (%arg0: !iree_tensor_ext.dispatch.tensor&lt;readonly:tensor&lt;5x5xf32&gt;&gt;,
+           %arg1: !iree_tensor_ext.dispatch.tensor&lt;readonly:tensor&lt;5xf32&gt;&gt;,
+           %arg2: !iree_tensor_ext.dispatch.tensor&lt;writeonly:tensor&lt;5x5xf32&gt;&gt;) {
   ...
 }
 </code></pre></div>
 <p>The number of results of the operation is equal to the number of results
 in the type signature (<code>(tensor&lt;5x5xf32&gt;, tensor&lt;5xf32&gt;) -&gt; tensor&lt;5x5xf32&gt;</code>).
 Each tensor argument and result in the type signature has a corresponding
-block argument of type <code>!flow.dispatch.tensor</code>. Furthermore, each argument
+block argument of type <code>!iree_tensor_ext.dispatch.tensor</code>. Furthermore, each argument
 has a corresponding <code>arguments</code> operand.</p>
 <p>There are no <code>arguments</code> operands for results, but a result can be tied an
 argument by writing the argument operand's SSA value instead of its type:
@@ -6127,13 +6737,13 @@ result.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code>, <code>IsolatedFromAbove</code></p>
 <p>Interfaces: <code>ClosureOpInterface</code>, <code>ConditionallySpeculatable</code>, <code>HoistableOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>TiedOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_14">Attributes:<a class="headerlink" href="#attributes_14" title="Permanent link">link</a></h5>
+<h5 id="attributes_12">Attributes:<a class="headerlink" href="#attributes_12" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
 </table>
 
-<h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
+<h5 id="operands_11">Operands:<a class="headerlink" href="#operands_11" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6160,7 +6770,7 @@ result.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_16">Results:<a class="headerlink" href="#results_16" title="Permanent link">link</a></h5>
+<h5 id="results_15">Results:<a class="headerlink" href="#results_15" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6184,7 +6794,7 @@ result.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>ReturnLike</code>, <code>Terminator</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>RegionBranchTerminatorOpInterface</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_14">Operands:<a class="headerlink" href="#operands_14" title="Permanent link">link</a></h5>
+<h5 id="operands_12">Operands:<a class="headerlink" href="#operands_12" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6221,14 +6831,16 @@ unknowable until the operation is performed it should be made as a normal
 asynchronous host call with 'coarse-fences' instead.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code></p>
 <p>Interfaces: <code>CallOpInterface</code>, <code>SymbolUserOpInterface</code>, <code>TiedOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
-<h5 id="attributes_15">Attributes:<a class="headerlink" href="#attributes_15" title="Permanent link">link</a></h5>
+<h5 id="attributes_13">Attributes:<a class="headerlink" href="#attributes_13" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>callee</code></td><td>::mlir::FlatSymbolRefAttr</td><td>flat symbol reference attribute</td></tr>
 <tr><td><code>tied_operands</code></td><td>::mlir::ArrayAttr</td><td>64-bit integer array attribute</td></tr>
+<tr><td><code>arg_attrs</code></td><td>::mlir::ArrayAttr</td><td>Array of dictionary attributes</td></tr>
+<tr><td><code>res_attrs</code></td><td>::mlir::ArrayAttr</td><td>Array of dictionary attributes</td></tr>
 </table>
 
-<h5 id="operands_15">Operands:<a class="headerlink" href="#operands_15" title="Permanent link">link</a></h5>
+<h5 id="operands_13">Operands:<a class="headerlink" href="#operands_13" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6251,7 +6863,7 @@ asynchronous host call with 'coarse-fences' instead.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_17">Results:<a class="headerlink" href="#results_17" title="Permanent link">link</a></h5>
+<h5 id="results_16">Results:<a class="headerlink" href="#results_16" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6283,7 +6895,7 @@ asynchronous host call with 'coarse-fences' instead.</p>
 operation via <code>flow.call</code>. Today only external functions are allowed.</p>
 <p>Traits: <code>IsolatedFromAbove</code></p>
 <p>Interfaces: <code>CallableOpInterface</code>, <code>FunctionOpInterface</code>, <code>Symbol</code></p>
-<h5 id="attributes_16">Attributes:<a class="headerlink" href="#attributes_16" title="Permanent link">link</a></h5>
+<h5 id="attributes_14">Attributes:<a class="headerlink" href="#attributes_14" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>sym_name</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
@@ -6295,174 +6907,6 @@ operation via <code>flow.call</code>. Today only external functions are allowed.
 </table>
 
 <h3 id="tensor-ops">Tensor ops<a class="headerlink" href="#tensor-ops" title="Permanent link">link</a></h3>
-<h4 id="flowdispatchworkgroup_count_from_dag_root-flowdispatchworkgroupcountfromdagrootop"><code>flow.dispatch.workgroup_count_from_dag_root</code> (Flow::DispatchWorkgroupCountFromDagRootOp)<a class="headerlink" href="#flowdispatchworkgroup_count_from_dag_root-flowdispatchworkgroupcountfromdagrootop" title="Permanent link">link</a></h4>
-<p><em>Workgroup count computed based on iteration range of the root of the DAG
-    for ops within the dispatch.</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `flow.dispatch.workgroup_count_from_dag_root` attr-dict $operands
-</code></pre></div>
-<p>When using tile + distribution of the root of the DAG (Directed Acyclic
-Graph) of ops within the dispatch to split the work amongst workgroups. The
-workload captured is the size of the iteration space of the root of the DAG.
-This op represents the computation that given the workload returns the
-number of workgroups to use. The backends are responsible for lowering this
-op into actual computation (typically based on the tile sizes used to tile
-and distribute the root of the DAG).</p>
-<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
-<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
-<p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_16">Operands:<a class="headerlink" href="#operands_16" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>operands</code></td>
-<td>variadic of index</td>
-</tr>
-</tbody>
-</table>
-<h5 id="results_18">Results:<a class="headerlink" href="#results_18" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>x</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>y</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>z</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h4 id="flowdispatchworkgroup_count_from_slice-flowdispatchworkgroupcountfromsliceop"><code>flow.dispatch.workgroup_count_from_slice</code> (Flow::DispatchWorkgroupCountFromSliceOp)<a class="headerlink" href="#flowdispatchworkgroup_count_from_slice-flowdispatchworkgroupcountfromsliceop" title="Permanent link">link</a></h4>
-<p><em>Place holder to signify default workgroup count calculation.</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `flow.dispatch.workgroup_count_from_slice` attr-dict $operands
-</code></pre></div>
-<p>The default computation of the number of workgroups (or workgroup count)
-assumes that the dispatch + captured values is enough to compute the
-workgroup count. It does so by using a program slice of the values
-within the dispatch that represent the number of workgroups when available
-within the dispatch.
-Currently the arguments of index types captured by the
-<code>flow.dispatch.workgroups</code> is treated as the workload for the operation.
-It is a requirement that the slice of the program that computes the
-number of workgroups will need to have its leaves be these captured values.</p>
-<p>TODO: This could be generalized in future to allow the slices to encompass
-arbitrary computation. The computation of the workgroup count can then be
-done on the device itself, if this is data dependent. In such cases the
-workload could be more than just values of index types.</p>
-<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
-<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
-<p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_17">Operands:<a class="headerlink" href="#operands_17" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>operands</code></td>
-<td>variadic of index</td>
-</tr>
-</tbody>
-</table>
-<h5 id="results_19">Results:<a class="headerlink" href="#results_19" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>x</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>y</code></td>
-<td>index</td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>z</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h4 id="flowdispatchworkloadordinal-flowdispatchworkloadordinalop"><code>flow.dispatch.workload.ordinal</code> (Flow::DispatchWorkloadOrdinalOp)<a class="headerlink" href="#flowdispatchworkloadordinal-flowdispatchworkloadordinalop" title="Permanent link">link</a></h4>
-<p><em>Annotates the values captured as workload within the body of
-    <code>flow.dispatch.workgroups</code> op.</em></p>
-<p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `flow.dispatch.workload.ordinal` attr-dict $operand `,` $ordinal `:` type($operand)
-</code></pre></div>
-<p>The arguments that represent the captured/returned values of the
-`flow.dispatch.workgroups, i.e. the signature of the body of the op is not
-preserved during IREEs compilation. Since the workloads are derived from
-the operands captured by the operation, this op denotes the values captured
-as workloads. This can be used in the backends to map back to the workload
-values while materializing the workgroup count computation.</p>
-<p>TODO: Find a better way to represent this information, either by somehow
-propagating the signature of the created dispatch workgroup op through
-the compilation stack until the codegen backends, or as a separate
-list/attribute that can be plumbed through without using explicit ops.</p>
-<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
-<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
-<p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_17">Attributes:<a class="headerlink" href="#attributes_17" title="Permanent link">link</a></h5>
-<table>
-<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
-<tr><td><code>ordinal</code></td><td>::mlir::IntegerAttr</td><td>index attribute</td></tr>
-</table>
-
-<h5 id="operands_18">Operands:<a class="headerlink" href="#operands_18" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Operand</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>operand</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
-<h5 id="results_20">Results:<a class="headerlink" href="#results_20" title="Permanent link">link</a></h5>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Result</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><code>result</code></td>
-<td>index</td>
-</tr>
-</tbody>
-</table>
 <h4 id="flowtensoralloca-flowtensorallocaop"><code>flow.tensor.alloca</code> (Flow::TensorAllocaOp)<a class="headerlink" href="#flowtensoralloca-flowtensorallocaop" title="Permanent link">link</a></h4>
 <p><em>An empty tensor allocation with undefined contents</em></p>
 <p>Syntax:</p>
@@ -6478,7 +6922,7 @@ the compiler. The presence of this op is often an indication of an improper
 lowering.</p>
 <p>Interfaces: <code>MemoryEffectOpInterface (MemoryEffectOpInterface)</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{MemoryEffects::Allocate on ::mlir::SideEffects::DefaultResource}</code></p>
-<h5 id="operands_19">Operands:<a class="headerlink" href="#operands_19" title="Permanent link">link</a></h5>
+<h5 id="operands_14">Operands:<a class="headerlink" href="#operands_14" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6493,7 +6937,61 @@ lowering.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_21">Results:<a class="headerlink" href="#results_21" title="Permanent link">link</a></h5>
+<h5 id="results_17">Results:<a class="headerlink" href="#results_17" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>result</code></td>
+<td>ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
+<h4 id="flowtensorbarrier-flowtensorbarrierop"><code>flow.tensor.barrier</code> (Flow::TensorBarrierOp)<a class="headerlink" href="#flowtensorbarrier-flowtensorbarrierop" title="Permanent link">link</a></h4>
+<p><em>Indicates a value that must have a specific affinity</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `flow.tensor.barrier` $operand `:` type($result) (`{` $operand_dims^ `}`)?
+              `on` $target
+              attr-dict-with-keyword
+</code></pre></div>
+<p>Prevents fusion and scheduling of a value across an affinity boundary.
+May introduce copy-on-write behavior if the operand value is used as well as
+the result and users should try to keep the operand to a single use by this
+op.</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>HoistableOpInterface</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>TiedOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
+<h5 id="attributes_15">Attributes:<a class="headerlink" href="#attributes_15" title="Permanent link">link</a></h5>
+<table>
+<tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
+<tr><td><code>target</code></td><td>::mlir::Attribute</td><td>any attribute</td></tr>
+</table>
+
+<h5 id="operands_15">Operands:<a class="headerlink" href="#operands_15" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>operand</code></td>
+<td>ranked tensor of any type values</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>operand_dims</code></td>
+<td>variadic of index</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results_18">Results:<a class="headerlink" href="#results_18" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6520,7 +7018,7 @@ lowering.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>HoistableOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>TiedOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_20">Operands:<a class="headerlink" href="#operands_20" title="Permanent link">link</a></h5>
+<h5 id="operands_16">Operands:<a class="headerlink" href="#operands_16" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6543,7 +7041,7 @@ lowering.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_22">Results:<a class="headerlink" href="#results_22" title="Permanent link">link</a></h5>
+<h5 id="results_19">Results:<a class="headerlink" href="#results_19" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6561,14 +7059,14 @@ lowering.</p>
 <h4 id="flowtensorclone-flowtensorcloneop"><code>flow.tensor.clone</code> (Flow::TensorCloneOp)<a class="headerlink" href="#flowtensorclone-flowtensorcloneop" title="Permanent link">link</a></h4>
 <p><em>Performs a full tensor clone operation</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `flow.tensor.clone` $operand `:` type($result) (`{` $argument_dims^ `}`)?
+<div class="highlight"><pre><span></span><code>operation ::= `flow.tensor.clone` $operand `:` type($result) (`{` $operand_dims^ `}`)?
               attr-dict-with-keyword
 </code></pre></div>
 <p>Clones the input tensor into an identical output tensor.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>HoistableOpInterface</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_21">Operands:<a class="headerlink" href="#operands_21" title="Permanent link">link</a></h5>
+<h5 id="operands_17">Operands:<a class="headerlink" href="#operands_17" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6582,12 +7080,12 @@ lowering.</p>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>argument_dims</code></td>
+<td style="text-align: center;"><code>operand_dims</code></td>
 <td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_23">Results:<a class="headerlink" href="#results_23" title="Permanent link">link</a></h5>
+<h5 id="results_20">Results:<a class="headerlink" href="#results_20" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6614,13 +7112,13 @@ lowering.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>ConstantLike</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_18">Attributes:<a class="headerlink" href="#attributes_18" title="Permanent link">link</a></h5>
+<h5 id="attributes_16">Attributes:<a class="headerlink" href="#attributes_16" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>value</code></td><td>::mlir::TypedAttr</td><td>TypedAttr instance</td></tr>
 </table>
 
-<h5 id="results_24">Results:<a class="headerlink" href="#results_24" title="Permanent link">link</a></h5>
+<h5 id="results_21">Results:<a class="headerlink" href="#results_21" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6648,13 +7146,13 @@ preserved.</p>
 <div class="highlight"><pre><span></span><code>%cst = flow.tensor.dynamic_constant #something_tensor_like : tensor&lt;2x2xf32&gt; -&gt; tensor&lt;?x2xf32&gt;
 %res = math.absf %cst : tensor&lt;?x2xf32&gt;
 </code></pre></div>
-<h5 id="attributes_19">Attributes:<a class="headerlink" href="#attributes_19" title="Permanent link">link</a></h5>
+<h5 id="attributes_17">Attributes:<a class="headerlink" href="#attributes_17" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>value</code></td><td>::mlir::TypedAttr</td><td>TypedAttr instance</td></tr>
 </table>
 
-<h5 id="results_25">Results:<a class="headerlink" href="#results_25" title="Permanent link">link</a></h5>
+<h5 id="results_22">Results:<a class="headerlink" href="#results_22" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6680,7 +7178,7 @@ any ranges of the tensor that are later read.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>HoistableOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_22">Operands:<a class="headerlink" href="#operands_22" title="Permanent link">link</a></h5>
+<h5 id="operands_18">Operands:<a class="headerlink" href="#operands_18" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6695,7 +7193,57 @@ any ranges of the tensor that are later read.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_26">Results:<a class="headerlink" href="#results_26" title="Permanent link">link</a></h5>
+<h5 id="results_23">Results:<a class="headerlink" href="#results_23" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Result</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>result</code></td>
+<td>ranked tensor of any type values</td>
+</tr>
+</tbody>
+</table>
+<h4 id="flowtensorencode-flowtensorencodeop"><code>flow.tensor.encode</code> (Flow::TensorEncodeOp)<a class="headerlink" href="#flowtensorencode-flowtensorencodeop" title="Permanent link">link</a></h4>
+<p><em>Performs a full tensor encode operation</em></p>
+<p>Syntax:</p>
+<div class="highlight"><pre><span></span><code>operation ::= `flow.tensor.encode` $operand `:`
+              type($operand) (`{` $operand_dims^ `}`)? `-&gt;`
+              type($result) (`{` $result_dims^ `}`)?
+              attr-dict-with-keyword
+</code></pre></div>
+<p>Encode the input tensor into an encoded output tensor.</p>
+<p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code></p>
+<p>Interfaces: <code>ConditionallySpeculatable</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Util_ShapeAwareOp</code></p>
+<p>Effects: <code>MemoryEffects::Effect{}</code></p>
+<h5 id="operands_19">Operands:<a class="headerlink" href="#operands_19" title="Permanent link">link</a></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>operand</code></td>
+<td>ranked tensor of any type values</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>operand_dims</code></td>
+<td>variadic of index</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>result_dims</code></td>
+<td>variadic of index</td>
+</tr>
+</tbody>
+</table>
+<h5 id="results_24">Results:<a class="headerlink" href="#results_24" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6721,7 +7269,7 @@ any ranges of the tensor that are later read.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_23">Operands:<a class="headerlink" href="#operands_23" title="Permanent link">link</a></h5>
+<h5 id="operands_20">Operands:<a class="headerlink" href="#operands_20" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6744,7 +7292,7 @@ any ranges of the tensor that are later read.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_27">Results:<a class="headerlink" href="#results_27" title="Permanent link">link</a></h5>
+<h5 id="results_25">Results:<a class="headerlink" href="#results_25" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6771,7 +7319,7 @@ any ranges of the tensor that are later read.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>HoistableOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>TiedOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_24">Operands:<a class="headerlink" href="#operands_24" title="Permanent link">link</a></h5>
+<h5 id="operands_21">Operands:<a class="headerlink" href="#operands_21" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6794,7 +7342,7 @@ any ranges of the tensor that are later read.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_28">Results:<a class="headerlink" href="#results_28" title="Permanent link">link</a></h5>
+<h5 id="results_26">Results:<a class="headerlink" href="#results_26" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6821,7 +7369,7 @@ any ranges of the tensor that are later read.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>HoistableOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_25">Operands:<a class="headerlink" href="#operands_25" title="Permanent link">link</a></h5>
+<h5 id="operands_22">Operands:<a class="headerlink" href="#operands_22" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6852,7 +7400,7 @@ any ranges of the tensor that are later read.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_29">Results:<a class="headerlink" href="#results_29" title="Permanent link">link</a></h5>
+<h5 id="results_27">Results:<a class="headerlink" href="#results_27" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6877,7 +7425,7 @@ any ranges of the tensor that are later read.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>HoistableOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_26">Operands:<a class="headerlink" href="#operands_26" title="Permanent link">link</a></h5>
+<h5 id="operands_23">Operands:<a class="headerlink" href="#operands_23" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6896,7 +7444,7 @@ any ranges of the tensor that are later read.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_30">Results:<a class="headerlink" href="#results_30" title="Permanent link">link</a></h5>
+<h5 id="results_28">Results:<a class="headerlink" href="#results_28" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6922,7 +7470,7 @@ any ranges of the tensor that are later read.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_27">Operands:<a class="headerlink" href="#operands_27" title="Permanent link">link</a></h5>
+<h5 id="operands_24">Operands:<a class="headerlink" href="#operands_24" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6949,7 +7497,7 @@ any ranges of the tensor that are later read.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_31">Results:<a class="headerlink" href="#results_31" title="Permanent link">link</a></h5>
+<h5 id="results_29">Results:<a class="headerlink" href="#results_29" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6976,7 +7524,7 @@ calculations and is removed during lowering.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>ReifyRankedShapedTypeOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_28">Operands:<a class="headerlink" href="#operands_28" title="Permanent link">link</a></h5>
+<h5 id="operands_25">Operands:<a class="headerlink" href="#operands_25" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -6995,7 +7543,7 @@ calculations and is removed during lowering.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_32">Results:<a class="headerlink" href="#results_32" title="Permanent link">link</a></h5>
+<h5 id="results_30">Results:<a class="headerlink" href="#results_30" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -7022,13 +7570,13 @@ tensors. The key is arbitrary and can be used for identifying the set of
 values being traced.</p>
 <p>Traits: <code>AttrSizedOperandSegments</code></p>
 <p>Interfaces: <code>ShapeAwareOpInterface</code></p>
-<h5 id="attributes_20">Attributes:<a class="headerlink" href="#attributes_20" title="Permanent link">link</a></h5>
+<h5 id="attributes_18">Attributes:<a class="headerlink" href="#attributes_18" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>key</code></td><td>::mlir::StringAttr</td><td>string attribute</td></tr>
 </table>
 
-<h5 id="operands_29">Operands:<a class="headerlink" href="#operands_29" title="Permanent link">link</a></h5>
+<h5 id="operands_26">Operands:<a class="headerlink" href="#operands_26" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -7050,7 +7598,7 @@ values being traced.</p>
 <h4 id="flowtensortransfer-flowtensortransferop"><code>flow.tensor.transfer</code> (Flow::TensorTransferOp)<a class="headerlink" href="#flowtensortransfer-flowtensortransferop" title="Permanent link">link</a></h4>
 <p><em>Transfers a tensor to a target by copying if needed</em></p>
 <p>Syntax:</p>
-<div class="highlight"><pre><span></span><code>operation ::= `flow.tensor.transfer` $operand `:` type($result) (`{` $argument_dims^ `}`)?
+<div class="highlight"><pre><span></span><code>operation ::= `flow.tensor.transfer` $operand `:` type($result) (`{` $operand_dims^ `}`)?
               `to` $target
               attr-dict-with-keyword
 </code></pre></div>
@@ -7062,13 +7610,13 @@ context is required.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>HoistableOpInterface</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="attributes_21">Attributes:<a class="headerlink" href="#attributes_21" title="Permanent link">link</a></h5>
+<h5 id="attributes_19">Attributes:<a class="headerlink" href="#attributes_19" title="Permanent link">link</a></h5>
 <table>
 <tr><th>Attribute</th><th>MLIR Type</th><th>Description</th></tr>
 <tr><td><code>target</code></td><td>::mlir::Attribute</td><td>any attribute</td></tr>
 </table>
 
-<h5 id="operands_30">Operands:<a class="headerlink" href="#operands_30" title="Permanent link">link</a></h5>
+<h5 id="operands_27">Operands:<a class="headerlink" href="#operands_27" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -7082,12 +7630,12 @@ context is required.</p>
 <td>ranked tensor of any type values</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>argument_dims</code></td>
+<td style="text-align: center;"><code>operand_dims</code></td>
 <td>variadic of index</td>
 </tr>
 </tbody>
 </table>
-<h5 id="results_33">Results:<a class="headerlink" href="#results_33" title="Permanent link">link</a></h5>
+<h5 id="results_31">Results:<a class="headerlink" href="#results_31" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -7115,7 +7663,7 @@ given offset indices.</p>
 <p>Traits: <code>AlwaysSpeculatableImplTrait</code>, <code>AttrSizedOperandSegments</code></p>
 <p>Interfaces: <code>ConditionallySpeculatable</code>, <code>HoistableOpInterface</code>, <code>InferTypeOpInterface</code>, <code>NoMemoryEffect (MemoryEffectOpInterface)</code>, <code>TiedOpInterface</code>, <code>Util_ShapeAwareOp</code></p>
 <p>Effects: <code>MemoryEffects::Effect{}</code></p>
-<h5 id="operands_31">Operands:<a class="headerlink" href="#operands_31" title="Permanent link">link</a></h5>
+<h5 id="operands_28">Operands:<a class="headerlink" href="#operands_28" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -7146,7 +7694,7 @@ given offset indices.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="results_34">Results:<a class="headerlink" href="#results_34" title="Permanent link">link</a></h5>
+<h5 id="results_32">Results:<a class="headerlink" href="#results_32" title="Permanent link">link</a></h5>
 <table>
 <thead>
 <tr>
@@ -7161,11 +7709,11 @@ given offset indices.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="attributes_22">Attributes<a class="headerlink" href="#attributes_22" title="Permanent link">link</a></h2>
+<h2 id="attributes_20">Attributes<a class="headerlink" href="#attributes_20" title="Permanent link">link</a></h2>
 <h3 id="dummyattr">DummyAttr<a class="headerlink" href="#dummyattr" title="Permanent link">link</a></h3>
 <p>Syntax: <code>#flow.dummy</code></p>
 <h3 id="namedparameterattr">NamedParameterAttr<a class="headerlink" href="#namedparameterattr" title="Permanent link">link</a></h3>
-<p>named parameter referenced an optional scope and key</p>
+<p><em>Named parameter referenced an optional scope and key</em></p>
 <p>Syntax:</p>
 <div class="highlight"><pre><span></span><code>#flow.parameter.named&lt;
   ::mlir::Type,   # type
@@ -7209,22 +7757,9 @@ the parameter within its scope.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="type-constraints">Type constraints<a class="headerlink" href="#type-constraints" title="Permanent link">link</a></h2>
-<h3 id="dispatchtensor">dispatch.tensor<a class="headerlink" href="#dispatchtensor" title="Permanent link">link</a></h3>
-<p>A placeholder for a dispatch region input/output operand. This can be used
-to query the metadata about the tensor (such as its shape) as well as both
-load and store from the backing tensor representation.</p>
-<h3 id="dispatchtensor_1">dispatch.tensor<a class="headerlink" href="#dispatchtensor_1" title="Permanent link">link</a></h3>
-<p>A placeholder for a dispatch region input operand. This can be used
-to query the metadata about the tensor (such as its shape) as well as load
-from the backing tensor representation.</p>
-<h3 id="dispatchtensor_2">dispatch.tensor<a class="headerlink" href="#dispatchtensor_2" title="Permanent link">link</a></h3>
-<p>A placeholder for a dispatch region output operand. This can be used
-to query the metadata about the tensor (such as its shape) as well as store
-to the backing tensor representation.</p>
 <h2 id="types">Types<a class="headerlink" href="#types" title="Permanent link">link</a></h2>
 <h3 id="channeltype">ChannelType<a class="headerlink" href="#channeltype" title="Permanent link">link</a></h3>
-<p>a collecive communication channel</p>
+<p><em>A collecive communication channel</em></p>
 <p>Syntax: <code>!flow.channel</code></p>
 <p>Represents a single participant in a collective clique. Multiple channels
 may exist within the same program to allow for partial operations or
@@ -7237,7 +7772,7 @@ can be created or provided by hosting applications.</p>
 <p>Syntax: <code>!flow.dummy</code></p>
 <h2 id="enums">Enums<a class="headerlink" href="#enums" title="Permanent link">link</a></h2>
 <h3 id="collectiveelementtype">CollectiveElementType<a class="headerlink" href="#collectiveelementtype" title="Permanent link">link</a></h3>
-<p>valid CollectiveElementType</p>
+<p><em>Valid CollectiveElementType</em></p>
 <h4 id="cases">Cases:<a class="headerlink" href="#cases" title="Permanent link">link</a></h4>
 <table>
 <thead>
@@ -7311,7 +7846,7 @@ can be created or provided by hosting applications.</p>
 </tbody>
 </table>
 <h3 id="collectivereductionop">CollectiveReductionOp<a class="headerlink" href="#collectivereductionop" title="Permanent link">link</a></h3>
-<p>valid CollectiveReductionOp</p>
+<p><em>Valid CollectiveReductionOp</em></p>
 <h4 id="cases_1">Cases:<a class="headerlink" href="#cases_1" title="Permanent link">link</a></h4>
 <table>
 <thead>
